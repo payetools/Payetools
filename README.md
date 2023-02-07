@@ -1,2 +1,2 @@
 # Paytools.Core
-Payroll software for .NET Core
+.NET Library for UK payroll
