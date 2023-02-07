@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Common;
+namespace Paytools.Common.Model;
 
 /// <summary>
 /// Enum representing a given tax year based on the last day of the tax year (i.e., 5 April 20xx).
