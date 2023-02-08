@@ -17,11 +17,16 @@ using System.Text.RegularExpressions;
 
 namespace Paytools.Common.Model;
 
-// Use a single text input and get the user to enter the reference formatted as:
-//   * 3 numbers
-//   * a forward slash(/)
-//   * between 1 and 10 characters, which can be letters and numbers
-// (from https://design.tax.service.gov.uk/hmrc-design-patterns/employer-paye-reference/)
+/// <summary>
+/// Represents an HMRC PAYE Reference, as defined at 
+/// <see href="https://design.tax.service.gov.uk/hmrc-design-patterns/employer-paye-reference/"/>,
+/// which is formatted as follows:
+/// <list type="bullet">
+///     <item><description>3 numbers</description></item>
+///     <item><description>a forward slash ('/')</description></item>
+///     <item><description>between 1 and 10 characters, which can be letters and numbers</description></item>
+/// </list>
+/// </summary>
 public struct HmrcPayeReference
 {
     private static readonly Regex _payeRefRegex = new Regex(@"^[0-9]{3}/[A-Z0-9]{1,10}$");
