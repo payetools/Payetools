@@ -39,6 +39,11 @@ public class CountriesForTaxPurposesConverterTests
 
         input = "GB-WLS";
         CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.Wales);
+
+        input = "GB-XYZ";
+        Action action = () => CountriesForTaxPurposesConverter.ToEnum(input);
+        action.Should().Throw<ArgumentException>()
+            .WithMessage("Unrecognised country 'GB-XYZ' (Parameter 'iso3166Countries')");
     }
 
     [Fact]

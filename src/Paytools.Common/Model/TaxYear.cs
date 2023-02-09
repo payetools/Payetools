@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Extensions;
+
 namespace Paytools.Common.Model;
 
 public record TaxYear
@@ -39,7 +41,7 @@ public record TaxYear
     public DateOnly StartOfTaxYear { get; init; }
     public DateOnly EndOfTaxYear { get; init; }
 
-    public static TaxYearEnding Current => FromDate(DateOnly.FromDateTime(DateTime.Now));
+    public static TaxYearEnding Current => (DateOnly.FromDateTime(DateTime.Now)).ToTaxYearEnding();
 
     public TaxYear(TaxYearEnding taxYearEnding)
     {
@@ -49,20 +51,8 @@ public record TaxYear
     }
 
     public TaxYear(DateOnly taxDate)
-        : this(FromDate(taxDate))
+        : this(taxDate.ToTaxYearEnding())
     {
-    }
-
-    public static TaxYearEnding FromDate(DateOnly date)
-    {
-        var apr6 = new DateOnly(date.Year, date.Month, 6);
-
-        var taxYear = date < apr6 ? date.Year : date.Year + 1;
-
-        if (taxYear < (int)TaxYearEnding.MinValue || taxYear > (int)TaxYearEnding.MaxValue)
-            throw new ArgumentOutOfRangeException(nameof(taxYear), $"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue}");
-
-        return (TaxYearEnding)taxYear;
     }
 
     public CountriesForTaxPurposes[] GetCountriesForYear()

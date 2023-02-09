@@ -39,7 +39,7 @@ public static class PayFrequencyExtensions
             PayFrequency.Quarterly => 4,
             PayFrequency.BiAnnually => 2,
             PayFrequency.Annually => 1,
-            _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(PayFrequency))
+            _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
         };
     }
 }

@@ -17,7 +17,7 @@ using Paytools.Common.Model;
 
 namespace Paytools.Common.Tests;
 
-public class PayFrequencyExtensionTests
+public class PayFrequencyTests
 {
     [Fact]
     public void TestTaxYearPeriodCounts()
@@ -27,6 +27,12 @@ public class PayFrequencyExtensionTests
         PayFrequency.FourWeekly.GetStandardTaxPeriodCount().Should().Be(13);
         PayFrequency.Monthly.GetStandardTaxPeriodCount().Should().Be(12);
         PayFrequency.Quarterly.GetStandardTaxPeriodCount().Should().Be(4);
+        PayFrequency.BiAnnually.GetStandardTaxPeriodCount().Should().Be(2);
         PayFrequency.Annually.GetStandardTaxPeriodCount().Should().Be(1);
+
+        Action action = () => { PayFrequency.Unspecified.GetStandardTaxPeriodCount(); };
+
+        action.Should().Throw<ArgumentException>()
+            .WithMessage($"Invalid pay frequency value Unspecified (Parameter 'payFrequency')");
     }
 }

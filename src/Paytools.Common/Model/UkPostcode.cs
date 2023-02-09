@@ -14,6 +14,6 @@
 
 namespace Paytools.Common.Model;
 
-public record Postcode
+public record UkPostcode
 {
 }

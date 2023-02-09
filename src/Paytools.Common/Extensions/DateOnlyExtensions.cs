@@ -12,10 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
+
 namespace Paytools.Common.Extensions;
 
 public static class DateOnlyExtensions
 {
     public static DateTime ToMiddayUtcDateTime(this DateOnly date) =>
         date.ToDateTime(new TimeOnly(12, 0), DateTimeKind.Utc);
+
+    public static TaxYearEnding ToTaxYearEnding(this DateOnly date)
+    {
+        var apr6 = new DateOnly(date.Year, date.Month, 6);
+
+        var taxYear = date < apr6 ? date.Year : date.Year + 1;
+
+        if (taxYear < (int)TaxYearEnding.MinValue || taxYear > (int)TaxYearEnding.MaxValue)
+            throw new ArgumentOutOfRangeException(nameof(date), $"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue}");
+
+        return (TaxYearEnding)taxYear;
+    }
 }

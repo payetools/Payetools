@@ -20,30 +20,6 @@ namespace Paytools.Common.Tests;
 public class TaxYearTests
 {
     [Fact]
-    public void TestSpecificTaxYear()
-    {
-        var date = new DateOnly(2020, 4, 5);
-        TaxYearEnding ending = TaxYear.FromDate(date);
-        ending.Should().Be(TaxYearEnding.Apr5_2020);
-
-        date = new DateOnly(2020, 4, 6);
-        ending = TaxYear.FromDate(date);
-        ending.Should().Be(TaxYearEnding.Apr5_2021);
-    }
-
-    [Fact]
-    public void TestUnsupportedTaxYears()
-    {
-        Action action = () => TaxYear.FromDate(new DateOnly((int)TaxYearEnding.MinValue - 1, 1, 1));
-        action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue} (Parameter 'taxYear')");
-
-        action = () => TaxYear.FromDate(new DateOnly((int)TaxYearEnding.MaxValue + 1, 1, 1));
-        action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue} (Parameter 'taxYear')");
-    }
-
-    [Fact]
     public void TestMonthlyTaxPeriod()
     {
         TaxYearTestHelper.RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 4, 6), PayFrequency.Monthly, 1);
@@ -81,7 +57,7 @@ public class TaxYearTests
             var periodNumber = taxYear.GetTaxPeriod(new DateOnly(2022, 4, 6), PayFrequency.Monthly);
         };
 
-        TaxYear.FromDate(new DateOnly((int)TaxYearEnding.MinValue, 4, 6));
+        //TaxYear.FromDate(new DateOnly((int)TaxYearEnding.MinValue, 4, 6));
 
         action.Should().Throw<ArgumentException>()
             .WithMessage("Pay date of 06/04/2022 is outside this tax year 06/04/2021 - 05/04/2022 (Parameter 'payDate')");

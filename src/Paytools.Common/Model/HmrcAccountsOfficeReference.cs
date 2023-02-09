@@ -33,14 +33,16 @@ public record HmrcAccountsOfficeReference
 
     private readonly string _accountsOfficeReference;
 
-    public static implicit operator string(HmrcAccountsOfficeReference r) => $"{r._accountsOfficeReference}";
+    public static implicit operator string(HmrcAccountsOfficeReference r) => r.ToString();
 
     public HmrcAccountsOfficeReference(string accountsOfficeReference)
     {
-        if (!IsValid(accountsOfficeReference))
+        var aor = accountsOfficeReference.ToUpper();
+
+        if (!IsValid(aor))
             throw new ArgumentException("Argument is not a valid Accounts Office Reference", nameof(accountsOfficeReference));
 
-        _accountsOfficeReference = accountsOfficeReference;
+        _accountsOfficeReference = aor;
     }
 
     public static bool IsValid(string value) => _validationRegex.IsMatch(value);

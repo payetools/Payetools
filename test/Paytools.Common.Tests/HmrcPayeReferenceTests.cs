@@ -12,19 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Common.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public record EmailAddress
+namespace Paytools.Common.Tests
 {
-    public string? Name { get; init; }
-    public string Address { get; init; }
-
-    public EmailAddress(string address, string? name = null)
+    internal class HmrcPayeReferenceTests
     {
-        Address = address;
-        Name = name;
     }
-
-    public override string ToString() =>
-        Name != null ? $"{Name} <{Address}>" : Address;
 }

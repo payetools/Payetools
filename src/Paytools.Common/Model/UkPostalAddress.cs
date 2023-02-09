@@ -14,12 +14,12 @@
 
 namespace Paytools.Common.Model;
 
-public class PostalAddress
+public class UkPostalAddress
 {
     public string AddressLine1 { get; set; } = null!;
     public string AddressLine2 { get; set; } = null!;
     public string? AddressLine3 { get; set; }
     public string? AddressLine4 { get; set; }
-    public Postcode? Postcode { get; set; }
+    public UkPostcode? Postcode { get; set; }
     public string? ForeignCountry { get; set; }
 }
