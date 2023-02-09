@@ -12,8 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Common.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public record UkPostcode
+namespace Paytools.Common.Tests
 {
+    internal class NiNumberTests
+    {
+    }
 }

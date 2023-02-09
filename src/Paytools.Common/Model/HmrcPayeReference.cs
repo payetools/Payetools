@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -61,29 +61,31 @@ public struct HmrcPayeReference
     /// <summary>
     /// Tries to parse the supplied string into an <see cref="HmrcPayeReference"/> object.
     /// </summary>
-    /// <param name="input">String value containing candidate full HMRC PAYE Reference.</param>
+    /// <param name="input">String value containing candidate full HMRC PAYE Reference.  Lower case characters are converted to
+    /// upper case.</param>
     /// <param name="payeReference">Set to a new instance of HmrcPayeReference if parse succeeds; set to object default 
     /// otherwise.</param>
     /// <returns>True if the string could be parsed into a valid HMRC PAYE Reference; false otherwise.</returns>
-    public static bool TryParse([NotNullWhen(true)] string? input, out HmrcPayeReference payeReference)
+    public static bool TryParse(string? input, [NotNullWhen(true)] out HmrcPayeReference? payeReference)
     {
-        if (IsValid(input))
-        {
-            var tokens = string.IsNullOrEmpty(input) ? null :
-                input.Split('/', 2, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        payeReference = null;
 
-            if (tokens != null && tokens.Length == 2 &&
-                int.TryParse(tokens[0], out var officeNumber) && tokens[1].Length <= 10)
-            {
-                payeReference = new HmrcPayeReference(officeNumber, tokens[1]);
+        if (string.IsNullOrEmpty(input))
+            return false;
 
-                return true;
-            }
-        }
+        var tidiedInput = input.ToUpper().Replace(" ", "");
 
-        payeReference = default;
+        if (!IsValid(tidiedInput))
+            return false;
 
-        return false;
+        var tokens = tidiedInput.Split('/', 2, StringSplitOptions.RemoveEmptyEntries);
+
+        if (tokens == null || tokens.Length != 2)
+            throw new InvalidOperationException($"Unexpected parsing error in HmrcPayeReference.TryParse()");
+
+        payeReference = new HmrcPayeReference(int.Parse(tokens[0]), tokens[1]);
+
+        return true;
     }
 
     /// <summary>

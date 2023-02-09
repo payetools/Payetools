@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -13,10 +13,12 @@
 // limitations under the License.
 
 using Paytools.Common.Extensions;
-using System.Runtime.CompilerServices;
 
 namespace Paytools.Common.Model;
 
+/// <summary>
+/// Represents a specific pay date for a specific pay frequency.
+/// </summary>
 public readonly struct PayDate
 {
     public DateOnly Date { get; init; }
@@ -33,7 +35,7 @@ public readonly struct PayDate
     }
 
     public PayDate(int year, int month, int day, PayFrequency payFrequency)
-        : this(new DateOnly(year,month,day), payFrequency)
+        : this(new DateOnly(year, month, day), payFrequency)
     {
     }
 }
