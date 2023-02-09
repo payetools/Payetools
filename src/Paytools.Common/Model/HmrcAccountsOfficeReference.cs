@@ -36,7 +36,7 @@ public record HmrcAccountsOfficeReference
     /// <summary>
     /// Operator for casting implicitly from a <see cref="HmrcAccountsOfficeReference"/> instance to its string equivalent. 
     /// </summary>
-    /// <param name="value">String value of the HMRC Accounts Office Reference.</param>
+    /// <param name="value">An instance of HmrcAccountsOfficeReference.</param>
     public static implicit operator string(HmrcAccountsOfficeReference value) => value.ToString();
 
     /// <summary>
