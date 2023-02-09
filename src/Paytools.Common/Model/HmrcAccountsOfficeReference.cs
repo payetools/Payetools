@@ -19,6 +19,7 @@ namespace Paytools.Common.Model;
 
 
 /// <summary>
+/// Represents an HMRC Accounts Office Reference  
 /// The Accounts Office reference is formatted as follows:
 ///    * 3 numbers
 ///    * ‘P’

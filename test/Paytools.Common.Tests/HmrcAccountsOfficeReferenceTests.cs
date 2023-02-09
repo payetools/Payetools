@@ -59,4 +59,11 @@ public class HmrcAccountsOfficeReferenceTests
         action.Should().Throw<ArgumentException>()
             .WithMessage("Argument is not a valid Accounts Office Reference (Parameter 'accountsOfficeReference')");
     }
+
+    [Fact]
+    public void TestImplicitCast()
+    {
+        string value = new HmrcAccountsOfficeReference("123PX12345678");
+        value.Should().Be("123PX12345678");
+    }
 }
