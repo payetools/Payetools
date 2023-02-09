@@ -16,8 +16,18 @@ using Paytools.Common.Model;
 
 namespace Paytools.Common.Extensions;
 
+/// <summary>
+/// Extension methods for instances of <see cref="DateOnly"/>.
+/// </summary>
 public static class DateOnlyExtensions
 {
+    /// <summary>
+    /// Method to provide an equivalent <see cref="DateTime"/> to the supplied <see cref="DateOnly"/> with the
+    /// time portion set to midday (12:00:00) UTC.  This is used to minimise the possibility of dates being misinterpreted
+    /// as the next or previous day due to the use of non-UTC timezones.
+    /// </summary>
+    /// <param name="date">DateOnly to convert to DateTime</param>
+    /// <returns>DateTime instance with the same date as the supplied DateOnly and time portion set to 12:00:00 UTC.</returns>
     public static DateTime ToMiddayUtcDateTime(this DateOnly date) =>
         date.ToDateTime(new TimeOnly(12, 0), DateTimeKind.Utc);
 

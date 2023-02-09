@@ -14,8 +14,15 @@
 
 namespace Paytools.Common.Diagnostics;
 
+/// <summary>
+/// Exception that is thrown when invalid reference data is provided.
+/// </summary>
 public class InvalidReferenceDataException : Exception
 {
+    /// <summary>
+    /// Initialises a new instance of the <see cref="InvalidReferenceDataException"/> class.
+    /// </summary>
+    /// <param name="message">Human-readable text providing further details on the exception.</param>
     public InvalidReferenceDataException(string message)
         : base(message) { }
 }
