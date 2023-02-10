@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+namespace Paytools.Common.Model;
+
+/// <summary>
+/// Represents a payroll ID (also known as a "worker ID", "payroll number", "works number") as reported to HMRC.
+/// </summary>
 public sealed record PayrollId
 {
     private readonly string _payrollId;

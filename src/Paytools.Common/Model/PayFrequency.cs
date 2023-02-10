@@ -14,20 +14,40 @@
 
 namespace Paytools.Common.Model;
 
+/// <summary>
+/// Enumerated value for payment frequency.
+/// </summary>
 public enum PayFrequency
 {
+    /// <summary>Not specified</summary>
     Unspecified,
+    /// <summary>Weekly</summary>
     Weekly,
+    /// <summary>Every two weeks</summary>
     TwoWeekly,
+    /// <summary>Every four weeks</summary>
     FourWeekly,
+    /// <summary>Monthly</summary>
     Monthly,
+    /// <summary>Every three months</summary>
     Quarterly,
+    /// <summary>Every six months</summary>
     BiAnnually,
+    /// <summary>Once a year</summary>
     Annually
 }
 
+/// <summary>
+/// 
+/// </summary>
 public static class PayFrequencyExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="payFrequency"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     public static int GetStandardTaxPeriodCount(this PayFrequency payFrequency)
     {
         return payFrequency switch
