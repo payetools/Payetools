@@ -14,9 +14,23 @@
 
 namespace Paytools.Common.Model;
 
+/// <summary>
+/// Represents an individual either in employment, about to be employed, or previously but no longer employed. 
+/// </summary>
 public interface IEmployableIndividual : INamedIndividual
 {
-    public NiNumber NiNumber { get; set; }
-    public DateOnly DateOfBirth { get; set; }
-    Gender Gender { get; set; }
+    /// <summary>
+    /// Gets the individual's National Insurance number.
+    /// </summary>
+    public NiNumber NiNumber { get; init; }
+
+    /// <summary>
+    /// Gets the individual's date of birth.
+    /// </summary>
+    public DateOnly DateOfBirth { get; init; }
+
+    /// <summary>
+    /// Gets the individual's "official" gender as recognised by HMRC for payroll purposes.
+    /// </summary>
+    Gender Gender { get; init; }
 }

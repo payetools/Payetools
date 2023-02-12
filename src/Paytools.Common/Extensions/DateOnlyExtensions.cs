@@ -22,7 +22,7 @@ namespace Paytools.Common.Extensions;
 public static class DateOnlyExtensions
 {
     /// <summary>
-    /// Method to provide an equivalent <see cref="DateTime"/> to the supplied <see cref="DateOnly"/> with the
+    /// Provides an equivalent <see cref="DateTime"/> to the supplied <see cref="DateOnly"/> with the
     /// time portion set to midday (12:00:00) UTC.  This is used to minimise the possibility of dates being misinterpreted
     /// as the next or previous day due to the use of non-UTC timezones.
     /// </summary>
@@ -31,6 +31,13 @@ public static class DateOnlyExtensions
     public static DateTime ToMiddayUtcDateTime(this DateOnly date) =>
         date.ToDateTime(new TimeOnly(12, 0), DateTimeKind.Utc);
 
+    /// <summary>
+    /// Gets the <see cref="TaxYearEnding"/> value for the supplied <see cref="DateOnly"/>.
+    /// </summary>
+    /// <param name="date"><see cref="DateOnly"/> to get the TaxYearEnding for.</param>
+    /// <returns>Relevant <see cref="TaxYearEnding"/> for the supplied date.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the supplied date is outside the supported
+    /// set of dates for this library.</exception>
     public static TaxYearEnding ToTaxYearEnding(this DateOnly date)
     {
         var apr6 = new DateOnly(date.Year, date.Month, 6);

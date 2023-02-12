@@ -14,6 +14,9 @@
 
 namespace Paytools.Common.Model;
 
+/// <summary>
+/// Represents a UK postal address.
+/// </summary>
 public class UkPostalAddress
 {
     public string AddressLine1 { get; set; } = null!;
