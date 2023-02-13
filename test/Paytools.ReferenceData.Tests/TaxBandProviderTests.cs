@@ -13,16 +13,15 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.ReferenceData;
 
-namespace Paytools.IncomeTax.Tests;
+namespace Paytools.ReferenceData.Tests;
 
 public class TaxBandProviderTests
 {
     [Fact]
-    public void InitialiseTest()
+    public async Task InitialiseTest()
     {
-        TaxBandProvider provider = new TaxBandProvider();
+        TaxBandProvider provider = await TaxBandProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
         var bands = provider.GetBandsForTaxYear(new TaxYear(TaxYearEnding.Apr5_2023));
 

@@ -21,4 +21,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Paytools.Common\Paytools.Common.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
+  </ItemGroup>
+
 </Project>

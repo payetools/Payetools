@@ -5,10 +5,6 @@ public class Class1
 {
     //public TaxBandwidthSet(TaxYearEntry taxYearEntry)
     //{
-    //    TaxBandwidthEntries = new TaxBandwidthEntry[taxYearEntry.TaxBands.Length];
-
-    //    for (int i = 0; i < taxYearEntry.TaxBands.Length; i++)
-    //        TaxBandwidthEntries[i] = new TaxBandwidthEntry(taxYearEntry.TaxBands[i], i > 0 ? TaxBandwidthEntries[i - 1] : null);
     //}
 
     //public TaxBandwidthEntry(HmrcDeductionBand taxBand, TaxBandwidthEntry? entryBelow)

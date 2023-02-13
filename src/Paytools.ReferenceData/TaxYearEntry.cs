@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.IncomeTax;
+using Paytools.IncomeTax.ReferenceData;
 using System.Collections.Immutable;
 
 namespace Paytools.ReferenceData;
@@ -23,4 +23,18 @@ public class TaxYearEntry
     public CountriesForTaxPurposes ApplicableCountries { get; init; }
     public ImmutableArray<PersonalAllowance> PersonalAllowances { get; init; } = ImmutableArray<PersonalAllowance>.Empty;
     public ImmutableArray<HmrcDeductionBand> TaxBands { get; init; } = ImmutableArray<HmrcDeductionBand>.Empty;
+
+    public TaxBandwidthEntry[] GetTaxBandwidthEntries()
+    {
+        var taxBandwidthEntries = new TaxBandwidthEntry[TaxBands.Length];
+
+        for (int i = 0; i < TaxBands.Length; i++)
+            taxBandwidthEntries[i] = new TaxBandwidthEntry(TaxBands[i].Description,
+                TaxBands[i].Rate,
+                TaxBands[i].To,
+                TaxBands[i].IsTopRate,
+                i > 0 ? taxBandwidthEntries[i - 1] : null);
+
+        return taxBandwidthEntries;
+    }
 }
