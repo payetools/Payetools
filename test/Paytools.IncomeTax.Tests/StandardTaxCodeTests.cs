@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common;
+using FluentAssertions;
 using Paytools.Common.Model;
 using Test = Paytools.IncomeTax.Tests.TaxCodeTestHelper;
 
@@ -47,6 +47,7 @@ public class StandardTaxCodeTests
     {
         var result = TaxCode.TryParse("AB123C", new(TaxYearEnding.Apr5_2023), out var taxCode);
 
-        Assert.False(result);
+        taxCode.ShouldHaveDefaultValue();
+        result.Should().BeFalse();
     }
 }

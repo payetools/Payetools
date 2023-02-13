@@ -116,7 +116,7 @@ public readonly struct TaxCode
     /// <param name="taxCode"></param>
     /// <param name="result"></param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
-    public static bool TryParse(string taxCode, [NotNullWhen(true)] out TaxCode? result)
+    public static bool TryParse(string taxCode, [NotNullWhen(true)] out TaxCode result)
     {
         return TryParse(taxCode, new(TaxYear.Current), out result);
     }
@@ -129,7 +129,7 @@ public readonly struct TaxCode
     /// <param name="taxYear"></param>
     /// <param name="result"></param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
-    public static bool TryParse(string taxCode, TaxYear taxYear, [NotNullWhen(true)] out TaxCode? result)
+    public static bool TryParse(string taxCode, TaxYear taxYear, out TaxCode result)
     {
         var isNonCumulative = IsNonCumulativeCode(taxCode);
 
@@ -137,14 +137,18 @@ public readonly struct TaxCode
 
         Match? standardCodeMatch = fixedCodeMatch.Success ? null : _standardCodeRegex.Match(taxCode);
 
-        result = (fixedCodeMatch.Success, standardCodeMatch) switch
+        TaxCode? taxCodeResult = null;
+
+        var success = (fixedCodeMatch.Success, standardCodeMatch) switch
         {
-            (true, null) => ProcessFixedCodeMatch(fixedCodeMatch, taxYear, isNonCumulative),
-            (false, not null) => standardCodeMatch.Success ? ProcessStandardCodeMatch(standardCodeMatch, taxYear, isNonCumulative) : null,
-            _ => null
+            (true, null) => ProcessFixedCodeMatch(fixedCodeMatch, taxYear, isNonCumulative, out taxCodeResult),
+            (false, not null) => standardCodeMatch.Success && ProcessStandardCodeMatch(standardCodeMatch, taxYear, isNonCumulative, out taxCodeResult),
+            _ => false
         };
 
-        return result != null && result?.Validate() == true;
+        result = taxCodeResult ?? default;
+
+        return success;
     }
 
     public decimal GetTaxFreePayForPeriod(int taxPeriod, int periodCount)
@@ -211,10 +215,14 @@ public readonly struct TaxCode
         return true;
     }
 
-    private static TaxCode? ProcessFixedCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative)
+    private static bool ProcessFixedCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative, out TaxCode? taxCode)
     {
-        var fixedCode = match.Groups[_fixedCode] ??
-            throw new InvalidOperationException($"{_fixedCode} not found in matched output");
+        taxCode = null;
+
+        var fixedCode = match.Groups[_fixedCode];
+
+        if (fixedCode == null)
+            return false;
 
         var code = fixedCode.Value.ToUpper();
 
@@ -226,28 +234,35 @@ public readonly struct TaxCode
             "D2" => TaxTreatment.D2,
             "0T" => TaxTreatment._0T,
             "NT" => TaxTreatment.NT,
-            _ => throw new InvalidOperationException($"Unrecognised fixed tax code value '{fixedCode.Value}'")
+            _ => TaxTreatment.Unspecified
         };
+
+        if (treatment == TaxTreatment.Unspecified)
+            return false;
 
         var countries = treatment == TaxTreatment.NT ? _allCountries : GetApplicableCountries(match, taxYear);
         var allowance = treatment == TaxTreatment.NT ? int.MaxValue : 0;
 
-        return new TaxCode(taxYear, countries, treatment, allowance, isNonCumulative, true);
+        taxCode = new TaxCode(taxYear, countries, treatment, allowance, isNonCumulative, true);
+
+        return true;
     }
 
-    private static TaxCode? ProcessStandardCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative)
+    private static bool ProcessStandardCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative, out TaxCode? taxCode)
     {
-        Group otherPrefix = match.Groups[_otherPrefix] ??
-            throw new InvalidOperationException($"{_otherPrefix} not found in matched output");
-        Group digits = match.Groups[_digits] ??
-            throw new InvalidOperationException($"{_digits} not found in matched output");
-        Group suffix = match.Groups[_suffix] ??
-            throw new InvalidOperationException($"{_suffix} not found in matched output");
+        taxCode = null;
+
+        Group otherPrefix = match.Groups[_otherPrefix];
+        Group digits = match.Groups[_digits];
+        Group suffix = match.Groups[_suffix];
+
+        if (otherPrefix == null || digits == null || suffix == null)
+            return false;
 
         CountriesForTaxPurposes countries = GetApplicableCountries(match, taxYear);
 
         if (!int.TryParse(digits.Value, out var numericPortion))
-            return null;
+            return false;
 
         TaxTreatment treatment = (ToChar(otherPrefix.Value), ToChar(suffix.Value)) switch
         {
@@ -258,9 +273,12 @@ public readonly struct TaxCode
             _ => TaxTreatment.Unspecified
         };
 
-        return treatment != TaxTreatment.Unspecified ?
-            new TaxCode(taxYear, countries, treatment, GetNumericPortionOfCode(numericPortion, treatment), isNonCumulative) :
-            null;
+        if (treatment == TaxTreatment.Unspecified)
+            return false;
+
+        taxCode = new TaxCode(taxYear, countries, treatment, GetNumericPortionOfCode(numericPortion, treatment), isNonCumulative);
+
+        return true;
     }
 
     private static int GetNumericPortionOfCode(int numericPortionOfCode, TaxTreatment treatment)

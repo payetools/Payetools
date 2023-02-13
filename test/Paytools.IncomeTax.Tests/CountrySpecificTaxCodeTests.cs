@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using FluentAssertions;
 using Paytools.Common;
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Model;
@@ -52,6 +53,7 @@ public class CountrySpecificTaxCodeTests
     {
         Action action = () => TaxCode.TryParse("C1257L", new(TaxYearEnding.Apr5_2019), out var taxCode);
 
-        Assert.Throws<InconsistentDataException>(action);
+        action.Should().Throw<InconsistentDataException>()
+            .WithMessage("Country-specific tax code supplied but country not valid for tax year");
     }
 }

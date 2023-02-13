@@ -14,23 +14,16 @@ public class TaxCalculatorFactory : ITaxCalculatorFactory
         _taxBandProvider = taxBandProvider;
     }
 
-    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, PayDate payDate, PayFrequency payFrequency)
+    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, PayDate payDate, PayFrequency payFrequency) =>
+        GetCalculator(applicableCountries, payDate.TaxYear, payDate.TaxPeriod, payFrequency);
+
+    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, int taxPeriod, PayFrequency payFrequency)
     {
-        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYear(payDate.TaxYear);
+        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYear(taxYear);
 
         if (!taxBandwidthSets.TryGetValue(applicableCountries, out var taxBandwidthSet))
-            throw new InvalidReferenceDataException($"Unable to find unique tax bands for countries/tax year combination [{applicableCountries}] {payDate.TaxYear}");
+            throw new InvalidReferenceDataException($"Unable to find unique tax bands for countries/tax year combination [{applicableCountries}] {taxYear}");
 
-        return GetTaxCalculator(taxBandwidthSet, payFrequency, payDate.TaxPeriod);
+        return new TaxCalculator(taxBandwidthSet, payFrequency, taxPeriod);
     }
-
-    public ITaxCalculator GetTaxCalculator(TaxBandwidthSet annualTaxBandwidthSet, PayFrequency payFrequency, int taxPeriod)
-    {
-        return new TaxCalculator(annualTaxBandwidthSet, payFrequency, taxPeriod);
-    }
-
-    //public ITaxCalculator GetTaxCalculator(TaxBandwidthSet annualTaxBandwidthSet, int taxPeriod, int taxPeriodCount)
-    //{
-    //    return new TaxCalculator(annualTaxBandwidthSet, taxPeriod, taxPeriodCount);
-    //}
 }

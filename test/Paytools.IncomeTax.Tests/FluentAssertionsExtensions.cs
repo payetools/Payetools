@@ -12,34 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.IncomeTax;
+using FluentAssertions.Execution;
 
-public enum TaxTreatment
-{
-    Unspecified,
-    NT,
-    BR,
-    D0,
-    D1,
-    D2,
-    _0T,
-    K,
-    L,
-    M,
-    N
-}
+namespace Paytools.IncomeTax.Tests;
 
-public static class TaxTreatmentExtensions
+public static class FluentAssertionsExtensions
 {
-    public static int GetBandIndex(this TaxTreatment taxTreatment)
+    public static void ShouldHaveDefaultValue<T>(this T value)
     {
-        return taxTreatment switch
-        {
-            TaxTreatment.BR => 0,
-            TaxTreatment.D0 => 1,
-            TaxTreatment.D1 => 2,
-            TaxTreatment.D2 => 3,
-            _ => throw new ArgumentException($"Band index not valid for tax treatment {taxTreatment}", nameof(taxTreatment))
-        };
+        if (!EqualityComparer<T>.Default.Equals(value, default(T)))
+            throw new AssertionFailedException("Must have default value.");
+    }
+
+    public static void ShouldNotHaveDefaultValue<T>(this T value)
+    {
+        if (EqualityComparer<T>.Default.Equals(value, default(T)))
+            throw new AssertionFailedException("Must not have default value.");
     }
 }

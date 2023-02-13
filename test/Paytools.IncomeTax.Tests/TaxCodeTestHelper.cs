@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using FluentAssertions;
 using Paytools.Common;
 using Paytools.Common.Model;
 
@@ -25,44 +26,44 @@ public static class TaxCodeTestHelper
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
 
         result = TaxCode.TryParse(input.ToUpper(), out taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
     }
 
     public static void RunInvalidCodeTest(string input)
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
-
-        Assert.False(result);
-        Assert.Null(taxCode);
+        
+        result.Should().BeFalse();
+        result.ShouldHaveDefaultValue();
 
         result = TaxCode.TryParse(input.ToUpper(), out taxCode);
 
-        Assert.False(result);
-        Assert.Null(taxCode);
+        result.Should().BeFalse();
+        result.ShouldHaveDefaultValue();
     }
 
     public static void RunValidNonCumulativeCodeTest(string input, TaxTreatment expectedTreatment)
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.True(taxCode?.IsNonCumulative);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.IsNonCumulative.Should().BeTrue();
 
         result = TaxCode.TryParse(input.ToUpper(), out taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.True(taxCode?.IsNonCumulative);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.IsNonCumulative.Should().BeTrue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
     }
 
     public static void RunFixedCodeCountrySpecificTest(string input,
@@ -72,17 +73,17 @@ public static class TaxCodeTestHelper
     {
         var result = TaxCode.TryParse(input.ToLower(), taxYear, out var taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
-        Assert.Equal(expectedCountries, taxCode?.ApplicableCountries);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
+        taxCode.ApplicableCountries.Should().Be(expectedCountries);
 
         result = TaxCode.TryParse(input.ToUpper(), taxYear, out taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
-        Assert.Equal(expectedCountries, taxCode?.ApplicableCountries);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
+        taxCode.ApplicableCountries.Should().Be(expectedCountries);
     }
 
     public static void RunStandardCodeTest(string input,
@@ -93,29 +94,29 @@ public static class TaxCodeTestHelper
     {
         var result = TaxCode.TryParse(input.ToLower(), taxYear, out var taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
-        Assert.Equal(expectedCountries, taxCode?.ApplicableCountries);
-        Assert.Equal(expectedAllowance, taxCode?.NotionalAllowance);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
+        taxCode.ApplicableCountries.Should().Be(expectedCountries);
+        taxCode.NotionalAllowance.Should().Be(expectedAllowance);
 
         result = TaxCode.TryParse(input.ToUpper(), taxYear, out taxCode);
 
-        Assert.True(result);
-        Assert.NotNull(taxCode);
-        Assert.Equal(expectedTreatment, taxCode?.TaxTreatment);
-        Assert.Equal(expectedCountries, taxCode?.ApplicableCountries);
-        Assert.Equal(expectedAllowance, taxCode?.NotionalAllowance);
+        result.Should().BeTrue();
+        result.ShouldNotHaveDefaultValue();
+        taxCode.TaxTreatment.Should().Be(expectedTreatment);
+        taxCode.ApplicableCountries.Should().Be(expectedCountries);
+        taxCode.NotionalAllowance.Should().Be(expectedAllowance);
     }
 
     public static void RunToStringTest(string input, string expectedOutput, bool expectedIsNonCumulative)
     {
-        Assert.True(TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode));
-        Assert.Equal(expectedOutput, taxCode?.ToString());
-        Assert.Equal(expectedIsNonCumulative, taxCode?.IsNonCumulative);
+        TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode).Should().BeTrue();
+        taxCode.ToString().Should().Be(expectedOutput);
+        taxCode.IsNonCumulative.Should().Be(expectedIsNonCumulative);
 
-        Assert.True(TaxCode.TryParse(input.ToUpper(), _testTaxYear, out taxCode));
-        Assert.Equal(expectedOutput, taxCode?.ToString());
-        Assert.Equal(expectedIsNonCumulative, taxCode?.IsNonCumulative);
+        TaxCode.TryParse(input.ToUpper(), _testTaxYear, out taxCode).Should().BeTrue();
+        taxCode.ToString().Should().Be(expectedOutput);
+        taxCode.IsNonCumulative.Should().Be(expectedIsNonCumulative);
     }
 }

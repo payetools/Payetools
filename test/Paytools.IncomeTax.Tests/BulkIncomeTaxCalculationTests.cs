@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.IncomeTax.Tests.TestData;
 using Paytools.ReferenceData;
@@ -36,12 +37,10 @@ public class BulkIncomeTaxCalculationTests
     [Fact]
     public async Task RunTests()
     {
-        int year = 2023;
+        var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
         TaxBandProvider provider = await TaxBandProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
-        TaxCalculatorFactory taxCalculatorFactory = new TaxCalculatorFactory(provider);
-        var bands = provider.GetBandsForTaxYear(new TaxYear(TaxYearEnding.Apr5_2023));
-        var bandwidthSet = bands[CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland];
+        var taxCalculatorFactory = new TaxCalculatorFactory(provider);
         var tests = IncomeTaxTestDataLoader.Load();
 
         int testIndex = 1;
@@ -49,12 +48,15 @@ public class BulkIncomeTaxCalculationTests
 
         foreach (var test in tests)
         {
-            var calculator = taxCalculatorFactory.GetTaxCalculator(bandwidthSet, test.PayFrequency, test.Period);
-
             var fullTaxCode = string.Format("{0}{1}", test.TaxCode, test.IsNonCumulative ? " X" : "");
 
             if (!TaxCode.TryParse(fullTaxCode, out var taxCode))
                 throw new XunitException($"Unable to parse tax code '{test.TaxCode}'");
+
+            var applicableCountries = taxCode.TaxTreatment == TaxTreatment.NT ?
+                taxYear.GetDefaultCountriesForYear() : taxCode.ApplicableCountries;
+
+            var calculator = taxCalculatorFactory.GetCalculator(applicableCountries, taxYear, test.Period, test.PayFrequency);
 
             var result = calculator.Calculate(test.GrossPay,
                 0.0m,
@@ -67,7 +69,7 @@ public class BulkIncomeTaxCalculationTests
             if (test.TaxDue != result.TaxDue)
                 Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, fullTaxCode, test.TaxDue, result.TaxDue);
 
-            Assert.True(test.TaxDue == result.TaxDue, $"Failed {test.TaxDue} != {result.TaxDue} (Index {testIndex})");
+            result.TaxDue.Should().Be(test.TaxDue, $"Failure {test.TaxDue} != {result.TaxDue} (Index {testIndex})");
 
             testCompleted++;
             testIndex++;
