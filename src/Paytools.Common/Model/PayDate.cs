@@ -39,6 +39,11 @@ public readonly struct PayDate
     public int TaxPeriod { get; init; }
 
     /// <summary>
+    /// Gets the pay frequency for this <see cref="PayDate"/>.
+    /// </summary>
+    public PayFrequency PayFrequency { get; init; }
+
+    /// <summary>
     /// Gets the equivalent <see cref="DateTime"/> for this paydate, with the time portion set to midday (12:00:00) UTC.
     /// </summary>
     /// <param name="payDate"><see cref="PayDate"/> to get the DateTime for.</param>
@@ -54,6 +59,7 @@ public readonly struct PayDate
         Date = date;
         TaxYear = new TaxYear(date);
         TaxPeriod = TaxYear.GetTaxPeriod(date, payFrequency);
+        PayFrequency = payFrequency;
     }
 
     /// <summary>

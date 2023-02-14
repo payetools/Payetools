@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2022-2023 Paytools Ltd
+﻿// Copyright (c) 2023 Paytools Foundation
 //
 // Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
@@ -12,22 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
-
 namespace Paytools.IncomeTax;
 
-/// <summary>
-/// Interface for 
-/// </summary>
-public interface ITaxCalculationResult
+public readonly struct TaxAtBand
 {
-    //PayDate PayDate { get; }
-    TaxCode TaxCode { get; }
-    int PayPeriodCount { get; }
-    decimal TaxableSalary { get; }
-    decimal SalaryYearToDate { get; }
-    decimal TaxPaidYearToDate { get; }
-    decimal TaxUnpaidDueToRegulatoryLimit { get; }
-    decimal TaxDue { get; }
-    public TaxAtBand[] TaxAtEachBand { get; init; }
+    public readonly decimal TaxRate;
+    public readonly decimal TaxDue;
+    public readonly decimal ApplicableIncome;
+
+    public TaxAtBand(decimal taxRate, decimal applicableIncome, decimal taxDue)
+    {
+        TaxRate = taxRate;
+        ApplicableIncome = applicableIncome;
+        TaxDue = taxDue;
+    }
 }

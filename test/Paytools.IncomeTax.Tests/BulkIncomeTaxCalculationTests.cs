@@ -71,6 +71,10 @@ public class BulkIncomeTaxCalculationTests
 
             result.TaxDue.Should().Be(test.TaxDue, $"Failure {test.TaxDue} != {result.TaxDue} (Index {testIndex})");
 
+            var totalTax = result.TaxAtEachBand.Select(tb => tb.TaxDue).Sum();
+
+            //totalTax.Should().Be(test.TaxDueToDate);
+
             testCompleted++;
             testIndex++;
         }

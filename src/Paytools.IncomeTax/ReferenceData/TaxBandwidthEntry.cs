@@ -17,6 +17,7 @@ namespace Paytools.IncomeTax.ReferenceData;
 public record TaxBandwidthEntry
 {
     public string Description { get; init; }
+    public decimal Bandwidth => CumulativeBandwidth - (BandWidthEntryBelow?.CumulativeBandwidth ?? 0.0m);
     public decimal CumulativeBandwidth { get; init; }
     public decimal Rate { get; init; }
     public decimal TaxForBand { get; init; }
@@ -42,5 +43,20 @@ public record TaxBandwidthEntry
         IsTopBand = isTopRate;
 
         BandWidthEntryBelow = entryBelow;
+    }
+
+    public int GetApplicableBandCount()
+    {
+        int bands = 1;
+        var bandwidthEntry = this;
+
+        while (bandwidthEntry?.BandWidthEntryBelow != null)
+        {
+            bands++;
+
+            bandwidthEntry = bandwidthEntry?.BandWidthEntryBelow;
+        }
+
+        return bands;
     }
 }

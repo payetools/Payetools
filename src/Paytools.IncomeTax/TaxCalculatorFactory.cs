@@ -14,8 +14,8 @@ public class TaxCalculatorFactory : ITaxCalculatorFactory
         _taxBandProvider = taxBandProvider;
     }
 
-    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, PayDate payDate, PayFrequency payFrequency) =>
-        GetCalculator(applicableCountries, payDate.TaxYear, payDate.TaxPeriod, payFrequency);
+    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, PayDate payDate) =>
+        GetCalculator(applicableCountries, payDate.TaxYear, payDate.TaxPeriod, payDate.PayFrequency);
 
     public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, int taxPeriod, PayFrequency payFrequency)
     {

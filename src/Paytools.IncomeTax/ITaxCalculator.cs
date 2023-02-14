@@ -4,7 +4,7 @@ namespace Paytools.IncomeTax;
 
 public interface ITaxCalculator
 {
-    TaxCalculationResult Calculate(decimal totalTaxableSalaryInPeriod,
+    ITaxCalculationResult Calculate(decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
