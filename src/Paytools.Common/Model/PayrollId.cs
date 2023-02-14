@@ -21,15 +21,32 @@ public sealed record PayrollId
 {
     private readonly string _payrollId;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="payrollId"></param>
     public static implicit operator string(PayrollId payrollId) => payrollId._payrollId;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="payrollId"></param>
     public static implicit operator PayrollId(string payrollId) => new(payrollId);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="title"></param>
     public PayrollId(string title)
     {
         _payrollId = title;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="title"></param>
+    /// <returns></returns>
     public static PayrollId Parse(string title)
     {
         return new PayrollId(title);

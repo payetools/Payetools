@@ -19,10 +19,21 @@ namespace Paytools.Common.Model;
 /// </summary>
 public class UkPostalAddress
 {
+    /// <summary>First line of the address.</summary>
     public string AddressLine1 { get; set; } = null!;
+
+    /// <summary>Second line of the address.</summary>
     public string AddressLine2 { get; set; } = null!;
+
+    /// <summary>Third line of the address.</summary>
     public string? AddressLine3 { get; set; }
+
+    /// <summary>Fourth line of the address.</summary>
     public string? AddressLine4 { get; set; }
+
+    /// <summary>Postcode (UK addresses only).</summary>
     public UkPostcode? Postcode { get; set; }
+
+    /// <summary>TBA.</summary>
     public string? ForeignCountry { get; set; }
 }
