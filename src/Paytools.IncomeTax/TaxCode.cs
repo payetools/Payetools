@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common;
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Model;
 using System.Diagnostics;
@@ -21,6 +20,9 @@ using System.Text.RegularExpressions;
 
 namespace Paytools.IncomeTax;
 
+/// <summary>
+/// Represents a UK tax code, with the ability to calculate tax-free pay based the code and the relevant tax period.
+/// </summary>
 public readonly struct TaxCode
 {
     private const string _nonCumulative = "NonCumulative";
@@ -30,12 +32,15 @@ public readonly struct TaxCode
     private const string _digits = "Digits";
     private const string _suffix = "Suffix";
 
-    private static readonly Regex _nonCumulativeRegex = new($@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<{_nonCumulative}>W1M1|W1/M1|X|W1|M1)$",
+    private static readonly Regex _nonCumulativeRegex = new ($@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<{_nonCumulative}>W1M1|W1/M1|X|W1|M1)$",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    private static readonly Regex _fixedCodeRegex = new($@"^(?<{_countryPrefix}>^[SC]?)(?<{_fixedCode}>0T|BR|NT|D0|D1|D2)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
+
+    private static readonly Regex _fixedCodeRegex = new ($@"^(?<{_countryPrefix}>^[SC]?)(?<{_fixedCode}>0T|BR|NT|D0|D1|D2)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    private static readonly Regex _standardCodeRegex = new($@"(?<{_countryPrefix}>^[SC]?)(?<{_otherPrefix}>[K]?)(?<{_digits}>\d*)(?<{_suffix}>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
+
+    private static readonly Regex _standardCodeRegex = new ($@"(?<{_countryPrefix}>^[SC]?)(?<{_otherPrefix}>[K]?)(?<{_digits}>\d*)(?<{_suffix}>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
     private static readonly CountriesForTaxPurposes _allCountries = CountriesForTaxPurposes.England | CountriesForTaxPurposes.Wales | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Scotland;
 
     private static readonly decimal _taxCodeDivisor = 500.0m;
@@ -44,18 +49,46 @@ public readonly struct TaxCode
 
     private readonly TaxYear _taxYear;
 
+    /// <summary>
+    /// Gets a value indicating whether the tax code is cumulative (e.g., 1257L) or non-cumulative (e.g., 1257L W1/M1).
+    /// </summary>
     public bool IsNonCumulative { get; }
+
+    /// <summary>
+    /// Gets the tax treatment specified by this tax code.  For the most part, this is the prefix or suffix for the tax code, omitting the
+    /// tax regime letter.
+    /// </summary>
     public TaxTreatment TaxTreatment { get; }
+
+    /// <summary>
+    /// Gets the country or countries that this tax code applies to, i.e., the tax regime.
+    /// </summary>
     public CountriesForTaxPurposes ApplicableCountries { get; }
+
+    /// <summary>
+    /// Gets the notional annual personal allowance for the tax code.  This may be negative in the event the tax code has a K prefix.
+    /// </summary>
     public decimal NotionalAllowance { get; }
+
+    /// <summary>
+    /// Gets the integer portion of the tax code, if applicable, or zero otherwise.
+    /// </summary>
     public int NumericPortionOfCode { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the tax code is a "fixed code", such as BR, D0, NT, etc., or a variable code, such as 1257L.
+    /// </summary>
     public bool IsFixedCode { get; }
-    public string TaxRegime =>
+
+    /// <summary>
+    /// Gets the tax regime letter, e.g., S for Scotland, C for Wales.  Returns an empty string if no specific regime is applicable.
+    /// </summary>
+    public string TaxRegimeLetter =>
         ApplicableCountries switch
         {
             CountriesForTaxPurposes.Scotland => "S",
             CountriesForTaxPurposes.Wales => "C",
-            _ => ""
+            _ => string.Empty
         };
 
     private string BaseCode =>
@@ -67,7 +100,8 @@ public readonly struct TaxCode
             _ => $"{TaxTreatment}"
         };
 
-    private TaxCode(TaxYear taxYear,
+    private TaxCode(
+        TaxYear taxYear,
         CountriesForTaxPurposes applicableCountries,
         TaxTreatment taxTreatment,
         int numericPortionOfCode,
@@ -90,15 +124,19 @@ public readonly struct TaxCode
     }
 
     /// <summary>
-    /// 
+    /// Returns the string representation of the tax code including the tax regime letter if applicable, but without
+    /// any indication of whether the code is cumulative or non-cumulative.
     /// </summary>
-    /// <returns></returns>
-    public override string ToString()
-    {
-        return $"{TaxRegime}{BaseCode}";
-    }
+    /// <returns>String representation of tax code without tax regime prefix.</returns>
+    public override string ToString() => $"{TaxRegimeLetter}{BaseCode}";
 
-
+    /// <summary>
+    /// Returns the string representation of the tax code optional including the tax regime letter if applicable, and optionally
+    /// indicating whether the code is cumulative or non-cumulative by means of an "X" suffix.
+    /// </summary>
+    /// <param name="includeNonCumulativeFlag">True to include the non-cumulative flag; false otherwise.</param>
+    /// <param name="includeTaxRegime">True to include the tax regime prefix; false otherwise.</param>
+    /// <returns>String representation of tax code with or without tax regime prefix and with or without non-cumulative indicator.</returns>
     public string ToString(bool includeNonCumulativeFlag, bool includeTaxRegime)
     {
         return (includeNonCumulativeFlag, includeTaxRegime) switch
@@ -111,23 +149,25 @@ public readonly struct TaxCode
     }
 
     /// <summary>
-    /// 
+    /// Attempts to parse the supplied tax code into its component parts, assuming the tax regimes for the current tax year.
+    /// Non-cumulative codes must be identified by an 'X', 'W1', 'M1' or 'W1/M1' suffix, with or without preceding space.
+    /// Tax code parsing is case-insensitive.
     /// </summary>
-    /// <param name="taxCode"></param>
-    /// <param name="result"></param>
+    /// <param name="taxCode">Tax code as a string.</param>
+    /// <param name="result">Instance of <see cref="TaxCode"/> if valid; default(TaxCode) otherwise.</param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
-    public static bool TryParse(string taxCode, [NotNullWhen(true)] out TaxCode result)
+    public static bool TryParse(string taxCode, out TaxCode result)
     {
-        return TryParse(taxCode, new(TaxYear.Current), out result);
+        return TryParse(taxCode, new TaxYear(TaxYear.Current), out result);
     }
 
     /// <summary>
     /// Attempts to parse the supplied tax code.  Non-cumulative codes must be identified by an 'X', 'W1', 'M1' or 'W1/M1' suffix,
     /// with or without preceding space.  Tax code parsing is case-insensitive.
     /// </summary>
-    /// <param name="taxCode"></param>
-    /// <param name="taxYear"></param>
-    /// <param name="result"></param>
+    /// <param name="taxCode">Tax code as a string.</param>
+    /// <param name="taxYear">Tax year for the supplied tax code.</param>
+    /// <param name="result">Instance of <see cref="TaxCode"/> if valid; default(TaxCode) otherwise.</param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
     public static bool TryParse(string taxCode, TaxYear taxYear, out TaxCode result)
     {
@@ -151,6 +191,12 @@ public readonly struct TaxCode
         return success;
     }
 
+    /// <summary>
+    /// Calculates the tax free pay for the specified tax period and given tax code.
+    /// </summary>
+    /// <param name="taxPeriod">Tax period.</param>
+    /// <param name="periodCount">Number of tax periods in the year (e.g., 12 for monthly pay).</param>
+    /// <returns>Tax-free pay applicable up to and including the end of the specified tax period.  May be negative.</returns>
     public decimal GetTaxFreePayForPeriod(int taxPeriod, int periodCount)
     {
         // Calculating the tax free pay for a period involves deriving the tax free pay for the year and then multiplying by
@@ -166,7 +212,6 @@ public readonly struct TaxCode
 
         if (numericPortionOfCode > _taxCodeDivisor)
         {
-
             remainder = numericPortionOfCode % _taxCodeDivisor;
             quotient = (numericPortionOfCode - remainder) / _taxCodeDivisor;
 
@@ -182,7 +227,7 @@ public readonly struct TaxCode
             quotient = 0.0m;
         }
 
-        var taxFreePayForOnePeriod = quotient * GetQuotientTaxFreePay(periodCount) +
+        var taxFreePayForOnePeriod = (quotient * GetQuotientTaxFreePay(periodCount)) +
             decimal.Round(decimal.Round(((remainder * 10.0m) + 9.0m) / periodCount, 4, MidpointRounding.ToZero), 2, MidpointRounding.ToPositiveInfinity);
 
         if (TaxTreatment == TaxTreatment.K)
@@ -190,8 +235,13 @@ public readonly struct TaxCode
 
         decimal taxFreePayForPeriod = IsNonCumulative ? taxFreePayForOnePeriod : taxFreePayForOnePeriod * taxPeriod;
 
-        Debug.WriteLine("Calculating tax free pay for period {0} (annual periods: {1}) for tax code {2}\n   allowanceForOnePeriod = {3}, taxFreePayForPeriod = {4}",
-            taxPeriod, periodCount, this, taxFreePayForOnePeriod, taxFreePayForPeriod);
+        Debug.WriteLine(
+            "Calculating tax free pay for period {0} (annual periods: {1}) for tax code {2}\n   allowanceForOnePeriod = {3}, taxFreePayForPeriod = {4}",
+            taxPeriod,
+            periodCount,
+            this,
+            taxFreePayForOnePeriod,
+            taxFreePayForPeriod);
 
         return taxFreePayForPeriod;
     }
@@ -207,12 +257,6 @@ public readonly struct TaxCode
             1 => _taxCodeDivisor,
             _ => throw new ArgumentOutOfRangeException(nameof(periodCount), $"Unsupported value for periodCount: {periodCount}")
         };
-    }
-
-    public bool Validate()
-    {
-        // TODO: Add validation
-        return true;
     }
 
     private static bool ProcessFixedCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative, out TaxCode? taxCode)

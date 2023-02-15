@@ -29,64 +29,103 @@ public class TaxCalculator : ITaxCalculator
 {
     internal struct InternalTaxCalculationResult
     {
-        public decimal TaxableSalary { get; init;  }
-        public decimal TaxFreePayForPeriod {  get; init; }
+        public decimal TaxableSalary { get; init; }
+
+        public decimal TaxFreePayForPeriod { get; set; }
+
         public decimal TaxDueBeforeRegulatoryLimit { get; init; }
+
         public decimal TaxDue { get; set; }
+
         public int HighestApplicableTaxBandIndex { get; init; }
+
         public decimal IncomeAtHighestApplicableBand { get; init; }
+
         public decimal TaxAtHighestApplicableBand { get; init; }
     }
 
-    public TaxPeriodBandwidthSet TaxBandwidths { get; init; }
-    public PayFrequency PayFrequency{ get; init; }
-    public int TaxPeriod{ get; init; }
-    public int TaxPeriodCount{ get; init; }
+    /// <summary>
+    /// Gets the set of pro-rata tax bandwidths in use for a given tax year, tax regime and tax period.
+    /// </summary>
+    public TaxPeriodBandwidthSet TaxBandwidths { get; }
+
+    /// <summary>
+    /// Gets the pay frequency for this calculator.
+    /// </summary>
+    public PayFrequency PayFrequency { get; }
+
+    /// <summary>
+    /// Gets the relevant tax period for this calculator.
+    /// </summary>
+    public int TaxPeriod { get; }
+
+    /// <summary>
+    /// Gets the number of tax periods within a given tax year, based on the supplied pay frequency.
+    /// </summary>
+    public int TaxPeriodCount { get; }
 
     internal TaxCalculator(TaxBandwidthSet annualTaxBandwidths, PayFrequency payFrequency, int taxPeriod)
     {
         PayFrequency = payFrequency;
         TaxBandwidths = new TaxPeriodBandwidthSet(annualTaxBandwidths, payFrequency, taxPeriod);
         TaxPeriod = taxPeriod;
-        TaxPeriodCount = payFrequency.GetStandardTaxPeriodCount(); ;
+        TaxPeriodCount = payFrequency.GetStandardTaxPeriodCount();
     }
 
-    public ITaxCalculationResult Calculate(decimal totalTaxableSalaryInPeriod,
+    /// <summary>
+    /// Calculates the tax due based on tax code, total taxable salary and total tax paid to date.
+    /// </summary>
+    /// <param name="totalTaxableSalaryInPeriod">Taxable pay in period (i.e., gross less pre-tax deductions but including benefits in kind).</param>
+    /// <param name="benefitsInKind">Benefits in kind element of the taxable pay for the period.</param>
+    /// <param name="taxCode">Individual's tax code.</param>
+    /// <param name="taxableSalaryYearToDate">Total year to date taxable salary up to and including the end of the previous tax period.</param>
+    /// <param name="taxPaidYearToDate">Total year to date tax paid up to and including the end of the previous tax period.</param>
+    /// <param name="taxUnpaidDueToRegulatoryLimit">Any tax outstanding due to the effect of the regulatory limit.  Optional.</param>
+    /// <returns>An <see cref="ITaxCalculationResult"/> containing the tax now due plus related information from the tax calculation.</returns>
+    public ITaxCalculationResult Calculate(
+        decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
         decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
     {
-        InternalTaxCalculationResult internalResult = taxCode switch
+        Func<decimal, TaxCode, decimal, decimal, decimal, decimal, InternalTaxCalculationResult> calculation = taxCode switch
         {
             // NB Although '0T' is a fixed code, it is just a special case of the regular calculation,
             // where the allowance is zero
-            { IsFixedCode: true } and not { TaxTreatment: TaxTreatment._0T } =>
-                CalculateTaxDueOnFixedTaxCode(totalTaxableSalaryInPeriod, taxCode, taxableSalaryYearToDate,
-                    taxPaidYearToDate, benefitsInKind, taxUnpaidDueToRegulatoryLimit),
-
-            _ => CalculateTaxDueOnNonFixedTaxCode(totalTaxableSalaryInPeriod, taxCode, taxableSalaryYearToDate,
-                    benefitsInKind, taxPaidYearToDate, taxUnpaidDueToRegulatoryLimit)
+            { IsFixedCode: true } and not { TaxTreatment: TaxTreatment._0T } => CalculateTaxDueOnFixedTaxCode,
+            _ => CalculateTaxDueOnNonFixedTaxCode
         };
 
-        return new TaxCalculationResult(this,
-            internalResult.HighestApplicableTaxBandIndex,
-            internalResult.IncomeAtHighestApplicableBand,
-            internalResult.TaxAtHighestApplicableBand,
-            internalResult.TaxableSalary,
+        InternalTaxCalculationResult internalResult = calculation(
+            totalTaxableSalaryInPeriod,
             taxCode,
             taxableSalaryYearToDate,
             taxPaidYearToDate,
+            benefitsInKind,
+            taxUnpaidDueToRegulatoryLimit);
+
+        return new TaxCalculationResult(
+            this,
+            taxCode,
+            internalResult.TaxFreePayForPeriod,
+            internalResult.TaxableSalary,
+            taxableSalaryYearToDate,
+            taxPaidYearToDate,
+            internalResult.HighestApplicableTaxBandIndex,
+            internalResult.IncomeAtHighestApplicableBand,
+            internalResult.TaxAtHighestApplicableBand,
             taxUnpaidDueToRegulatoryLimit,
             internalResult.TaxDue);
     }
 
-    private InternalTaxCalculationResult CalculateTaxDueOnNonFixedTaxCode(decimal totalTaxableSalaryInPeriod,
-        TaxCode taxCode, 
+    private InternalTaxCalculationResult CalculateTaxDueOnNonFixedTaxCode(
+        decimal totalTaxableSalaryInPeriod,
+        TaxCode taxCode,
         decimal taxableSalaryYearToDate,
-        decimal benefitsInKind,
         decimal taxPaidYearToDate,
+        decimal benefitsInKind,
         decimal taxUnpaidDueToRegulatoryLimit)
     {
         var totalTaxableSalaryYtd = totalTaxableSalaryInPeriod + taxableSalaryYearToDate;
@@ -97,31 +136,34 @@ public class TaxCalculator : ITaxCalculator
                     CalculateTaxDueNonCumulative(totalTaxableSalaryInPeriod, benefitsInKind, taxFreePayToEndOfPeriod) :
                     CalculateTaxDueCumulative(totalTaxableSalaryInPeriod, benefitsInKind, taxableSalaryYearToDate, taxPaidYearToDate, taxFreePayToEndOfPeriod);
 
-        internalResult.TaxDue = internalResult.TaxDueBeforeRegulatoryLimit > 0 ? 
-            Math.Min(internalResult.TaxDueBeforeRegulatoryLimit, 0.5m * (totalTaxableSalaryInPeriod - benefitsInKind)) : 
+        internalResult.TaxDue = internalResult.TaxDueBeforeRegulatoryLimit > 0 ?
+            Math.Min(internalResult.TaxDueBeforeRegulatoryLimit, 0.5m * (totalTaxableSalaryInPeriod - benefitsInKind)) :
             internalResult.TaxDueBeforeRegulatoryLimit;
+
+        internalResult.TaxFreePayForPeriod = taxFreePayToEndOfPeriod;
 
         return internalResult;
     }
 
-    private InternalTaxCalculationResult CalculateTaxDueCumulative(decimal totalTaxableSalaryInPeriod,
-            decimal benefitsInKind,
-            decimal taxableSalaryYearToDate,
-            decimal taxPaidYearToDate,
-            decimal taxFreePayToEndOfPeriod,
-            decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
+    private InternalTaxCalculationResult CalculateTaxDueCumulative(
+        decimal totalTaxableSalaryInPeriod,
+        decimal benefitsInKind,
+        decimal taxableSalaryYearToDate,
+        decimal taxPaidYearToDate,
+        decimal taxFreePayToEndOfPeriod,
+        decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
     {
         var totalTaxableSalaryYtd = totalTaxableSalaryInPeriod + taxableSalaryYearToDate;
 
         // TODO: Process possible refund
-        //if (totalTaxableSalaryYtd <= taxFreePayToEndOfPeriod)
+        // if (totalTaxableSalaryYtd <= taxFreePayToEndOfPeriod)
         //    return new TaxCalculation(null, totalTaxableSalaryInPeriod, taxCode, totalTaxableSalaryYtd,
         //        taxPaidYearToDate, _taxPeriodCount, taxUnpaidDueToRegulatoryLimit, 0.0m);
 
         var taxableSalaryAfterAllowance = Math.Floor(totalTaxableSalaryYtd - taxFreePayToEndOfPeriod);
 
         // This is the "magic" - we search for the highest applicable tax band (using FirstOrDefault with criteria) and
-        // calculate the portion of tax that is applicable to that band.  For all other bands below, we are applying 
+        // calculate the portion of tax that is applicable to that band.  For all other bands below, we are applying
         // 100% of the band, and all bands above are irrelevant.
         TaxPeriodBandwidthEntry applicableEntry = TaxBandwidths.TaxBandwidthEntries
             .FirstOrDefault(entry =>
@@ -133,8 +175,12 @@ public class TaxCalculator : ITaxCalculator
 
         var applicableRate = applicableEntry?.Rate ?? 0.0m;
 
-        Debug.WriteLine("Cumlative tax calculation: totalTaxableSalaryYtd = {0}, taxFreePayToEndOfPeriod = {1}, taxableSalaryAfterAllowance = {2}, applicableRate = {3}",
-            totalTaxableSalaryYtd, taxFreePayToEndOfPeriod, taxableSalaryAfterAllowance, applicableRate);
+        Debug.WriteLine(
+            "Cumulative tax calculation: totalTaxableSalaryYtd = {0}, taxFreePayToEndOfPeriod = {1}, taxableSalaryAfterAllowance = {2}, applicableRate = {3}",
+            totalTaxableSalaryYtd,
+            taxFreePayToEndOfPeriod,
+            taxableSalaryAfterAllowance,
+            applicableRate);
 
         var taxableSalaryAfterAllowanceRounded = Math.Floor(taxableSalaryAfterAllowance);
         var taxableSalaryAtThisBand = taxableSalaryAfterAllowanceRounded - cumulativeBandwidthBelow;
@@ -150,17 +196,19 @@ public class TaxCalculator : ITaxCalculator
             TaxDueBeforeRegulatoryLimit = taxPayable,
             HighestApplicableTaxBandIndex = applicableEntry?.EntryIndex ?? 0,
             IncomeAtHighestApplicableBand = taxableSalaryAtThisBand,
-            TaxAtHighestApplicableBand = taxAtThisBand
+            TaxAtHighestApplicableBand = taxAtThisBand,
+            TaxableSalary = taxableSalaryAfterAllowance
         };
     }
 
-    private InternalTaxCalculationResult CalculateTaxDueNonCumulative(decimal totalTaxableSalaryInPeriod,
+    private InternalTaxCalculationResult CalculateTaxDueNonCumulative(
+        decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         decimal taxFreePayToEndOfPeriod,
         decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
     {
         // TODO: Process possible refund
-        //if (totalTaxableSalaryYtd <= taxFreePayToEndOfPeriod)
+        // if (totalTaxableSalaryYtd <= taxFreePayToEndOfPeriod)
         //    return new TaxCalculation(null, totalTaxableSalaryInPeriod, taxCode, totalTaxableSalaryYtd,
         //        taxPaidYearToDate, _taxPeriodCount, taxUnpaidDueToRegulatoryLimit, 0.0m);
 
@@ -187,8 +235,13 @@ public class TaxCalculator : ITaxCalculator
 
         var taxPayable = decimal.Round(taxDue, 2, MidpointRounding.ToZero);
 
-        Debug.WriteLine("Non-cumulative tax calculation: totalTaxableSalaryInPeriod = {0}, taxFreePayToEndOfPeriod = {1}, taxableSalaryAfterAllowance = {2}, applicableRate = {3}, taxPayable = {4}",
-            totalTaxableSalaryInPeriod, taxFreePayToEndOfPeriod, taxableSalaryAfterAllowance, applicableRate, taxPayable);
+        Debug.WriteLine(
+            "Non-cumulative tax calculation: totalTaxableSalaryInPeriod = {0}, taxFreePayToEndOfPeriod = {1}, taxableSalaryAfterAllowance = {2}, applicableRate = {3}, taxPayable = {4}",
+            totalTaxableSalaryInPeriod,
+            taxFreePayToEndOfPeriod,
+            taxableSalaryAfterAllowance,
+            applicableRate,
+            taxPayable);
 
         return new InternalTaxCalculationResult()
         {
@@ -200,7 +253,8 @@ public class TaxCalculator : ITaxCalculator
     }
 
     // Used for all fixed tax codes _except_ 0T, which is treated like a normal code with zero allowance.
-    private InternalTaxCalculationResult CalculateTaxDueOnFixedTaxCode(decimal taxableSalary,
+    private InternalTaxCalculationResult CalculateTaxDueOnFixedTaxCode(
+        decimal taxableSalary,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
@@ -229,7 +283,7 @@ public class TaxCalculator : ITaxCalculator
                 taxRate = TaxBandwidths.TaxBandwidthEntries[bandIndex].Rate;
                 taxDue = taxCode.IsNonCumulative ?
                     Math.Round(taxableSalary, 0, MidpointRounding.ToZero) * taxRate :
-                    Math.Round(taxableSalaryYearToDate + taxableSalary, 0, MidpointRounding.ToZero) * taxRate - taxPaidYearToDate;
+                    (Math.Round(taxableSalaryYearToDate + taxableSalary, 0, MidpointRounding.ToZero) * taxRate) - taxPaidYearToDate;
                 break;
         }
 

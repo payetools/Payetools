@@ -12,45 +12,113 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
+using Paytools.IncomeTax.ReferenceData;
 
 namespace Paytools.IncomeTax;
 
 /// <summary>
-/// Represents the result of an income tax calculation for an individual.  
+/// Represents the result of an income tax calculation for an individual, providing the tax due plus a rich set of information about
+/// how the result was achieved.
 /// </summary>
 public readonly struct TaxCalculationResult : ITaxCalculationResult
 {
-    public ITaxCalculator Calculator { get; init; }
-    public decimal TaxableSalary { get; init; }
-    public TaxCode TaxCode { get; init; }
-    public decimal PreviousSalaryYearToDate { get; init; }
-    public decimal PreviousTaxPaidYearToDate { get; init; }
-    public decimal TaxUnpaidDueToRegulatoryLimit { get; init; }
-    public decimal TaxDue { get; init; }
-    public int HighestApplicableTaxBandIndex { get; init; }
-    public decimal IncomeAtHighestApplicableBand { get; init; }
-    public decimal TaxAtHighestApplicableBand { get; init; }
+    /// <summary>
+    /// Gets the calculator (implementation of <see cref="ITaxCalculator"/>) used to perform this calculation.
+    /// </summary>
+    public ITaxCalculator Calculator { get; }
 
-    public TaxCalculationResult(ITaxCalculator calculator,
+    /// <summary>
+    /// Gets the <see cref="TaxCode"/> used in this calculation.
+    /// </summary>
+    public TaxCode TaxCode { get; }
+
+    /// <summary>
+    /// Gets the taxable salary used in this calculation.  This is the gross salary less any tax-free pay (or plus any additional
+    /// notional pay in the case of K tax codes).
+    /// </summary>
+    public decimal TaxableSalary { get; }
+
+    /// <summary>
+    /// Gets the tax-free pay applicable to the end of the period, as given by the specified tax code.  May be negative
+    /// in the case of K tax codes.
+    /// </summary>
+    public decimal TaxFreePayToEndOfPeriod { get; }
+
+    /// <summary>
+    /// Gets the year to date taxable salary paid up to and including the end of the previous period.
+    /// </summary>
+    public decimal PreviousPeriodSalaryYearToDate { get; }
+
+    /// <summary>
+    /// Gets the year to date tax paid up to and including the end of the previous period.
+    /// </summary>
+    public decimal PreviousPeriodTaxPaidYearToDate { get; }
+
+    /// <summary>
+    /// Gets any unpaid tax due to the regulatory limit.
+    /// TODO: implement this properly.
+    /// </summary>
+    public decimal TaxUnpaidDueToRegulatoryLimit { get; }
+
+    /// <summary>
+    /// Gets the tax due at the end of the period, based on the taxable earnings to the end of the period and
+    /// accounting for any tax-free pay up to the end of the period.
+    /// </summary>
+    public decimal TaxDue { get; }
+
+    /// <summary>
+    /// Gets the numberic index of the highest tax band used in the calculation.
+    /// </summary>
+    public int HighestApplicableTaxBandIndex { get; }
+
+    /// <summary>
+    /// Gets the total income to date that falls within the highest tax band used in the calculation.
+    /// </summary>
+    public decimal IncomeAtHighestApplicableBand { get; }
+
+    /// <summary>
+    /// Gets the total tax due for income to date that falls within the highest tax band used in the calculation.
+    /// </summary>
+    public decimal TaxAtHighestApplicableBand { get; }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="TaxCalculationResult"/> using the supplied parameters.
+    /// </summary>
+    /// <param name="calculator">Calculator (implementation of <see cref="ITaxCalculator"/>) used to perform this calculation.</param>
+    /// <param name="taxCode"><see cref="TaxCode"/> used in this calculation.</param>
+    /// <param name="taxFreePayToEndOfPeriod">Tax-free pay applicable to the end of the period, derived from the specified tax code.</param>
+    /// <param name="taxableSalary">Taxable salary used in this calculation.</param>
+    /// <param name="previousPeriodSalaryYearToDate">Year to date taxable salary paid up to and including the end of the previous period.</param>
+    /// <param name="previousPeriodTaxPaidYearToDate">Year to date tax paid up to and including the end of the previous period.</param>
+    /// <param name="highestApplicableTaxBandIndex">Numeric index of the highest tax band (<see cref="TaxPeriodBandwidthEntry"/>) used in the
+    /// calculation.</param>
+    /// <param name="incomeAtHighestApplicableBand">Total income to date that falls within the highest tax band used in the calculation.</param>
+    /// <param name="taxAtHighestApplicableBand">Total tax due for income to date that falls within the highest tax band used in the calculation.</param>
+    /// <param name="taxUnpaidDueToRegulatoryLimit">Previous period tax unpaid due to regulatory limit.</param>
+    /// <param name="taxDue">Tax due at the end of the period, based on the taxable earnings to the end of the period and
+    /// accounting for any tax-free pay up to the end of the period.</param>
+    public TaxCalculationResult(
+        ITaxCalculator calculator,
+        TaxCode taxCode,
+        decimal taxFreePayToEndOfPeriod,
+        decimal taxableSalary,
+        decimal previousPeriodSalaryYearToDate,
+        decimal previousPeriodTaxPaidYearToDate,
         int highestApplicableTaxBandIndex,
         decimal incomeAtHighestApplicableBand,
         decimal taxAtHighestApplicableBand,
-        decimal taxableSalary,
-        TaxCode taxCode,
-        decimal previousSalaryYearToDate,
-        decimal previousTaxPaidYearToDate,
         decimal taxUnpaidDueToRegulatoryLimit,
         decimal taxDue)
     {
         Calculator = calculator;
+        TaxCode = taxCode;
+        TaxFreePayToEndOfPeriod = taxFreePayToEndOfPeriod;
         HighestApplicableTaxBandIndex = highestApplicableTaxBandIndex;
         IncomeAtHighestApplicableBand = incomeAtHighestApplicableBand;
         TaxAtHighestApplicableBand = taxAtHighestApplicableBand;
         TaxableSalary = taxableSalary;
-        TaxCode = taxCode;
-        PreviousSalaryYearToDate = previousSalaryYearToDate;
-        PreviousTaxPaidYearToDate = previousTaxPaidYearToDate;
+        PreviousPeriodSalaryYearToDate = previousPeriodSalaryYearToDate;
+        PreviousPeriodTaxPaidYearToDate = previousPeriodTaxPaidYearToDate;
         TaxUnpaidDueToRegulatoryLimit = taxUnpaidDueToRegulatoryLimit;
         TaxDue = taxDue;
     }

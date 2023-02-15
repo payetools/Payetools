@@ -16,25 +16,54 @@ using Paytools.Common.Model;
 
 namespace Paytools.IncomeTax.ReferenceData;
 
+/// <summary>
+/// Represents a single tax bandwidth entry for a portion of a tax year.  For example, in the UK for 2021-2022, the starter rate of tax
+/// for Scottish taxpayers was 19%, from zero taxable earnings up to £2,097.  In simple terms, this bandwidth is distributed evenly across
+/// the tax year, so in tax period 1 for a monthly payroll, the bandwidth would be £2,097 / 12 = £174.75.  All other parameters are
+/// adjusted accordingly in line with the tax period.  This information constitutes a single <see cref="TaxPeriodBandwidthEntry"/>.
+/// </summary>
 public record TaxPeriodBandwidthEntry : TaxBandwidthEntry
 {
-    public int EntryIndex { get; init; }
-    public PayFrequency PayFrequency { get; init; }
-    public int TaxPeriod { get; init; }
-    public decimal Period1CumulativeBandwidth { get; init; }
-    public decimal Period1CumulativeTax { get; init; }
-    public new TaxPeriodBandwidthEntry? BandWidthEntryBelow { get; init; }
+    /// <summary>
+    /// Gets the numeric index of this <see cref="TaxPeriodBandwidthEntry"/> within its <see cref="TaxPeriodBandwidthSet"/>.  Zero-based,
+    /// with 0 being the lowest tax band.
+    /// </summary>
+    public int EntryIndex { get; }
 
-    public TaxPeriodBandwidthEntry(int index,
-        TaxBandwidthEntry annualEntry, 
-        PayFrequency payFrequency, 
-        int taxPeriod, 
+    /// <summary>
+    /// Gets the cumulative bandwidth value for tax period 1.
+    /// </summary>
+    public decimal Period1CumulativeBandwidth { get; }
+
+    /// <summary>
+    /// Gets the cumulative tax value for tax period 1.
+    /// </summary>
+    public decimal Period1CumulativeTax { get; }
+
+    /// <summary>
+    /// Gets the <see cref="TaxPeriodBandwidthEntry"/> that is immediately below this TaxPeriodBandwidthEntry, or null if this is
+    /// the lowest TaxPeriodBandwidthEntry for this tax regime.
+    /// </summary>
+    public new TaxPeriodBandwidthEntry? BandWidthEntryBelow { get; }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="TaxPeriodBandwidthEntry"/> with the supplied parameters.
+    /// </summary>
+    /// <param name="index">Zero-based numeric index of this <see cref="TaxPeriodBandwidthEntry"/> within its
+    /// <see cref="TaxPeriodBandwidthSet"/>.</param>
+    /// <param name="annualEntry">Corresponding annual tax bandwidth entry, i.e., <see cref="TaxBandwidthEntry"/>.</param>
+    /// <param name="payFrequency">Pay frequency for this TaxPeriodBandwidthEntry.</param>
+    /// <param name="taxPeriod">Tax period, e.g., 1-12 for monthly.</param>
+    /// <param name="periodEntryBelow"><see cref="TaxPeriodBandwidthEntry"/> immediately below this one, or null if this is the lowest band.</param>
+    public TaxPeriodBandwidthEntry(
+        int index,
+        TaxBandwidthEntry annualEntry,
+        PayFrequency payFrequency,
+        int taxPeriod,
         TaxPeriodBandwidthEntry? periodEntryBelow)
         : base(annualEntry)
     {
         EntryIndex = index;
-        PayFrequency = payFrequency;
-        TaxPeriod = taxPeriod;
 
         var payPeriodCount = payFrequency.GetStandardTaxPeriodCount();
 
