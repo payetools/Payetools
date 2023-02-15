@@ -18,15 +18,21 @@ namespace Paytools.IncomeTax.ReferenceData;
 
 public record TaxPeriodBandwidthEntry : TaxBandwidthEntry
 {
+    public int EntryIndex { get; init; }
     public PayFrequency PayFrequency { get; init; }
     public int TaxPeriod { get; init; }
     public decimal Period1CumulativeBandwidth { get; init; }
     public decimal Period1CumulativeTax { get; init; }
     public new TaxPeriodBandwidthEntry? BandWidthEntryBelow { get; init; }
 
-    public TaxPeriodBandwidthEntry(TaxBandwidthEntry annualEntry, PayFrequency payFrequency, int taxPeriod, TaxPeriodBandwidthEntry? periodEntryBelow)
+    public TaxPeriodBandwidthEntry(int index,
+        TaxBandwidthEntry annualEntry, 
+        PayFrequency payFrequency, 
+        int taxPeriod, 
+        TaxPeriodBandwidthEntry? periodEntryBelow)
         : base(annualEntry)
     {
+        EntryIndex = index;
         PayFrequency = payFrequency;
         TaxPeriod = taxPeriod;
 

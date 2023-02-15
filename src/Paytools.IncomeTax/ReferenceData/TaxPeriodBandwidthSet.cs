@@ -31,7 +31,7 @@ public record TaxPeriodBandwidthSet
         TaxBandwidthEntries = new TaxPeriodBandwidthEntry[annualEntries.Length];
 
         for (int index = 0; index < annualEntries.Length; index++)
-            TaxBandwidthEntries[index] = new TaxPeriodBandwidthEntry(annualEntries[index], payFrequency, taxPeriod,
+            TaxBandwidthEntries[index] = new TaxPeriodBandwidthEntry(index, annualEntries[index], payFrequency, taxPeriod,
                 index > 0 ? TaxBandwidthEntries[index - 1] : null);
     }
 }

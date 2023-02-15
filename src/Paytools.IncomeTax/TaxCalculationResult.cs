@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.ReferenceData;
+using Paytools.Common.Model;
 
 namespace Paytools.IncomeTax;
 
@@ -21,70 +21,37 @@ namespace Paytools.IncomeTax;
 /// </summary>
 public readonly struct TaxCalculationResult : ITaxCalculationResult
 {
-    //public PayDate PayDate { get; init; }
+    public ITaxCalculator Calculator { get; init; }
     public decimal TaxableSalary { get; init; }
     public TaxCode TaxCode { get; init; }
-    public decimal SalaryYearToDate { get; init; }
-    public decimal TaxPaidYearToDate { get; init; }
-    public int PayPeriodCount { get; init; }
+    public decimal PreviousSalaryYearToDate { get; init; }
+    public decimal PreviousTaxPaidYearToDate { get; init; }
     public decimal TaxUnpaidDueToRegulatoryLimit { get; init; }
     public decimal TaxDue { get; init; }
-    public TaxAtBand[] TaxAtEachBand { get; init; }
+    public int HighestApplicableTaxBandIndex { get; init; }
+    public decimal IncomeAtHighestApplicableBand { get; init; }
+    public decimal TaxAtHighestApplicableBand { get; init; }
 
-    public TaxCalculationResult(TaxBandwidthEntry? applicableEntry,
-        decimal incomeAtApplicableEntry,
-        decimal taxAtApplicableEntry,
-        decimal taxRateAtApplicableEntry,
-        //PayDate payDate,
+    public TaxCalculationResult(ITaxCalculator calculator,
+        int highestApplicableTaxBandIndex,
+        decimal incomeAtHighestApplicableBand,
+        decimal taxAtHighestApplicableBand,
         decimal taxableSalary,
         TaxCode taxCode,
-        decimal salaryYearToDate,
-        decimal taxPaidYearToDate,
-        int payPeriodCount,
+        decimal previousSalaryYearToDate,
+        decimal previousTaxPaidYearToDate,
         decimal taxUnpaidDueToRegulatoryLimit,
         decimal taxDue)
     {
-        //PayDate = payDate;
+        Calculator = calculator;
+        HighestApplicableTaxBandIndex = highestApplicableTaxBandIndex;
+        IncomeAtHighestApplicableBand = incomeAtHighestApplicableBand;
+        TaxAtHighestApplicableBand = taxAtHighestApplicableBand;
         TaxableSalary = taxableSalary;
         TaxCode = taxCode;
-        SalaryYearToDate = salaryYearToDate;
-        TaxPaidYearToDate = taxPaidYearToDate;
-        PayPeriodCount = payPeriodCount;
+        PreviousSalaryYearToDate = previousSalaryYearToDate;
+        PreviousTaxPaidYearToDate = previousTaxPaidYearToDate;
         TaxUnpaidDueToRegulatoryLimit = taxUnpaidDueToRegulatoryLimit;
         TaxDue = taxDue;
-
-        TaxAtEachBand = GetTaxBandSplit(applicableEntry, incomeAtApplicableEntry, taxAtApplicableEntry, taxRateAtApplicableEntry);
-    }
-
-    private static TaxAtBand[] GetTaxBandSplit(TaxBandwidthEntry? applicableEntry, decimal incomeAtApplicableEntry, decimal taxAtApplicableEntry, decimal taxRateAtApplicableEntry)
-    {
-        TaxAtBand[] result;
-
-        if (applicableEntry == null)
-        {
-            result = new TaxAtBand[1] { new TaxAtBand(taxRateAtApplicableEntry, incomeAtApplicableEntry, taxAtApplicableEntry) };
-        }
-        else
-        {
-            int bands = applicableEntry.GetApplicableBandCount();
-
-            result = new TaxAtBand[bands];
-
-            var bandwidthEntry = applicableEntry;
-
-            for (int index = bands - 1; index >= 0; index--)
-            {
-                if (bandwidthEntry == null)
-                    throw new InvalidOperationException("Unexpected null bandwidth entry detected when establishing tax band split");
-
-                result[index] = index == bands - 1 ?
-                    new TaxAtBand(taxRateAtApplicableEntry, incomeAtApplicableEntry, taxAtApplicableEntry) :
-                    new TaxAtBand(bandwidthEntry.Rate, bandwidthEntry.Bandwidth, bandwidthEntry.TaxForBand);
-
-                bandwidthEntry = bandwidthEntry.BandWidthEntryBelow;
-            }
-        }
-
-        return result;
     }
 }

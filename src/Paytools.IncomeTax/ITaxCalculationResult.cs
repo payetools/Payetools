@@ -21,13 +21,14 @@ namespace Paytools.IncomeTax;
 /// </summary>
 public interface ITaxCalculationResult
 {
-    //PayDate PayDate { get; }
+    ITaxCalculator Calculator { get; }
     TaxCode TaxCode { get; }
-    int PayPeriodCount { get; }
     decimal TaxableSalary { get; }
-    decimal SalaryYearToDate { get; }
-    decimal TaxPaidYearToDate { get; }
+    decimal PreviousSalaryYearToDate { get; }
+    decimal PreviousTaxPaidYearToDate { get; }
     decimal TaxUnpaidDueToRegulatoryLimit { get; }
     decimal TaxDue { get; }
-    public TaxAtBand[] TaxAtEachBand { get; init; }
+    int HighestApplicableTaxBandIndex { get; }
+    decimal IncomeAtHighestApplicableBand { get; }
+    decimal TaxAtHighestApplicableBand { get; }
 }
