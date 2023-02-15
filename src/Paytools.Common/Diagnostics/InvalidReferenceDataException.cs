@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -24,5 +24,7 @@ public class InvalidReferenceDataException : Exception
     /// </summary>
     /// <param name="message">Human-readable text providing further details on the exception.</param>
     public InvalidReferenceDataException(string message)
-        : base(message) { }
+        : base(message)
+    {
+    }
 }

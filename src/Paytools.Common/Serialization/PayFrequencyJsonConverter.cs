@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Paytools.Common.Model;
 
 namespace Paytools.Common.Serialization;
 
@@ -32,14 +32,14 @@ public class PayFrequencyJsonConverter : JsonConverter<PayFrequency>
     /// <param name="options">JSON serializer options (unused).</param>
     /// <returns><see cref="PayFrequency"/> value.</returns>
     public override PayFrequency Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-        Enum.Parse<PayFrequency>(reader.GetString() ?? String.Empty);
+        Enum.Parse<PayFrequency>(reader.GetString() ?? string.Empty);
 
     /// <summary>
     /// Writes a <see cref="PayFrequency"/> enum value, converted to its string equivalent, to the JSON stream.
     /// </summary>
     /// <param name="writer">JSON writer (UTF-8 format).</param>
-    /// <param name="payFrequency">Enum value to convert.</param>
+    /// <param name="value">Enum value to convert.</param>
     /// <param name="options">JSON serializer options (unused).</param>
-    public override void Write(Utf8JsonWriter writer, PayFrequency payFrequency, JsonSerializerOptions options) =>
-        writer.WriteStringValue(payFrequency.ToString());
+    public override void Write(Utf8JsonWriter writer, PayFrequency value, JsonSerializerOptions options) =>
+        writer.WriteStringValue(value.ToString());
 }

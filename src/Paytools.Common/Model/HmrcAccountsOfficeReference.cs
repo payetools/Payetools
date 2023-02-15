@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 namespace Paytools.Common.Model;
 
 /// <summary>
-/// Represents an HMRC Accounts Office Reference, as defined at 
+/// Represents an HMRC Accounts Office Reference, as defined at
 /// <see href="https://design.tax.service.gov.uk/hmrc-design-patterns/accounts-office-reference/"/>,
 /// which is formatted as follows:
 /// <list type="bullet">
@@ -34,20 +34,20 @@ public record HmrcAccountsOfficeReference
     private readonly string _accountsOfficeReference;
 
     /// <summary>
-    /// Operator for casting implicitly from a <see cref="HmrcAccountsOfficeReference"/> instance to its string equivalent. 
+    /// Operator for casting implicitly from a <see cref="HmrcAccountsOfficeReference"/> instance to its string equivalent.
     /// </summary>
     /// <param name="value">An instance of HmrcAccountsOfficeReference.</param>
     public static implicit operator string(HmrcAccountsOfficeReference value) => value.ToString();
 
     /// <summary>
-    /// Instantiates a new instance of <see cref="HmrcAccountsOfficeReference"/>.
+    /// Initialises a new instance of <see cref="HmrcAccountsOfficeReference"/>.
     /// </summary>
     /// <param name="accountsOfficeReference">String value containing the HMRC Accounts Office Reference.</param>
     /// <exception cref="ArgumentException">Thrown if the supplied string value does not match the required pattern
     /// for valid HMRC Accounts Office Reference values.</exception>
     public HmrcAccountsOfficeReference(string accountsOfficeReference)
     {
-        var aor = accountsOfficeReference.ToUpper();
+        var aor = accountsOfficeReference.ToUpperInvariant();
 
         if (!IsValid(aor))
             throw new ArgumentException("Argument is not a valid Accounts Office Reference", nameof(accountsOfficeReference));

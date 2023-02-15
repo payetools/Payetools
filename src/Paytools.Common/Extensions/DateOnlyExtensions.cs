@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -26,7 +26,7 @@ public static class DateOnlyExtensions
     /// time portion set to midday (12:00:00) UTC.  This is used to minimise the possibility of dates being misinterpreted
     /// as the next or previous day due to the use of non-UTC timezones.
     /// </summary>
-    /// <param name="date">DateOnly to convert to DateTime</param>
+    /// <param name="date">DateOnly to convert to DateTime.</param>
     /// <returns>DateTime instance with the same date as the supplied DateOnly and time portion set to 12:00:00 UTC.</returns>
     public static DateTime ToMiddayUtcDateTime(this DateOnly date) =>
         date.ToDateTime(new TimeOnly(12, 0), DateTimeKind.Utc);

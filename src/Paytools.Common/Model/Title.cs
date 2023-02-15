@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -17,7 +17,7 @@ namespace Paytools.Common.Model;
 /// <summary>
 /// Represents an individual's title (e.g., Mr., Mrs).
 /// </summary>
-/// <remarks>Some ideas on standardisation sourced from 
+/// <remarks>Some ideas on standardisation sourced from
 /// <see href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112942/Titles__V12_.pdf"/>.<br/><br/>
 /// As per general Government guidance, no attempt is made to deduce a person's gender from their title.
 /// </remarks>
@@ -46,16 +46,16 @@ public readonly struct Title
 
     private readonly string _title;
 
+    private Title(string title)
+    {
+        _title = title;
+    }
+
     /// <summary>
     /// Implicit cast from Title to string.
     /// </summary>
     /// <param name="title">Title to obtain the string representation of.</param>
     public static implicit operator string(Title title) => title.ToString();
-
-    private Title(string title)
-    {
-        _title = title;
-    }
 
     /// <summary>
     /// Inspects the supplied title and returns a new <see cref="Title"/> instance holding either the
@@ -64,13 +64,13 @@ public readonly struct Title
     /// </summary>
     /// <param name="title">Externally supplied string value for title.</param>
     /// <returns>Null if no title provided, a standardised title (e.g., "Mr") if a standardised title
-    /// is provided, or the supplied string otherwise, </returns>
+    /// is provided, or the supplied string otherwise.</returns>
     public static Title? Parse(string title)
     {
         if (string.IsNullOrWhiteSpace(title))
             return null;
 
-        if (_standardTitles.TryGetValue(title.ToLower(), out var standardTitle))
+        if (_standardTitles.TryGetValue(title.ToLowerInvariant(), out var standardTitle))
             return new Title(standardTitle);
 
         if (title.Length > 35)

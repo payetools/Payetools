@@ -30,6 +30,7 @@ public class TaxCalculator : ITaxCalculator
     internal struct InternalTaxCalculationResult
     {
         public decimal TaxableSalary { get; init;  }
+        public decimal TaxFreePayForPeriod {  get; init; }
         public decimal TaxDueBeforeRegulatoryLimit { get; init; }
         public decimal TaxDue { get; set; }
         public int HighestApplicableTaxBandIndex { get; init; }

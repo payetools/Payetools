@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Paytools.Common.Model;
 
 namespace Paytools.Common.Serialization;
 
@@ -40,8 +40,8 @@ public class CountriesForTaxPurposesJsonConverter : JsonConverter<CountriesForTa
     /// appropriate ISO-3166 space separated string format, e.g., "GB-ENG GB-WLS GB-NIR".
     /// </summary>
     /// <param name="writer">JSON writer (UTF-8 format).</param>
-    /// <param name="countriesForTaxPurposes">Enum value(s) to convert.</param>
+    /// <param name="value">Enum value(s) to convert.</param>
     /// <param name="options">JSON serializer options (unused).</param>
-    public override void Write(Utf8JsonWriter writer, CountriesForTaxPurposes countriesForTaxPurposes, JsonSerializerOptions options) =>
-        writer.WriteStringValue(CountriesForTaxPurposesConverter.ToString(countriesForTaxPurposes));
+    public override void Write(Utf8JsonWriter writer, CountriesForTaxPurposes value, JsonSerializerOptions options) =>
+        writer.WriteStringValue(CountriesForTaxPurposesConverter.ToString(value));
 }

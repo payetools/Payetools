@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -27,10 +27,13 @@ public enum CountriesForTaxPurposes
 {
     /// <summary>England</summary>
     England = 1,
+
     /// <summary>Northern Ireland</summary>
     NorthernIreland = 2,
+
     /// <summary>Scotland</summary>
     Scotland = 4,
+
     /// <summary>Wales</summary>
     Wales = 8
 }
@@ -40,10 +43,10 @@ public enum CountriesForTaxPurposes
 /// </summary>
 public static class CountriesForTaxPurposesConverter
 {
-    private const string _iso3166_England = "GB-ENG";
-    private const string _iso3166_NorthernIreland = "GB-NIR";
-    private const string _iso3166_Scotland = "GB-SCT";
-    private const string _iso3166_Wales = "GB-WLS";
+    private const string Iso3166_England = "GB-ENG";
+    private const string Iso3166_NorthernIreland = "GB-NIR";
+    private const string Iso3166_Scotland = "GB-SCT";
+    private const string Iso3166_Wales = "GB-WLS";
 
     /// <summary>
     /// Gets the ISO-3166 sub-entity for the supplied country or countries enum value.
@@ -55,22 +58,22 @@ public static class CountriesForTaxPurposesConverter
         var sb = new StringBuilder();
 
         if (countries.HasFlag(CountriesForTaxPurposes.England))
-            sb.Append($"{_iso3166_England} ");
+            sb.Append($"{Iso3166_England} ");
 
         if (countries.HasFlag(CountriesForTaxPurposes.NorthernIreland))
-            sb.Append($"{_iso3166_NorthernIreland} ");
+            sb.Append($"{Iso3166_NorthernIreland} ");
 
         if (countries.HasFlag(CountriesForTaxPurposes.Scotland))
-            sb.Append($"{_iso3166_Scotland} ");
+            sb.Append($"{Iso3166_Scotland} ");
 
         if (countries.HasFlag(CountriesForTaxPurposes.Wales))
-            sb.Append($"{_iso3166_Wales} ");
+            sb.Append($"{Iso3166_Wales} ");
 
         return sb.ToString().TrimEnd();
     }
 
     /// <summary>
-    /// Gets the <see cref="CountriesForTaxPurposes"/> enum value for the supplied country or space separated list of 
+    /// Gets the <see cref="CountriesForTaxPurposes"/> enum value for the supplied country or space separated list of
     /// ISO-3166 countries, e.g., "GB-ENG GB-NIR".
     /// </summary>
     /// <param name="iso3166Countries">Space separated list of ISO-3166 countries.</param>
@@ -78,7 +81,7 @@ public static class CountriesForTaxPurposesConverter
     /// <exception cref="ArgumentException">Thrown if an invalid country value is supplied.</exception>
     public static CountriesForTaxPurposes ToEnum(string? iso3166Countries)
     {
-        CountriesForTaxPurposes countries = new();
+        CountriesForTaxPurposes countries = 0;
 
         if (iso3166Countries != null)
         {
@@ -86,10 +89,10 @@ public static class CountriesForTaxPurposesConverter
 
             var selectedCountries = applicableCountries.Select(ac => ac switch
             {
-                _iso3166_England => CountriesForTaxPurposes.England,
-                _iso3166_NorthernIreland => CountriesForTaxPurposes.NorthernIreland,
-                _iso3166_Scotland => CountriesForTaxPurposes.Scotland,
-                _iso3166_Wales => CountriesForTaxPurposes.Wales,
+                Iso3166_England => CountriesForTaxPurposes.England,
+                Iso3166_NorthernIreland => CountriesForTaxPurposes.NorthernIreland,
+                Iso3166_Scotland => CountriesForTaxPurposes.Scotland,
+                Iso3166_Wales => CountriesForTaxPurposes.Wales,
                 _ => throw new ArgumentException($"Unrecognised country '{ac}'", nameof(iso3166Countries))
             });
 

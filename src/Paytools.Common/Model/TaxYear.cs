@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -25,21 +25,21 @@ namespace Paytools.Common.Model;
 /// to tax periods, based on payment frequency.</remarks>
 public record TaxYear
 {
-    private static readonly CountriesForTaxPurposes _defaultCountriesBefore6Apr2020 =
+    private static readonly CountriesForTaxPurposes DefaultCountriesBefore6Apr2020 =
         CountriesForTaxPurposes.England | CountriesForTaxPurposes.Wales | CountriesForTaxPurposes.NorthernIreland;
 
-    private static readonly CountriesForTaxPurposes _defaultCountriesFrom6Apr2020 =
+    private static readonly CountriesForTaxPurposes DefaultCountriesFrom6Apr2020 =
         CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland;
 
-    private static readonly CountriesForTaxPurposes[] _countriesForBefore6Apr2020 = new[]
+    private static readonly CountriesForTaxPurposes[] CountriesForBefore6Apr2020 = new[]
     {
-        _defaultCountriesBefore6Apr2020,
+        DefaultCountriesBefore6Apr2020,
         CountriesForTaxPurposes.Scotland
     };
 
-    private static readonly CountriesForTaxPurposes[] _countriesForFrom6Apr2020 = new[]
+    private static readonly CountriesForTaxPurposes[] CountriesForFrom6Apr2020 = new[]
     {
-        _defaultCountriesFrom6Apr2020,
+        DefaultCountriesFrom6Apr2020,
         CountriesForTaxPurposes.Wales,
         CountriesForTaxPurposes.Scotland
     };
@@ -62,10 +62,10 @@ public record TaxYear
     /// <summary>
     /// Gets the <see cref="TaxYearEnding"/> for the "current" tax year (based on today's date).
     /// </summary>
-    public static TaxYearEnding Current => (DateOnly.FromDateTime(DateTime.Now)).ToTaxYearEnding();
+    public static TaxYearEnding Current => DateOnly.FromDateTime(DateTime.Now).ToTaxYearEnding();
 
     /// <summary>
-    /// Instantiates a new instance of <see cref="TaxYear"/> based on the supplied <see cref="TaxYearEnding"/> value.
+    /// Initialises a new instance of <see cref="TaxYear"/> based on the supplied <see cref="TaxYearEnding"/> value.
     /// </summary>
     /// <param name="taxYearEnding">TaxYearEnding enum value for this tax year.</param>
     public TaxYear(TaxYearEnding taxYearEnding)
@@ -76,7 +76,7 @@ public record TaxYear
     }
 
     /// <summary>
-    /// Instantiates a new instance of <see cref="TaxYear"/> based on the supplied date.
+    /// Initialises a new instance of <see cref="TaxYear"/> based on the supplied date.
     /// </summary>
     /// <param name="taxDate">Date to create <see cref="TaxYear"/> for.</param>
     public TaxYear(DateOnly taxDate)
@@ -87,7 +87,7 @@ public record TaxYear
     /// <summary>
     /// Gets the list (as an array) of the country groupings that are applicable for a given tax year.
     /// </summary>
-    /// <returns>Array of <see cref="CountriesForTaxPurposes"/> values listing the tax regime groupings for this 
+    /// <returns>Array of <see cref="CountriesForTaxPurposes"/> values listing the tax regime groupings for this
     /// tax year.</returns>
     /// <exception cref="InvalidOperationException">Thrown if an invalid/unspecified tax year is provided.</exception>
     public CountriesForTaxPurposes[] GetCountriesForYear()
@@ -95,8 +95,8 @@ public record TaxYear
         return TaxYearEnding switch
         {
             TaxYearEnding.Unspecified => throw new InvalidOperationException("Unable to verify countries for unspecified tax year"),
-            TaxYearEnding.Apr5_2019 => _countriesForBefore6Apr2020,
-            _ => _countriesForFrom6Apr2020
+            TaxYearEnding.Apr5_2019 => CountriesForBefore6Apr2020,
+            _ => CountriesForFrom6Apr2020
         };
     }
 
@@ -143,7 +143,7 @@ public record TaxYear
                     PayFrequency.Weekly => 7,
                     PayFrequency.TwoWeekly => 14,
                     PayFrequency.FourWeekly => 28,
-                    _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(PayFrequency))
+                    _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
                 };
                 return (int)Math.Ceiling((float)dayNumber / dayCountPerPeriod);
         }
@@ -160,8 +160,8 @@ public record TaxYear
         return TaxYearEnding switch
         {
             TaxYearEnding.Unspecified => throw new InvalidOperationException("Unable to retrieve default countries for uninitialised tax year"),
-            TaxYearEnding.Apr5_2019 => _defaultCountriesBefore6Apr2020,
-            _ => _defaultCountriesFrom6Apr2020
+            TaxYearEnding.Apr5_2019 => DefaultCountriesBefore6Apr2020,
+            _ => DefaultCountriesFrom6Apr2020
         };
     }
 }

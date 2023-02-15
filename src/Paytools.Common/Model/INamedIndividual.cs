@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -48,12 +48,12 @@ public interface INamedIndividual
     string LastName { get; init; }
 
     /// <summary>
-    /// Helper property to indicate whether the individual has supplied a middle name.
+    /// Gets a value indicating whether the individual has supplied a middle name.
     /// </summary>
     bool HasMiddleName { get; init; }
 
     /// <summary>
-    /// Helper property to provide any initials provided as a space separated string.  Will be null if a <see cref="FirstName"/>
+    /// Gets any initials provided as a space separated string.  Will be null if a <see cref="FirstName"/>
     /// has been provided.
     /// </summary>
     string? InitialsAsString { get; init; }

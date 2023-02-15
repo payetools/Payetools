@@ -15,7 +15,7 @@
 namespace Paytools.Common.Model;
 
 /// <summary>
-/// Represents an individual either in employment, about to be employed, or previously but no longer employed. 
+/// Represents an individual either in employment, about to be employed, or previously but no longer employed.
 /// </summary>
 public interface IEmployableIndividual : INamedIndividual
 {

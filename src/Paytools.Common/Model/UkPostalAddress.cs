@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -19,21 +19,21 @@ namespace Paytools.Common.Model;
 /// </summary>
 public class UkPostalAddress
 {
-    /// <summary>First line of the address.</summary>
+    /// <summary>Gets or sets the first line of the address.</summary>
     public string AddressLine1 { get; set; } = null!;
 
-    /// <summary>Second line of the address.</summary>
+    /// <summary>Gets or sets the second line of the address.</summary>
     public string AddressLine2 { get; set; } = null!;
 
-    /// <summary>Third line of the address.</summary>
+    /// <summary>Gets or sets the third line of the address.</summary>
     public string? AddressLine3 { get; set; }
 
-    /// <summary>Fourth line of the address.</summary>
+    /// <summary>Gets or sets the fourth line of the address.</summary>
     public string? AddressLine4 { get; set; }
 
-    /// <summary>Postcode (UK addresses only).</summary>
+    /// <summary>Gets or sets the postcode (UK addresses only).</summary>
     public UkPostcode? Postcode { get; set; }
 
-    /// <summary>TBA.</summary>
+    /// <summary>Gets or sets the TBA.</summary>
     public string? ForeignCountry { get; set; }
 }

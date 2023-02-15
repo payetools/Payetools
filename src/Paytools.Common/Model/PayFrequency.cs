@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -21,33 +21,40 @@ public enum PayFrequency
 {
     /// <summary>Not specified</summary>
     Unspecified,
+
     /// <summary>Weekly</summary>
     Weekly,
+
     /// <summary>Every two weeks</summary>
     TwoWeekly,
+
     /// <summary>Every four weeks</summary>
     FourWeekly,
+
     /// <summary>Monthly</summary>
     Monthly,
+
     /// <summary>Every three months</summary>
     Quarterly,
+
     /// <summary>Every six months</summary>
     BiAnnually,
+
     /// <summary>Once a year</summary>
     Annually
 }
 
 /// <summary>
-/// 
+/// Extension methods for <see cref="PayFrequency"/>.
 /// </summary>
 public static class PayFrequencyExtensions
 {
     /// <summary>
-    /// 
+    /// Provides access to the number of tax periods within a tax year for a given <see cref="PayFrequency"/>.
     /// </summary>
-    /// <param name="payFrequency"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <param name="payFrequency">PayFrequency to provide period count for.</param>
+    /// <returns>The number of tax periods within a tax year for a this PayFrequency, for example, PayFrequency.Monthly returns 12.</returns>
+    /// <exception cref="ArgumentException">Thrown if an invalid PayFrequency value is supplied.</exception>
     public static int GetStandardTaxPeriodCount(this PayFrequency payFrequency)
     {
         return payFrequency switch

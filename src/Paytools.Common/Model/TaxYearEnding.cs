@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -22,20 +22,28 @@ public enum TaxYearEnding
 {
     /// <summary>No tax year specified</summary>
     Unspecified,
+
     /// <summary>2018-2019</summary>
     Apr5_2019 = 2019,
+
     /// <summary>2019-2020</summary>
     Apr5_2020 = 2020,
+
     /// <summary>2020-2021</summary>
     Apr5_2021 = 2021,
+
     /// <summary>2021-2022</summary>
     Apr5_2022 = 2022,
+
     /// <summary>2022-2023</summary>
     Apr5_2023 = 2023,
+
     /// <summary>2023-2024</summary>
     Apr5_2024 = 2024,
+
     /// <summary>Minimum value supported for TaxYearEnding</summary>
     MinValue = 2019,
+
     /// <summary>Maximum value supported for TaxYearEnding</summary>
     MaxValue = 2024
 }

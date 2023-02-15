@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -15,7 +15,7 @@
 namespace Paytools.Common.Model;
 
 /// <summary>
-/// 
+/// Represents a UK Postcode.
 /// </summary>
 public record UkPostcode
 {

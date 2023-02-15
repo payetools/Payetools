@@ -1,6 +1,6 @@
 ﻿// Copyright (c) 2023 Paytools Foundation
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License")~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -29,7 +29,6 @@ public readonly struct PayDate
     /// <summary>
     /// Gets the <see cref="TaxYear"/> for this <see cref="PayDate"/>.
     /// </summary>
-
     public TaxYear TaxYear { get; init; }
 
     /// <summary>
@@ -44,13 +43,7 @@ public readonly struct PayDate
     public PayFrequency PayFrequency { get; init; }
 
     /// <summary>
-    /// Gets the equivalent <see cref="DateTime"/> for this paydate, with the time portion set to midday (12:00:00) UTC.
-    /// </summary>
-    /// <param name="payDate"><see cref="PayDate"/> to get the DateTime for.</param>
-    public static implicit operator DateTime(PayDate payDate) => payDate.Date.ToMiddayUtcDateTime();
-
-    /// <summary>
-    /// Instantiates a new <see cref="PayDate"/> based on the supplied date and pay frequency.
+    /// Initialises a new <see cref="PayDate"/> based on the supplied date and pay frequency.
     /// </summary>
     /// <param name="date">Pay date.</param>
     /// <param name="payFrequency">Pay frequency.</param>
@@ -63,7 +56,7 @@ public readonly struct PayDate
     }
 
     /// <summary>
-    /// Instantiates a new <see cref="PayDate"/> based on the supplied date and pay frequency.
+    /// Initialises a new <see cref="PayDate"/> based on the supplied date and pay frequency.
     /// </summary>
     /// <param name="year">Year.</param>
     /// <param name="month">Month (1-12).</param>
@@ -73,4 +66,10 @@ public readonly struct PayDate
         : this(new DateOnly(year, month, day), payFrequency)
     {
     }
+
+    /// <summary>
+    /// Gets the equivalent <see cref="DateTime"/> for this paydate, with the time portion set to midday (12:00:00) UTC.
+    /// </summary>
+    /// <param name="payDate"><see cref="PayDate"/> to get the DateTime for.</param>
+    public static implicit operator DateTime(PayDate payDate) => payDate.Date.ToMiddayUtcDateTime();
 }
