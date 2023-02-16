@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
+using System.Collections.ObjectModel;
+
 namespace Paytools.NationalInsurance.ReferenceData;
 
 public interface INiReferenceDataProvider
 {
-    NiPeriodThresholdSet GetThresholdsForCategory(NiCategory niCategory);
+    NiPeriodThresholdSet GetPeriodThresholdsForTaxYearAndPeriod(TaxYear taxYear, int taxPeriod, PayFrequency payFrequency, int numberOfTaxPeriods);
 
-    INiCategoryRateEntry GetRatesForCategory(NiCategory niCategory);
+    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetRatesForTaxYearAndPeriod(TaxYear taxYear, int taxPeriod);
 }

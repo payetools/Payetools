@@ -18,7 +18,7 @@ using Paytools.IncomeTax.ReferenceData;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
-namespace Paytools.ReferenceData;
+namespace Paytools.ReferenceData.IncomeTax;
 
 public class TaxBandProvider : ITaxBandProvider
 {
@@ -48,14 +48,14 @@ public class TaxBandProvider : ITaxBandProvider
             .ToDictionary(e => e.ApplicableCountries, e => new TaxBandwidthSet(e.GetTaxBandwidthEntries())));
     }
 
-    public ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetBandsForTaxYear(TaxYear taxYear)
+    public ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetBandsForTaxYearAndPeriod(TaxYear taxYear, int period)
     {
         //int year = (int)taxYear.TaxYearEnding;
 
         return _taxBands;
     }
 
-    public static async Task<TaxBandProvider> GetTaxBandProvider(string url) 
+    public static async Task<TaxBandProvider> GetTaxBandProvider(string url)
     {
         using var client = new HttpClient();
 

@@ -14,36 +14,36 @@
 
 using Paytools.Common.Model;
 
-namespace Paytools.NationalInsurance;
+namespace Paytools.NationalInsurance.ReferenceData;
 
 public record NiPeriodThresholdEntry
 {
-    public NiThreshold Threshold { get; init; }
-    public PayFrequency PayFrequency { get; init; }
-    public int TaxPeriod { get; init; }
-    public decimal ThresholdForPeriod { get; init; }
-    public decimal ThresholdForPeriod1 { get; init; }
+    public NiThreshold Threshold { get; }
+    public PayFrequency PayFrequency { get; }
+    public int NumberOfTaxPeriods { get; }
+    public decimal ThresholdForPeriod { get; }
+    public decimal ThresholdForPeriod1 { get; }
 
-    public NiPeriodThresholdEntry(NiThresholdEntry baseEntry, PayFrequency payFrequency, int taxPeriod)
+    public NiPeriodThresholdEntry(INiThresholdEntry baseEntry, PayFrequency payFrequency, int numberOfTaxPeriods)
     {
         Threshold = baseEntry.Threshold;
         PayFrequency = payFrequency;
-        TaxPeriod = taxPeriod;
+        NumberOfTaxPeriods = numberOfTaxPeriods;
 
-        ///* This is what we might expect for obtaining the correct threshold for the period.  But HMRC guidance is that we
+        // * This is what we might expect for obtaining the correct threshold for the period.  But HMRC guidance is that we
         // * we must always use the annual figure divided by the number of periods in the tax year.
 
-        //ThresholdForPeriod = PayFrequency switch
-        //{
+        // ThresholdForPeriod = PayFrequency switch
+        // {
         //    PayFrequency.Weekly => baseEntry.ThresholdValuePerWeek * TaxPeriod,
         //    PayFrequency.TwoWeekly => baseEntry.ThresholdValuePerWeek * TaxPeriod * 2,
         //    PayFrequency.FourWeekly => baseEntry.ThresholdValuePerWeek * TaxPeriod * 4,
         //    PayFrequency.Monthly => baseEntry.ThresholdValuePerMonth * TaxPeriod,
         //    PayFrequency.Annually => baseEntry.ThresholdValuePerYear,
         //    _ => throw new ArgumentException("Unrecognised PayFrequency value", nameof(payFrequency))
-        //};
+        // };
 
-        var rawThresholdForPeriod = baseEntry.ThresholdValuePerYear / payFrequency.GetStandardTaxPeriodCount() * taxPeriod;
+        var rawThresholdForPeriod = baseEntry.ThresholdValuePerYear / payFrequency.GetStandardTaxPeriodCount() * numberOfTaxPeriods;
 
         // From HMRC documentation: 'p' = number of weeks/months in pay period. Round result of calculation at this point
         // up to nearest whole pound.

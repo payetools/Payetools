@@ -16,7 +16,16 @@ using Paytools.Common.Model;
 
 namespace Paytools.NationalInsurance;
 
+/// <summary>
+/// Interface that represents factories that can generate <see cref="INiCalculator"/> implementations.
+/// </summary>
+
 public interface INiCalculatorFactory
 {
-    INiCalculator GetCalculator(PayDate payDate, PayFrequency payFrequency);
+    /// <summary>
+    /// Gets an instance of an <see cref="INiCalculator"/> for the specified pay date.
+    /// </summary>
+    /// <param name="payDate">Pay date.</param>
+    /// <returns>Instance of <see cref="INiCalculator"/> for the specified tax regime and pay date.</returns>
+    INiCalculator GetCalculator(PayDate payDate, int numberOfTaxPeriods = 1);
 }

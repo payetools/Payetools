@@ -1,7 +1,7 @@
 ﻿namespace Paytools.NationalInsurance;
 
 /// <summary>
-/// Represents the set of National Insurance category letters assigned by HMRC.  Taken from 
+/// Represents the set of National Insurance category letters assigned by HMRC.  Taken from
 /// https://www.gov.uk/national-insurance-rates-letters/category-letters (retrieved 5-Dec-2022).
 /// </summary>
 public enum NiCategory
@@ -9,7 +9,7 @@ public enum NiCategory
     /// <summary>Not specified.</summary>
     Unspecified,
 
-    /// <summary>All employees apart from those in groups B, C, H, J, M, V and Z, and those that work in 
+    /// <summary>All employees apart from those in groups B, C, H, J, M, V and Z, and those that work in
     /// freeports (F, I, L and S) and those that are exempt (X).</summary>
     A,
 

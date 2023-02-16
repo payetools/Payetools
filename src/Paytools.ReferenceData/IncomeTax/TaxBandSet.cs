@@ -13,11 +13,12 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.IncomeTax;
 
-namespace Paytools.ReferenceData;
+namespace Paytools.ReferenceData.IncomeTax;
 
-public readonly struct PersonalAllowance
+public record TaxBandSet
 {
-    public PayFrequency PayFrequency { get; init; }
-    public decimal Value { get; init; }
+    public TaxYearEnding ApplicableTaxYearEnding { get; init; }
+    public IReadOnlyList<TaxYearEntry> TaxYearEntries { get; init; } = default!;
 }

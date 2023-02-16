@@ -57,7 +57,7 @@ public class TaxCalculatorFactory : ITaxCalculatorFactory
     /// tax regime and tax year combination.</exception>
     public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, int taxPeriod, PayFrequency payFrequency)
     {
-        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYear(taxYear);
+        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYearAndPeriod(taxYear, taxPeriod);
 
         if (!taxBandwidthSets.TryGetValue(applicableCountries, out var taxBandwidthSet))
             throw new InvalidReferenceDataException($"Unable to find unique tax bands for countries/tax year combination [{applicableCountries}] {taxYear}");

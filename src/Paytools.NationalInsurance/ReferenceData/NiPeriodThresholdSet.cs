@@ -14,21 +14,13 @@
 
 using Paytools.Common.Model;
 
-namespace Paytools.NationalInsurance;
+namespace Paytools.NationalInsurance.ReferenceData;
 
 public record NiPeriodThresholdSet
 {
     private readonly NiPeriodThresholdEntry[] _thresholdEntries;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entries"></param>
-    /// <param name="payFrequency"></param>
-    /// <param name="taxPeriod">Defaults to 1 for non-directors NI.</param>
-    /// <exception cref="ArgumentException"></exception>
-    public NiPeriodThresholdSet(List<NiThresholdEntry> entries,
-        PayFrequency payFrequency, int taxPeriod = 1)
+    public NiPeriodThresholdSet(List<INiThresholdEntry> entries, PayFrequency payFrequency, int numberOfTaxPeriods = 1)
     {
         int entryCount = (int)NiThreshold.Count;
 
@@ -39,7 +31,7 @@ public record NiPeriodThresholdSet
 
         for (int index = 0; index < entryCount; index++)
             _thresholdEntries[entries[index].Threshold.GetIndex()] = new NiPeriodThresholdEntry(entries[index],
-                payFrequency, taxPeriod);
+                payFrequency, numberOfTaxPeriods);
     }
 
     public decimal GetThreshold(NiThreshold threshold) =>

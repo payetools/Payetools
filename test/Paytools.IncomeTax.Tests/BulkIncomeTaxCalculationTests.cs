@@ -15,7 +15,7 @@
 using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.IncomeTax.Tests.TestData;
-using Paytools.ReferenceData;
+using Paytools.ReferenceData.IncomeTax;
 using System.Diagnostics;
 using Xunit.Abstractions;
 using Xunit.Sdk;

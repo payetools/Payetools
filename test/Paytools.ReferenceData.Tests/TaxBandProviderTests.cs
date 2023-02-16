@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.ReferenceData.IncomeTax;
 
 namespace Paytools.ReferenceData.Tests;
 
@@ -23,7 +24,7 @@ public class TaxBandProviderTests
     {
         TaxBandProvider provider = await TaxBandProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
-        var bands = provider.GetBandsForTaxYear(new TaxYear(TaxYearEnding.Apr5_2023));
+        var bands = provider.GetBandsForTaxYearAndPeriod(new TaxYear(TaxYearEnding.Apr5_2023),1);
 
         //var bandwidths = new TaxBandwidthSet(bands[Common.CountriesForTaxPurposes.England | Common.CountriesForTaxPurposes.NorthernIreland]);
 

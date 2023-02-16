@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Paytools.NationalInsurance.Extensions;
 
 namespace Paytools.NationalInsurance.Tests;
 

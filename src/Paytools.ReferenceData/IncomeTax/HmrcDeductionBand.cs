@@ -12,26 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.NationalInsurance;
+namespace Paytools.ReferenceData.IncomeTax;
 
-namespace Paytools.ReferenceData;
-
-public record NiCategoryRateSet
+public record HmrcDeductionBand
 {
-    private readonly Dictionary<NiCategory, NiCategoryRateEntry> _categories;
-
-    public NiCategoryRateSet()
-    {
-        _categories = new();
-    }
-
-    public NiCategoryRateEntry GetRatesForCategory(NiCategory category)
-    {
-        return _categories[category];
-    }
-
-    public void Add(NiCategory category, NiCategoryRateEntry rates)
-    {
-        _categories.TryAdd(category, rates);
-    }
+    public string Description { get; init; } = default!;
+    public decimal? From { get; init; }
+    public decimal? To { get; init; }
+    public decimal Rate { get; init; }
+    public bool IsBottomRate => From == null;
+    public bool IsTopRate => To == null;
 }

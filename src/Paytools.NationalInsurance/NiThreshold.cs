@@ -1,5 +1,8 @@
 ﻿namespace Paytools.NationalInsurance;
 
+/// <summary>
+/// Enum enumerating the various National Insurance threshold levels.
+/// </summary>
 public enum NiThreshold
 {
     /// <summary>Lower earnings limit</summary>

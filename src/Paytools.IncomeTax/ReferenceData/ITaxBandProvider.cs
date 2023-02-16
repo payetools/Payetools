@@ -27,8 +27,10 @@ public interface ITaxBandProvider
     /// keyed on tax regime, i.e., <see cref="CountriesForTaxPurposes"/>.
     /// </summary>
     /// <param name="taxYear">Desired tax year.</param>
+    /// <param name="taxPeriod">Tax period, e.g., 1 for month 1.  Currently ignored on the assumption that in-year
+    /// tax changes are not anticipated.</param>
     /// <returns>ReadOnlyDictionary of <see cref="TaxBandwidthSet"/>'s keyed on tax regime.</returns>
     /// <remarks>Although ReadOnlyDictionary is not guaranteed to be thread-safe, in the current implementation the
     /// underlying Dictionary is guaranteed not to change, so thread-safety can be assumed.</remarks>
-    ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetBandsForTaxYear(TaxYear taxYear);
+    ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetBandsForTaxYearAndPeriod(TaxYear taxYear, int taxPeriod);
 }

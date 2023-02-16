@@ -16,22 +16,54 @@ using System.Text;
 
 namespace Paytools.NationalInsurance;
 
+/// <summary>
+/// Represents a National Insurance calculation result.
+/// </summary>
+
 public readonly struct NiCalculationResult : INiCalculationResult
 {
-    private bool _noRecordingRequired { get; init; }
+    private static readonly NiCalculationResult _noRecordingRequiredResult = new NiCalculationResult() { NoRecordingRequiredIndicator = true };
 
-    private static readonly NiCalculationResult _noRecordingRequiredResult = new NiCalculationResult() { _noRecordingRequired = true };
-    
-    public NiEarningsBreakdown EarningsBreakdown { get; init; }
-    public decimal EmployeeContribution { get; init; }
-    public decimal EmployerContribution { get; init; }
-    public decimal TotalContribution { get; init; }
-    public bool NoRecordingRequiredIndicator => _noRecordingRequired;
+    /// <summary>
+    /// Gets the breakdown of earnings across each of the different National Insurance thresholds.
+    /// </summary>
+    public NiEarningsBreakdown EarningsBreakdown { get; }
 
+    /// <summary>
+    /// Gets the total employee contribution due as a result of this calculation.
+    /// </summary>
+    public decimal EmployeeContribution { get; }
+
+    /// <summary>
+    /// Gets the total employer contribution due as a result of this calculation.
+    /// </summary>
+    public decimal EmployerContribution { get; }
+
+    /// <summary>
+    /// Gets the total contribution due (employee + employer) as a result of this calculation.
+    /// </summary>
+    public decimal TotalContribution { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the results of this calculation need to be reported to HMRC.
+    /// </summary>
+    public bool NoRecordingRequiredIndicator { get; init;  }
+
+    /// <summary>
+    /// Gets a static value representing an empty result with the NoRecordingRequiredIndicator set to true.
+    /// </summary>
     public static NiCalculationResult NoRecordingRequired => _noRecordingRequiredResult;
 
-    public NiCalculationResult(NiEarningsBreakdown earningsBreakdown, 
-        decimal employeeContribution, 
+    /// <summary>
+    /// Initialises a new instance of <see cref="NiCalculationResult"/> with the supplied values.
+    /// </summary>
+    /// <param name="earningsBreakdown">Breakdown of earnings across each of the different National Insurance thresholds</param>
+    /// <param name="employeeContribution">Total employee contribution due as a result of this calculation.</param>
+    /// <param name="employerContribution">Total employer contribution due as a result of this calculation.</param>
+    /// <param name="totalContribution">Total contribution due (employee + employer) as a result of this calculation.</param>
+    public NiCalculationResult(
+        NiEarningsBreakdown earningsBreakdown,
+        decimal employeeContribution,
         decimal employerContribution,
         decimal? totalContribution = null)
     {
@@ -40,9 +72,13 @@ public readonly struct NiCalculationResult : INiCalculationResult
         EmployerContribution = employerContribution;
         TotalContribution = totalContribution.HasValue ? (decimal)totalContribution : employeeContribution + employerContribution;
 
-        _noRecordingRequired = false;
+        NoRecordingRequiredIndicator = false;
     }
 
+    /// <summary>
+    /// Gets the string representation of this calculation result.
+    /// </summary>
+    /// <returns>String representation of this calculation result.</returns>
     public override string ToString()
     {
         var sb = new StringBuilder();

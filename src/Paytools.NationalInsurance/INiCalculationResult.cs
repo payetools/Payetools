@@ -14,11 +14,33 @@
 
 namespace Paytools.NationalInsurance;
 
+/// <summary>
+/// Interface for types representing National Insurance calculation results.
+/// </summary>
 public interface INiCalculationResult
 {
+    /// <summary>
+    /// Gets the breakdown of earnings across each of the different National Insurance thresholds.
+    /// </summary>
     NiEarningsBreakdown EarningsBreakdown { get; }
+
+    /// <summary>
+    /// Gets the total employee contribution due as a result of this calculation.
+    /// </summary>
     decimal EmployeeContribution { get; }
+
+    /// <summary>
+    /// Gets the total employer contribution due as a result of this calculation.
+    /// </summary>
     decimal EmployerContribution { get; }
+
+    /// <summary>
+    /// Gets the total contribution due (employee + employer) as a result of this calculation.
+    /// </summary>
     decimal TotalContribution { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the results of this calculation need to be reported to HMRC.
+    /// </summary>
     bool NoRecordingRequiredIndicator { get; }
 }

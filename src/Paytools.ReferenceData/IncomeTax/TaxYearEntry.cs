@@ -16,7 +16,7 @@ using Paytools.Common.Model;
 using Paytools.IncomeTax.ReferenceData;
 using System.Collections.Immutable;
 
-namespace Paytools.ReferenceData;
+namespace Paytools.ReferenceData.IncomeTax;
 
 public class TaxYearEntry
 {

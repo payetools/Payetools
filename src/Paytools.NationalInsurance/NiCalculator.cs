@@ -14,9 +14,14 @@
 
 namespace Paytools.NationalInsurance;
 
+using Paytools.NationalInsurance.Extensions;
 using Paytools.NationalInsurance.ReferenceData;
+using System.Collections.ObjectModel;
 using static NiThreshold;
 
+/// <summary>
+/// Represents a National Insurance calculator that implements <see cref="INiCalculator"/>.
+/// </summary>
 public class NiCalculator : INiCalculator
 {
     private const int Step3 = 2;
@@ -24,29 +29,39 @@ public class NiCalculator : INiCalculator
     private const int Step5 = 4;
     private const int Step6 = 5;
 
-    private readonly INiReferenceDataProvider _referenceDataProvider;
+    private readonly ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> _niRateEntries;
+    private readonly NiPeriodThresholdSet _niPeriodThresholds;
 
-    private static readonly (NiThreshold, NiThreshold)[] _thresholdPairs =
-        { (LEL, ST), (ST, PT), (PT, FUST), (FUST, UEL) };
+    private static readonly (NiThreshold, NiThreshold)[] _thresholdPairs = { (LEL, ST), (ST, PT), (PT, FUST), (FUST, UEL) };
 
     public const int CalculationStepCount = 6;
 
-    public NiCalculator(INiReferenceDataProvider referenceDataProvider)
+    /// <summary>
+    /// Initialises a new <see cref="NiCalculator"/> with the supplied thresholds and rates for the period.
+    /// </summary>
+    /// <param name="niPeriodThresholds">NI threshold set for the tax period applicable to this NI calculator.</param>
+    /// <param name="niRateEntries">NI rates for the tax period applicable to this NI calculator.</param>
+    public NiCalculator(NiPeriodThresholdSet niPeriodThresholds, ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> niRateEntries)
     {
-        _referenceDataProvider = referenceDataProvider;
+        _niPeriodThresholds = niPeriodThresholds;
+        _niRateEntries = niRateEntries;
     }
 
-    public NiCalculationResult Calculate(decimal nicableEarningsInPeriod, NiCategory niCategory)
+    /// <summary>
+    /// Calculates the National Insurance contributions required for an employee for a given pay period,
+    /// based on their NI-able salary and their allocated National Insurance category letter.
+    /// </summary>
+    /// <param name="niCategory">National Insurance category.</param>
+    /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
+    /// <returns>NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</returns>
+    public INiCalculationResult Calculate(NiCategory niCategory, decimal nicableEarningsInPeriod)
     {
-        NiPeriodThresholdSet thresholds = _referenceDataProvider.GetThresholdsForCategory(niCategory) ??
-            throw new InvalidOperationException($"Unable to obtain National Insurance thresholds for category {niCategory}");
-
         decimal[] results = new decimal[CalculationStepCount];
 
         // Step 1: Earnings up to and including LEL. If answer is negative no NICs due and no recording required. If answer is zero
         // or positive record result and proceed to Step 2.
 
-        decimal threshold = thresholds.GetThreshold(LEL);
+        decimal threshold = _niPeriodThresholds.GetThreshold(LEL);
         decimal resultOfStep1 = nicableEarningsInPeriod - threshold;
 
         if (resultOfStep1 < 0.0m)
@@ -67,7 +82,7 @@ public class NiCalculator : INiCalculator
 
         for (int stepIndex = 0; stepIndex < _thresholdPairs.Length; stepIndex++)
         {
-            decimal upperThreshold = thresholds.GetThreshold1(_thresholdPairs[stepIndex].Item2);
+            decimal upperThreshold = _niPeriodThresholds.GetThreshold1(_thresholdPairs[stepIndex].Item2);
             decimal earningsAboveUpperThreshold = Math.Max(0.0m, nicableEarningsInPeriod - upperThreshold);
 
             decimal resultOfStep = previousEarningsAboveThreshold - earningsAboveUpperThreshold;
@@ -81,25 +96,33 @@ public class NiCalculator : INiCalculator
 
         // Step 6: Earnings above UEL. If answer is zero or negative no earnings above UEL.
 
-        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsInPeriod - thresholds.GetThreshold1(UEL));
+        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsInPeriod - _niPeriodThresholds.GetThreshold1(UEL));
 
         // Step 7: Calculate employee NICs
         // Step 8: Calculate employer NICs
 
-        INiCategoryRateEntry rates = _referenceDataProvider.GetRatesForCategory(niCategory) ??
+        if (!_niRateEntries.TryGetValue(niCategory, out var rates))
             throw new InvalidOperationException($"Unable to obtain National Insurance rates for category {niCategory}");
 
-        return new NiCalculationResult(GetNiEarningsBreakdownFromCalculationResults(results),
+        return new NiCalculationResult(
+            GetNiEarningsBreakdownFromCalculationResults(results),
             CalculateEmployeesNi(rates, results),
             CalculateEmployersNi(rates, results));
     }
 
-    public NiCalculationResult CalculateDirectors(decimal nicableSalaryInPeriod, NiCategory niCategory)
+    /// <summary>
+    /// Calculates the National Insurance contributions required for a company director for a given pay period,
+    /// based on their NI-able salary and their allocated National Insurance category letter.
+    /// </summary>
+    /// <param name="niCategory">National Insurance category.</param>
+    /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
+    /// <returns>NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</returns>
+    public INiCalculationResult CalculateDirectors(NiCategory niCategory, decimal nicableEarningsInPeriod)
     {
         throw new NotImplementedException();
     }
 
-    private decimal CalculateEmployeesNi(INiCategoryRateEntry rates, decimal[] calculationStepResults)
+    private static decimal CalculateEmployeesNi(INiCategoryRatesEntry rates, decimal[] calculationStepResults)
     {
         if (calculationStepResults.Length != CalculationStepCount)
             throw new InvalidOperationException($"Unexpected number of calculation step results; should be {NiCalculator.CalculationStepCount}, was {calculationStepResults.Length}");
@@ -110,7 +133,7 @@ public class NiCalculator : INiCalculator
             .NiRound();
     }
 
-    private decimal CalculateEmployersNi(INiCategoryRateEntry rates, decimal[] calculationStepResults)
+    private static decimal CalculateEmployersNi(INiCategoryRatesEntry rates, decimal[] calculationStepResults)
     {
         if (calculationStepResults.Length != CalculationStepCount)
             throw new InvalidOperationException($"Unexpected number of calculation step results; should be {NiCalculator.CalculationStepCount}, was {calculationStepResults.Length}");
@@ -122,8 +145,8 @@ public class NiCalculator : INiCalculator
         // PLUS
         // Step 6 multiplied by employer’s band F % rate(round).
 
-        return ((calculationStepResults[Step3] + calculationStepResults[Step4]) * rates.EmployerRateSTtoFUST +
-            calculationStepResults[Step5] * rates.EmployerRateFUSTtoUEL)
+        return (((calculationStepResults[Step3] + calculationStepResults[Step4]) * rates.EmployerRateSTtoFUST) +
+            (calculationStepResults[Step5] * rates.EmployerRateFUSTtoUEL))
             .NiRound() +
             (calculationStepResults[Step6] * rates.EmployerRateAboveUEL)
             .NiRound();
