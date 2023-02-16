@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+	<ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Paytools.Common\Paytools.Common.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Db\Paytools.Testing.Data.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

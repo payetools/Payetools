@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Paytools.Common\Paytools.Common.csproj" />
     <ProjectReference Include="..\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
+    <ProjectReference Include="..\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />
   </ItemGroup>
 
 </Project>
