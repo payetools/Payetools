@@ -19,7 +19,6 @@ namespace Paytools.NationalInsurance;
 /// <summary>
 /// Represents a National Insurance calculation result.
 /// </summary>
-
 public readonly struct NiCalculationResult : INiCalculationResult
 {
     private static readonly NiCalculationResult _noRecordingRequiredResult = new NiCalculationResult() { NoRecordingRequiredIndicator = true };
@@ -57,7 +56,7 @@ public readonly struct NiCalculationResult : INiCalculationResult
     /// <summary>
     /// Initialises a new instance of <see cref="NiCalculationResult"/> with the supplied values.
     /// </summary>
-    /// <param name="earningsBreakdown">Breakdown of earnings across each of the different National Insurance thresholds</param>
+    /// <param name="earningsBreakdown">Breakdown of earnings across each of the different National Insurance thresholds.</param>
     /// <param name="employeeContribution">Total employee contribution due as a result of this calculation.</param>
     /// <param name="employerContribution">Total employer contribution due as a result of this calculation.</param>
     /// <param name="totalContribution">Total contribution due (employee + employer) as a result of this calculation.</param>

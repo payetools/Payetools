@@ -47,8 +47,17 @@ public enum NiThresholdType
     Count = 8
 }
 
+/// <summary>
+/// Extension methods for instances of <see cref="NiThresholdType"/>.
+/// </summary>
 public static class NationalInsuranceThresholdExtensions
 {
+    /// <summary>
+    /// Gets the zero-based index of the supplied <see cref="NiThresholdType"/>.  Used when retrieving thresholds from arrays or lists
+    /// who elements are ordered the same as this enum.
+    /// </summary>
+    /// <param name="threshold"><see cref="NiThresholdType"/> value.</param>
+    /// <returns>Zero-based index of this NiThresholdType.</returns>
     public static int GetIndex(this NiThresholdType threshold) =>
         (int)threshold;
 }

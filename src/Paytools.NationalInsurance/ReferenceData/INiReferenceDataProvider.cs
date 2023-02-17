@@ -17,10 +17,32 @@ using System.Collections.ObjectModel;
 
 namespace Paytools.NationalInsurance.ReferenceData;
 
+/// <summary>
+/// Interface that classes implement in order to provide access to National Insurance reference data, i.e.,
+/// rates and thresholds.
+/// </summary>
 public interface INiReferenceDataProvider
 {
+    /// <summary>
+    /// Gets the NI thresholds for the specified tax year and tax period, as denoted by the supplied pay frequency
+    /// and pay period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>An instance of <see cref="INiThresholdSet"/> containing the thresholds for the specified point
+    /// in time.</returns>
     INiThresholdSet GetThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 
+    /// <summary>
+    /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
+    /// for a given tax year and tax period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
+    /// the specified point in time.</returns>
     ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetRatesForTaxYearAndPeriod(
         TaxYear taxYear,
         PayFrequency payFrequency,
