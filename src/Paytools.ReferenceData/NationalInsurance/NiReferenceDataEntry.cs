@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.NationalInsurance;
-using Paytools.NationalInsurance.ReferenceData;
-using System.Text.Json.Serialization;
-
 namespace Paytools.ReferenceData.NationalInsurance;
 
-public record NiThresholdEntry : INiThresholdEntry
+/// <summary>
+/// Represents a set of tax bands for a given tax regime for a period, typically a full tax year. 
+/// </summary>
+public class NiReferenceDataEntry : IApplicableBetween
 {
-    [JsonPropertyName("thresholdName")]
-    public NiThresholdType ThresholdType { get; init; }
+    /// <summary>
+    /// Gets the start date (i.e., the first full day) for applicability.
+    /// </summary>
+    public DateOnly ApplicableFrom { get; init; }
 
-    [JsonPropertyName("perWeek")]
-    public decimal ThresholdValuePerWeek { get; init; }
+    /// <summary>
+    /// Gets the end date (i.e., the last full day) for applicability.
+    /// </summary>
+    public DateOnly ApplicableTill { get; init; }
 
-    [JsonPropertyName("perMonth")]
-    public decimal ThresholdValuePerMonth { get; init; }
-
-    [JsonPropertyName("perYear")]
-    public decimal ThresholdValuePerYear { get; init; }
+    /// <summary>
+    /// Gets a read-only list of applicable tax bands.
+    /// </summary>
+    public IReadOnlyList<NiThresholdEntry> NiThresholds { get; init; } = default!;
 }

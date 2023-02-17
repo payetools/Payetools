@@ -38,7 +38,7 @@ public class BulkIncomeTaxCalculationTests
     public async Task RunTests()
     {
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
-        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
+        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxReferenceDataProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
         var taxCalculatorFactory = new TaxCalculatorFactory(provider);
         var tests = IncomeTaxTestDataLoader.Load();

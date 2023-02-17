@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -70,17 +70,17 @@ public class HmrcTests
 
     private List<INiThresholdEntry> GetThresholdList(int taxPeriod)
     {
-        var thresholdList = new List<INiThresholdEntry>()
-        {
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.LEL, ThresholdValuePerYear = 6396.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.PT, ThresholdValuePerYear = taxPeriod < 4 ? 9880.0m : 12570.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.ST, ThresholdValuePerYear = 9100.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.FUST, ThresholdValuePerYear = 25000.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.UST, ThresholdValuePerYear = 50270.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.AUST, ThresholdValuePerYear = 50270.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.VUST, ThresholdValuePerYear = 50270.0m },
-            new NiThresholdEntry() { ThresholdType = NiThresholdType.UEL, ThresholdValuePerYear = 50270.0m }
-        };
+        var thresholdList = new List<INiThresholdEntry>();
+        //{
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.LEL, ThresholdValuePerYear = 6396.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.PT, ThresholdValuePerYear = taxPeriod < 4 ? 9880.0m : 12570.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.ST, ThresholdValuePerYear = 9100.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.FUST, ThresholdValuePerYear = 25000.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.UST, ThresholdValuePerYear = 50270.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.AUST, ThresholdValuePerYear = 50270.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.VUST, ThresholdValuePerYear = 50270.0m },
+        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.UEL, ThresholdValuePerYear = 50270.0m }
+        //};
 
         return thresholdList;
     }

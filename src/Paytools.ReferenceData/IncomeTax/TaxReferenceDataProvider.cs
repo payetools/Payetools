@@ -26,26 +26,26 @@ public class TaxReferenceDataProvider : ITaxReferenceDataProvider
 
     private TaxReferenceDataProvider(Stream jsonContent)
     {
-        int year = 0;
+        //int year = 0;
 
 
-        var taxBands = JsonSerializer.Deserialize<TaxBandSet>(jsonContent, new JsonSerializerOptions()
-        {
-            // See https://github.com/dotnet/runtime/issues/31081 on why we can't just use JsonStringEnumConverter
-            Converters =
-            {
-                new PayFrequencyJsonConverter(),
-                new CountriesForTaxPurposesJsonConverter(),
-                new TaxYearEndingJsonConverter()
-            },
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
+        //var taxBands = JsonSerializer.Deserialize<TaxBandSet>(jsonContent, new JsonSerializerOptions()
+        //{
+        //    // See https://github.com/dotnet/runtime/issues/31081 on why we can't just use JsonStringEnumConverter
+        //    Converters =
+        //    {
+        //        new PayFrequencyJsonConverter(),
+        //        new CountriesForTaxPurposesJsonConverter(),
+        //        new TaxYearEndingJsonConverter()
+        //    },
+        //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        //});
 
-        if (taxBands == null || taxBands.TaxYearEntries == null)
-            throw new ArgumentException($"Unable to retrieve tax band(s) for tax year ending 5 April {year} from stream", nameof(jsonContent));
+        //if (taxBands == null || taxBands.TaxYearEntries == null)
+        //    throw new ArgumentException($"Unable to retrieve tax band(s) for tax year ending 5 April {year} from stream", nameof(jsonContent));
 
-        _taxBands = new ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet>(taxBands.TaxYearEntries
-            .ToDictionary(e => e.ApplicableCountries, e => new TaxBandwidthSet(e.GetTaxBandwidthEntries())));
+        //_taxBands = new ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet>(taxBands.TaxYearEntries
+        //    .ToDictionary(e => e.ApplicableCountries, e => new TaxBandwidthSet(e.GetTaxBandwidthEntries())));
     }
 
 
@@ -66,7 +66,7 @@ public class TaxReferenceDataProvider : ITaxReferenceDataProvider
         return _taxBands;
     }
 
-    public static async Task<TaxReferenceDataProvider> GetTaxBandProvider(string url)
+    public static async Task<TaxReferenceDataProvider> GetTaxReferenceDataProvider(string url)
     {
         using var client = new HttpClient();
 

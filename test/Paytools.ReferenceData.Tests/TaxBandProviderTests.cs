@@ -13,16 +13,30 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.Common.Serialization;
 using Paytools.ReferenceData.IncomeTax;
+using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace Paytools.ReferenceData.Tests;
 
 public class TaxBandProviderTests
 {
     [Fact]
+    public void LoadTestData()
+    {
+        var testDataPath = @"C:\Users\Paytools.HUSKY-DT-30\Source\repos\paytools-fdn\reference-data\hmrc2.json";
+
+        var jsonContent = File.OpenRead(testDataPath);
+
+        var referenceData = HmrcTaxYearReferenceDataSet.Load(jsonContent);
+
+    }
+
+    [Fact]
     public async Task InitialiseTest()
     {
-        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
+        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxReferenceDataProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
         var bands = provider.GetBandsForTaxYearAndPeriod(new TaxYear(TaxYearEnding.Apr5_2023), PayFrequency.Monthly, 1);
 

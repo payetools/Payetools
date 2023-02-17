@@ -12,12 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
+namespace Paytools.ReferenceData;
 
-namespace Paytools.ReferenceData.IncomeTax;
-
-public record TaxBandSet
+/// <summary>
+/// Interface for reference data that indicates the period that a reference data applies for.
+/// </summary>
+public interface IApplicableBetween
 {
-    public TaxYearEnding ApplicableTaxYearEnding { get; init; }
-    public IReadOnlyList<TaxYearEntry> TaxYearEntries { get; init; } = default!;
+    /// <summary>
+    /// Gets the start date (i.e., the first full day) for applicability.
+    /// </summary>
+    public DateOnly ApplicableFrom { get; }
+
+    /// <summary>
+    /// Gets the end date (i.e., the last full day) for applicability.
+    /// </summary>
+    public DateOnly ApplicableTill { get; }
 }

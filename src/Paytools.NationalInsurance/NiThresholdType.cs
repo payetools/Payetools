@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Runtime.Intrinsics.Arm;
+
 namespace Paytools.NationalInsurance;
 
 /// <summary>
@@ -19,32 +21,35 @@ namespace Paytools.NationalInsurance;
 /// </summary>
 public enum NiThresholdType
 {
-    /// <summary>Lower earnings limit</summary>
+    /// <summary>Lower Earnings Limit</summary>
     LEL,
 
-    /// <summary>Primary threshold</summary>
+    /// <summary>Primary Threshold</summary>
     PT,
 
-    /// <summary>Secondary threshold</summary>
+    /// <summary>Secondary Threshold</summary>
     ST,
 
-    /// <summary>Freeport upper secondary threshold</summary>
+    /// <summary>Freeport Upper Secondary Threshold</summary>
     FUST,
 
-    /// <summary>Upper secondary threshold</summary>
+    /// <summary>Upper Secondary Threshold</summary>
     UST,
 
-    /// <summary>Apprentice upper secondary threshold</summary>
+    /// <summary>Apprentice Upper Secondary Threshold</summary>
     AUST,
 
-    /// <summary>Veterans upper secondary threshold</summary>
+    /// <summary>Veterans Upper Secondary Threshold</summary>
     VUST,
 
-    /// <summary>Upper earnings limit</summary>
+    /// <summary>Upper Earnings Limit</summary>
     UEL,
 
+    /// <summary>Directors Primary Threshold (if applicable)</summary>
+    DPT,
+
     /// <summary>Number of elements in enum</summary>
-    Count = 8
+    Count = 9
 }
 
 /// <summary>
@@ -60,4 +65,25 @@ public static class NationalInsuranceThresholdExtensions
     /// <returns>Zero-based index of this NiThresholdType.</returns>
     public static int GetIndex(this NiThresholdType threshold) =>
         (int)threshold;
+
+    /// <summary>
+    /// Gets the full name of the threshold as a string.
+    /// </summary>
+    /// <param name="thresholdType"><see cref="NiThresholdType"/> value.</param>
+    /// <returns>Full name of the threshold as a string, e.g., "Lower Earnings Limit".</returns>
+    /// <exception cref="ArgumentException">Thrown if the NiThresholdType value supplied is unrecognised.</exception>
+    public static string GetFullName(this NiThresholdType thresholdType) =>
+        thresholdType switch
+        {
+            NiThresholdType.LEL => "Lower Earnings Limit",
+            NiThresholdType.PT => "Primary Threshold",
+            NiThresholdType.ST => "Secondary Threshold",
+            NiThresholdType.FUST => "Freeport Upper Secondary Threshold",
+            NiThresholdType.UST => "Upper Secondary Threshold",
+            NiThresholdType.AUST => "Apprentice Upper Secondary Threshold",
+            NiThresholdType.VUST => "Veterans Upper Secondary Threshold",
+            NiThresholdType.UEL => "Upper Earnings Limit",
+            NiThresholdType.DPT => "Directors Primary Threshold",
+            _ => throw new ArgumentException("Unrecognised NiThresholdType value", nameof(thresholdType))
+        };
 }

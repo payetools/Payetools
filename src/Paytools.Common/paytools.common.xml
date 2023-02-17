@@ -672,6 +672,28 @@
             <param name="value">Enum value(s) to convert.</param>
             <param name="options">JSON serializer options (unused).</param>
         </member>
+        <member name="T:Paytools.Common.Serialization.DateOnlyJsonConverter">
+            <summary>
+            JSON Converter for instances of <see cref="T:System.DateOnly"/> types.
+            </summary>
+        </member>
+        <member name="M:Paytools.Common.Serialization.DateOnlyJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            Reads an ISO 8601 format date in string format and converts to the appropriate <see cref="T:System.DateOnly"/> value.
+            </summary>
+            <param name="reader">JSON reader (UTF-8 format).</param>
+            <param name="typeToConvert">Type to convert (unused).</param>
+            <param name="options">JSON serializer options (unused).</param>
+            <returns><see cref="T:System.DateOnly"/> value.</returns>
+        </member>
+        <member name="M:Paytools.Common.Serialization.DateOnlyJsonConverter.Write(System.Text.Json.Utf8JsonWriter,System.DateOnly,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            Writes a <see cref="T:System.DateOnly"/> value to the JSON stream in ISO 8601 format date in string format.
+            </summary>
+            <param name="writer">JSON writer (UTF-8 format).</param>
+            <param name="value">DateOnly value to convert.</param>
+            <param name="options">JSON serializer options (unused).</param>
+        </member>
         <member name="T:Paytools.Common.Serialization.PayFrequencyJsonConverter">
             <summary>
             JSON Converter for the <see cref="T:Paytools.Common.Model.PayFrequency"/> enumeration.

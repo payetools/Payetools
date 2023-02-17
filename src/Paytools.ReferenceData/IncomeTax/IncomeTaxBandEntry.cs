@@ -18,7 +18,7 @@ using System.Collections.Immutable;
 
 namespace Paytools.ReferenceData.IncomeTax;
 
-public class TaxYearEntry
+public class IncomeTaxBandEntry
 {
     public CountriesForTaxPurposes ApplicableCountries { get; init; }
     public ImmutableArray<PersonalAllowance> PersonalAllowances { get; init; } = ImmutableArray<PersonalAllowance>.Empty;
