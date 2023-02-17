@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -20,23 +20,22 @@ public record NiPeriodThresholdSet
 {
     private readonly NiPeriodThresholdEntry[] _thresholdEntries;
 
-    public NiPeriodThresholdSet(List<INiThresholdEntry> entries, PayFrequency payFrequency, int numberOfTaxPeriods = 1)
+    public NiPeriodThresholdSet(INiThresholdSet entries, PayFrequency payFrequency, int numberOfTaxPeriods = 1)
     {
-        int entryCount = (int)NiThreshold.Count;
-
-        if (entries.Count != entryCount)
-            throw new ArgumentException($"Expected {entryCount} threshold entries but only {entries.Count} supplied in input list", nameof(entries));
+        int entryCount = entries.Count;
 
         _thresholdEntries = new NiPeriodThresholdEntry[entryCount];
 
         for (int index = 0; index < entryCount; index++)
-            _thresholdEntries[entries[index].Threshold.GetIndex()] = new NiPeriodThresholdEntry(entries[index],
-                payFrequency, numberOfTaxPeriods);
+        {
+            _thresholdEntries[entries[index].ThresholdType.GetIndex()] =
+                new NiPeriodThresholdEntry(entries[index], payFrequency, numberOfTaxPeriods);
+        }
     }
 
-    public decimal GetThreshold(NiThreshold threshold) =>
+    public decimal GetThreshold(NiThresholdType threshold) =>
         _thresholdEntries[threshold.GetIndex()].ThresholdForPeriod;
 
-    public decimal GetThreshold1(NiThreshold threshold) =>
+    public decimal GetThreshold1(NiThresholdType threshold) =>
         _thresholdEntries[threshold.GetIndex()].ThresholdForPeriod1;
 }

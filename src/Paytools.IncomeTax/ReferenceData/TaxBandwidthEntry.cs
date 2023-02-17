@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -23,7 +23,7 @@ public record TaxBandwidthEntry
     /// <summary>
     /// Gets the descriptive text associated with this TaxBandwidthEntry.
     /// </summary>
-    public string Description { get;  }
+    public string Description { get; }
 
     /// <summary>
     /// Gets the bandwidth of this TaxBandwidthEntry, i.e., the upper threshold less any lower threshold.

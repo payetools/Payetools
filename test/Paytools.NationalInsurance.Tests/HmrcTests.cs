@@ -49,7 +49,7 @@ public class HmrcTests
             var taxYear = new TaxYear(test.TaxYearEnding);
 
             var factory = new NiCalculatorFactory(provider);
-            var calculator = factory.GetCalculator(taxYear, test.Period, test.PayFrequency);
+            var calculator = factory.GetCalculator(taxYear, test.PayFrequency, test.Period);
 
             var result1 = calculator.Calculate(NiCategory.A, test.GrossPay);
 
@@ -65,21 +65,21 @@ public class HmrcTests
     private INiReferenceDataProvider GetProvider(List<INiThresholdEntry> thresholds,
         NiCategoryRateSet ratesByCategory)
     {
-        return new NiReferenceDataProvider(thresholds, ratesByCategory);
+        return new NiReferenceDataProvider(new NiThresholdSet(thresholds), ratesByCategory);
     }
 
     private List<INiThresholdEntry> GetThresholdList(int taxPeriod)
     {
         var thresholdList = new List<INiThresholdEntry>()
         {
-            new NiThresholdEntry() { Threshold = NiThreshold.LEL, ThresholdValuePerYear = 6396.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.PT, ThresholdValuePerYear = taxPeriod < 4 ? 9880.0m : 12570.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.ST, ThresholdValuePerYear = 9100.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.FUST, ThresholdValuePerYear = 25000.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.UST, ThresholdValuePerYear = 50270.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.AUST, ThresholdValuePerYear = 50270.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.VUST, ThresholdValuePerYear = 50270.0m },
-            new NiThresholdEntry() { Threshold = NiThreshold.UEL, ThresholdValuePerYear = 50270.0m }
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.LEL, ThresholdValuePerYear = 6396.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.PT, ThresholdValuePerYear = taxPeriod < 4 ? 9880.0m : 12570.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.ST, ThresholdValuePerYear = 9100.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.FUST, ThresholdValuePerYear = 25000.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.UST, ThresholdValuePerYear = 50270.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.AUST, ThresholdValuePerYear = 50270.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.VUST, ThresholdValuePerYear = 50270.0m },
+            new NiThresholdEntry() { ThresholdType = NiThresholdType.UEL, ThresholdValuePerYear = 50270.0m }
         };
 
         return thresholdList;

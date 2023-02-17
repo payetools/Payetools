@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -19,7 +19,7 @@ namespace Paytools.ReferenceData.NationalInsurance;
 
 public record NiThresholdEntry : INiThresholdEntry
 {
-    public NiThreshold Threshold { get; init; }
+    public NiThresholdType ThresholdType { get; init; }
     public decimal ThresholdValuePerWeek { get; init; }
     public decimal ThresholdValuePerMonth { get; init; }
     public decimal ThresholdValuePerYear { get; init; }

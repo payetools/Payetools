@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -19,13 +19,13 @@ namespace Paytools.NationalInsurance;
 /// <summary>
 /// Interface that represents factories that can generate <see cref="INiCalculator"/> implementations.
 /// </summary>
-
 public interface INiCalculatorFactory
 {
     /// <summary>
     /// Gets an instance of an <see cref="INiCalculator"/> for the specified pay date.
     /// </summary>
     /// <param name="payDate">Pay date.</param>
+    /// <param name="numberOfTaxPeriods">Number of tax periods be applied by calculator.  Defaults to 1.</param>
     /// <returns>Instance of <see cref="INiCalculator"/> for the specified tax regime and pay date.</returns>
     INiCalculator GetCalculator(PayDate payDate, int numberOfTaxPeriods = 1);
 }

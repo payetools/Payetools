@@ -22,9 +22,9 @@ public class TaxBandProviderTests
     [Fact]
     public async Task InitialiseTest()
     {
-        TaxBandProvider provider = await TaxBandProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
+        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxBandProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
-        var bands = provider.GetBandsForTaxYearAndPeriod(new TaxYear(TaxYearEnding.Apr5_2023),1);
+        var bands = provider.GetBandsForTaxYearAndPeriod(new TaxYear(TaxYearEnding.Apr5_2023), PayFrequency.Monthly, 1);
 
         //var bandwidths = new TaxBandwidthSet(bands[Common.CountriesForTaxPurposes.England | Common.CountriesForTaxPurposes.NorthernIreland]);
 

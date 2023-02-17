@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -22,40 +22,24 @@ namespace Paytools.ReferenceData.NationalInsurance;
 public class NiReferenceDataProvider : INiReferenceDataProvider
 {
     private readonly ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> _ratesByCategory;
-    private readonly List<INiThresholdEntry> _thresholds;
+    private readonly INiThresholdSet _thresholds;
 
-    public NiReferenceDataProvider(List<INiThresholdEntry> thresholds,
-        NiCategoryRateSet ratesByCategory)
+    public NiReferenceDataProvider(INiThresholdSet thresholds, NiCategoryRateSet ratesByCategory)
     {
         _thresholds = thresholds;
         _ratesByCategory = new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(ratesByCategory.GetRates());
     }
 
-    //public INiCategoryRatesEntry GetRatesForCategory(NiCategory niCategory) =>
-    //    _ratesByCategory.GetRatesForCategory(niCategory);
-
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetRatesForTaxYearAndPeriod(TaxYear taxYear, int taxPeriod)
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetRatesForTaxYearAndPeriod(
+        TaxYear taxYear, 
+        PayFrequency payFrequency,
+        int taxPeriod)
     {
         return _ratesByCategory;
     }
 
-    //public NiPeriodThresholdSet GetThresholdsForCategory(NiCategory niCategory) =>
-    //    _periodThresholds[niCategory];
-
-    //public ReadOnlyDictionary<NiCategory, NiPeriodThresholdSet> GetPeriodThresholdsForTaxYearAndPeriod(
-    //    TaxYear taxYear,
-    //    int taxPeriod,
-    //    PayFrequency payFrequency)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    NiPeriodThresholdSet INiReferenceDataProvider.GetPeriodThresholdsForTaxYearAndPeriod(
-        TaxYear taxYear, 
-        int taxPeriod, 
-        PayFrequency payFrequency,
-        int numberOfTaxPeriods)
+    public INiThresholdSet GetThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
-        return new NiPeriodThresholdSet(_thresholds, payFrequency, numberOfTaxPeriods);
+        return _thresholds;
     }
 }

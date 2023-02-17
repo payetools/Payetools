@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -17,7 +17,7 @@ namespace Paytools.NationalInsurance;
 using Paytools.NationalInsurance.Extensions;
 using Paytools.NationalInsurance.ReferenceData;
 using System.Collections.ObjectModel;
-using static NiThreshold;
+using static NiThresholdType;
 
 /// <summary>
 /// Represents a National Insurance calculator that implements <see cref="INiCalculator"/>.
@@ -32,9 +32,9 @@ public class NiCalculator : INiCalculator
     private readonly ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> _niRateEntries;
     private readonly NiPeriodThresholdSet _niPeriodThresholds;
 
-    private static readonly (NiThreshold, NiThreshold)[] _thresholdPairs = { (LEL, ST), (ST, PT), (PT, FUST), (FUST, UEL) };
+    private static readonly (NiThresholdType, NiThresholdType)[] _thresholdPairs = { (LEL, ST), (ST, PT), (PT, FUST), (FUST, UEL) };
 
-    public const int CalculationStepCount = 6;
+    internal const int CalculationStepCount = 6;
 
     /// <summary>
     /// Initialises a new <see cref="NiCalculator"/> with the supplied thresholds and rates for the period.

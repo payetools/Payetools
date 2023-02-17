@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -14,31 +14,58 @@
 
 using Paytools.Common.Model;
 using Paytools.NationalInsurance.ReferenceData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paytools.NationalInsurance;
 
 /// <summary>
-/// Factory to generate <see cref="ITaxCalculator"/> implementations that are for a given pay date and specific tax regime.
+/// Factory to generate <see cref="INiCalculatorFactory"/> implementations that are for a given pay date.
 /// </summary>
 public class NiCalculatorFactory : INiCalculatorFactory
 {
     private INiReferenceDataProvider _niReferenceDataProvider;
 
+    /// <summary>
+    /// Initialises a new instance of <see cref="NiCalculatorFactory"/> with the supplied <see cref="INiReferenceDataProvider"/>.
+    /// </summary>
+    /// <param name="niReferenceDataProvider">Reference data provider used to seed new NI calculators.</param>
     public NiCalculatorFactory(INiReferenceDataProvider niReferenceDataProvider)
     {
         _niReferenceDataProvider = niReferenceDataProvider;
     }
 
+    /// <summary>
+    /// Gets a new <see cref="INiCalculator"/> based on the specified pay date and number of tax periods.  The pay date
+    /// is provided in order to determine which set of thresholds and rates to use, noting that these may change in-year.
+    /// </summary>
+    /// <param name="payDate">Applicable pay date.</param>
+    /// <param name="numberOfTaxPeriods">Number of tax periods applicable, usually 1.  Defaults to 1.</param>
+    /// <returns>A new calculator instance.</returns>
     public INiCalculator GetCalculator(PayDate payDate, int numberOfTaxPeriods = 1) =>
-        GetCalculator(payDate.TaxYear, payDate.TaxPeriod, payDate.PayFrequency, numberOfTaxPeriods);
+        GetCalculator(payDate.TaxYear, payDate.PayFrequency, payDate.TaxPeriod, numberOfTaxPeriods);
 
-    public INiCalculator GetCalculator(TaxYear taxYear, int taxPeriod, PayFrequency payFrequency, int numberOfTaxPeriods = 1) =>
+    /// <summary>
+    /// Gets a new <see cref="INiCalculator"/> based on the specified tax year, pay frequency and pay period, along with the
+    /// applicable number of tax periods.  The tax year, pay frequency and pay period are provided in order to determine which
+    /// set of thresholds and rates to use, noting that these may change in-year.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="numberOfTaxPeriods">Number of tax periods applicable, usually 1.  Defaults to 1.</param>
+    /// <returns>A new calculator instance.</returns>
+    public INiCalculator GetCalculator(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod, int numberOfTaxPeriods = 1) =>
         new NiCalculator(
-            _niReferenceDataProvider.GetPeriodThresholdsForTaxYearAndPeriod(taxYear, taxPeriod, payFrequency, numberOfTaxPeriods),
-            _niReferenceDataProvider.GetRatesForTaxYearAndPeriod(taxYear, taxPeriod));
+            GetPeriodThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod, numberOfTaxPeriods),
+            _niReferenceDataProvider.GetRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod));
+
+    private NiPeriodThresholdSet GetPeriodThresholdsForTaxYearAndPeriod(
+        TaxYear taxYear,
+        PayFrequency payFrequency,
+        int taxPeriod,
+        int numberOfTaxPeriods)
+    {
+        var annualThresholds = _niReferenceDataProvider.GetThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
+
+        return new NiPeriodThresholdSet(annualThresholds, payFrequency, numberOfTaxPeriods);
+    }
 }

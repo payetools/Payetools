@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -23,13 +23,13 @@ namespace Paytools.IncomeTax;
 /// </summary>
 public class TaxCalculatorFactory : ITaxCalculatorFactory
 {
-    private readonly ITaxBandProvider _taxBandProvider;
+    private readonly ITaxReferenceDataProvider _taxBandProvider;
 
     /// <summary>
     /// Initialises a new instance of <see cref="TaxCalculatorFactory"/> using the supplied tax band provider.
     /// </summary>
     /// <param name="taxBandProvider">Tax band provider for providing access to tax bands for given tax years.</param>
-    public TaxCalculatorFactory(ITaxBandProvider taxBandProvider)
+    public TaxCalculatorFactory(ITaxReferenceDataProvider taxBandProvider)
     {
         _taxBandProvider = taxBandProvider;
     }
@@ -57,7 +57,7 @@ public class TaxCalculatorFactory : ITaxCalculatorFactory
     /// tax regime and tax year combination.</exception>
     public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, int taxPeriod, PayFrequency payFrequency)
     {
-        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYearAndPeriod(taxYear, taxPeriod);
+        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
 
         if (!taxBandwidthSets.TryGetValue(applicableCountries, out var taxBandwidthSet))
             throw new InvalidReferenceDataException($"Unable to find unique tax bands for countries/tax year combination [{applicableCountries}] {taxYear}");
