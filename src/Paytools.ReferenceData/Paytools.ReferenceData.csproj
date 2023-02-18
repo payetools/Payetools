@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Paytools.Common\Paytools.Common.csproj" />
     <ProjectReference Include="..\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
     <ProjectReference Include="..\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />

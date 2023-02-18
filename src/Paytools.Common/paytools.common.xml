@@ -27,6 +27,14 @@
             </summary>
             <param name="message">Human-readable text providing further details on the exception.</param>
         </member>
+        <member name="M:Paytools.Common.Diagnostics.InvalidReferenceDataException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initialises a new instance of the <see cref="T:Paytools.Common.Diagnostics.InvalidReferenceDataException"/> class with the supplied
+            inner exception.
+            </summary>
+            <param name="message">Human-readable text providing further details on the exception.</param>
+            <param name="innerException">Inner exception.</param>
+        </member>
         <member name="T:Paytools.Common.Extensions.DateOnlyExtensions">
             <summary>
             Extension methods for instances of <see cref="T:System.DateOnly"/>.
