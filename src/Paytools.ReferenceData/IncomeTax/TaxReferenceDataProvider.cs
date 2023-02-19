@@ -56,7 +56,7 @@ public class TaxReferenceDataProvider : ITaxReferenceDataProvider
     /// <param name="payFrequency">Pay frequency pertaining.  Used in conjunction with the taxPeriod parameter to
     /// <param name="period"></param>
     /// <returns></returns>
-    public ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetBandsForTaxYearAndPeriod(
+    public ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetTaxBandsForTaxYearAndPeriod(
         TaxYear taxYear,
         PayFrequency payFrequency,
         int period)

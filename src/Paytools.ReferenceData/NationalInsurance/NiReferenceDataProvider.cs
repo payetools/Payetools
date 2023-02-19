@@ -30,7 +30,7 @@ public class NiReferenceDataProvider : INiReferenceDataProvider
         _ratesByCategory = new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(ratesByCategory.GetRates());
     }
 
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetRatesForTaxYearAndPeriod(
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetTaxRatesForTaxYearAndPeriod(
         TaxYear taxYear, 
         PayFrequency payFrequency,
         int taxPeriod)

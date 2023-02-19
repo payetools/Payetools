@@ -57,9 +57,26 @@ public class TaxYearTests
             var periodNumber = taxYear.GetTaxPeriod(new DateOnly(2022, 4, 6), PayFrequency.Monthly);
         };
 
-        //TaxYear.FromDate(new DateOnly((int)TaxYearEnding.MinValue, 4, 6));
-
         action.Should().Throw<ArgumentException>()
             .WithMessage("Pay date of 06/04/2022 is outside this tax year 06/04/2021 - 05/04/2022 (Parameter 'payDate')");
+    }
+
+    [Fact]
+    public void TestLastDateOfTaxPeriod()
+    {
+        var taxYear = new TaxYear(TaxYearEnding.Apr5_2022);
+
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Weekly, 1).Should().Be(new DateOnly(2021, 4, 12));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Weekly, 2).Should().Be(new DateOnly(2021, 4, 19));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.TwoWeekly, 1).Should().Be(new DateOnly(2021, 4, 19));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.TwoWeekly, 2).Should().Be(new DateOnly(2021, 5, 3));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.FourWeekly, 1).Should().Be(new DateOnly(2021, 5, 3));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Monthly, 1).Should().Be(new DateOnly(2021, 5, 5));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Monthly, 2).Should().Be(new DateOnly(2021, 6, 5));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Monthly, 3).Should().Be(new DateOnly(2021, 7, 5));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Monthly, 12).Should().Be(new DateOnly(2022, 4, 5));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Quarterly, 1).Should().Be(new DateOnly(2021, 7, 5));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.BiAnnually, 1).Should().Be(new DateOnly(2021, 10, 5));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Annually, 1).Should().Be(new DateOnly(2022, 4, 5));
     }
 }

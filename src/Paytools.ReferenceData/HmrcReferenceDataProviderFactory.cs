@@ -15,8 +15,6 @@
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Serialization;
 using Paytools.ReferenceData.Serialization;
-using System.Collections.Concurrent;
-using System.Net;
 using System.Text.Json;
 
 namespace Paytools.ReferenceData;

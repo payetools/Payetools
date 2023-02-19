@@ -41,7 +41,7 @@ public class HmrcReferenceDataProviderTests
     {
         TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxReferenceDataProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
-        var bands = provider.GetBandsForTaxYearAndPeriod(new TaxYear(TaxYearEnding.Apr5_2023), PayFrequency.Monthly, 1);
+        var bands = provider.GetTaxBandsForTaxYearAndPeriod(new TaxYear(TaxYearEnding.Apr5_2023), PayFrequency.Monthly, 1);
 
         //var bandwidths = new TaxBandwidthSet(bands[Common.CountriesForTaxPurposes.England | Common.CountriesForTaxPurposes.NorthernIreland]);
 

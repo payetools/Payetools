@@ -43,7 +43,7 @@ public interface INiReferenceDataProvider
     /// <param name="taxPeriod">Application tax period.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
-    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetRatesForTaxYearAndPeriod(
+    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetTaxRatesForTaxYearAndPeriod(
         TaxYear taxYear,
         PayFrequency payFrequency,
         int taxPeriod);

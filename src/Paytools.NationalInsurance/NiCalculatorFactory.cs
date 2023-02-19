@@ -56,7 +56,7 @@ public class NiCalculatorFactory : INiCalculatorFactory
     public INiCalculator GetCalculator(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod, int numberOfTaxPeriods = 1) =>
         new NiCalculator(
             GetPeriodThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod, numberOfTaxPeriods),
-            _niReferenceDataProvider.GetRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod));
+            _niReferenceDataProvider.GetTaxRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod));
 
     private NiPeriodThresholdSet GetPeriodThresholdsForTaxYearAndPeriod(
         TaxYear taxYear,

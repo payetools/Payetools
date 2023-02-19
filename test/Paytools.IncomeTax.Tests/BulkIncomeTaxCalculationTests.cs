@@ -56,7 +56,7 @@ public class BulkIncomeTaxCalculationTests
             var applicableCountries = taxCode.TaxTreatment == TaxTreatment.NT ?
                 taxYear.GetDefaultCountriesForYear() : taxCode.ApplicableCountries;
 
-            var calculator = taxCalculatorFactory.GetCalculator(applicableCountries, taxYear, test.Period, test.PayFrequency);
+            var calculator = taxCalculatorFactory.GetCalculator(applicableCountries, taxYear, test.PayFrequency, test.Period);
 
             var result = calculator.Calculate(test.GrossPay,
                 0.0m,

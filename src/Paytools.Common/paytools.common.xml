@@ -447,6 +447,14 @@
             <returns>The number of tax periods within a tax year for a this PayFrequency, for example, PayFrequency.Monthly returns 12.</returns>
             <exception cref="T:System.ArgumentException">Thrown if an invalid PayFrequency value is supplied.</exception>
         </member>
+        <member name="M:Paytools.Common.Model.PayFrequencyExtensions.GetTaxPeriodLength(Paytools.Common.Model.PayFrequency)">
+            <summary>
+            Provides access to the number of tax periods within a tax year for a given <see cref="T:Paytools.Common.Model.PayFrequency"/>.
+            </summary>
+            <param name="payFrequency">PayFrequency to provide period count for.</param>
+            <returns>The number of tax periods within a tax year for a this PayFrequency, for example, PayFrequency.Monthly returns 12.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if an invalid PayFrequency value is supplied.</exception>
+        </member>
         <member name="T:Paytools.Common.Model.PayrollId">
             <summary>
             Represents a payroll ID (also known as a "worker ID", "payroll number", "works number") as reported to HMRC.
@@ -550,6 +558,15 @@
             </summary>
             <returns>Default tax regime for this tax year.</returns>
             <exception cref="T:System.InvalidOperationException">Thrown if the tax year is invalid or has not been specified.</exception>
+        </member>
+        <member name="M:Paytools.Common.Model.TaxYear.GetLastDayOfTaxPeriod(Paytools.Common.Model.PayFrequency,System.Int32)">
+            <summary>
+            Gets the very last day of the specified tax period based on the applicable pay frequency.
+            </summary>
+            <param name="payFrequency">Applicable pay frequency.</param>
+            <param name="taxPeriod">Applicable tax period.</param>
+            <returns>Last day of the tax period.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if the supplied pay frequency is not supported.</exception>
         </member>
         <member name="T:Paytools.Common.Model.TaxYearEnding">
             <summary>

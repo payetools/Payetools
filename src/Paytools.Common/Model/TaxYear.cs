@@ -164,4 +164,24 @@ public record TaxYear
             _ => DefaultCountriesFrom6Apr2020
         };
     }
+
+    /// <summary>
+    /// Gets the very last day of the specified tax period based on the applicable pay frequency.
+    /// </summary>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <returns>Last day of the tax period.</returns>
+    /// <exception cref="ArgumentException">Thrown if the supplied pay frequency is not supported.</exception>
+    public DateOnly GetLastDayOfTaxPeriod(PayFrequency payFrequency, int taxPeriod) =>
+        payFrequency switch
+        {
+            PayFrequency.Weekly => StartOfTaxYear.AddDays((7 * taxPeriod) - 1),
+            PayFrequency.TwoWeekly => StartOfTaxYear.AddDays((14 * taxPeriod) - 1),
+            PayFrequency.FourWeekly => StartOfTaxYear.AddDays((28 * taxPeriod) - 1),
+            PayFrequency.Monthly => StartOfTaxYear.AddMonths(taxPeriod).AddDays(-1),
+            PayFrequency.Quarterly => StartOfTaxYear.AddMonths(taxPeriod * 3).AddDays(-1),
+            PayFrequency.BiAnnually => StartOfTaxYear.AddMonths(6 * taxPeriod).AddDays(-1),
+            PayFrequency.Annually => EndOfTaxYear,
+            _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
+        };
 }

@@ -34,7 +34,7 @@ public interface ITaxReferenceDataProvider
     /// <returns>ReadOnlyDictionary of <see cref="TaxBandwidthSet"/>'s keyed on tax regime.</returns>
     /// <remarks>Although ReadOnlyDictionary is not guaranteed to be thread-safe, in the current implementation the
     /// underlying Dictionary is guaranteed not to change, so thread-safety can be assumed.</remarks>
-    ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetBandsForTaxYearAndPeriod(
+    ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet> GetTaxBandsForTaxYearAndPeriod(
         TaxYear taxYear,
         PayFrequency payFrequency,
         int taxPeriod);

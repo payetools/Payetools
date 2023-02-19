@@ -69,4 +69,25 @@ public static class PayFrequencyExtensions
             _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
         };
     }
+
+    /// <summary>
+    /// Provides access to the number of tax periods within a tax year for a given <see cref="PayFrequency"/>.
+    /// </summary>
+    /// <param name="payFrequency">PayFrequency to provide period count for.</param>
+    /// <returns>The number of tax periods within a tax year for a this PayFrequency, for example, PayFrequency.Monthly returns 12.</returns>
+    /// <exception cref="ArgumentException">Thrown if an invalid PayFrequency value is supplied.</exception>
+    public static int GetTaxPeriodLength(this PayFrequency payFrequency)
+    {
+        return payFrequency switch
+        {
+            PayFrequency.Weekly => 7,
+            PayFrequency.TwoWeekly => 14,
+            PayFrequency.FourWeekly => 28,
+            PayFrequency.Monthly => 12,
+            PayFrequency.Quarterly => 4,
+            PayFrequency.BiAnnually => 2,
+            PayFrequency.Annually => 1,
+            _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
+        };
+    }
 }

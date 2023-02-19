@@ -43,21 +43,21 @@ public class TaxCalculatorFactory : ITaxCalculatorFactory
     /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to find a tax bandwidth set for the specified
     /// tax regime and tax year combination.</exception>
     public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, PayDate payDate) =>
-        GetCalculator(applicableCountries, payDate.TaxYear, payDate.TaxPeriod, payDate.PayFrequency);
+        GetCalculator(applicableCountries, payDate.TaxYear, payDate.PayFrequency, payDate.TaxPeriod);
 
     /// <summary>
     /// Gets an instance of an <see cref="ITaxCalculator"/> for the specified tax regime, tax year, tax period and pay frequency.
     /// </summary>
     /// <param name="applicableCountries">Applicable tax regime.</param>
     /// <param name="taxYear">Relevant tax year.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Instance of <see cref="ITaxCalculator"/> for the specified tax regime, tax year and period and pay frequency.</returns>
     /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to find a tax bandwidth set for the specified
     /// tax regime and tax year combination.</exception>
-    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, int taxPeriod, PayFrequency payFrequency)
+    public ITaxCalculator GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
-        var taxBandwidthSets = _taxBandProvider.GetBandsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
+        var taxBandwidthSets = _taxBandProvider.GetTaxBandsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
 
         if (!taxBandwidthSets.TryGetValue(applicableCountries, out var taxBandwidthSet))
             throw new InvalidReferenceDataException($"Unable to find unique tax bands for countries/tax year combination [{applicableCountries}] {taxYear}");
