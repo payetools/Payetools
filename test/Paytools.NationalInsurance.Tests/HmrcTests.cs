@@ -14,9 +14,10 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
-using Paytools.NationalInsurance.ReferenceData;
 using Paytools.ReferenceData.NationalInsurance;
 using Paytools.Testing.Data;
+using Paytools.Testing.Utils;
+using System.Runtime.CompilerServices;
 using Xunit.Abstractions;
 
 namespace Paytools.NationalInsurance.Tests;
@@ -31,8 +32,13 @@ public class HmrcTests
     }
 
     [Fact]
-    public void RunAllTests()
+    public async Task RunAllTests()
     {
+        var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
+
+        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+
+        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\NationalInsurance_2022_2023.json") });
 
         using var db = new TestDataRepository();
 
@@ -43,11 +49,6 @@ public class HmrcTests
         foreach (var test in testData.ToList().Where(t => t.NiCategory == NiCategory.A &&
             t.PayFrequency == PayFrequency.Monthly))
         {
-            // test.Period is ignored for non-directors NI
-            var provider = GetProvider(GetThresholdList(test.Period), GetCategoryRateSet(test.Period));
-
-            var taxYear = new TaxYear(test.TaxYearEnding);
-
             var factory = new NiCalculatorFactory(provider);
             var calculator = factory.GetCalculator(taxYear, test.PayFrequency, test.Period);
 
@@ -62,15 +63,15 @@ public class HmrcTests
         Output.WriteLine($"{testsCompleted} tests completed");
     }
 
-    private INiReferenceDataProvider GetProvider(List<INiThresholdEntry> thresholds,
-        NiCategoryRateSet ratesByCategory)
-    {
-        return new NiReferenceDataProvider(new NiThresholdSet(thresholds), ratesByCategory);
-    }
+    //private INiReferenceDataProvider GetProvider(List<NiThresholdEntry> thresholds,
+    //    NiCategoryRateSet ratesByCategory)
+    //{
+    //    return new NiReferenceDataProvider(new NiThresholdSet(thresholds), ratesByCategory);
+    //}
 
-    private List<INiThresholdEntry> GetThresholdList(int taxPeriod)
+    private List<NiThresholdEntry> GetThresholdList(int taxPeriod)
     {
-        var thresholdList = new List<INiThresholdEntry>();
+        var thresholdList = new List<NiThresholdEntry>();
         //{
         //    new NiThresholdEntry() { ThresholdType = NiThresholdType.LEL, ThresholdValuePerYear = 6396.0m },
         //    new NiThresholdEntry() { ThresholdType = NiThresholdType.PT, ThresholdValuePerYear = taxPeriod < 4 ? 9880.0m : 12570.0m },
@@ -89,17 +90,17 @@ public class HmrcTests
     {
         NiCategoryRateSet ratesByCategory = new();
 
-        ratesByCategory.Add(NiCategory.A, new NiCategoryRatesEntry()
-        {
-            Category = NiCategory.A,
-            EmployeeRateToPT = 0.0m,
-            EmployeeRatePTToUEL = taxPeriod > 7 ? 0.12m : 0.1325m,
-            EmployeeRateAboveUEL = taxPeriod > 7 ? 0.02m : 0.0325m,
-            EmployerRateLELtoST = 0.0m,
-            EmployerRateSTtoFUST = taxPeriod > 7 ? 0.138m : 0.1505m,
-            EmployerRateFUSTtoUEL = taxPeriod > 7 ? 0.138m : 0.1505m,
-            EmployerRateAboveUEL = taxPeriod > 7 ? 0.138m : 0.1505m
-        });
+        //ratesByCategory.Add(, new NiCategoryRatesEntry()
+        //{
+        //    Category = NiCategory.A,
+        //    EmployeeRateToPT = 0.0m,
+        //    EmployeeRatePTToUEL = taxPeriod > 7 ? 0.12m : 0.1325m,
+        //    EmployeeRateAboveUEL = taxPeriod > 7 ? 0.02m : 0.0325m,
+        //    EmployerRateLELtoST = 0.0m,
+        //    EmployerRateSTtoFUST = taxPeriod > 7 ? 0.138m : 0.1505m,
+        //    EmployerRateFUSTtoUEL = taxPeriod > 7 ? 0.138m : 0.1505m,
+        //    EmployerRateAboveUEL = taxPeriod > 7 ? 0.138m : 0.1505m
+        //});
 
         return ratesByCategory;
     }

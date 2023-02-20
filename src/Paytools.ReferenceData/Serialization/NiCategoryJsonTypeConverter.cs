@@ -25,7 +25,7 @@ namespace Paytools.ReferenceData.Serialization;
 public class NiCategoryJsonTypeConverter : JsonConverter<NiCategory>
 {
     /// <summary>
-    /// Reads a <see cref="PayFrequency"/> enumerated value in string format and converts to the appropriate enum
+    /// Reads a <see cref="NiCategory"/> enumerated value in string format and converts to the appropriate enum
     /// value.
     /// </summary>
     /// <param name="reader">JSON reader (UTF-8 format).</param>
@@ -36,7 +36,7 @@ public class NiCategoryJsonTypeConverter : JsonConverter<NiCategory>
         Enum.Parse<NiCategory>(reader.GetString() ?? string.Empty);
 
     /// <summary>
-    /// Writes a <see cref="PayFrequency"/> enum value, converted to its string equivalent, to the JSON stream.
+    /// Writes a <see cref="NiCategory"/> enum value, converted to its string equivalent, to the JSON stream.
     /// </summary>
     /// <param name="writer">JSON writer (UTF-8 format).</param>
     /// <param name="value">Enum value to convert.</param>

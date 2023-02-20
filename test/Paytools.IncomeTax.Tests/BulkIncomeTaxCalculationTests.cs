@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -15,7 +15,7 @@
 using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.IncomeTax.Tests.TestData;
-using Paytools.ReferenceData.IncomeTax;
+using Paytools.Testing.Utils;
 using System.Diagnostics;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -38,7 +38,11 @@ public class BulkIncomeTaxCalculationTests
     public async Task RunTests()
     {
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
-        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxReferenceDataProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
+
+        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+
+        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
+        //        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxReferenceDataProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
         var taxCalculatorFactory = new TaxCalculatorFactory(provider);
         var tests = IncomeTaxTestDataLoader.Load();
@@ -71,7 +75,7 @@ public class BulkIncomeTaxCalculationTests
 
             result.TaxDue.Should().Be(test.TaxDue, $"test failed with {test.TaxDue} != {result.TaxDue} (Index {testIndex}, tax code {test.TaxCode})");
 
-//            var totalTax = result.TaxAtEachBand.Select(tb => tb.TaxDue).Sum();
+            //            var totalTax = result.TaxAtEachBand.Select(tb => tb.TaxDue).Sum();
 
             //totalTax.Should().Be(test.TaxDueToDate);
 

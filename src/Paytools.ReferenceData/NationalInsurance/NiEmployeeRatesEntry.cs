@@ -13,12 +13,13 @@
 // limitations under the License.
 
 using Paytools.NationalInsurance;
+using System.Collections.Immutable;
 
 namespace Paytools.ReferenceData.NationalInsurance;
 
 public record NiEmployeeRatesEntry
 {
-    List<NiCategory> NiCategories { get; } = new List<NiCategory>();
+    public ImmutableList<NiCategory> NiCategories { get; init; } = default!;
 
     public decimal EarningsAtOrAboveLELUpTAndIncludingPT { get; init; }
 

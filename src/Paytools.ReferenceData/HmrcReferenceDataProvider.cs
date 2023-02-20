@@ -20,6 +20,7 @@ using Paytools.NationalInsurance.ReferenceData;
 using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,7 +32,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     private ConcurrentDictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet> _referenceDataSets;
 
     /// <summary>
-    /// Gets the health of this reference data provider as human-readable string.
+    /// Gets or sets (internal only) the health of this reference data provider as human-readable string.
     /// </summary>
     public string Health { get; internal set; }
 
@@ -66,28 +67,81 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     {
         var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
 
-        var taxBands = FindApplicableEntry<IncomeTaxBandSet>(referenceDataSet.IncomeTax, 
+        var taxBands = FindApplicableEntry<IncomeTaxBandSet>(referenceDataSet.IncomeTax,
             taxYear, payFrequency, taxPeriod);
-        
+
         return new ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet>(taxBands.TaxEntries
             .ToDictionary(e => e.ApplicableCountries, e => new TaxBandwidthSet(e.GetTaxBandwidthEntries())));
     }
 
+    /// <summary>
+    /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
+    /// for a given tax year and tax period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
+    /// the specified point in time.</returns>
     public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
-        throw new NotImplementedException();
-        //var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
 
-        //var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
-        //    taxYear, payFrequency, taxPeriod);
+        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
+            taxYear, payFrequency, taxPeriod);
 
-        //foreach (var x in niReferenceDataEntry.)
-        //new NiCategoryRatesEntry();
+        var rates = GetNiCategoryRatesEntries(niReferenceDataEntry.EmployerRates, niReferenceDataEntry.EmployeeRates);
+
+        return new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(rates);
     }
 
+    /// <summary>
+    /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
+    /// for a given tax year and tax period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
+    /// the specified point in time.</returns>
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
+            taxYear, payFrequency, taxPeriod);
+
+        var rates = GetNiCategoryRatesEntries(niReferenceDataEntry.EmployerRates, niReferenceDataEntry.EmployeeRates);
+
+        return new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(rates);
+    }
+
+    /// <summary>
+    /// Gets the NI thresholds for the specified tax year and tax period, as denoted by the supplied pay frequency
+    /// and pay period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>An instance of <see cref="INiThresholdSet"/> containing the thresholds for the specified point
+    /// in time.</returns>
     public INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
-        throw new NotImplementedException();
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
+            taxYear, payFrequency, taxPeriod);
+
+        var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiThresholdEntry() 
+            { 
+                ThresholdType = nit.ThresholdType,
+                ThresholdValuePerWeek= nit.ThresholdValuePerWeek,
+                ThresholdValuePerMonth= nit.ThresholdValuePerMonth,
+                ThresholdValuePerYear = nit.ThresholdValuePerYear
+            })
+            .ToImmutableList();
+
+        return new NiThresholdSet(thresholds);
     }
 
     private HmrcTaxYearReferenceDataSet GetReferenceDataSetForTaxYear(TaxYear taxYear)
@@ -98,7 +152,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         if (referenceDataSet == null ||
             referenceDataSet?.IncomeTax == null ||
             referenceDataSet?.NationalInsurance == null)
-            throw new InvalidReferenceDataException($"Reference data for tax year {taxYear} is invalid or incomplete");
+            throw new InvalidReferenceDataException($"Reference data for tax year ending {taxYear.EndOfTaxYear} is invalid or incomplete");
 
         return referenceDataSet;
     }
@@ -114,5 +168,49 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             throw new InvalidReferenceDataException($"Unable to find reference data entry for specified tax year, pay frequency and pay period (Type: '{typeof(T)}')");
 
         return (T)entry;
+    }
+
+    private static Dictionary<NiCategory, INiCategoryRatesEntry> GetNiCategoryRatesEntries(
+        ImmutableList<NiEmployerRatesEntry> employerRateEntries,
+        ImmutableList<NiEmployeeRatesEntry> employeeRateEntries)
+    {
+        var rateEntries = new Dictionary<NiCategory, NiCategoryRatesEntry>();
+
+        employerRateEntries.ForEach(erEntry =>
+        {
+            erEntry.NiCategories.ForEach(erCategory =>
+            {
+                if (!rateEntries.TryGetValue(erCategory, out NiCategoryRatesEntry? rateEntry))
+                {
+                    rateEntry = new NiCategoryRatesEntry(erCategory);
+                    rateEntries.Add(erCategory, rateEntry);
+                }
+
+                rateEntry.EmployerRateLELtoST = erEntry.EarningsAtOrAboveLELUpToAndIncludingST;
+                rateEntry.EmployerRateSTtoFUST = erEntry.EarningsAboveSTUpToAndIncludingFUST;
+                rateEntry.EmployerRateFUSTtoUEL = erEntry.EarningsAboveFUSTUpToAndIncludingUELOrUST;
+                rateEntry.EmployerRateAboveUEL = erEntry.EarningsAboveUELOrUST;
+            });
+        });
+
+        employeeRateEntries.ForEach(eeEntry =>
+        {
+            eeEntry.NiCategories.ForEach(erCategory =>
+            {
+                if (!rateEntries.TryGetValue(erCategory, out NiCategoryRatesEntry? rateEntry))
+                {
+                    rateEntry = new NiCategoryRatesEntry(erCategory);
+                    rateEntries.Add(erCategory, rateEntry);
+                }
+
+                rateEntry.EmployeeRateToPT = eeEntry.EarningsAtOrAboveLELUpTAndIncludingPT;
+                rateEntry.EmployeeRatePTToUEL = eeEntry.EarningsAbovePTUpToAndIncludingUEL;
+                rateEntry.EmployeeRateAboveUEL = eeEntry.EarningsAboveUEL;
+            });
+        });
+
+        return rateEntries
+            .Select(kv => new KeyValuePair<NiCategory, INiCategoryRatesEntry>(kv.Key, kv.Value))
+            .ToDictionary(kv => kv.Key, kv => kv.Value);
     }
 }

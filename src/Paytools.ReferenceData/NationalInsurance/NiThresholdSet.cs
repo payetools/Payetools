@@ -14,6 +14,7 @@
 
 using Paytools.NationalInsurance;
 using Paytools.NationalInsurance.ReferenceData;
+using System.Collections.Immutable;
 
 namespace Paytools.ReferenceData.NationalInsurance;
 
@@ -22,7 +23,7 @@ namespace Paytools.ReferenceData.NationalInsurance;
 /// </summary>
 public class NiThresholdSet : INiThresholdSet
 {
-    private List<INiThresholdEntry> _niThresholds;
+    private readonly ImmutableList<NiThresholdEntry> _niThresholds;
 
     /// <summary>
     /// Gets the number of threshold value this threshold set contains.
@@ -48,10 +49,10 @@ public class NiThresholdSet : INiThresholdSet
     /// <summary>
     /// Initialises a new instance of <see cref="NiThresholdSet"/>.
     /// </summary>
-    /// <param name="niThresholds">Input list of thresholds.</param>
+    /// <param name="niThresholds">Immutable input list of thresholds.</param>
     /// <exception cref="ArgumentException">Thrown if the number of thresholds supplied does not match the expected
     /// number of possible thresholds.</exception>
-    public NiThresholdSet(List<INiThresholdEntry> niThresholds)
+    public NiThresholdSet(ImmutableList<NiThresholdEntry> niThresholds)
     {
         int entryCount = (int)NiThresholdType.Count;
 

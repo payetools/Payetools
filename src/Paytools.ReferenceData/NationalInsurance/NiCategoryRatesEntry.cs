@@ -20,28 +20,37 @@ namespace Paytools.ReferenceData.NationalInsurance;
 public record NiCategoryRatesEntry : INiCategoryRatesEntry
 {
     /// <summary>Applicable National Insurance Category.</summary>
-    public NiCategory Category { get; init; }
+    public NiCategory Category { get; }
 
     /// <summary>Employee rate for earnings at or above lower earnings limit up to and including primary threshold.</summary>
-    public decimal EmployeeRateToPT { get; init; }
+    public decimal EmployeeRateToPT { get; set; }
 
     /// <summary>Employee rate for earnings above the primary threshold up to and including upper earnings limit.</summary>
-    public decimal EmployeeRatePTToUEL { get; init; }
+    public decimal EmployeeRatePTToUEL { get; set; }
 
     /// <summary>Employee rate for balance of earnings above upper earnings limit</summary>
-    public decimal EmployeeRateAboveUEL { get; init; }
+    public decimal EmployeeRateAboveUEL { get; set; }
 
     /// <summary>Employer rate for earnings at or above lower earnings limit up to and including secondary threshold,</summary>
-    public decimal EmployerRateLELtoST { get; init; }
+    public decimal EmployerRateLELtoST { get; set; }
 
     /// <summary>Employer rate for earnings above secondary threshold up to and including Freeport upper secondary threshold.</summary>
-    public decimal EmployerRateSTtoFUST { get; init; }
+    public decimal EmployerRateSTtoFUST { get; set; }
 
     /// <summary>Employer rate for earnings above Freeport upper secondary threshold up to and including upper earnings limit, upper 
     /// secondary thresholds for under 21s, apprentices and veterans.</summary>
-    public decimal EmployerRateFUSTtoUEL { get; init; }
+    public decimal EmployerRateFUSTtoUEL { get; set; }
 
     /// <summary>Employer rate for balance of earnings above upper earnings limit, upper secondary thresholds for under 21s, apprentices 
     /// and veterans.</summary>
-    public decimal EmployerRateAboveUEL { get; init; }
+    public decimal EmployerRateAboveUEL { get; set; }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="NiCategoryRatesEntry"/> for the specified NI category.
+    /// </summary>
+    /// <param name="category">NI category for this NiCategoryRatesEntry.</param>
+    public NiCategoryRatesEntry(NiCategory category)
+    {
+        Category = category;
+    }
 }

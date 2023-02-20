@@ -13,47 +13,24 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.Common.Serialization;
 using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
-using Paytools.ReferenceData.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Paytools.ReferenceData;
 
 /// <summary>
 /// Data structure used to represent HMRC reference data for a given tax year.
 /// </summary>
-public  class HmrcTaxYearReferenceDataSet
+public class HmrcTaxYearReferenceDataSet
 {
+    /// <summary>
+    /// Gets the version of this data set.  Every time the data set is updated centrally, the version number is incremented.
+    /// </summary>
+    public string Version { get; init; } = "Not specified";
+
     public TaxYearEnding ApplicableTaxYearEnding { get; init; }
 
-    public IReadOnlyList<IncomeTaxBandSet> IncomeTax { get; init; }
+    public List<IncomeTaxBandSet> IncomeTax { get; init; } = default!;
 
-    public IReadOnlyList<NiReferenceDataEntry> NationalInsurance { get; init; }
-
-    public static HmrcTaxYearReferenceDataSet Load(Stream jsonContent)
-    {
-        var referenceData = JsonSerializer.Deserialize<HmrcTaxYearReferenceDataSet>(jsonContent, new JsonSerializerOptions()
-        {
-            // See https://github.com/dotnet/runtime/issues/31081 on why we can't just use JsonStringEnumConverter
-            Converters =
-            {
-                new PayFrequencyJsonConverter(),
-                new CountriesForTaxPurposesJsonConverter(),
-                new TaxYearEndingJsonConverter(),
-                new DateOnlyJsonConverter(),
-                new NiThresholdTypeJsonConverter()
-            },
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
-
-        return referenceData;
-    }
+    public List<NiReferenceDataEntry> NationalInsurance { get; init; } = default!;
 }
