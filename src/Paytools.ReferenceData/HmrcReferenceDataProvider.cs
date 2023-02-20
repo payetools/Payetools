@@ -18,6 +18,7 @@ using Paytools.IncomeTax.ReferenceData;
 using Paytools.NationalInsurance;
 using Paytools.NationalInsurance.ReferenceData;
 using Paytools.ReferenceData.IncomeTax;
+using Paytools.ReferenceData.NationalInsurance;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -72,12 +73,19 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             .ToDictionary(e => e.ApplicableCountries, e => new TaxBandwidthSet(e.GetTaxBandwidthEntries())));
     }
 
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetTaxRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
         throw new NotImplementedException();
+        //var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        //var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
+        //    taxYear, payFrequency, taxPeriod);
+
+        //foreach (var x in niReferenceDataEntry.)
+        //new NiCategoryRatesEntry();
     }
 
-    public INiThresholdSet GetThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    public INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
         throw new NotImplementedException();
     }

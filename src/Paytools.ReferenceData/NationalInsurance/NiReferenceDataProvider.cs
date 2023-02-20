@@ -30,7 +30,7 @@ public class NiReferenceDataProvider : INiReferenceDataProvider
         _ratesByCategory = new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(ratesByCategory.GetRates());
     }
 
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetTaxRatesForTaxYearAndPeriod(
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(
         TaxYear taxYear, 
         PayFrequency payFrequency,
         int taxPeriod)
@@ -38,7 +38,7 @@ public class NiReferenceDataProvider : INiReferenceDataProvider
         return _ratesByCategory;
     }
 
-    public INiThresholdSet GetThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    public INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
         return _thresholds;
     }

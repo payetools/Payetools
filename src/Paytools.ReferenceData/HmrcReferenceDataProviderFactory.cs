@@ -39,7 +39,8 @@ public class HmrcReferenceDataProviderFactory
                 new CountriesForTaxPurposesJsonConverter(),
                 new TaxYearEndingJsonConverter(),
                 new DateOnlyJsonConverter(),
-                new NiThresholdTypeJsonConverter()
+                new NiThresholdTypeJsonConverter(),
+                new NiCategoryJsonTypeConverter()
             },
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
@@ -122,11 +123,9 @@ public class HmrcReferenceDataProviderFactory
         {
             throw new InvalidReferenceDataException($"Unable to retrieve data from reference data endpoint '{endpoint}' (see inner exception for details)", ex);
         }
-        catch (Exception ex)
+        catch (JsonException ex)
         {
-            Console.WriteLine(ex);
-
-            throw;
+            throw new InvalidReferenceDataException($"Unable to parse data retrieved from reference data endpoint '{endpoint}' (see inner exception for details)", ex);
         }
     }
 }

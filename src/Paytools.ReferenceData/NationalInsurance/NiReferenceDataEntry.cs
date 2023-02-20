@@ -30,7 +30,18 @@ public class NiReferenceDataEntry : IApplicableBetween
     public DateOnly ApplicableTill { get; init; }
 
     /// <summary>
-    /// Gets a read-only list of applicable tax bands.
+    /// Gets a read-only list of applicable NI thresholds.
     /// </summary>
+
     public IReadOnlyList<NiThresholdEntry> NiThresholds { get; init; } = default!;
+
+    /// <summary>
+    /// Gets applicable NI rates for employees.
+    /// </summary>
+    public IReadOnlyList<NiEmployerRatesEntry> EmployerRates { get; init; } = default!;
+
+    /// <summary>
+    /// Gets applicable NI rates for employees.
+    /// </summary>
+    public IReadOnlyList<NiEmployeeRatesEntry> EmployeeRates { get; init; } = default!;
 }
