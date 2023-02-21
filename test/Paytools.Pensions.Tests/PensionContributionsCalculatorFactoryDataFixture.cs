@@ -12,26 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Pensions.ReferenceData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Paytools.Testing.Utils;
 
 namespace Paytools.Pensions.Tests;
 
-public class PensionsReferenceDataFixture : IDisposable
+public class PensionContributionsCalculatorFactoryDataFixture
 {
-    public IPensionsReferenceDataProvider Provider { get; set; }
-
-    public PensionsReferenceDataFixture()
+    private AsyncLazy<IPensionContributionCalculatorFactory> _factory = new AsyncLazy<IPensionContributionCalculatorFactory>(async () =>
     {
+        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
 
-    }
+        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
 
-    public void Dispose()
+        return new PensionContributionCalculatorFactory(provider);
+    });
+
+    public async Task<IPensionContributionCalculatorFactory> GetFactory()
     {
-        // ... clean up test data from the database ...
+        return await _factory;
     }
 }

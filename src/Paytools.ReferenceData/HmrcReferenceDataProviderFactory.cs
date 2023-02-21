@@ -14,10 +14,9 @@
 
 using Microsoft.Extensions.Logging;
 using Paytools.Common.Diagnostics;
-using Paytools.Common.Extensions;
 using Paytools.Common.Serialization;
 using Paytools.ReferenceData.Serialization;
-using System.Net;
+using System;
 using System.Text.Json;
 
 namespace Paytools.ReferenceData;
@@ -86,11 +85,24 @@ public class HmrcReferenceDataProviderFactory
         _logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider with array of Streams; {referenceDataStreams.Length} streams provided",
             referenceDataStreams.Length);
 
-        var streams = referenceDataStreams.WithIndex().ToDictionary(iv => iv.Index.ToString(), iv => iv.Value);
+        var provider = new HmrcReferenceDataProvider();
+        var health = new List<string>();
 
-        return await CreateProviderAsync(key =>
-            DeserializeAsync<HmrcTaxYearReferenceDataSet>(streams[key], $"Stream #{key}"), streams.Keys.ToList()) ??
-                throw new InvalidReferenceDataException("Failed to create ");
+        for (int i = 0; i < referenceDataStreams.Length; i++)
+        {
+            var entry = await DeserializeAsync<HmrcTaxYearReferenceDataSet>(referenceDataStreams[i], $"Stream #{i}");
+
+            _logger?.LogInformation("Retrieved reference data for tax year {entry.ApplicableTaxYearEnding}, version {entry.Version}",
+                entry.ApplicableTaxYearEnding, entry.Version);
+
+            health.Add(provider.TryAdd(entry) ?
+                $"{entry.ApplicableTaxYearEnding}:OK" :
+                $"{entry.ApplicableTaxYearEnding}:Failed to load data using from stream #{i}");
+        }
+
+        provider.Health = string.Join('|', health.ToArray());
+
+        return provider;
     }
 
     /// <summary>
@@ -116,7 +128,7 @@ public class HmrcReferenceDataProviderFactory
             referenceDataEndpoint);
 
         // Get the list of supported tax years
-        var taxYearUris = await RetrieveFromHttpEndpoint<List<string>>(referenceDataEndpoint);
+        var taxYearUris = await RetrieveFromHttpEndpoint<List<Uri>>(referenceDataEndpoint);
 
         if (!taxYearUris.Any())
             throw new InvalidReferenceDataException($"No valid tax year entries returned from endpoint {referenceDataEndpoint}");
@@ -124,38 +136,24 @@ public class HmrcReferenceDataProviderFactory
         _logger?.LogInformation("Retrieved links to {taxYearUris.Count} item(s) from HTTP(S) endpoint '{referenceDataEndpoint}'",
             taxYearUris.Count, referenceDataEndpoint);
 
-        return await CreateProviderAsync(uri => RetrieveFromHttpEndpoint<HmrcTaxYearReferenceDataSet>(new Uri(uri)), taxYearUris);
-    }
-
-    private async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Func<string, Task<HmrcTaxYearReferenceDataSet>> retrieve, List<string> keys)
-    {
-        var referenceDataProvider = new HmrcReferenceDataProvider();
+        var provider = new HmrcReferenceDataProvider();
         var health = new List<string>();
 
-        keys.ForEach(async key =>
+        foreach (var uri in taxYearUris)
         {
-            try
-            {
-                _logger?.LogInformation("Attempting to retrieve reference data item with key '{key}'", key);
+            var entry = await RetrieveFromHttpEndpoint<HmrcTaxYearReferenceDataSet>(uri);
 
-                var taxYearEntry = await retrieve(key);
+            _logger?.LogInformation("Retrieved reference data for tax year {entry.ApplicableTaxYearEnding}, version {entry.Version}",
+                entry.ApplicableTaxYearEnding, entry.Version);
 
-                _logger?.LogInformation("Retrieved reference data for tax year {taxYearEntry.ApplicableTaxYearEnding}, version {taxYearEntry.Version}",
-                    taxYearEntry.ApplicableTaxYearEnding, taxYearEntry.Version);
+            health.Add(provider.TryAdd(entry) ?
+                $"{entry.ApplicableTaxYearEnding}:OK" :
+                $"{entry.ApplicableTaxYearEnding}:Failed to load data using from URI '{uri}'");
+        }
 
-                health.Add(referenceDataProvider.TryAdd(taxYearEntry) ?
-                    $"{taxYearEntry.ApplicableTaxYearEnding}:OK" :
-                    $"{taxYearEntry.ApplicableTaxYearEnding}:Failed to load data using key '{key}'");
-            }
-            catch (InvalidReferenceDataException ex)
-            {
-                health.Add($"Failed to load from '{key}' with message: {ex.Message}");
-            }
-        });
+        provider.Health = string.Join('|', health.ToArray());
 
-        referenceDataProvider.Health = string.Join('|', health.ToArray());
-
-        return await Task.FromResult(referenceDataProvider);
+        return provider;
     }
 
     private async Task<T> RetrieveFromHttpEndpoint<T>(Uri endpoint)

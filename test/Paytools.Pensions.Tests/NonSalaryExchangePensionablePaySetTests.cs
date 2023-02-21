@@ -1,16 +1,36 @@
-﻿using FluentAssertions;
-using Paytools.Pensions.ReferenceData;
+﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License") ~
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using FluentAssertions;
+using Paytools.Common.Model;
 
 namespace Paytools.Pensions.Tests;
 
-public class NonSalaryExchangePensionablePaySetTests
+public class NonSalaryExchangePensionablePaySetTests : IClassFixture<PensionContributionsCalculatorFactoryDataFixture>
 {
-    private static readonly IPensionsReferenceDataProvider _provider;
+    private readonly PayDate _payDate = new PayDate(2022, 4, 6, PayFrequency.Monthly);
+    private readonly PensionContributionsCalculatorFactoryDataFixture _factoryProviderFixture;
+
+    public NonSalaryExchangePensionablePaySetTests(PensionContributionsCalculatorFactoryDataFixture factoryProviderFixture)
+    {
+        _factoryProviderFixture = factoryProviderFixture;
+    }
 
     [Fact]
-    public void TestPensionablePay_NPA()
+    public async Task TestPensionablePay_NPAAsync()
     {
-        PensionablePaySetCalculator calculator = new(EarningsBasis.PensionablePaySet1, PensionTaxTreatment.NetPayArrangement);
+        var calculator = await GetCalculator(EarningsBasis.PensionablePaySet1, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 4129.52m;
         var employerContributionPct = 3.0m;
@@ -26,9 +46,9 @@ public class NonSalaryExchangePensionablePaySetTests
     }
 
     [Fact]
-    public void TestPensionablePay_RAS()
+    public async Task TestPensionablePay_RASAsync()
     {
-        PensionablePaySetCalculator calculator = new(EarningsBasis.PensionablePaySet2, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.PensionablePaySet2, PensionTaxTreatment.ReliefAtSource, 0.2m);
 
         var pensionableSalary = 3769.42m;
         var employerContributionPct = 3.0m;
@@ -64,5 +84,12 @@ public class NonSalaryExchangePensionablePaySetTests
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().BeNull();
         result.EmployerNiSavings.Should().BeNull();
+    }
+
+    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)
+    {
+        var provider = await _factoryProviderFixture.GetFactory();
+
+        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate, basicRateOfTax);
     }
 }

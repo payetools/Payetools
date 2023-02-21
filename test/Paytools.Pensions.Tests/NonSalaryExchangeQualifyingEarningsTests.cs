@@ -5,8 +5,16 @@ using System.Runtime.CompilerServices;
 
 namespace Paytools.Pensions.Tests;
 
-public class NonSalaryExchangeQualifyingEarningsTests
+public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionContributionsCalculatorFactoryDataFixture>
 {
+    private readonly PayDate _payDate = new PayDate(2022, 4, 6, PayFrequency.Monthly);
+    private readonly PensionContributionsCalculatorFactoryDataFixture _factoryProviderFixture;
+
+    public NonSalaryExchangeQualifyingEarningsTests(PensionContributionsCalculatorFactoryDataFixture factoryProviderFixture)
+    {
+        _factoryProviderFixture = factoryProviderFixture;
+    }
+
     [Fact]
     public async Task TestEarningsBelowLowerLimitForQE_NPA()
     {
@@ -14,8 +22,6 @@ public class NonSalaryExchangeQualifyingEarningsTests
 
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
-
-        //QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
 
         var pensionableSalary = 519.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -254,12 +260,8 @@ public class NonSalaryExchangeQualifyingEarningsTests
 
     private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax =null)
     {
-        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+        var provider = await _factoryProviderFixture.GetFactory();
 
-        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
-
-        var calculatorFactory = new PensionContributionCalculatorFactory(provider);
-
-        return calculatorFactory.GetCalculator(earningsBasis, taxTreatment, new PayDate(2022, 4, 6, PayFrequency.Monthly), basicRateOfTax);
+        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate, basicRateOfTax);
     }
 }

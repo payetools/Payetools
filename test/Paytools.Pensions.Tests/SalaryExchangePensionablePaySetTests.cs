@@ -1,13 +1,22 @@
 ﻿using FluentAssertions;
+using Paytools.Common.Model;
 
 namespace Paytools.Pensions.Tests;
 
-public class SalaryExchangePensionablePaySetTests
+public class SalaryExchangePensionablePaySetTests : IClassFixture<PensionContributionsCalculatorFactoryDataFixture>
 {
-    [Fact]
-    public void TestPensionablePay()
+    private readonly PayDate _payDate = new PayDate(2022, 4, 6, PayFrequency.Monthly);
+    private readonly PensionContributionsCalculatorFactoryDataFixture _factoryProviderFixture;
+
+    public SalaryExchangePensionablePaySetTests(PensionContributionsCalculatorFactoryDataFixture factoryProviderFixture)
     {
-        PensionablePaySetCalculator calculator = new(EarningsBasis.PensionablePaySet1, PensionTaxTreatment.NetPayArrangement);
+        _factoryProviderFixture = factoryProviderFixture;
+    }
+
+    [Fact]
+    public async Task TestPensionablePayAsync()
+    {
+        var calculator = await GetCalculator(EarningsBasis.PensionablePaySet1, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 5366.59m;
         var employerContributionPct = 3.0m;
@@ -44,5 +53,12 @@ public class SalaryExchangePensionablePaySetTests
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().Be(expectedEmployerContributionBeforeSE);
         result.EmployerNiSavings.Should().Be(expectedEmployerNiSaving);
+    }
+
+    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)
+    {
+        var provider = await _factoryProviderFixture.GetFactory();
+
+        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate, basicRateOfTax);
     }
 }
