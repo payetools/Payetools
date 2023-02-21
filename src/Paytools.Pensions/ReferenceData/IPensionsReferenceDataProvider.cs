@@ -23,13 +23,12 @@ namespace Paytools.Pensions.ReferenceData;
 public interface IPensionsReferenceDataProvider
 {
     /// <summary>
-    /// Gets the thresholds for Qualifying Earnings for the specified tax year and tax period, as denoted by the 
+    /// Gets the thresholds for Qualifying Earnings for the specified tax year and tax period, as denoted by the
     /// supplied pay frequency and pay period.
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
     /// <param name="taxPeriod">Application tax period.</param>
-    /// <returns>An instance of <see cref="IPensionsReferenceDataSet"/> containing the thresholds for the specified point
-    /// in time.</returns>
-    IPensionsReferenceDataSet GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
+    /// <returns>A tuple containing the thresholds for the specified pay frequency and point in time.</returns>
+    (decimal LowerLimit, decimal UpperLimit) GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 }

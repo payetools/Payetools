@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.ReferenceData;
-using Paytools.NationalInsurance.ReferenceData;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Paytools.ReferenceData;
+namespace Paytools.Pensions;
 
-/// <summary>
-/// Interface that HMRC reference data providers must implement.
-/// </summary>
-public interface IHmrcReferenceDataProvider : 
-    ITaxReferenceDataProvider,
-    INiReferenceDataProvider
+internal class QeThresholdType
 {
-    string Health { get; }
 }
