@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.Pensions.ReferenceData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ public class PensionContributionCalculatorFactory : IPensionContributionCalculat
 
     public PensionContributionCalculatorFactory(IPensionsReferenceDataProvider provider)
     {
-        
+        _provider= provider;
     }
     public IPensionContributionCalculator GetCalculator(PayDate payDate, PayFrequency payFrequency, EarningsBasis earningsBasis)
     {
