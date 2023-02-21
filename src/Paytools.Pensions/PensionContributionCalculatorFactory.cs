@@ -42,10 +42,15 @@ public class PensionContributionCalculatorFactory : IPensionContributionCalculat
     /// <param name="earningsBasis">Earnings basis for pension calculation (Qualifying Earnings vs Pensionable Pay Set x.</param>
     /// <param name="taxTreatment">Tax treatment (net pay arrangement vs relief at source).</param>
     /// <param name="payDate">Applicable pay date.</param>
+    /// <param name="basicRateOfTax">Basic rate of tax.  Optional.  [NOT YET IMPLEMENTED].</param>
     /// <returns>A new calculator instance.</returns>
     /// <exception cref="ArgumentException">Thrown if an unsupported earnings basis is provided.</exception>
-    public IPensionContributionCalculator GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, PayDate payDate) =>
-        GetCalculator(earningsBasis, taxTreatment, payDate.TaxYear, payDate.PayFrequency, payDate.TaxPeriod);
+    public IPensionContributionCalculator GetCalculator(
+        EarningsBasis earningsBasis,
+        PensionTaxTreatment taxTreatment,
+        PayDate payDate,
+        decimal? basicRateOfTax = null) =>
+        GetCalculator(earningsBasis, taxTreatment, payDate.TaxYear, payDate.PayFrequency, payDate.TaxPeriod, basicRateOfTax);
 
     /// <summary>
     /// Gets a new <see cref="IPensionContributionCalculator"/> based on the specified tax year, pay frequency and pay period, along with the

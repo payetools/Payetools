@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ReferenceData\Pensions_2022_2023.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ReferenceData\Pensions_2022_2023.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.8.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -25,6 +33,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Paytools.Common\Paytools.Common.csproj" />
     <ProjectReference Include="..\..\src\Paytools.Pensions\Paytools.Pensions.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
+    <ProjectReference Include="..\Paytools.Testing.Utils\Paytools.Testing.Utils.csproj" />
   </ItemGroup>
 
 </Project>

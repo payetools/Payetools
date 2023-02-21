@@ -2,10 +2,18 @@
 using Microsoft.Extensions.Logging;
 using Paytools.ReferenceData;
 using System.Diagnostics;
+using Microsoft.Extensions.Configuration;
 
 Console.WriteLine("Hello, World!");
 
 AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+
+var builder = new ConfigurationBuilder();
+builder.SetBasePath(Directory.GetCurrentDirectory())
+       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+IConfiguration config = builder.Build();
 
 var serviceProvider = new ServiceCollection()
     .AddHttpClient()

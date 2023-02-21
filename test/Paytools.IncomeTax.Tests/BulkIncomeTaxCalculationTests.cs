@@ -42,7 +42,6 @@ public class BulkIncomeTaxCalculationTests
         var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
 
         var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
-        //        TaxReferenceDataProvider provider = await TaxReferenceDataProvider.GetTaxReferenceDataProvider("https://stellular-bombolone-34e67e.netlify.app/hmrc.json");
 
         var taxCalculatorFactory = new TaxCalculatorFactory(provider);
         var tests = IncomeTaxTestDataLoader.Load();

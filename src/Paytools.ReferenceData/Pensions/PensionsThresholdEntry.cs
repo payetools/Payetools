@@ -27,43 +27,43 @@ public readonly struct PensionsThresholdEntry : IPensionsThresholdEntry
     /// Gets the per week value of the threshold.
     /// </summary>
     [JsonPropertyName("perWeek")]
-    public decimal ThresholdValuePerWeek { get; }
+    public decimal ThresholdValuePerWeek { get; init; }
 
     /// <summary>
     /// Gets the per 2-week value of the threshold.
     /// </summary>
     [JsonPropertyName("perTwoWeeks")]
-    public decimal ThresholdValuePerTwoWeeks { get; }
+    public decimal ThresholdValuePerTwoWeeks { get; init; }
 
     /// <summary>
     /// Gets the per 4-week value of the threshold.
     /// </summary>
     [JsonPropertyName("perFourWeeks")]
-    public decimal ThresholdValuePerFourWeeks { get; }
+    public decimal ThresholdValuePerFourWeeks { get; init; }
 
     /// <summary>
     /// Gets the per month value of the threshold.
     /// </summary>
     [JsonPropertyName("perMonth")]
-    public decimal ThresholdValuePerMonth { get; }
+    public decimal ThresholdValuePerMonth { get; init; }
 
     /// <summary>
     /// Gets the per quarter value of the threshold.
     /// </summary>
     [JsonPropertyName("perQuarter")]
-    public decimal ThresholdValuePerQuarter { get; }
+    public decimal ThresholdValuePerQuarter { get; init; }
 
     /// <summary>
     /// Gets the per half-year value of the threshold.
     /// </summary>
     [JsonPropertyName("perHalfYear")]
-    public decimal ThresholdValuePerHalfYear { get; }
+    public decimal ThresholdValuePerHalfYear { get; init; }
 
     /// <summary>
     /// Gets the per annum value of the threshold.
     /// </summary>
     [JsonPropertyName("perYear")]
-    public decimal ThresholdValuePerYear { get; }
+    public decimal ThresholdValuePerYear { get; init; }
 
     /// <summary>
     /// Gets the applicable threshold value for the supplied pay frequency.

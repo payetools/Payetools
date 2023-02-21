@@ -30,7 +30,7 @@ namespace Paytools.ReferenceData;
 
 internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 {
-    private readonly ConcurrentDictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet> _referenceDataSets;
+    private readonly Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet> _referenceDataSets;
 
     /// <summary>
     /// Gets or sets (internal only) the health of this reference data provider as human-readable string.
@@ -42,7 +42,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     internal HmrcReferenceDataProvider()
     {
-        _referenceDataSets = new ConcurrentDictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();
+        _referenceDataSets = new Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();
         Health = "No tax years added";
     }
 

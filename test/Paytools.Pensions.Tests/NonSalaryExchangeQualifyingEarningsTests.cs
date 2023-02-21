@@ -1,16 +1,21 @@
 using FluentAssertions;
+using Paytools.Common.Model;
+using Paytools.Testing.Utils;
+using System.Runtime.CompilerServices;
 
 namespace Paytools.Pensions.Tests;
 
 public class NonSalaryExchangeQualifyingEarningsTests
 {
     [Fact]
-    public void TestEarningsBelowLowerLimitForQE_NPA()
+    public async Task TestEarningsBelowLowerLimitForQE_NPA()
     {
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.NetPayArrangement);
+
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
+        //QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
 
         var pensionableSalary = 519.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -27,12 +32,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsAtLowerLimitForQE_NPA()
+    public async Task TestEarningsAtLowerLimitForQE_NPAAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 520.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -49,12 +54,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsJustBelowUpperLimitForQE_NPA()
+    public async Task TestEarningsJustBelowUpperLimitForQE_NPAAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 4188.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -71,12 +76,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsAtUpperLimitForQE_NPA()
+    public async Task TestEarningsAtUpperLimitForQE_NPAAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 4189.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -93,12 +98,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsAboveUpperLimitForQE_NPA()
+    public async Task TestEarningsAboveUpperLimitForQE_NPAAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.NetPayArrangement, lowerLimit, upperLimit);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 5000.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -115,12 +120,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsBelowLowerLimitForQE_RAS()
+    public async Task TestEarningsBelowLowerLimitForQE_RASAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.ReliefAtSource, lowerLimit, upperLimit, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
 
         var pensionableSalary = 519.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -137,12 +142,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsAtLowerLimitForQE_RAS()
+    public async Task TestEarningsAtLowerLimitForQE_RASAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.ReliefAtSource, lowerLimit, upperLimit, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
 
         var pensionableSalary = 520.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -159,12 +164,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsJustBelowUpperLimitForQE_RAS()
+    public async Task TestEarningsJustBelowUpperLimitForQE_RASAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.ReliefAtSource, lowerLimit, upperLimit, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
 
         var pensionableSalary = 4188.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -181,12 +186,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsAtUpperLimitForQE_RAS()
+    public async Task TestEarningsAtUpperLimitForQE_RASAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.ReliefAtSource, lowerLimit, upperLimit, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
 
         var pensionableSalary = 4189.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -203,12 +208,12 @@ public class NonSalaryExchangeQualifyingEarningsTests
     }
 
     [Fact]
-    public void TestEarningsAboveUpperLimitForQE_RAS()
+    public async Task TestEarningsAboveUpperLimitForQE_RASAsync()
     {
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        QualifyingEarningsCalculator calculator = new(PensionTaxTreatment.ReliefAtSource, lowerLimit, upperLimit, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
 
         var pensionableSalary = 5000.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -245,5 +250,16 @@ public class NonSalaryExchangeQualifyingEarningsTests
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().BeNull();
         result.EmployerNiSavings.Should().BeNull();
+    }
+
+    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax =null)
+    {
+        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+
+        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
+
+        var calculatorFactory = new PensionContributionCalculatorFactory(provider);
+
+        return calculatorFactory.GetCalculator(earningsBasis, taxTreatment, new PayDate(2022, 4, 6, PayFrequency.Monthly), basicRateOfTax);
     }
 }

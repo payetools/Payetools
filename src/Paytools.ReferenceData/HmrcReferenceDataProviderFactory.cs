@@ -121,10 +121,10 @@ public class HmrcReferenceDataProviderFactory
         if (!taxYearUris.Any())
             throw new InvalidReferenceDataException($"No valid tax year entries returned from endpoint {referenceDataEndpoint}");
 
-        _logger?.LogInformation("Retrieved links to {taxYearUris.Count} items from HTTP(S) endpoint '{referenceDataEndpoint}'",
+        _logger?.LogInformation("Retrieved links to {taxYearUris.Count} item(s) from HTTP(S) endpoint '{referenceDataEndpoint}'",
             taxYearUris.Count, referenceDataEndpoint);
 
-        return await CreateProviderAsync((uri) => RetrieveFromHttpEndpoint<HmrcTaxYearReferenceDataSet>(new Uri(uri)), taxYearUris);
+        return await CreateProviderAsync(uri => RetrieveFromHttpEndpoint<HmrcTaxYearReferenceDataSet>(new Uri(uri)), taxYearUris);
     }
 
     private async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Func<string, Task<HmrcTaxYearReferenceDataSet>> retrieve, List<string> keys)
@@ -139,6 +139,9 @@ public class HmrcReferenceDataProviderFactory
                 _logger?.LogInformation("Attempting to retrieve reference data item with key '{key}'", key);
 
                 var taxYearEntry = await retrieve(key);
+
+                _logger?.LogInformation("Retrieved reference data for tax year {taxYearEntry.ApplicableTaxYearEnding}, version {taxYearEntry.Version}",
+                    taxYearEntry.ApplicableTaxYearEnding, taxYearEntry.Version);
 
                 health.Add(referenceDataProvider.TryAdd(taxYearEntry) ?
                     $"{taxYearEntry.ApplicableTaxYearEnding}:OK" :
@@ -161,6 +164,8 @@ public class HmrcReferenceDataProviderFactory
         {
             var client = _httpClientFactory?.CreateClient() ??
                 throw new InvalidOperationException("Unable to retrieve reference data via HTTP(S); failed to create HTTP client.");
+
+            _logger?.LogInformation("Retrieving reference data set via HTTP GET from '{endpoint}'", endpoint);
 
             var response = await client.GetAsync(endpoint);
 
