@@ -17,7 +17,8 @@ using System.Collections.Immutable;
 namespace Paytools.ReferenceData.NationalInsurance;
 
 /// <summary>
-/// Represents a set of tax bands for a given tax regime for a period, typically a full tax year. 
+/// Represents a set of Ni thresholds and rates for a period; where there have been in-year changes,
+/// then there may be several such entries for a given tax year.
 /// </summary>
 public class NiReferenceDataEntry : IApplicableBetween
 {
@@ -34,7 +35,6 @@ public class NiReferenceDataEntry : IApplicableBetween
     /// <summary>
     /// Gets a read-only list of applicable NI thresholds.
     /// </summary>
-
     public ImmutableList<NiThresholdEntry> NiThresholds { get; init; } = default!;
 
     /// <summary>

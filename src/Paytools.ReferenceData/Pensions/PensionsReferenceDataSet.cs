@@ -12,12 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.ReferenceData.IncomeTax;
+using Paytools.Pensions.ReferenceData;
+
+namespace Paytools.ReferenceData.Pensions;
 
 /// <summary>
-/// Represents a set of tax bands for a given tax regime for a period, typically a full tax year. 
+/// Represents the reference data for pensions for a period; where there have been in-year changes,
+/// then there may be several such entries for a given tax year, although this is very uncommon.
 /// </summary>
-public record IncomeTaxBandSet : IApplicableBetween
+public class PensionsReferenceDataSet : IApplicableBetween
 {
     /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability.
@@ -30,7 +33,17 @@ public record IncomeTaxBandSet : IApplicableBetween
     public DateOnly ApplicableTill { get; init; }
 
     /// <summary>
-    /// Gets a read-only list of applicable tax bands.
+    /// Gets the lower set of earnings thresholds for Qualifying Earnings (i.e., per week, per 2-weeks, etc.).
     /// </summary>
-    public IReadOnlyList<IncomeTaxBandEntry> TaxEntries { get; init; } = default!;
+    public PensionsThresholdEntry QualifyingEarningsLowerLevel { get; init; }
+
+    /// <summary>
+    /// Gets the upper set of earnings thresholds for Qualifying Earnings (i.e., per week, per 2-weeks, etc.).
+    /// </summary>
+    public PensionsThresholdEntry QualifyingEarningsUpperLevel { get; init; }
+
+    /// <summary>
+    /// Gets the set of earnings triggers for Automatic Enrolment (i.e., per week, per 2-weeks, etc.).
+    /// </summary>
+    public PensionsThresholdEntry AeEarningsTrigger { get; init; }
 }

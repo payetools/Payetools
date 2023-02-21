@@ -29,6 +29,6 @@ public interface IPensionsReferenceDataProvider
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
     /// <param name="taxPeriod">Application tax period.</param>
-    /// <returns>A tuple containing the thresholds for the specified pay frequency and point in time.</returns>
+    /// <returns>A tuple containing the lower and upper thresholds for the specified pay frequency and point in time.</returns>
     (decimal LowerLimit, decimal UpperLimit) GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 }

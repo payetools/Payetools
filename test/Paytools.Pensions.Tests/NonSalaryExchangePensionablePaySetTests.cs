@@ -1,9 +1,12 @@
 ﻿using FluentAssertions;
+using Paytools.Pensions.ReferenceData;
 
 namespace Paytools.Pensions.Tests;
 
 public class NonSalaryExchangePensionablePaySetTests
 {
+    private static readonly IPensionsReferenceDataProvider _provider;
+
     [Fact]
     public void TestPensionablePay_NPA()
     {

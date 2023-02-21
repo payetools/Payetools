@@ -15,6 +15,7 @@
 using Paytools.Common.Model;
 using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
+using Paytools.ReferenceData.Pensions;
 
 namespace Paytools.ReferenceData;
 
@@ -28,9 +29,16 @@ public class HmrcTaxYearReferenceDataSet
     /// </summary>
     public string Version { get; init; } = "Not specified";
 
+    /// <summary>
+    /// Gets the latest update timestamp for this data set.
+    /// </summary>
+    public DateTime LatestUpdateTimestamp { get; init; }
+
     public TaxYearEnding ApplicableTaxYearEnding { get; init; }
 
-    public List<IncomeTaxBandSet> IncomeTax { get; init; } = default!;
+    public List<IncomeTaxReferenceDataSet> IncomeTax { get; init; } = default!;
 
     public List<NiReferenceDataEntry> NationalInsurance { get; init; } = default!;
+
+    public List<PensionsReferenceDataSet> Pensions { get; init; } = default!;
 }

@@ -15,42 +15,42 @@
 namespace Paytools.Pensions.ReferenceData;
 
 /// <summary>
-/// Interface for types that provide access to a given pensions threshold value.
+/// Interface for types that provide access to a given set of pensions threshold values.
 /// </summary>
 public interface IPensionsThresholdEntry
 {
     /// <summary>
     /// Gets the per week value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerWeek { get; }
+    decimal ThresholdValuePerWeek { get; }
 
     /// <summary>
     /// Gets the per 2-week value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerTwoWeeks { get; }
+    decimal ThresholdValuePerTwoWeeks { get; }
 
     /// <summary>
     /// Gets the per 4-week value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerFourWeeks { get; }
+    decimal ThresholdValuePerFourWeeks { get; }
 
     /// <summary>
     /// Gets the per month value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerMonth { get; }
+    decimal ThresholdValuePerMonth { get; }
 
     /// <summary>
     /// Gets the per quarter value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerQuarter { get; }
+    decimal ThresholdValuePerQuarter { get; }
 
     /// <summary>
     /// Gets the per half-year value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerHalfYear { get; }
+    decimal ThresholdValuePerHalfYear { get; }
 
     /// <summary>
     /// Gets the per annum value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerYear { get; }
+    decimal ThresholdValuePerYear { get; }
 }

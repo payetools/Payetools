@@ -19,6 +19,7 @@ using Paytools.NationalInsurance;
 using Paytools.NationalInsurance.ReferenceData;
 using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
+using Paytools.ReferenceData.Pensions;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
@@ -29,7 +30,7 @@ namespace Paytools.ReferenceData;
 
 internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 {
-    private ConcurrentDictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet> _referenceDataSets;
+    private readonly ConcurrentDictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet> _referenceDataSets;
 
     /// <summary>
     /// Gets or sets (internal only) the health of this reference data provider as human-readable string.
@@ -67,7 +68,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     {
         var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
 
-        var taxBands = FindApplicableEntry<IncomeTaxBandSet>(referenceDataSet.IncomeTax,
+        var taxBands = FindApplicableEntry<IncomeTaxReferenceDataSet>(referenceDataSet.IncomeTax,
             taxYear, payFrequency, taxPeriod);
 
         return new ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet>(taxBands.TaxEntries
@@ -132,16 +133,35 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
             taxYear, payFrequency, taxPeriod);
 
-        var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiThresholdEntry() 
-            { 
+        var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiThresholdEntry()
+            {
                 ThresholdType = nit.ThresholdType,
-                ThresholdValuePerWeek= nit.ThresholdValuePerWeek,
-                ThresholdValuePerMonth= nit.ThresholdValuePerMonth,
+                ThresholdValuePerWeek = nit.ThresholdValuePerWeek,
+                ThresholdValuePerMonth = nit.ThresholdValuePerMonth,
                 ThresholdValuePerYear = nit.ThresholdValuePerYear
             })
             .ToImmutableList();
 
         return new NiThresholdSet(thresholds);
+    }
+
+    /// <summary>
+    /// Gets the thresholds for Qualifying Earnings for the specified tax year and tax period, as denoted by the
+    /// supplied pay frequency and pay period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>A tuple containing the lower and upper thresholds for the specified pay frequency and point in time.</returns>
+    public (decimal LowerLimit, decimal UpperLimit) GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        var pensionsReferenceDataEntry = FindApplicableEntry<PensionsReferenceDataSet>(referenceDataSet.Pensions,
+            taxYear, payFrequency, taxPeriod);
+
+        return (pensionsReferenceDataEntry.QualifyingEarningsLowerLevel.GetThresholdForPayFrequency(payFrequency),
+            pensionsReferenceDataEntry.QualifyingEarningsUpperLevel.GetThresholdForPayFrequency(payFrequency));
     }
 
     private HmrcTaxYearReferenceDataSet GetReferenceDataSetForTaxYear(TaxYear taxYear)
@@ -151,7 +171,8 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 
         if (referenceDataSet == null ||
             referenceDataSet?.IncomeTax == null ||
-            referenceDataSet?.NationalInsurance == null)
+            referenceDataSet?.NationalInsurance == null ||
+            referenceDataSet?.Pensions == null)
             throw new InvalidReferenceDataException($"Reference data for tax year ending {taxYear.EndOfTaxYear} is invalid or incomplete");
 
         return referenceDataSet;

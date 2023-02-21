@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Microsoft.Extensions.Logging;
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Extensions;
 using Paytools.Common.Serialization;
@@ -30,7 +31,8 @@ namespace Paytools.ReferenceData;
 /// the status of each tax year loaded.</remarks>
 public class HmrcReferenceDataProviderFactory
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IHttpClientFactory? _httpClientFactory;
+    private readonly ILogger<HmrcReferenceDataProviderFactory>? _logger;
 
     private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
     {
@@ -48,30 +50,47 @@ public class HmrcReferenceDataProviderFactory
     };
 
     /// <summary>
+    /// Initialises a new instance of <see cref="HmrcReferenceDataProviderFactory"/> for use with Streams; do not use this
+    /// constructor if accessing HMRC reference data over HTTP(S) is required.
+    /// </summary>
+    public HmrcReferenceDataProviderFactory(ILogger<HmrcReferenceDataProviderFactory>? logger = null)
+    {
+        _httpClientFactory = null;
+        _logger = logger;
+    }
+
+    /// <summary>
     /// Initialises a new instance of <see cref="HmrcReferenceDataProviderFactory"/>.  An <see cref="IHttpClientFactory"/>
     /// is required to provide <see cref="HttpClient"/> instances to retrieve the reference data from the cloud.
     /// </summary>
     /// <param name="httpClientFactory">Implementation of <see cref="IHttpClientFactory"/>.</param>
-    public HmrcReferenceDataProviderFactory(IHttpClientFactory httpClientFactory)
+    /// <param name="logger">Optional logger.</param>
+    public HmrcReferenceDataProviderFactory(
+        IHttpClientFactory httpClientFactory,
+        ILogger<HmrcReferenceDataProviderFactory>? logger = null)
     {
         _httpClientFactory = httpClientFactory;
+        _logger = logger;
     }
 
     /// <summary>
     /// Creates a new HMRC reference data that implements <see cref="IHmrcReferenceDataProvider"/> using reference
     /// data loaded from an array of streams.
     /// </summary>
-    /// <param name="referenceDataStream">Array of data streams to load HMRC reference data from.</param>
+    /// <param name="referenceDataStreams">Array of data streams to load HMRC reference data from.</param>
     /// <returns>An instance of a type that implements <see cref="IHmrcReferenceDataProvider"/>.</returns>
     /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to load
     /// reference data from the supplied stream.</exception>
-    public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Stream[] referenceDataStream)
+    public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Stream[] referenceDataStreams)
     {
-        var streams = referenceDataStream.WithIndex().ToDictionary(iv => iv.Index.ToString(), iv => iv.Value);
+        _logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider with array of Streams; {referenceDataStreams.Length} streams provided",
+            referenceDataStreams.Length);
+
+        var streams = referenceDataStreams.WithIndex().ToDictionary(iv => iv.Index.ToString(), iv => iv.Value);
 
         return await CreateProviderAsync(key =>
             DeserializeAsync<HmrcTaxYearReferenceDataSet>(streams[key], $"Stream #{key}"), streams.Keys.ToList()) ??
-                throw new InvalidReferenceDataException("Failed to ");
+                throw new InvalidReferenceDataException("Failed to create ");
     }
 
     /// <summary>
@@ -82,18 +101,33 @@ public class HmrcReferenceDataProviderFactory
     /// <returns>An instance of a type that implements <see cref="IHmrcReferenceDataProvider"/>.</returns>
     /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to retrieve
     /// reference data from the supplied endpoint.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if this factory was created without a valid <see cref="IHttpClientFactory"/>
+    /// instance.</exception>
+    /// <remarks>Original implementation of <see cref="HmrcReferenceDataProvider"/> used Parallel.Foreach()
+    /// loop to retrieve entries in parallel but there must be some issue with the default IHttpClientFactory
+    /// implementation that prevents parallel usage (or some other non-obvious issue).</remarks>
+
     public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Uri referenceDataEndpoint)
     {
+        if (_httpClientFactory == null)
+            throw new InvalidOperationException("Unable to retrieve reference data via HTTP(S); no IHttpClientFactory provided.  Use alternate constructor.");
+
+        _logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider from HTTP(S) endpoint '{referenceDataEndpoint}'",
+            referenceDataEndpoint);
+
         // Get the list of supported tax years
-        var taxYearUris = await Retrieve<List<string>>(referenceDataEndpoint);
+        var taxYearUris = await RetrieveFromHttpEndpoint<List<string>>(referenceDataEndpoint);
 
         if (!taxYearUris.Any())
             throw new InvalidReferenceDataException($"No valid tax year entries returned from endpoint {referenceDataEndpoint}");
 
-        return await CreateProviderAsync((uri) => Retrieve<HmrcTaxYearReferenceDataSet>(new Uri(uri)), taxYearUris);
+        _logger?.LogInformation("Retrieved links to {taxYearUris.Count} items from HTTP(S) endpoint '{referenceDataEndpoint}'",
+            taxYearUris.Count, referenceDataEndpoint);
+
+        return await CreateProviderAsync((uri) => RetrieveFromHttpEndpoint<HmrcTaxYearReferenceDataSet>(new Uri(uri)), taxYearUris);
     }
 
-    private static async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Func<string, Task<HmrcTaxYearReferenceDataSet>> retrieve, List<string> keys)
+    private async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Func<string, Task<HmrcTaxYearReferenceDataSet>> retrieve, List<string> keys)
     {
         var referenceDataProvider = new HmrcReferenceDataProvider();
         var health = new List<string>();
@@ -102,6 +136,8 @@ public class HmrcReferenceDataProviderFactory
         {
             try
             {
+                _logger?.LogInformation("Attempting to retrieve reference data item with key '{key}'", key);
+
                 var taxYearEntry = await retrieve(key);
 
                 health.Add(referenceDataProvider.TryAdd(taxYearEntry) ?
@@ -119,34 +155,35 @@ public class HmrcReferenceDataProviderFactory
         return await Task.FromResult(referenceDataProvider);
     }
 
-    /// <summary>
-    /// Retrieves the item or items of the specified type from the supplied endpoint over HTTP(S).
-    /// </summary>
-    /// <typeparam name="T">Type of object to retrieve.</typeparam>
-    /// <param name="endpoint">Endpoint to retrieve object(s) from.</param>
-    /// <returns>Instance of the specfied type.</returns>
-    /// <exception cref="InvalidReferenceDataException">Thrown if the HTTP(S) request was unsuccessful or if
-    /// it was not possible to deserialise the data retrieved into the specified type.</exception>
-    /// <remarks>Originally implementation of <see cref="HmrcReferenceDataProvider"/> used Parallel.Foreach()
-    /// loop to retrieve entries in parallel but there must be some issue with the default IHttpClientFactory
-    /// implementation that prevents parallel usage (or some other non-obvious issue).
-    /// </remarks>
-    private async Task<T> Retrieve<T>(Uri endpoint)
+    private async Task<T> RetrieveFromHttpEndpoint<T>(Uri endpoint)
     {
         try
         {
-            using var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory?.CreateClient() ??
+                throw new InvalidOperationException("Unable to retrieve reference data via HTTP(S); failed to create HTTP client.");
 
             var response = await client.GetAsync(endpoint);
 
             if (response == null || !response.IsSuccessStatusCode)
-                throw new InvalidReferenceDataException($"Unable to retrieve data from reference data endpoint '{endpoint}'; status code = {response?.StatusCode}, status text = ''{response?.ReasonPhrase}");
+            {
+                _logger?.LogWarning("Failed to retrieve item from endpoint {endpoint}; HTTP status code = {response?.StatusCode}", endpoint, response?.StatusCode);
+
+                throw new InvalidReferenceDataException($"Unable to retrieve data from reference data endpoint '{endpoint}'; status code = {response?.StatusCode}, status text = '{response?.ReasonPhrase}'");
+            }
+
+            _logger?.LogInformation("Retrieved data from endpoint {endpoint} with HTTP status code {response.StatusCode}", endpoint, response.StatusCode);
 
             return await DeserializeAsync<T>(response.Content.ReadAsStream(), endpoint.ToString());
         }
         catch (HttpRequestException ex)
         {
             throw new InvalidReferenceDataException($"Unable to retrieve data from reference data endpoint '{endpoint}' (see inner exception for details)", ex);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine();
+
+            throw;
         }
     }
 

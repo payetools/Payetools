@@ -12,19 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.ReferenceData;
-using Paytools.NationalInsurance.ReferenceData;
 using Paytools.Pensions.ReferenceData;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Paytools.ReferenceData;
+namespace Paytools.Pensions.Tests;
 
-/// <summary>
-/// Interface that HMRC reference data providers must implement.
-/// </summary>
-public interface IHmrcReferenceDataProvider :
-    ITaxReferenceDataProvider,
-    INiReferenceDataProvider,
-    IPensionsReferenceDataProvider
+public class PensionsReferenceDataFixture : IDisposable
 {
-    string Health { get; }
+    public IPensionsReferenceDataProvider Provider { get; set; }
+
+    public PensionsReferenceDataFixture()
+    {
+
+    }
+
+    public void Dispose()
+    {
+        // ... clean up test data from the database ...
+    }
 }
