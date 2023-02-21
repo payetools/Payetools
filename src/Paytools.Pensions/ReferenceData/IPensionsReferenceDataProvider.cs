@@ -12,15 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Paytools.Common.Model;
 
-namespace Paytools.Pensions.ReferenceData
+namespace Paytools.Pensions.ReferenceData;
+
+/// <summary>
+/// Interface that classes implement in order to provide access to pensions reference data, i.e.,
+/// rates and thresholds.
+/// </summary>
+public interface IPensionsReferenceDataProvider
 {
-    internal interface IPensionsReferenceDataProvider
-    {
-    }
+    /// <summary>
+    /// Gets the thresholds for Qualifying Earnings for the specified tax year and tax period, as denoted by the 
+    /// supplied pay frequency and pay period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>An instance of <see cref="IPensionsReferenceDataSet"/> containing the thresholds for the specified point
+    /// in time.</returns>
+    IPensionsReferenceDataSet GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 }

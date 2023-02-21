@@ -12,15 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paytools.Pensions
+namespace Paytools.Pensions;
+
+public class PensionContributionCalculatorFactory : IPensionContributionCalculatorFactory
 {
-    internal class PensionContributionCalculatorFactory
+    private readonly IPensionsReferenceDataProvider _provider;
+
+    public PensionContributionCalculatorFactory(IPensionsReferenceDataProvider provider)
     {
+        
+    }
+    public IPensionContributionCalculator GetCalculator(PayDate payDate, PayFrequency payFrequency, EarningsBasis earningsBasis)
+    {
+        throw new NotImplementedException();
     }
 }
