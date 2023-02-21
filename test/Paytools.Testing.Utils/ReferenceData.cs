@@ -28,4 +28,8 @@ public static class ReferenceData
 
         return new HmrcReferenceDataProviderFactory(httpClientFactory);
     }
+
+    public async static Task<T> CreateProviderAsync<T>(Stream[] streams) where T : class =>
+        await GetFactory().CreateProviderAsync(streams) as T ??
+            throw new InvalidCastException("Unable to cast reference data provider to specified type");
 }

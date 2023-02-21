@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
+using Paytools.NationalInsurance.ReferenceData;
 using Paytools.ReferenceData.NationalInsurance;
 using Paytools.Testing.Data;
 using Paytools.Testing.Utils;
@@ -38,7 +39,7 @@ public class HmrcTests
 
         var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
 
-        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\NationalInsurance_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<INiReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalInsurance_2022_2023.json") });
 
         using var db = new TestDataRepository();
 

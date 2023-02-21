@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
+using Paytools.IncomeTax.ReferenceData;
 using Paytools.IncomeTax.Tests.TestData;
 using Paytools.Testing.Utils;
 using System.Diagnostics;
@@ -39,9 +40,8 @@ public class BulkIncomeTaxCalculationTests
     {
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
 
-        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
-
-        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
+        var provider = await 
+            Testing.Utils.ReferenceData.CreateProviderAsync<ITaxReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
 
         var taxCalculatorFactory = new TaxCalculatorFactory(provider);
         var tests = IncomeTaxTestDataLoader.Load();

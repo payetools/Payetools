@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Pensions.ReferenceData;
 using Paytools.Testing.Utils;
 
 namespace Paytools.Pensions.Tests;
@@ -22,7 +23,7 @@ public class PensionContributionsCalculatorFactoryDataFixture
     {
         var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
 
-        var provider = await referenceDataFactory.CreateProviderAsync(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<IPensionsReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
 
         return new PensionContributionCalculatorFactory(provider);
     });
