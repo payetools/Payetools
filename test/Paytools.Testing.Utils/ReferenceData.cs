@@ -13,22 +13,19 @@
 // limitations under the License.
 
 using Microsoft.Extensions.DependencyInjection;
+using Paytools.ReferenceData;
 
-namespace Paytools.ReferenceData.Tests;
+namespace Paytools.Testing.Utils;
 
-public class HmrcReferenceDataProviderTests
+public static class ReferenceData
 {
-    [Fact]
-    public async Task LoadTestDataAsync()
+    public static HmrcReferenceDataProviderFactory GetFactory()
     {
         var serviceProvider = new ServiceCollection().AddHttpClient().BuildServiceProvider();
 
         var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>() ??
             throw new InvalidOperationException("Unable to create HttpClientfactory");
 
-        var factory = new HmrcReferenceDataProviderFactory(httpClientFactory);
-
-        var provider = await factory.CreateProviderAsync(new Uri("https://stellular-bombolone-34e67e.netlify.app/index.json"));
+        return new HmrcReferenceDataProviderFactory(httpClientFactory);
     }
-
 }

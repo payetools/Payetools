@@ -54,8 +54,7 @@ public class NiCalculatorFactory : INiCalculatorFactory
     /// <param name="numberOfTaxPeriods">Number of tax periods applicable, usually 1.  Defaults to 1.</param>
     /// <returns>A new calculator instance.</returns>
     public INiCalculator GetCalculator(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod, int numberOfTaxPeriods = 1) =>
-        new NiCalculator(
-            GetPeriodThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod, numberOfTaxPeriods),
+        new NiCalculator(GetPeriodThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod, numberOfTaxPeriods),
             _niReferenceDataProvider.GetNiRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod));
 
     private NiPeriodThresholdSet GetPeriodThresholdsForTaxYearAndPeriod(

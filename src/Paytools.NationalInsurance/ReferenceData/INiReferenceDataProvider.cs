@@ -47,4 +47,20 @@ public interface INiReferenceDataProvider
         TaxYear taxYear,
         PayFrequency payFrequency,
         int taxPeriod);
+
+    /// <summary>
+    /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
+    /// for a given tax year and tax period, for directors.  (For most tax years, this yields the same set of
+    /// rates as <see cref="GetNiRatesForTaxYearAndPeriod"/>, but if there have been in-year changes, specific
+    /// directors' rates may apply.)
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
+    /// the specified point in time.</returns>
+    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForTaxYearAndPeriod(
+        TaxYear taxYear,
+        PayFrequency payFrequency,
+        int taxPeriod);
 }

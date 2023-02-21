@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.NationalInsurance"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.NationalInsurance.Tests", "test\Paytools.NationalInsurance.Tests\Paytools.NationalInsurance.Tests.csproj", "{0A6CD27A-4336-4533-974F-E56D308CEF8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paytools.Testing.Data", "test\Paytools.Testing.Data\Paytools.Testing.Data.csproj", "{99A00AD7-6132-445E-897D-34EE3B6D0F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Testing.Data", "test\Paytools.Testing.Data\Paytools.Testing.Data.csproj", "{99A00AD7-6132-445E-897D-34EE3B6D0F5E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paytools.Pensions", "src\Paytools.Pensions\Paytools.Pensions.csproj", "{0A1029F5-EF89-47C8-BF69-5CB6A4A5F4D7}"
 EndProject

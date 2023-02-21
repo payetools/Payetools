@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System.Collections.Immutable;
+
 namespace Paytools.ReferenceData.NationalInsurance;
 
 /// <summary>
@@ -33,15 +35,27 @@ public class NiReferenceDataEntry : IApplicableBetween
     /// Gets a read-only list of applicable NI thresholds.
     /// </summary>
 
-    public IReadOnlyList<NiThresholdEntry> NiThresholds { get; init; } = default!;
+    public ImmutableList<NiThresholdEntry> NiThresholds { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable NI rates for employees.
     /// </summary>
-    public IReadOnlyList<NiEmployerRatesEntry> EmployerRates { get; init; } = default!;
+    public ImmutableList<NiEmployerRatesEntry> EmployerRates { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable NI rates for employees.
     /// </summary>
-    public IReadOnlyList<NiEmployeeRatesEntry> EmployeeRates { get; init; } = default!;
+    public ImmutableList<NiEmployeeRatesEntry> EmployeeRates { get; init; } = default!;
+
+    /// <summary>
+    /// Gets applicable employer NI rates for directors.  Only applicable when there has been an in-year
+    /// change to National Insurance rates.
+    /// </summary>
+    public ImmutableList<NiEmployeeRatesEntry>? DirectorEmployerRates { get; init; } = default!;
+
+    /// <summary>
+    /// Gets applicable employee NI rates for directors.  Only applicable when there has been an in-year
+    /// change to National Insurance rates.
+    /// </summary>
+    public ImmutableList<NiEmployeeRatesEntry>? DirectorEmployeeRates { get; init; } = default!;
 }
