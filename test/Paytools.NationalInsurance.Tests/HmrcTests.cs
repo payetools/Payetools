@@ -62,46 +62,4 @@ public class HmrcTests
 
         Output.WriteLine($"{testsCompleted} tests completed");
     }
-
-    //private INiReferenceDataProvider GetProvider(List<NiThresholdEntry> thresholds,
-    //    NiCategoryRateSet ratesByCategory)
-    //{
-    //    return new NiReferenceDataProvider(new NiThresholdSet(thresholds), ratesByCategory);
-    //}
-
-    private List<NiThresholdEntry> GetThresholdList(int taxPeriod)
-    {
-        var thresholdList = new List<NiThresholdEntry>();
-        //{
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.LEL, ThresholdValuePerYear = 6396.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.PT, ThresholdValuePerYear = taxPeriod < 4 ? 9880.0m : 12570.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.ST, ThresholdValuePerYear = 9100.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.FUST, ThresholdValuePerYear = 25000.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.UST, ThresholdValuePerYear = 50270.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.AUST, ThresholdValuePerYear = 50270.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.VUST, ThresholdValuePerYear = 50270.0m },
-        //    new NiThresholdEntry() { ThresholdType = NiThresholdType.UEL, ThresholdValuePerYear = 50270.0m }
-        //};
-
-        return thresholdList;
-    }
-
-    private NiCategoryRateSet GetCategoryRateSet(int taxPeriod)
-    {
-        NiCategoryRateSet ratesByCategory = new();
-
-        //ratesByCategory.Add(, new NiCategoryRatesEntry()
-        //{
-        //    Category = NiCategory.A,
-        //    EmployeeRateToPT = 0.0m,
-        //    EmployeeRatePTToUEL = taxPeriod > 7 ? 0.12m : 0.1325m,
-        //    EmployeeRateAboveUEL = taxPeriod > 7 ? 0.02m : 0.0325m,
-        //    EmployerRateLELtoST = 0.0m,
-        //    EmployerRateSTtoFUST = taxPeriod > 7 ? 0.138m : 0.1505m,
-        //    EmployerRateFUSTtoUEL = taxPeriod > 7 ? 0.138m : 0.1505m,
-        //    EmployerRateAboveUEL = taxPeriod > 7 ? 0.138m : 0.1505m
-        //});
-
-        return ratesByCategory;
-    }
 }
