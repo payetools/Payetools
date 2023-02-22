@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.ReferenceData;
-using Paytools.NationalInsurance.ReferenceData;
 using Paytools.NationalMinimumWage.ReferenceData;
-using Paytools.Pensions.ReferenceData;
+using Paytools.Testing.Utils;
 
-namespace Paytools.ReferenceData;
+namespace Paytools.NationalMinimumWage.Tests;
 
-/// <summary>
-/// Interface that HMRC reference data providers must implement.
-/// </summary>
-public interface IHmrcReferenceDataProvider :
-    ITaxReferenceDataProvider,
-    INiReferenceDataProvider,
-    IPensionsReferenceDataProvider,
-    INmwReferenceDataProvider
+public class NmwEvaluatorFactoryDataFixture
 {
-    /// <summary>
-    /// Gets the human-readable 'health' of this reference data provider.
-    /// </summary>
-    string Health { get; }
+    private AsyncLazy<INmwEvaluatorFactory> _factory = new AsyncLazy<INmwEvaluatorFactory>(async () =>
+    {
+        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+
+        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<INmwReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalMinimumWage_2022_2023.json") });
+
+        return new NmwEvaluatorFactory(provider);
+    });
+
+    public async Task<INmwEvaluatorFactory> GetFactory()
+    {
+        return await _factory;
+    }
 }

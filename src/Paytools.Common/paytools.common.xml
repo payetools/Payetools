@@ -58,6 +58,18 @@
             <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the supplied date is outside the supported
             set of dates for this library.</exception>
         </member>
+        <member name="M:Paytools.Common.Extensions.DateOnlyExtensions.AgeAt(System.DateOnly,System.DateOnly)">
+            <summary>
+            Calculates the age of a person on a certain date based on the supplied date of birth.  Takes account of leap years,
+            using the convention that someone born on 29th February in a leap year is not legally one year older until 1st March
+            of a non-leap year.
+            </summary>
+            <param name="dateOfBirth">Individual's date of birth.</param>
+            <param name="date">Date at which to evaluate age at.</param>
+            <returns>Age of the individual in years (as an integer).</returns>
+            <remarks>This code is not guaranteed to be correct for non-UK locales, as some countries have skipped certain dates
+            within living memory.</remarks>
+        </member>
         <member name="T:Paytools.Common.Extensions.DateTimeExtensions">
             <summary>
             Extension methods for instances of <see cref="T:System.DateTime"/>.
@@ -454,6 +466,29 @@
             <param name="payFrequency">PayFrequency to provide period count for.</param>
             <returns>The number of tax periods within a tax year for a this PayFrequency, for example, PayFrequency.Monthly returns 12.</returns>
             <exception cref="T:System.ArgumentException">Thrown if an invalid PayFrequency value is supplied.</exception>
+        </member>
+        <member name="T:Paytools.Common.Model.PayReferencePeriod">
+            <summary>
+            Represents a pay reference period, i.e. the range of dates from the first day an individual is being paid for,
+            to the last day, inclusive.
+            </summary>
+        </member>
+        <member name="P:Paytools.Common.Model.PayReferencePeriod.StartOfPayPeriod">
+            <summary>
+            Gets the first day of the pay period.
+            </summary>
+        </member>
+        <member name="P:Paytools.Common.Model.PayReferencePeriod.EndOfPayPeriod">
+            <summary>
+            Gets the last day of the pay period.
+            </summary>
+        </member>
+        <member name="M:Paytools.Common.Model.PayReferencePeriod.#ctor(System.DateOnly,System.DateOnly)">
+            <summary>
+            Initialises a new instance of <see cref="T:Paytools.Common.Model.PayReferencePeriod"/> with the supplied start and end dates.
+            </summary>
+            <param name="startOfPayPeriod">First day of pay period.</param>
+            <param name="endOfPayPeriod">Last day of pay period.</param>
         </member>
         <member name="T:Paytools.Common.Model.PayrollId">
             <summary>

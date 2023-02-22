@@ -1,0 +1,33 @@
+﻿{
+  "applicableTaxYearEnding": "Apr5_2023",
+  "version": "1.0",
+  "incomeTax": [
+    {
+      "applicableFrom": "2022-04-06",
+      "applicableTill": "2023-04-05",
+      "taxEntries": []
+    }
+  ],
+  "nationalInsurance": [
+    {
+      "applicableFrom": "2022-04-06",
+      "applicableTill": "2022-07-05",
+      "niThresholds": [],
+      "employerRates": [],
+      "directorEmployeeRates": [],
+      "directorEmployeRates": []
+    }
+  ],
+  "pensions": [],
+  "nationalMinimumWage": [
+    {
+      "applicableFrom": "2022-04-06",
+      "applicableTill": "2023-04-05",
+      "apprenticeLevel": 4.81,
+      "under18Level": 4.81,
+      "age18To20Level": 6.83,
+      "age21To22Level": 9.18,
+      "age23AndAboveLevel": 9.50
+    }
+  ]
+}

@@ -17,14 +17,13 @@ using Paytools.Common.Model;
 using Paytools.IncomeTax.ReferenceData;
 using Paytools.NationalInsurance;
 using Paytools.NationalInsurance.ReferenceData;
+using Paytools.NationalMinimumWage.ReferenceData;
 using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
+using Paytools.ReferenceData.NationalMinimumWage;
 using Paytools.ReferenceData.Pensions;
-using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Paytools.ReferenceData;
 
@@ -46,9 +45,6 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         Health = "No tax years added";
     }
 
-    internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet)
-        => _referenceDataSets.TryAdd(referenceDataSet.ApplicableTaxYearEnding, referenceDataSet);
-
     /// <summary>
     /// Retrieves the tax bands for a given tax year in the form of a dictionary (<see cref="ReadOnlyDictionary{CountriesForTaxPurposes, TaxBandwidthSet}"/>)
     /// keyed on tax regime, i.e., <see cref="CountriesForTaxPurposes"/>.
@@ -68,7 +64,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     {
         var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
 
-        var taxBands = FindApplicableEntry<IncomeTaxReferenceDataSet>(referenceDataSet.IncomeTax,
+        var taxBands = FindApplicableEntry<IncomeTaxReferenceDataEntry>(referenceDataSet.IncomeTax,
             taxYear, payFrequency, taxPeriod);
 
         return new ReadOnlyDictionary<CountriesForTaxPurposes, TaxBandwidthSet>(taxBands.TaxEntries
@@ -134,13 +130,12 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             taxYear, payFrequency, taxPeriod);
 
         var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiThresholdEntry()
-            {
-                ThresholdType = nit.ThresholdType,
-                ThresholdValuePerWeek = nit.ThresholdValuePerWeek,
-                ThresholdValuePerMonth = nit.ThresholdValuePerMonth,
-                ThresholdValuePerYear = nit.ThresholdValuePerYear
-            })
-            .ToImmutableList();
+        {
+            ThresholdType = nit.ThresholdType,
+            ThresholdValuePerWeek = nit.ThresholdValuePerWeek,
+            ThresholdValuePerMonth = nit.ThresholdValuePerMonth,
+            ThresholdValuePerYear = nit.ThresholdValuePerYear
+        }).ToImmutableList();
 
         return new NiThresholdSet(thresholds);
     }
@@ -163,6 +158,26 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         return (pensionsReferenceDataEntry.QualifyingEarningsLowerLevel.GetThresholdForPayFrequency(payFrequency),
             pensionsReferenceDataEntry.QualifyingEarningsUpperLevel.GetThresholdForPayFrequency(payFrequency));
     }
+
+    /// <summary>
+    /// Gets the NMW/NLW levels for the specified tax year and tax period, as denoted by the supplied pay frequency
+    /// and pay period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>An instance of <see cref="INmwLevelSet"/> containing the levels for the specified point
+    /// in time.</returns>
+    public INmwLevelSet GetNmwLevelsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        return FindApplicableEntry<NmwReferenceDataEntry>(referenceDataSet.NationalMinimumWage,
+            taxYear, payFrequency, taxPeriod);
+    }
+
+    internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet)
+        => _referenceDataSets.TryAdd(referenceDataSet.ApplicableTaxYearEnding, referenceDataSet);
 
     private HmrcTaxYearReferenceDataSet GetReferenceDataSetForTaxYear(TaxYear taxYear)
     {

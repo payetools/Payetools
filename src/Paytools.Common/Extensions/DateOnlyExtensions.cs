@@ -40,13 +40,30 @@ public static class DateOnlyExtensions
     /// set of dates for this library.</exception>
     public static TaxYearEnding ToTaxYearEnding(this DateOnly date)
     {
-        var apr6 = new DateOnly(date.Year, date.Month, 6);
+        var apr6 = new DateOnly(date.Year, 4, 6);
 
-        var taxYear = date < apr6 ? date.Year : date.Year + 1;
+        var taxYear = date.Year + (date < apr6 ? 0 : 1);
 
         if (taxYear < (int)TaxYearEnding.MinValue || taxYear > (int)TaxYearEnding.MaxValue)
             throw new ArgumentOutOfRangeException(nameof(date), $"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue}");
 
         return (TaxYearEnding)taxYear;
+    }
+
+    /// <summary>
+    /// Calculates the age of a person on a certain date based on the supplied date of birth.  Takes account of leap years,
+    /// using the convention that someone born on 29th February in a leap year is not legally one year older until 1st March
+    /// of a non-leap year.
+    /// </summary>
+    /// <param name="dateOfBirth">Individual's date of birth.</param>
+    /// <param name="date">Date at which to evaluate age at.</param>
+    /// <returns>Age of the individual in years (as an integer).</returns>
+    /// <remarks>This code is not guaranteed to be correct for non-UK locales, as some countries have skipped certain dates
+    /// within living memory.</remarks>
+    public static int AgeAt(this DateOnly dateOfBirth, DateOnly date)
+    {
+        int age = date.Year - dateOfBirth.Year;
+
+        return dateOfBirth > date.AddYears(-age) ? --age : age;
     }
 }

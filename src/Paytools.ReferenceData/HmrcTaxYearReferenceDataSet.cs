@@ -15,6 +15,7 @@
 using Paytools.Common.Model;
 using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
+using Paytools.ReferenceData.NationalMinimumWage;
 using Paytools.ReferenceData.Pensions;
 
 namespace Paytools.ReferenceData;
@@ -36,9 +37,11 @@ public class HmrcTaxYearReferenceDataSet
 
     public TaxYearEnding ApplicableTaxYearEnding { get; init; }
 
-    public List<IncomeTaxReferenceDataSet> IncomeTax { get; init; } = default!;
+    public List<IncomeTaxReferenceDataEntry> IncomeTax { get; init; } = default!;
 
     public List<NiReferenceDataEntry> NationalInsurance { get; init; } = default!;
 
     public List<PensionsReferenceDataSet> Pensions { get; init; } = default!;
+
+    public List<NmwReferenceDataEntry> NationalMinimumWage { get; init; } = default!;
 }

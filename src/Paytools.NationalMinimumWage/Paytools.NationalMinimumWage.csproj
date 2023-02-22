@@ -4,7 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,10 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paytools.Common\Paytools.Common.csproj" />
-    <ProjectReference Include="..\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
-    <ProjectReference Include="..\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />
-    <ProjectReference Include="..\Paytools.NationalMinimumWage\Paytools.NationalMinimumWage.csproj" />
-    <ProjectReference Include="..\Paytools.Pensions\Paytools.Pensions.csproj" />
   </ItemGroup>
 
 </Project>

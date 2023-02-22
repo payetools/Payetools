@@ -30,6 +30,10 @@ public class TaxYearEndingTests
         date = new DateOnly(2020, 4, 6);
         ending = date.ToTaxYearEnding();
         ending.Should().Be(TaxYearEnding.Apr5_2021);
+
+        date = new DateOnly(2022, 5, 5);
+        ending = date.ToTaxYearEnding();
+        ending.Should().Be(TaxYearEnding.Apr5_2023);
     }
 
     [Fact]
