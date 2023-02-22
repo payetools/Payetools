@@ -22,8 +22,11 @@ using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
 using Paytools.ReferenceData.NationalMinimumWage;
 using Paytools.ReferenceData.Pensions;
+using Paytools.StudentLoans;
+using Paytools.StudentLoans.ReferenceData;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace Paytools.ReferenceData;
 
@@ -177,7 +180,16 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     }
 
     internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet)
-        => _referenceDataSets.TryAdd(referenceDataSet.ApplicableTaxYearEnding, referenceDataSet);
+    {
+        var (isValid, errorMessage) = ValidateReferenceData(referenceDataSet);
+
+        if (!isValid)
+        {
+            return false;
+        }
+
+        return _referenceDataSets.TryAdd(referenceDataSet.ApplicableTaxYearEnding, referenceDataSet);
+    }
 
     private HmrcTaxYearReferenceDataSet GetReferenceDataSetForTaxYear(TaxYear taxYear)
     {
@@ -187,7 +199,9 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         if (referenceDataSet == null ||
             referenceDataSet?.IncomeTax == null ||
             referenceDataSet?.NationalInsurance == null ||
-            referenceDataSet?.Pensions == null)
+            referenceDataSet?.Pensions == null ||
+            referenceDataSet?.NationalMinimumWage == null ||
+            referenceDataSet?.StudentLoans == null)
             throw new InvalidReferenceDataException($"Reference data for tax year ending {taxYear.EndOfTaxYear} is invalid or incomplete");
 
         return referenceDataSet;
@@ -248,5 +262,34 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         return rateEntries
             .Select(kv => new KeyValuePair<NiCategory, INiCategoryRatesEntry>(kv.Key, kv.Value))
             .ToDictionary(kv => kv.Key, kv => kv.Value);
+    }
+
+    private static (bool IsValid, string? ErrorMessage) ValidateReferenceData(HmrcTaxYearReferenceDataSet? referenceDataSet)
+    {
+        bool empty = referenceDataSet == null;
+        bool noIncomeTax = !empty && referenceDataSet?.IncomeTax == null;
+        bool noNi = !empty && referenceDataSet?.NationalInsurance == null;
+        bool noPensions = !empty && referenceDataSet?.Pensions == null;
+        bool noNmw = !empty && referenceDataSet?.NationalMinimumWage == null;
+        bool noStudentLoan = !empty && referenceDataSet?.StudentLoans == null;
+
+        bool isValid = empty || noIncomeTax || noNi || noPensions || noNmw || noStudentLoan;
+
+        if (isValid)
+            return (true, null);
+
+        var errorMessage = new StringBuilder();
+
+        return (false, errorMessage.ToString());
+    }
+
+    public ReadOnlyDictionary<StudentLoanType, IStudentLoanThresholdsEntry> GetStudentLoanThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IStudentLoanRatesSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        throw new NotImplementedException();
     }
 }

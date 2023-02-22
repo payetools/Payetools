@@ -17,6 +17,7 @@ using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
 using Paytools.ReferenceData.NationalMinimumWage;
 using Paytools.ReferenceData.Pensions;
+using Paytools.ReferenceData.StudentLoans;
 
 namespace Paytools.ReferenceData;
 
@@ -44,4 +45,6 @@ public class HmrcTaxYearReferenceDataSet
     public List<PensionsReferenceDataSet> Pensions { get; init; } = default!;
 
     public List<NmwReferenceDataEntry> NationalMinimumWage { get; init; } = default!;
+
+    public List<StudentLoanReferenceDataEntry> StudentLoans { get; init; } = default!;
 }

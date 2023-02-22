@@ -16,6 +16,7 @@ using Paytools.IncomeTax.ReferenceData;
 using Paytools.NationalInsurance.ReferenceData;
 using Paytools.NationalMinimumWage.ReferenceData;
 using Paytools.Pensions.ReferenceData;
+using Paytools.StudentLoans.ReferenceData;
 
 namespace Paytools.ReferenceData;
 
@@ -26,7 +27,8 @@ public interface IHmrcReferenceDataProvider :
     ITaxReferenceDataProvider,
     INiReferenceDataProvider,
     IPensionsReferenceDataProvider,
-    INmwReferenceDataProvider
+    INmwReferenceDataProvider,
+    IStudentLoanReferenceDataProvider
 {
     /// <summary>
     /// Gets the human-readable 'health' of this reference data provider.
