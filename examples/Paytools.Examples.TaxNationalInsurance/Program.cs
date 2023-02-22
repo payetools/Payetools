@@ -42,7 +42,8 @@ var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>() ??
 var loggerFactory = serviceProvider.GetService<ILoggerFactory>() ??
     throw new InvalidOperationException("Unable to create ILoggerFactory");
 
-var factory = new HmrcReferenceDataProviderFactory(httpClientFactory, loggerFactory.CreateLogger<HmrcReferenceDataProviderFactory>());
+var factory = new HmrcReferenceDataProviderFactory(httpClientFactory, 
+    loggerFactory.CreateLogger<HmrcReferenceDataProviderFactory>());
 
 var provider = await factory.CreateProviderAsync(new Uri("https://stellular-bombolone-34e67e.netlify.app/index.json"));
 

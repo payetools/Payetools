@@ -83,7 +83,7 @@ public class NonSalaryExchangePensionablePaySetTests : IClassFixture<PensionCont
         result.EarningsBasis.Should().BeOneOf(new[] { EarningsBasis.PensionablePaySet1, EarningsBasis.PensionablePaySet2, EarningsBasis.PensionablePaySet3 });
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().BeNull();
-        result.EmployerNiSavings.Should().BeNull();
+        result.EmployerNiSavingsToReinvest.Should().BeNull();
     }
 
     private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)

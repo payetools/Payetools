@@ -18,7 +18,8 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
                 throw new ArgumentException("Parameter cannot be null for relief at source tax treatment", nameof(basicRateOfTax)));
     }
 
-    public virtual PensionContributionCalculationResult Calculate(decimal pensionableSalary,
+    public virtual PensionContributionCalculationResult Calculate(
+        decimal pensionableSalary,
         decimal employerContributionPercentage,
         decimal employeeContribution,
         bool employeeContributionIsFixedAmount = false,
@@ -44,14 +45,15 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             EmployerContributionPercentage = employerContributionPercentage,
             EmployersNiReinvestmentPercentage = null,
             EmployerContributionAmountBeforeSalaryExchange = null,
-            EmployerNiSavings = null,
+            EmployerNiSavingsToReinvest = null,
             PensionableSalaryInPeriod = pensionableSalary,
             SalaryExchangeApplied = false,
             SalaryExchangedAmount = null
         };
     }
 
-    public PensionContributionCalculationResult CalculateUnderSalaryExchange(decimal pensionableSalary,
+    public PensionContributionCalculationResult CalculateUnderSalaryExchange(
+        decimal pensionableSalary,
         decimal employerContributionPercentage,
         IEmployerNiSavingsCalculator employersNiSavingsCalculator,
         decimal employeeSalaryExchanged,
@@ -79,7 +81,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             EmployerContributionPercentage = employerContributionPercentage,
             EmployersNiReinvestmentPercentage = null,
             EmployerContributionAmountBeforeSalaryExchange = contributions.employerContribution,
-            EmployerNiSavings = employerNiSavings,
+            EmployerNiSavingsToReinvest = employerNiSavings,
             PensionableSalaryInPeriod = pensionableSalary,
             SalaryExchangeApplied = true,
             SalaryExchangedAmount = contributions.employeeContribution

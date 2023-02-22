@@ -129,7 +129,7 @@ public class SalaryExchangeQualifyingEarningsTests : IClassFixture<PensionContri
         bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployerContributionBeforeSE,
         decimal expectedEmployerNiSaving)
     {
-        var niSavingsCalculator = new TestEmployerNiSavingsCalculator(0.138m, 100.0m);
+        var niSavingsCalculator = new EmployerNiSavingsCalculator(0.138m, 100.0m);
 
         var result = calculator.CalculateUnderSalaryExchange(pensionableSalary, employerContributionPct,
             niSavingsCalculator, (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
@@ -146,7 +146,7 @@ public class SalaryExchangeQualifyingEarningsTests : IClassFixture<PensionContri
         result.EarningsBasis.Should().Be(EarningsBasis.QualifyingEarnings);
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().Be(expectedEmployerContributionBeforeSE);
-        result.EmployerNiSavings.Should().Be(expectedEmployerNiSaving);
+        result.EmployerNiSavingsToReinvest.Should().Be(expectedEmployerNiSaving);
     }
 
     private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)

@@ -255,7 +255,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         result.EarningsBasis.Should().Be(EarningsBasis.QualifyingEarnings);
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().BeNull();
-        result.EmployerNiSavings.Should().BeNull();
+        result.EmployerNiSavingsToReinvest.Should().BeNull();
     }
 
     private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax =null)
