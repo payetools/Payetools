@@ -22,6 +22,7 @@ using Paytools.ReferenceData.IncomeTax;
 using Paytools.ReferenceData.NationalInsurance;
 using Paytools.ReferenceData.NationalMinimumWage;
 using Paytools.ReferenceData.Pensions;
+using Paytools.ReferenceData.StudentLoans;
 using Paytools.StudentLoans;
 using Paytools.StudentLoans.ReferenceData;
 using System.Collections.Immutable;
@@ -179,6 +180,48 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             taxYear, payFrequency, taxPeriod);
     }
 
+    /// <summary>
+    /// Gets the set of annual thresholds to be applied for a given tax year and tax period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>An implementation of <see cref="IStudentLoanThresholdSet"/> that provides the appropriate set of annual
+    /// thresholds for the specified point.</returns>
+    public IStudentLoanThresholdSet GetStudentLoanThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        var thresholdsSet = FindApplicableEntry<StudentLoanReferenceDataEntry>(referenceDataSet.StudentLoans,
+            taxYear, payFrequency, taxPeriod);
+
+        return new StudentLoanThresholdSet()
+        {
+            Plan1PerPeriodThreshold = thresholdsSet.Plan1Thresholds.ThresholdValuePerYear,
+            Plan2PerPeriodThreshold = thresholdsSet.Plan2Thresholds.ThresholdValuePerYear,
+            Plan4PerPeriodThreshold = thresholdsSet.Plan4Thresholds.ThresholdValuePerYear,
+            PostGradPerPeriodThreshold = thresholdsSet.PostGradThresholds.ThresholdValuePerYear
+        };
+    }
+
+    /// <summary>
+    /// Gets the student and post graduate deduction rates for the specified tax year and tax period, as denoted
+    /// by the supplied pay frequency.
+    /// and pay period.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
+    /// <param name="taxPeriod">Application tax period.</param>
+    /// <returns>An instance of <see cref="IStudentLoanRateSet"/> containing the rates for the specified point
+    /// in time.</returns>
+    public IStudentLoanRateSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        return FindApplicableEntry<StudentLoanReferenceDataEntry>(referenceDataSet.StudentLoans,
+            taxYear, payFrequency, taxPeriod).DeductionRates;
+    }
+
     internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet)
     {
         var (isValid, errorMessage) = ValidateReferenceData(referenceDataSet);
@@ -281,15 +324,5 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         var errorMessage = new StringBuilder();
 
         return (false, errorMessage.ToString());
-    }
-
-    public ReadOnlyDictionary<StudentLoanType, IStudentLoanThresholdsEntry> GetStudentLoanThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IStudentLoanRatesSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
-    {
-        throw new NotImplementedException();
     }
 }

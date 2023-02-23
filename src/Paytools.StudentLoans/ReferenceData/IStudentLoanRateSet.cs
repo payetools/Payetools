@@ -12,14 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace Paytools.StudentLoans.ReferenceData;
 
-namespace Paytools.ReferenceData.Pensions;
-
-internal class QualifyingEarningsThresholdEntry
+/// <summary>
+/// Interface for types that detail the various HMRC-published student loan deduction rates.
+/// </summary>
+public interface IStudentLoanRateSet
 {
+    /// <summary>
+    /// Gets the deduction rate for Plan 1, 2 and 4 student loan deductions.
+    /// </summary>
+    decimal Student { get; }
+
+    /// <summary>
+    /// Gets the deduction rate for post-graduate student loan deductions.
+    /// </summary>
+    decimal PostGrad { get; }
 }

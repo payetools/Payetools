@@ -131,10 +131,13 @@ public record TaxYear
                 return 1;
 
             case PayFrequency.Monthly:
-                var startOfCalendarYear = new DateOnly((int)TaxYearEnding, 1, 1);
-                var monthNumber = payDate.Month + (payDate >= startOfCalendarYear && payDate <= EndOfTaxYear ? 12 : 0) - 3;
-                var dayOfMonth = payDate.Day;
-                return monthNumber - (dayOfMonth >= 1 && dayOfMonth <= 5 ? 1 : 0);
+                return GetMonthNumber(payDate);
+
+            case PayFrequency.Quarterly:
+                return ((GetMonthNumber(payDate) - 1) / 3) + 1;
+
+            case PayFrequency.BiAnnually:
+                return ((GetMonthNumber(payDate) - 1) / 6) + 1;
 
             default:
                 var dayNumber = payDate.DayNumber - StartOfTaxYear.DayNumber + 1;
@@ -184,4 +187,13 @@ public record TaxYear
             PayFrequency.Annually => EndOfTaxYear,
             _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
         };
+
+    private int GetMonthNumber(DateOnly payDate)
+    {
+        var startOfCalendarYear = new DateOnly((int)TaxYearEnding, 1, 1);
+        var monthNumber = payDate.Month + (payDate >= startOfCalendarYear && payDate <= EndOfTaxYear ? 12 : 0) - 3;
+        var dayOfMonth = payDate.Day;
+
+        return monthNumber - (dayOfMonth >= 1 && dayOfMonth <= 5 ? 1 : 0);
+    }
 }

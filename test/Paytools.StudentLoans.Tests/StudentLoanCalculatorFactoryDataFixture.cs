@@ -24,7 +24,7 @@ public class StudentLoanCalculatorFactoryDataFixture
     {
         var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
 
-        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<IStudentLoanReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalMinimumWage_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<IStudentLoanReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\StudentLoans_2022_2023.json") });
 
         return new StudentLoanCalculatorFactory(provider);
     });

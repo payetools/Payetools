@@ -12,12 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.StudentLoans.ReferenceData;
+using Paytools.StudentLoans.ReferenceData;
+
+namespace Paytools.ReferenceData.StudentLoans;
 
 /// <summary>
-/// Interface for types that provide access to a specific set of student (and pos-grad) loan
-/// thresholds for a given plan type.
+/// Represents the set of deduction rates to be applied for student and post-graduate loans.
 /// </summary>
-public interface IStudentLoanThresholdsEntry
+public readonly struct StudentLoanRatesSet : IStudentLoanRateSet
 {
+    /// <summary>
+    /// Gets the deduction rate for Plan 1, 2 and 4 student loan deductions.
+    /// </summary>
+    public decimal Student { get; init; }
+
+    /// <summary>
+    /// Gets the deduction rate for post-graduate student loan deductions.
+    /// </summary>
+    public decimal PostGrad { get; init; }
 }

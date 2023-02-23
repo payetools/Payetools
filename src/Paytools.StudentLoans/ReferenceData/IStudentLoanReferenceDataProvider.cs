@@ -23,18 +23,14 @@ namespace Paytools.StudentLoans.ReferenceData;
 public interface IStudentLoanReferenceDataProvider
 {
     /// <summary>
-    /// Gets a read-only dictionary that maps <see cref="StudentLoanType"/> values to the set of thresholds to be applied
-    /// for a given tax year and tax period.
+    /// Gets the set of annual thresholds to be applied for a given tax year and tax period.
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
     /// <param name="taxPeriod">Application tax period.</param>
-    /// <returns>Read-only dictionary that maps <see cref="StudentLoanType"/> values to the appropriate set of thresholds for
-    /// the specified point in time.</returns>
-    ReadOnlyDictionary<StudentLoanType, IStudentLoanThresholdsEntry> GetStudentLoanThresholdsForTaxYearAndPeriod(
-        TaxYear taxYear,
-        PayFrequency payFrequency,
-        int taxPeriod);
+    /// <returns>An implementation of <see cref="IStudentLoanThresholdSet"/> that provides the appropriate set of annual
+    /// thresholds for the specified point.</returns>
+    IStudentLoanThresholdSet GetStudentLoanThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 
     /// <summary>
     /// Gets the student and post graduate deduction rates for the specified tax year and tax period, as denoted
@@ -44,7 +40,7 @@ public interface IStudentLoanReferenceDataProvider
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
     /// <param name="taxPeriod">Application tax period.</param>
-    /// <returns>An instance of <see cref="IStudentLoanRatesSet"/> containing the rates for the specified point
+    /// <returns>An instance of <see cref="IStudentLoanRateSet"/> containing the rates for the specified point
     /// in time.</returns>
-    IStudentLoanRatesSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
+    IStudentLoanRateSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 }

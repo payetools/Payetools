@@ -12,21 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Paytools.StudentLoans;
 
 /// <summary>
-/// Enum that represents a given type of student loan plan, including post-graduate loans.
+/// Enum that represents a given type of student loan plan.  Post-graduate loans are handled separately.
 /// </summary>
 public enum StudentLoanType
 {
+    /// <summary>Student loan Plan 1 type</summary>
     Plan1,
+
+    /// <summary>Student loan Plan 2 type</summary>
     Plan2,
-    Plan4,
-    PostGrad
+
+    /// <summary>Student loan Plan 4 type</summary>
+    Plan4
 }

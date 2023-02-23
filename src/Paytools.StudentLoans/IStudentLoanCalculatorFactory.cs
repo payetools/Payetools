@@ -13,11 +13,6 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paytools.StudentLoans;
 
@@ -32,5 +27,7 @@ public interface IStudentLoanCalculatorFactory
     /// </summary>
     /// <param name="payDate">Applicable pay date.</param>
     /// <returns>A new calculator instance.</returns>
+    /// <remarks>The supplied PayDate is also used to calculate the appropriate period threshold to apply, from the PayFrequency
+    /// property, e.g., weekly, monthly, etc.</remarks>
     IStudentLoanCalculator GetCalculator(PayDate payDate);
 }

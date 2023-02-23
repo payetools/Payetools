@@ -132,13 +132,13 @@ public class CompliantNmwTests : IClassFixture<NmwEvaluatorFactoryDataFixture>
         var grossPay = hoursWorked * hourlyRate;
 
         await RunValidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Under18LevelIndex], true, 1.0m);
+            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[ApprenticeLevelIndex], true, 1.0m);
 
         grossPay += 0.01m;
         dateOfBirth = new DateOnly(2004, 3, 5);
 
         await RunValidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Under18LevelIndex], true, 0.99m);
+            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[ApprenticeLevelIndex], true, 0.99m);
     }
 
     private async Task RunValidNmwTestAsync(PayReferencePeriod payPeriod, DateOnly dateOfBirth, decimal hoursWorked,

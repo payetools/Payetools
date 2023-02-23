@@ -182,12 +182,6 @@ public class HmrcReferenceDataProviderFactory
         {
             throw new InvalidReferenceDataException($"Unable to retrieve data from reference data endpoint '{endpoint}' (see inner exception for details)", ex);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine();
-
-            throw;
-        }
     }
 
     private static async Task<T> DeserializeAsync<T>(Stream data, string source)

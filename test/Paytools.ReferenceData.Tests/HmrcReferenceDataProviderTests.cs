@@ -30,5 +30,4 @@ public class HmrcReferenceDataProviderTests
 
         var provider = await factory.CreateProviderAsync(new Uri("https://stellular-bombolone-34e67e.netlify.app/index.json"));
     }
-
 }

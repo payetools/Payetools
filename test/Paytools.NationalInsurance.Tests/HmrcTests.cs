@@ -15,10 +15,8 @@
 using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.NationalInsurance.ReferenceData;
-using Paytools.ReferenceData.NationalInsurance;
 using Paytools.Testing.Data;
 using Paytools.Testing.Utils;
-using System.Runtime.CompilerServices;
 using Xunit.Abstractions;
 
 namespace Paytools.NationalInsurance.Tests;
@@ -47,13 +45,15 @@ public class HmrcTests
 
         int testsCompleted = 0;
 
-        foreach (var test in testData.ToList().Where(t => t.NiCategory == NiCategory.A &&
-            t.PayFrequency == PayFrequency.Monthly))
+        var factory = new NiCalculatorFactory(provider);
+
+        foreach (var test in testData.ToList().Where(t => //t.NiCategory == NiCategory.A &&
+            t.PayFrequency == PayFrequency.Monthly || t.PayFrequency == PayFrequency.Weekly || t.PayFrequency == PayFrequency.FourWeekly))
+        //foreach (var test in testData)
         {
-            var factory = new NiCalculatorFactory(provider);
             var calculator = factory.GetCalculator(taxYear, test.PayFrequency, test.Period);
 
-            var result1 = calculator.Calculate(NiCategory.A, test.GrossPay);
+            var result1 = calculator.Calculate(test.NiCategory, test.GrossPay);
 
             test.EmployeeNiContribution.Should().Be(result1.EmployeeContribution, "input is {0} and output is {1}", test.ToDebugString(), result1.ToString());
             test.EmployerNiContribution.Should().Be(result1.EmployerContribution, "input is {0} and output is {1}", test.ToDebugString(), result1.ToString());

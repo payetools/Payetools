@@ -23,7 +23,7 @@
   "studentLoans": [
     {
       "applicableFrom": "2022-04-06",
-      "applicableTill": "2022-07-05",
+      "applicableTill": "2023-04-05",
       "plan1Thresholds": {
         "perWeek": 388.36,
         "perMonth": 1682.91,

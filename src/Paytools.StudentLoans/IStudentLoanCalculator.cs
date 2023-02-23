@@ -16,6 +16,13 @@ namespace Paytools.StudentLoans;
 
 public interface IStudentLoanCalculator
 {
-
-
+    /// <summary>
+    /// Calculates the necessary student loan deduction based on the input salary, the student loan type (if applicable) and
+    /// indication of whether to apply post-graduate loan deductions.
+    /// </summary>
+    /// <param name="grossSalary">Gross salary.</param>
+    /// <param name="studentLoanType">Optional student loan type.  Null if no student loan applies.</param>
+    /// <param name="hasPostGradLoan">True if post-graduate loan deductions should be applied; false otherwise.</param>
+    /// <returns>An implementation of <see cref="IStudentLoanCalculationResult"/> containing the results of the calculation.</returns>
+    IStudentLoanCalculationResult Calculate(decimal grossSalary, StudentLoanType? studentLoanType, bool hasPostGradLoan);
 }
