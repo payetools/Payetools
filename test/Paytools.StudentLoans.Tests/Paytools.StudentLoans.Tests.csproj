@@ -29,4 +29,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Paytools.Common\Paytools.Common.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
+    <ProjectReference Include="..\Paytools.Testing.Utils\Paytools.Testing.Utils.csproj" />
+  </ItemGroup>
+
 </Project>
