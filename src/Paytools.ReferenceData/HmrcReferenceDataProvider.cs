@@ -273,7 +273,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         bool noNmw = !empty && referenceDataSet?.NationalMinimumWage == null;
         bool noStudentLoan = !empty && referenceDataSet?.StudentLoans == null;
 
-        bool isValid = empty || noIncomeTax || noNi || noPensions || noNmw || noStudentLoan;
+        bool isValid = !(empty || noIncomeTax || noNi || noPensions || noNmw || noStudentLoan);
 
         if (isValid)
             return (true, null);

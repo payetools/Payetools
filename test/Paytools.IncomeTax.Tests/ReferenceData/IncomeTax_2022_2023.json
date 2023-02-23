@@ -141,5 +141,7 @@
       "employeeRates": []
     }
   ],
-  "pensions": []
+  "pensions": [],
+  "nationalMinimumWage": [],
+  "studentLoans": []
 }
