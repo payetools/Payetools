@@ -67,9 +67,9 @@ public partial class IRenvelope<T> : IRtiDocumentForTaxYear where T : IRtiDataTa
     private static string Namespace =>
         typeof(T) switch
         {
-            var type when type == typeof(EmployerPaymentSummary) => "",
+            var type when type == typeof(EmployerPaymentSummary) => "http://www.govtalk.gov.uk/taxation/PAYE/RTI/EmployerPaymentSummary/22-23/1",
             var type when type == typeof(FullPaymentSubmission) => "http://www.govtalk.gov.uk/taxation/PAYE/RTI/FullPaymentSubmission/22-23/1",
-            var type when type == typeof(NINOverificationRequest) => "",
+            var type when type == typeof(NINOverificationRequest) => "http://www.govtalk.gov.uk/taxation/PAYE/RTI/NINOverificationRequest/1",
             _ => throw new InvalidOperationException("Unable to obtain namespace for target type")
         };
 
