@@ -14,6 +14,9 @@
 
 namespace Paytools.StudentLoans;
 
+/// <summary>
+/// Interface that student loan calculators must implement.
+/// </summary>
 public interface IStudentLoanCalculator
 {
     /// <summary>

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Model\_2024\**" />
+    <EmbeddedResource Remove="Model\_2024\**" />
+    <None Remove="Model\_2024\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paytools.Common\Paytools.Common.csproj" />
+    <ProjectReference Include="..\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
+    <ProjectReference Include="..\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />
+    <ProjectReference Include="..\Paytools.Payroll\Paytools.Payroll.csproj" />
+    <ProjectReference Include="..\Paytools.Pensions\Paytools.Pensions.csproj" />
+    <ProjectReference Include="..\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="7.0.1" />
+  </ItemGroup>
+
+</Project>

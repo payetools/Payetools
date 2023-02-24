@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
 namespace Paytools.Common.Model;
