@@ -17,15 +17,37 @@ using System.Collections.Immutable;
 
 namespace Paytools.ReferenceData.NationalInsurance;
 
+/// <summary>
+/// Record that represents the employee NI rates to be applied at various earnings thresholds.
+/// </summary>
 public record NiEmployerRatesEntry
 {
+    /// <summary>
+    /// Gets the list of applicable NI categories for this rates entry.
+    /// </summary>
     public ImmutableList<NiCategory> NiCategories { get; init; } = default!;
 
-    public decimal EarningsAtOrAboveLELUpToAndIncludingST { get; init; }
+    /// <summary>
+    /// Gets the employer rate applicable for earnings between the Lower Earnings
+    /// Limit and the Secondary Threshold.
+    /// </summary>
+    public decimal ForEarningsAtOrAboveLELUpToAndIncludingST { get; init; }
 
-    public decimal EarningsAboveSTUpToAndIncludingFUST { get; init; }
+    /// <summary>
+    /// Gets the employer rate applicable for earnings between the Secondary Threshold
+    /// and the Freeport Upper Secondary Threshold.
+    /// </summary>
+    public decimal ForEarningsAboveSTUpToAndIncludingFUST { get; init; }
 
-    public decimal EarningsAboveFUSTUpToAndIncludingUELOrUST { get; init; }
+    /// <summary>
+    /// Gets the employer rate applicable for earnings between the Freeport Upper
+    /// Secondary Threshold and the Upper Earnings Limit or any applicable Upper
+    /// Secondary Threshold.
+    /// </summary>
+    public decimal ForEarningsAboveFUSTUpToAndIncludingUELOrUST { get; init; }
 
-    public decimal EarningsAboveUELOrUST { get; init; }
+    /// <summary>
+    /// Gets the employer rate applicable for earnings above the Upper Earnings Limit.
+    /// </summary>
+    public decimal ForEarningsAboveUELOrUST { get; init; }
 }

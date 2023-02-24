@@ -279,10 +279,10 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
                     rateEntries.Add(erCategory, rateEntry);
                 }
 
-                rateEntry.EmployerRateLELtoST = erEntry.EarningsAtOrAboveLELUpToAndIncludingST;
-                rateEntry.EmployerRateSTtoFUST = erEntry.EarningsAboveSTUpToAndIncludingFUST;
-                rateEntry.EmployerRateFUSTtoUEL = erEntry.EarningsAboveFUSTUpToAndIncludingUELOrUST;
-                rateEntry.EmployerRateAboveUEL = erEntry.EarningsAboveUELOrUST;
+                rateEntry.EmployerRateLELtoST = erEntry.ForEarningsAtOrAboveLELUpToAndIncludingST;
+                rateEntry.EmployerRateSTtoFUST = erEntry.ForEarningsAboveSTUpToAndIncludingFUST;
+                rateEntry.EmployerRateFUSTtoUEL = erEntry.ForEarningsAboveFUSTUpToAndIncludingUELOrUST;
+                rateEntry.EmployerRateAboveUEL = erEntry.ForEarningsAboveUELOrUST;
             });
         });
 
@@ -296,9 +296,9 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
                     rateEntries.Add(erCategory, rateEntry);
                 }
 
-                rateEntry.EmployeeRateToPT = eeEntry.EarningsAtOrAboveLELUpTAndIncludingPT;
-                rateEntry.EmployeeRatePTToUEL = eeEntry.EarningsAbovePTUpToAndIncludingUEL;
-                rateEntry.EmployeeRateAboveUEL = eeEntry.EarningsAboveUEL;
+                rateEntry.EmployeeRateToPT = eeEntry.ForEarningsAtOrAboveLELUpTAndIncludingPT;
+                rateEntry.EmployeeRatePTToUEL = eeEntry.ForEarningsAbovePTUpToAndIncludingUEL;
+                rateEntry.EmployeeRateAboveUEL = eeEntry.ForEarningsAboveUEL;
             });
         });
 

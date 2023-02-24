@@ -52,7 +52,6 @@ public class NmwReferenceDataEntry : INmwLevelSet, IApplicableBetween
     /// </summary>
     public decimal Age21To22Level { get; init; }
 
-
     /// <summary>
     /// Gets the NLW (rather than NMW) level for employees aged 23 and over.
     /// </summary>

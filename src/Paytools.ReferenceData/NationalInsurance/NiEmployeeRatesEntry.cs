@@ -17,13 +17,31 @@ using System.Collections.Immutable;
 
 namespace Paytools.ReferenceData.NationalInsurance;
 
+/// <summary>
+/// Record that represents the employee NI rates to be applied at various earnings thresholds.
+/// </summary>
 public record NiEmployeeRatesEntry
 {
+    /// <summary>
+    /// Gets the list of applicable NI categories for this rates entry.
+    /// </summary>
     public ImmutableList<NiCategory> NiCategories { get; init; } = default!;
 
-    public decimal EarningsAtOrAboveLELUpTAndIncludingPT { get; init; }
+    /// <summary>
+    /// Gets the employee rate applicable for earnings between the Lower Earnings
+    /// Limit and the Primary Threshold.
+    /// </summary>
+    public decimal ForEarningsAtOrAboveLELUpTAndIncludingPT { get; init; }
 
-    public decimal EarningsAbovePTUpToAndIncludingUEL { get; init; }
+    /// <summary>
+    /// Gets the employee rate applicable for earnings between the Primary Threshold
+    /// and the Upper Earnings Limit.
+    /// </summary>
+    public decimal ForEarningsAbovePTUpToAndIncludingUEL { get; init; }
 
-    public decimal EarningsAboveUEL { get; init; }
+    /// <summary>
+    /// Gets the employee rate applicable for earnings above the Upper Earnings
+    /// Limit.
+    /// </summary>
+    public decimal ForEarningsAboveUEL { get; init; }
 }

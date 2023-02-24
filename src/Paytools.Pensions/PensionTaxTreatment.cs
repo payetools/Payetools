@@ -24,7 +24,6 @@ public enum PensionTaxTreatment
 
     /// <summary>Relief at source.  Contributions are taken from post-tax salary and the pension
     /// provider claims back basic rate tax from HMRC.</summary>
-
     ReliefAtSource,
 
     /// <summary>

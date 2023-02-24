@@ -40,7 +40,6 @@ public interface INmwLevelSet
     /// </summary>
     decimal Age21To22Level { get; }
 
-
     /// <summary>
     /// Gets the NLW (rather than NMW) level for employees aged 23 and over.
     /// </summary>

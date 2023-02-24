@@ -36,15 +36,38 @@ public class HmrcTaxYearReferenceDataSet
     /// </summary>
     public DateTime LatestUpdateTimestamp { get; init; }
 
+    /// <summary>
+    /// Gets the tax year to which this data set applies.
+    /// </summary>
     public TaxYearEnding ApplicableTaxYearEnding { get; init; }
 
+    /// <summary>
+    /// Gets a set of <see cref="IncomeTaxReferenceDataEntry"/>s, each entry applicable to a portion of the tax year.  Where
+    /// the same regime applies across the entire tax year, this set contains only one entry.
+    /// </summary>
     public List<IncomeTaxReferenceDataEntry> IncomeTax { get; init; } = default!;
 
+    /// <summary>
+    /// Gets a set of <see cref="NiReferenceDataEntry"/>s, each entry applicable to a portion of the tax year.  Where
+    /// the same regime applies across the entire tax year, this set contains only one entry.
+    /// </summary>
     public List<NiReferenceDataEntry> NationalInsurance { get; init; } = default!;
 
+    /// <summary>
+    /// Gets a set of <see cref="PensionsReferenceDataSet"/>s, each entry applicable to a portion of the tax year.  Where
+    /// the same regime applies across the entire tax year, this set contains only one entry.
+    /// </summary>
     public List<PensionsReferenceDataSet> Pensions { get; init; } = default!;
 
+    /// <summary>
+    /// Gets a set of <see cref="NmwReferenceDataEntry"/>s, each entry applicable to a portion of the tax year.  Where
+    /// the same regime applies across the entire tax year, this set contains only one entry.
+    /// </summary>
     public List<NmwReferenceDataEntry> NationalMinimumWage { get; init; } = default!;
 
+    /// <summary>
+    /// Gets a set of <see cref="StudentLoanReferenceDataEntry"/>s, each entry applicable to a portion of the tax year.  Where
+    /// the same regime applies across the entire tax year, this set contains only one entry.
+    /// </summary>
     public List<StudentLoanReferenceDataEntry> StudentLoans { get; init; } = default!;
 }

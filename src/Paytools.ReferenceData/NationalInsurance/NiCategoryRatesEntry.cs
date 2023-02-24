@@ -17,31 +17,34 @@ using Paytools.NationalInsurance.ReferenceData;
 
 namespace Paytools.ReferenceData.NationalInsurance;
 
+/// <summary>
+/// Represents a set of National Insurance rates applicable to a specific NI category.
+/// </summary>
 public record NiCategoryRatesEntry : INiCategoryRatesEntry
 {
-    /// <summary>Applicable National Insurance Category.</summary>
+    /// <summary>Gets the applicable National Insurance Category.</summary>
     public NiCategory Category { get; }
 
-    /// <summary>Employee rate for earnings at or above lower earnings limit up to and including primary threshold.</summary>
+    /// <summary>Gets or sets the employee rate for earnings at or above lower earnings limit up to and including primary threshold.</summary>
     public decimal EmployeeRateToPT { get; set; }
 
-    /// <summary>Employee rate for earnings above the primary threshold up to and including upper earnings limit.</summary>
+    /// <summary>Gets or sets the employee rate for earnings above the primary threshold up to and including upper earnings limit.</summary>
     public decimal EmployeeRatePTToUEL { get; set; }
 
-    /// <summary>Employee rate for balance of earnings above upper earnings limit</summary>
+    /// <summary>Gets or sets the employee rate for balance of earnings above upper earnings limit.</summary>
     public decimal EmployeeRateAboveUEL { get; set; }
 
-    /// <summary>Employer rate for earnings at or above lower earnings limit up to and including secondary threshold,</summary>
+    /// <summary>Gets or sets the employer rate for earnings at or above lower earnings limit up to and including secondary threshold,.</summary>
     public decimal EmployerRateLELtoST { get; set; }
 
-    /// <summary>Employer rate for earnings above secondary threshold up to and including Freeport upper secondary threshold.</summary>
+    /// <summary>Gets or sets the employer rate for earnings above secondary threshold up to and including Freeport upper secondary threshold.</summary>
     public decimal EmployerRateSTtoFUST { get; set; }
 
-    /// <summary>Employer rate for earnings above Freeport upper secondary threshold up to and including upper earnings limit, upper 
+    /// <summary>Gets or sets the employer rate for earnings above Freeport upper secondary threshold up to and including upper earnings limit, upper
     /// secondary thresholds for under 21s, apprentices and veterans.</summary>
     public decimal EmployerRateFUSTtoUEL { get; set; }
 
-    /// <summary>Employer rate for balance of earnings above upper earnings limit, upper secondary thresholds for under 21s, apprentices 
+    /// <summary>Gets or sets the employer rate for balance of earnings above upper earnings limit, upper secondary thresholds for under 21s, apprentices
     /// and veterans.</summary>
     public decimal EmployerRateAboveUEL { get; set; }
 

@@ -52,6 +52,8 @@ public class HmrcReferenceDataProviderFactory
     /// Initialises a new instance of <see cref="HmrcReferenceDataProviderFactory"/> for use with Streams; do not use this
     /// constructor if accessing HMRC reference data over HTTP(S) is required.
     /// </summary>
+    /// <param name="logger">An implementation of <see cref="ILogger{HmrcReferenceDataProviderFactory}"/> used
+    /// for logging.</param>
     public HmrcReferenceDataProviderFactory(ILogger<HmrcReferenceDataProviderFactory>? logger = null)
     {
         _httpClientFactory = null;
@@ -63,7 +65,8 @@ public class HmrcReferenceDataProviderFactory
     /// is required to provide <see cref="HttpClient"/> instances to retrieve the reference data from the cloud.
     /// </summary>
     /// <param name="httpClientFactory">Implementation of <see cref="IHttpClientFactory"/>.</param>
-    /// <param name="logger">Optional logger.</param>
+    /// <param name="logger">An implementation of <see cref="ILogger{HmrcReferenceDataProviderFactory}"/> used
+    /// for logging.</param>
     public HmrcReferenceDataProviderFactory(
         IHttpClientFactory httpClientFactory,
         ILogger<HmrcReferenceDataProviderFactory>? logger = null)
@@ -79,7 +82,7 @@ public class HmrcReferenceDataProviderFactory
     /// <param name="referenceDataStreams">Array of data streams to load HMRC reference data from.</param>
     /// <returns>An instance of a type that implements <see cref="IHmrcReferenceDataProvider"/>.</returns>
     /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to load
-    /// reference data from the supplied stream.</exception>
+    /// reference data from the supplied set of streams.</exception>
     public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Stream[] referenceDataStreams)
     {
         _logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider with array of Streams; {referenceDataStreams.Length} streams provided",
@@ -118,7 +121,6 @@ public class HmrcReferenceDataProviderFactory
     /// <remarks>Original implementation of <see cref="HmrcReferenceDataProvider"/> used Parallel.Foreach()
     /// loop to retrieve entries in parallel but there must be some issue with the default IHttpClientFactory
     /// implementation that prevents parallel usage (or some other non-obvious issue).</remarks>
-
     public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Uri referenceDataEndpoint)
     {
         if (_httpClientFactory == null)
