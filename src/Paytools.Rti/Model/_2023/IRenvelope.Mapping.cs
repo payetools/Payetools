@@ -49,7 +49,7 @@ public partial class IRenvelope<T> : IRtiDocumentForTaxYear where T : IRtiDataTa
     public void Populate<Tsource>(Tsource data, DateOnly? periodEnd = null) where Tsource : class, IEmployerInfoProvider
     {
         IRheader.PeriodEnd = periodEnd?.ToMiddayUtcDateTime() ?? DateTime.UtcNow.MiddayUtc();
-        IRheader.Keys = data.Employer.HmrcPayeReference.ToTypeValuePairs<IRheaderKey>();
+        IRheader.Keys = data.Employer.HmrcPayeReference?.ToTypeValuePairs<IRheaderKey>();
 
         Content.Populate(data);
     }
@@ -70,7 +70,7 @@ public partial class IRenvelope<T> : IRtiDocumentForTaxYear where T : IRtiDataTa
             var type when type == typeof(EmployerPaymentSummary) => "",
             var type when type == typeof(FullPaymentSubmission) => "http://www.govtalk.gov.uk/taxation/PAYE/RTI/FullPaymentSubmission/22-23/1",
             var type when type == typeof(NINOverificationRequest) => "",
-            _ => throw new InvalidOperationException("Unable to obtain namespace for target type"),
+            _ => throw new InvalidOperationException("Unable to obtain namespace for target type")
         };
 
     private static XmlAttributeOverrides GetXmlAttributeOverrides(string targetNamespace)
