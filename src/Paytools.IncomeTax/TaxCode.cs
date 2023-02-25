@@ -149,9 +149,9 @@ public readonly struct TaxCode
         return (includeNonCumulativeFlag, includeTaxRegime) switch
         {
             (false, true) => ToString(),
-            (true, true) => $"{ToString()} X",
+            (true, true) => IsNonCumulative ? $"{ToString()} X" : ToString(),
             (false, false) => BaseCode,
-            (true, false) => $"{BaseCode} X",
+            (true, false) => IsNonCumulative ? $"{BaseCode} X" : BaseCode
         };
     }
 

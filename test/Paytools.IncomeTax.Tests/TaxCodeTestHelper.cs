@@ -119,4 +119,15 @@ public static class TaxCodeTestHelper
         taxCode.ToString().Should().Be(expectedOutput);
         taxCode.IsNonCumulative.Should().Be(expectedIsNonCumulative);
     }
+
+    public static void RunToFullStringTest(string input, string expectedOutput, bool expectedIsNonCumulative)
+    {
+        TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode).Should().BeTrue();
+        taxCode.ToString(true, true).Should().Be(expectedOutput);
+        taxCode.IsNonCumulative.Should().Be(expectedIsNonCumulative);
+
+        TaxCode.TryParse(input.ToUpper(), _testTaxYear, out taxCode).Should().BeTrue();
+        taxCode.ToString(true, true).Should().Be(expectedOutput);
+        taxCode.IsNonCumulative.Should().Be(expectedIsNonCumulative);
+    }
 }
