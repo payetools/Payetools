@@ -56,8 +56,8 @@ public class HmrcTests
 
             var result1 = calculator.Calculate(test.NiCategory, test.GrossPay);
 
-            test.EmployeeNiContribution.Should().Be(result1.EmployeeContribution, "input is {0} and output is {1}", test.ToDebugString(), result1.ToString());
-            test.EmployerNiContribution.Should().Be(result1.EmployerContribution, "input is {0} and output is {1}", test.ToDebugString(), result1.ToString());
+            test.EmployeeNiContribution.Should().Be(result1.EmployeeContribution, "input is {0} and output is {1} (test #{2})", test.ToDebugString(), result1.ToString(), (testsCompleted + 1).ToString());
+            test.EmployerNiContribution.Should().Be(result1.EmployerContribution, "input is {0} and output is {1} (test #{2})", test.ToDebugString(), result1.ToString(), (testsCompleted + 1).ToString());
 
             testsCompleted++;
         }

@@ -15,7 +15,7 @@
     <PackageLicenseFile></PackageLicenseFile>
     <RepositoryUrl>https://github.com/paytools-uk/Paytools.Common</RepositoryUrl>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<DocumentationFile>paytools.common.xml</DocumentationFile>
+	<DocumentationFile></DocumentationFile>
     <Version>$(VersionPrefix)1.0.1</Version>
     <AnalysisLevel>6.0-recommended</AnalysisLevel>
   </PropertyGroup>
