@@ -82,8 +82,16 @@ public readonly struct TaxCode
     /// <summary>
     /// Gets the tax regime letter, e.g., S for Scotland, C for Wales.  Returns an empty string if no specific regime is applicable.
     /// </summary>
-    public string TaxRegimeLetter =>
-        ApplicableCountries switch
+    public string TaxRegimeLetter => MapCountryToTaxRegime(ApplicableCountries);
+
+    /// <summary>
+    /// Static method that maps a <see cref="CountriesForTaxPurposes"/> value to the regime prefix letter, for
+    /// example Scotland => "S".
+    /// </summary>
+    /// <param name="countries">Country or countries to be mapped.</param>
+    /// <returns>Prefix letter for single country regimes (currently Scotland, Wales); Empty string otherwise.</returns>
+    public static string MapCountryToTaxRegime(CountriesForTaxPurposes countries) =>
+        countries switch
         {
             CountriesForTaxPurposes.Scotland => "S",
             CountriesForTaxPurposes.Wales => "C",
