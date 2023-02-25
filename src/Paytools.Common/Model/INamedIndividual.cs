@@ -50,7 +50,7 @@ public interface INamedIndividual
     /// <summary>
     /// Gets a value indicating whether the individual has supplied a middle name.
     /// </summary>
-    bool HasMiddleName { get; init; }
+    bool HasMiddleName { get; }
 
     /// <summary>
     /// Gets any initials provided as a space separated string.  Will be null if a <see cref="FirstName"/>

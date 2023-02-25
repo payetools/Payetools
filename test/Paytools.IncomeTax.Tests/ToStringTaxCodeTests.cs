@@ -21,8 +21,10 @@ public class ToStringTaxCodeTests
     }
 
     [Fact]
-    public void CheckInvalidCodes()
+    public void CheckKCode()
     {
-        // TODO: Add invalid tests
+        Test.RunToStringTest("K1257 X", "K1257", true);
+        Test.RunToStringTest("SK1257 X", "SK1257", true);
+        Test.RunToStringTest("CK1257 X", "CK1257", true);
     }
 }

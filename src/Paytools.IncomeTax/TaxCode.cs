@@ -102,7 +102,7 @@ public readonly struct TaxCode
         TaxTreatment switch
         {
             TaxTreatment._0T => $"0T",
-            TaxTreatment.K => $"K{-NumericPortionOfCode}",
+            TaxTreatment.K => $"K{NumericPortionOfCode}",
             TaxTreatment.L or TaxTreatment.M or TaxTreatment.N => $"{NumericPortionOfCode}{TaxTreatment}",
             _ => $"{TaxTreatment}"
         };
