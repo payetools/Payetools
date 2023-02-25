@@ -21,9 +21,9 @@ public class NmwEvaluatorFactoryDataFixture
 {
     private AsyncLazy<INmwEvaluatorFactory> _factory = new AsyncLazy<INmwEvaluatorFactory>(async () =>
     {
-        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+        var referenceDataFactory = Testing.Utils.ReferenceDataHelper.GetFactory();
 
-        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<INmwReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalMinimumWage_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceDataHelper.CreateProviderAsync<INmwReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalMinimumWage_2022_2023.json") });
 
         return new NmwEvaluatorFactory(provider);
     });

@@ -22,9 +22,9 @@ public class StudentLoanCalculatorFactoryDataFixture
 {
     private AsyncLazy<IStudentLoanCalculatorFactory> _factory = new AsyncLazy<IStudentLoanCalculatorFactory>(async () =>
     {
-        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+        var referenceDataFactory = Testing.Utils.ReferenceDataHelper.GetFactory();
 
-        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<IStudentLoanReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\StudentLoans_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceDataHelper.CreateProviderAsync<IStudentLoanReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\StudentLoans_2022_2023.json") });
 
         return new StudentLoanCalculatorFactory(provider);
     });

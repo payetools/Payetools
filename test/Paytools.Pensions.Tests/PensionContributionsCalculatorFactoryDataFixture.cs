@@ -21,9 +21,9 @@ public class PensionContributionsCalculatorFactoryDataFixture
 {
     private AsyncLazy<IPensionContributionCalculatorFactory> _factory = new AsyncLazy<IPensionContributionCalculatorFactory>(async () =>
     {
-        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+        var referenceDataFactory = Testing.Utils.ReferenceDataHelper.GetFactory();
 
-        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<IPensionsReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceDataHelper.CreateProviderAsync<IPensionsReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\Pensions_2022_2023.json") });
 
         return new PensionContributionCalculatorFactory(provider);
     });

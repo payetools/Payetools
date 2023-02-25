@@ -35,9 +35,9 @@ public class HmrcTests
     {
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
 
-        var referenceDataFactory = Testing.Utils.ReferenceData.GetFactory();
+        var referenceDataFactory = Testing.Utils.ReferenceDataHelper.GetFactory();
 
-        var provider = await Testing.Utils.ReferenceData.CreateProviderAsync<INiReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalInsurance_2022_2023.json") });
+        var provider = await Testing.Utils.ReferenceDataHelper.CreateProviderAsync<INiReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalInsurance_2022_2023.json") });
 
         using var db = new TestDataRepository();
 

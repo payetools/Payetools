@@ -24,11 +24,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="stylecop.json" />
+	  <Compile Include="..\..\common\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AdditionalFiles Include="stylecop.json" />
+	  <Content Include="..\..\common\stylecop.json" Link="stylecop.json" />
 	</ItemGroup>
 
 	<ItemGroup>

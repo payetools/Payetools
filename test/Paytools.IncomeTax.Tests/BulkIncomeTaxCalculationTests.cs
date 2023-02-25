@@ -41,7 +41,7 @@ public class BulkIncomeTaxCalculationTests
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
 
         var provider = await 
-            Testing.Utils.ReferenceData.CreateProviderAsync<ITaxReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
+            Testing.Utils.ReferenceDataHelper.CreateProviderAsync<ITaxReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
 
         var taxCalculatorFactory = new TaxCalculatorFactory(provider);
         var tests = IncomeTaxTestDataLoader.Load();

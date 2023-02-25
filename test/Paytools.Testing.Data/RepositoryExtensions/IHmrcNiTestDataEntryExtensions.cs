@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -28,7 +28,7 @@ namespace Paytools.Testing.Data
             sb.Append($"GrossPay: {entry.GrossPay}, ");
             sb.Append($"EmployeeNiContribution: {entry.EmployeeNiContribution}, ");
             sb.Append($"EmployerNiContribution: {entry.EmployerNiContribution}, ");
-            sb.AppendLine(" }");
+            sb.Append(" }");
 
             return sb.ToString();
         }
