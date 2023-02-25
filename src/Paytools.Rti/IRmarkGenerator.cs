@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2022-2023 Paytools Ltd
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -37,7 +37,7 @@ public static class IRmarkGenerator
     private static XmlDocument GetDocumentWithBody(XmlDocument payload)
     {
         var bodyDocument = new XmlDocument();
-        
+
         bodyDocument.AppendChild(bodyDocument.CreateElement("Body", GovTalkMessage.Namespace));
 
         XmlNode importedNode = bodyDocument.ImportNode(payload.DocumentElement ??

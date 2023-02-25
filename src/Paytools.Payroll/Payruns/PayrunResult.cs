@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.Employment;
+using Paytools.Employment.Model;
 using System.Collections.Immutable;
 
 namespace Paytools.Payroll.Payruns;

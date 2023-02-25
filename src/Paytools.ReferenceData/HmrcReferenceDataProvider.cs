@@ -23,7 +23,6 @@ using Paytools.ReferenceData.NationalInsurance;
 using Paytools.ReferenceData.NationalMinimumWage;
 using Paytools.ReferenceData.Pensions;
 using Paytools.ReferenceData.StudentLoans;
-using Paytools.StudentLoans;
 using Paytools.StudentLoans.ReferenceData;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;

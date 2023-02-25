@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 using Paytools.Common.Extensions;
 using Paytools.Common.Model;
-using Paytools.Employment;
+using Paytools.Employment.Model;
 using Paytools.Payroll;
 using Paytools.Payroll.Payruns;
 using Paytools.Rti.Extensions;

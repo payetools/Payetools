@@ -16,6 +16,7 @@ using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.NationalInsurance.ReferenceData;
 using Paytools.Testing.Data;
+using Paytools.Testing.Data.NationalInsurance;
 using Paytools.Testing.Utils;
 using Xunit.Abstractions;
 
