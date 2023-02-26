@@ -144,16 +144,14 @@ public readonly struct TaxCode
     /// <param name="includeNonCumulativeFlag">True to include the non-cumulative flag; false otherwise.</param>
     /// <param name="includeTaxRegime">True to include the tax regime prefix; false otherwise.</param>
     /// <returns>String representation of tax code with or without tax regime prefix and with or without non-cumulative indicator.</returns>
-    public string ToString(bool includeNonCumulativeFlag, bool includeTaxRegime)
-    {
-        return (includeNonCumulativeFlag, includeTaxRegime) switch
+    public string ToString(bool includeNonCumulativeFlag, bool includeTaxRegime) =>
+        (includeNonCumulativeFlag, includeTaxRegime) switch
         {
             (false, true) => ToString(),
             (true, true) => IsNonCumulative ? $"{ToString()} X" : ToString(),
             (false, false) => BaseCode,
             (true, false) => IsNonCumulative ? $"{BaseCode} X" : BaseCode
         };
-    }
 
     /// <summary>
     /// Attempts to parse the supplied tax code into its component parts, assuming the tax regimes for the current tax year.
@@ -163,10 +161,8 @@ public readonly struct TaxCode
     /// <param name="taxCode">Tax code as a string.</param>
     /// <param name="result">Instance of <see cref="TaxCode"/> if valid; default(TaxCode) otherwise.</param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
-    public static bool TryParse(string taxCode, out TaxCode result)
-    {
-        return TryParse(taxCode, new TaxYear(TaxYear.Current), out result);
-    }
+    public static bool TryParse(string taxCode, out TaxCode result) =>
+        TryParse(taxCode, new TaxYear(TaxYear.Current), out result);
 
     /// <summary>
     /// Attempts to parse the supplied tax code.  Non-cumulative codes must be identified by an 'X', 'W1', 'M1' or 'W1/M1' suffix,
@@ -253,9 +249,8 @@ public readonly struct TaxCode
         return taxFreePayForPeriod;
     }
 
-    private static decimal GetQuotientTaxFreePay(int periodCount)
-    {
-        return periodCount switch
+    private static decimal GetQuotientTaxFreePay(int periodCount) =>
+        periodCount switch
         {
             52 => _quotientWeeklyTaxFreePay,
             26 => _quotientWeeklyTaxFreePay * 2,
@@ -264,7 +259,6 @@ public readonly struct TaxCode
             1 => _taxCodeDivisor,
             _ => throw new ArgumentOutOfRangeException(nameof(periodCount), $"Unsupported value for periodCount: {periodCount}")
         };
-    }
 
     private static bool ProcessFixedCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative, out TaxCode? taxCode)
     {
@@ -332,15 +326,13 @@ public readonly struct TaxCode
         return true;
     }
 
-    private static int GetNumericPortionOfCode(int numericPortionOfCode, TaxTreatment treatment)
-    {
-        return treatment switch
+    private static int GetNumericPortionOfCode(int numericPortionOfCode, TaxTreatment treatment) =>
+        treatment switch
         {
             TaxTreatment.K or TaxTreatment.L or TaxTreatment.M or TaxTreatment.N => numericPortionOfCode,
             TaxTreatment.NT => int.MaxValue,
             _ => 0
         };
-    }
 
     private static CountriesForTaxPurposes GetApplicableCountries(Match match, TaxYear taxYear)
     {
