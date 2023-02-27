@@ -36,12 +36,27 @@ public interface INmwEvaluator
     /// <returns>An instance of <see cref="NmwEvaluationResult"/> that indicates whether the pay is compliant with the NMW/NLW
     /// regulations.</returns>
     /// <remarks>As per <see href="https://www.gov.uk/hmrc-internal-manuals/national-minimum-wage-manual/nmwm03010"/>,
-    /// the rate that applies to each worker depends on their age at teh start of the pay reference period.</remarks>
+    /// the rate that applies to each worker depends on their age at the start of the pay reference period.</remarks>
     NmwEvaluationResult Evaluate(
         PayReferencePeriod payPeriod,
         DateOnly dateOfBirth,
         decimal grossPay,
         decimal hoursWorkedForPay,
+        bool isApprentice = false,
+        decimal? yearsAsApprentice = null);
+
+    /// <summary>
+    /// Gets the expected hourly rate of pay for an employee that is paid is the National Minimum or National Living Wage.
+    /// </summary>
+    /// <param name="ageAtStartOfPeriod">Age at the start of the applicable pay period.</param>
+    /// <param name="isApprentice">True if the employee is an apprentice; false otherwise.  Optional, defaults to false.</param>
+    /// <param name="yearsAsApprentice">Number of years an apprentice has served in their apprenticeship.  May be a figure less
+    /// than one.  Optional, defaults to null; not required if the employee is not an apprentice.</param>
+    /// <returns>Appropriate hourly rate of pay.</returns>
+    /// <remarks>As per <see href="https://www.gov.uk/hmrc-internal-manuals/national-minimum-wage-manual/nmwm03010"/>,
+    /// the rate that applies to each worker depends on their age at the start of the pay reference period.</remarks>
+    decimal GetNmwHourlyRateForEmployee(
+        int ageAtStartOfPeriod,
         bool isApprentice = false,
         decimal? yearsAsApprentice = null);
 }

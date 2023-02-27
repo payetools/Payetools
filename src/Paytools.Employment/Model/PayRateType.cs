@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
-using System.Collections.Concurrent;
-
-namespace Paytools.Payroll.Payruns;
+namespace Paytools.Employment.Model;
 
 /// <summary>
-/// Interface that represents the output of a given payrun.
+/// Enum representing different pay types, i.e., salaried, hourly paid, etc.
 /// </summary>
-public interface IPayrunResult : IEmployerInfoProvider
+public enum PayRateType
 {
     /// <summary>
-    /// Gets the pay date for this payrun.
+    /// Per annum pay type for salaried employees.
     /// </summary>
-    PayDate PayDate { get; }
+    Salaried,
 
     /// <summary>
-    /// Gets the list of employee payrun entries.
+    /// Hourly pay type for hourly-paid employees.
     /// </summary>
-    ConcurrentBag<IEmployeePayrunEntry> EmployeePayrunEntries { get; }
+    HourlyPaid,
+
+    /// <summary>
+    /// All pay rate type other than salaried and hourly paid.
+    /// </summary>
+    Other
 }

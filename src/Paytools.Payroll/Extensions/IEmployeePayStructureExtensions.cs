@@ -32,14 +32,15 @@ public static class IEmployeePayStructureExtensions
     /// employee.</exception>
     public static decimal GetPayForSinglePeriod(this IEmployeePayStructure value, PayFrequency payFrequency)
     {
-        if (value.PayRateUnits != PayRateUnits.PerAnnum)
+        if (value.PayRateType != PayRateType.Salaried)
             throw new ArgumentException("Pay for single period can only be calculated for annually paid employees", nameof(value));
 
         return value.PayRate / payFrequency.GetStandardTaxPeriodCount();
     }
 
     /// <summary>
-    /// Calculates the pay for the period based on the specified amount of time/unit.
+    /// Calculates the pay for the period based on the specified amount of time/unit. Currently only supports
+    /// hourly pay.
     /// </summary>
     /// <param name="value"><see cref="IEmployeePayStructure"/> instance.</param>
     /// <param name="quantity">Amount of time/unit to calculate pay for.</param>
@@ -47,8 +48,8 @@ public static class IEmployeePayStructureExtensions
     /// <returns>Pay for the period.</returns>
     public static decimal GetPayForPeriod(this IEmployeePayStructure value, decimal quantity, PayRateUnits units)
     {
-        if (units != value.PayRateUnits)
-            throw new ArgumentException("Units specified must match units for pay structure", nameof(units));
+        if (value.PayRateType != PayRateType.HourlyPaid || units != PayRateUnits.PerHour)
+            throw new ArgumentException("Pay rate type must be hourly paid and units specified must be per hour", nameof(units));
 
         return quantity * value.PayRate;
     }

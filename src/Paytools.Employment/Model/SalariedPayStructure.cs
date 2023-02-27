@@ -26,5 +26,8 @@ public record SalariedPayStructure : IEmployeePayStructure
     public decimal PayRate { get; init; }
 
     /// <inheritdoc/>>
-    public PayRateUnits PayRateUnits => PayRateUnits.PerAnnum;
+    public PayRateType PayRateType => PayRateType.Salaried;
+
+    /// <inheritdoc/>>
+    public IPayComponent PayComponent { get; init; } = default!;
 }

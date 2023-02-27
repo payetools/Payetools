@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2022-2023 Paytools Ltd
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -14,7 +14,7 @@
 
 using Paytools.Common.Model;
 using Paytools.Employment.Model;
-using System.Collections.Immutable;
+using System.Collections.Concurrent;
 
 namespace Paytools.Payroll.Payruns;
 
@@ -36,5 +36,5 @@ public record PayrunResult : IPayrunResult
     /// <summary>
     /// Gets the list of employee payrun entries.
     /// </summary>
-    public ImmutableList<IEmployeePayrunEntry> EmployeePayrunEntries { get; init; } = null!;
+    public ConcurrentBag<IEmployeePayrunEntry> EmployeePayrunEntries { get; init; } = null!;
 }

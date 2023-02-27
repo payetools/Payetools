@@ -89,4 +89,11 @@ public record NiPeriodThresholdEntry
             decimal.Round(rawThresholdForPeriod, 0, MidpointRounding.AwayFromZero) :
             decimal.Round(rawThresholdForPeriod, 0, MidpointRounding.ToPositiveInfinity);
     }
+
+    /// <summary>
+    /// Gets a string representation of this <see cref="NiPeriodThresholdEntry"/>.
+    /// </summary>
+    /// <returns>String representation of this instance.</returns>
+    public override string ToString() =>
+        $"{ThresholdType}: {PayFrequency} ({ThresholdForPeriod}, {ThresholdForPeriod})";
 }

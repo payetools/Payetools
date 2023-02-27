@@ -25,12 +25,17 @@ public interface IEmployeePayStructure
     Guid Id { get; }
 
     /// <summary>
-    /// Gets the rate of pay.  The units corresponding to this rate of pay are given by <see cref="PayRateUnits"/>.
+    /// Gets the rate of pay.  The type of this rate of pay is given by <see cref="PayRateType"/>.
     /// </summary>
     decimal PayRate { get; }
 
     /// <summary>
-    /// Gets the units for <see cref="PayRate"/>.
+    /// Gets the type of pay that <see cref="PayRate"/> represents.
     /// </summary>
-    PayRateUnits PayRateUnits { get; }
+    PayRateType PayRateType { get; }
+
+    /// <summary>
+    /// Gets the pay component that this pay structure is based on.
+    /// </summary>
+    IPayComponent PayComponent { get; }
 }

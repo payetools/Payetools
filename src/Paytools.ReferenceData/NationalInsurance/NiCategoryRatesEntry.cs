@@ -56,4 +56,11 @@ public record NiCategoryRatesEntry : INiCategoryRatesEntry
     {
         Category = category;
     }
+
+    /// <summary>
+    /// Gets a string representation of this <see cref="NiCategoryRatesEntry"/>.
+    /// </summary>
+    /// <returns>String representation of this instance.</returns>
+    public override string ToString() =>
+        $"(EmployeeRateToPT:{EmployeeRateToPT}, EmployeeRatePTToUEL:{EmployeeRatePTToUEL}, EmployeeRateAboveUEL:{EmployeeRateAboveUEL}, EmployerRateLELtoST:{EmployerRateLELtoST}, EmployerRateSTtoFUST:{EmployerRateSTtoFUST}, EmployerRateFUSTtoUEL:{EmployerRateFUSTtoUEL}, EmployerRateAboveUEL:{EmployerRateAboveUEL})";
 }

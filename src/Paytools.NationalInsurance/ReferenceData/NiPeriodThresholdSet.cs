@@ -61,4 +61,11 @@ public record NiPeriodThresholdSet
     /// <returns>Pro-rata threshold value applicable to the period and threshold type.</returns>
     public decimal GetThreshold1(NiThresholdType thresholdType) =>
         _thresholdEntries[thresholdType.GetIndex()].ThresholdForPeriod1;
+
+    /// <summary>
+    /// Gets a string representation of this <see cref="NiPeriodThresholdSet"/>.
+    /// </summary>
+    /// <returns>String representation of this instance.</returns>
+    public override string ToString() =>
+        string.Join(" | ", _thresholdEntries.Select(te => te.ToString()).ToArray());
 }

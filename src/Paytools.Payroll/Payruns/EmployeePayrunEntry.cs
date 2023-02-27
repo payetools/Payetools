@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
     /// the employee's leaving date may be before the start of the pay period for this payrun.
     /// </summary>
-    public bool IsLeaverInThisPayrun { get;  }
+    public bool IsLeaverInThisPayrun { get; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
@@ -70,6 +70,16 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     public IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
 
     /// <summary>
+    /// Gets the employee's total gross pay.
+    /// </summary>
+    public decimal TotalGrossPay { get; }
+
+    /// <summary>
+    /// Gets the employee's final net pay.
+    /// </summary>
+    public decimal NetPay { get; }
+
+    /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayrunEntry"/>.
     /// </summary>
     /// <param name="employee">Employee details.</param>
@@ -80,6 +90,8 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     /// employee does not have any outstanding student or post-graduate loans.</param>
     /// <param name="pensionContributionCalculation">Optional result of pension calculation.  Null if the
     /// employee is not a member of one of the company's schemes.</param>
+    /// <param name="totalGrossPay">Total gross pay.</param>
+    /// <param name="netPay">Employee's net (aka take-home) pay.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayrunEntry(
@@ -89,6 +101,8 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
         INiCalculationResult niCalculationResult,
         IStudentLoanCalculationResult? studentLoanCalculationResult,
         IPensionContributionCalculationResult? pensionContributionCalculation,
+        decimal totalGrossPay,
+        decimal netPay,
         EmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
         Employee = employee;
@@ -97,6 +111,8 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
         NiCalculationResult = niCalculationResult;
         StudentLoanCalculationResult = studentLoanCalculationResult;
         PensionContributionCalculationResult = pensionContributionCalculation;
+        TotalGrossPay = totalGrossPay;
+        NetPay = netPay;
         EmployeePayrollHistoryYtd = employeePayrollHistoryYtd;
     }
 }

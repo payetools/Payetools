@@ -15,7 +15,7 @@
 namespace Paytools.Employment.Model;
 
 /// <summary>
-/// Enum representing different pay types, i.e., annual pay, hourly pay, etc.
+/// Enum representing different pay units, i.e., per annum, per hour, etc.
 /// </summary>
 public enum PayRateUnits
 {
@@ -27,5 +27,10 @@ public enum PayRateUnits
     /// <summary>
     /// Hourly pay type for hourly-paid employees.
     /// </summary>
-    Hourly
+    PerHour,
+
+    /// <summary>
+    /// Daily rate, typically for salaried employees with regular working patterns.
+    /// </summary>
+    PerDay
 }

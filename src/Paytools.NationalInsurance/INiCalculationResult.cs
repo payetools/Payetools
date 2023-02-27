@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.NationalInsurance.ReferenceData;
+
 namespace Paytools.NationalInsurance;
 
 /// <summary>
@@ -19,6 +21,17 @@ namespace Paytools.NationalInsurance;
 /// </summary>
 public interface INiCalculationResult
 {
+    /// <summary>
+    /// Gets the rates used for this calculation.
+    /// </summary>
+    INiCategoryRatesEntry RatesUsed { get; }
+
+    /// <summary>
+    /// Gets the set of thresholds used for this calculation.  These thresholds are adjusted to match the
+    /// length of the pay period.
+    /// </summary>
+    NiPeriodThresholdSet PeriodThresholdsUsed { get; }
+
     /// <summary>
     /// Gets the breakdown of earnings across each of the different National Insurance thresholds.
     /// </summary>

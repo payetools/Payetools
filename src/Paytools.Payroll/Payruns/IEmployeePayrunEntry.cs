@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
@@ -62,6 +62,16 @@ public interface IEmployeePayrunEntry
     /// null otherwise.
     /// </summary>
     IPensionContributionCalculationResult? PensionContributionCalculationResult { get; }
+
+    /// <summary>
+    /// Gets the employee's total gross pay.
+    /// </summary>
+    decimal TotalGrossPay { get; }
+
+    /// <summary>
+    /// Gets the employee's final net pay.
+    /// </summary>
+    decimal NetPay { get; }
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,

@@ -75,10 +75,10 @@
             "C",
             "J"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0.1505,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
-          "earningsAboveUELOrUST": 0.1505
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.1505,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
+          "forEarningsAboveUELOrUST": 0.1505
         },
         {
           "niCategories": [
@@ -87,10 +87,10 @@
             "L",
             "S"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
-          "earningsAboveUELOrUST": 0.1505
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
+          "forEarningsAboveUELOrUST": 0.1505
         },
         {
           "niCategories": [
@@ -99,10 +99,10 @@
             "V",
             "Z"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0,
-          "earningsAboveUELOrUST": 0.1505
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.1505
         }
       ],
       "employeeRates": [
@@ -114,27 +114,27 @@
             "M",
             "V"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.1325,
-          "earningsAboveUEL": 0.0325
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.1325,
+          "forEarningsAboveUEL": 0.0325
         },
         {
           "niCategories": [
             "B",
             "I"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.071,
-          "earningsAboveUEL": 0.0325
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.071,
+          "forEarningsAboveUEL": 0.0325
         },
         {
           "niCategories": [
             "C",
             "S"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0,
-          "earningsAboveUEL": 0
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
         },
         {
           "niCategories": [
@@ -142,9 +142,9 @@
             "L",
             "Z"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0325,
-          "earningsAboveUEL": 0.0325
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0325,
+          "forEarningsAboveUEL": 0.0325
         }
       ],
       "directorEmployerRates": [
@@ -155,10 +155,10 @@
             "C",
             "J"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0.1453,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.1453,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
+          "forEarningsAboveUELOrUST": 0.1453
         },
         {
           "niCategories": [
@@ -167,10 +167,10 @@
             "L",
             "S"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
+          "forEarningsAboveUELOrUST": 0.1453
         },
         {
           "niCategories": [
@@ -179,10 +179,10 @@
             "V",
             "Z"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.1453
         }
       ],
       "directorEmployeeRates": [
@@ -194,27 +194,27 @@
             "M",
             "V"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.1273,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.1273,
+          "forEarningsAboveUEL": 0.0273
         },
         {
           "niCategories": [
             "B",
             "I"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0658,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0658,
+          "forEarningsAboveUEL": 0.0273
         },
         {
           "niCategories": [
             "C",
             "S"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0,
-          "earningsAboveUEL": 0
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
         },
         {
           "niCategories": [
@@ -222,9 +222,9 @@
             "L",
             "Z"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0273,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0273,
+          "forEarningsAboveUEL": 0.0273
         }
       ]
     },
@@ -294,10 +294,10 @@
             "C",
             "J"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0.1505,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
-          "earningsAboveUELOrUST": 0.1505
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.1505,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
+          "forEarningsAboveUELOrUST": 0.1505
         },
         {
           "niCategories": [
@@ -306,10 +306,10 @@
             "L",
             "S"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
-          "earningsAboveUELOrUST": 0.1505
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1505,
+          "forEarningsAboveUELOrUST": 0.1505
         },
         {
           "niCategories": [
@@ -318,10 +318,10 @@
             "V",
             "Z"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0,
-          "earningsAboveUELOrUST": 0.1505
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.1505
         }
       ],
       "employeeRates": [
@@ -333,27 +333,27 @@
             "M",
             "V"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.1325,
-          "earningsAboveUEL": 0.0325
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.1325,
+          "forEarningsAboveUEL": 0.0325
         },
         {
           "niCategories": [
             "B",
             "I"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.071,
-          "earningsAboveUEL": 0.0325
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.071,
+          "forEarningsAboveUEL": 0.0325
         },
         {
           "niCategories": [
             "C",
             "S"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0,
-          "earningsAboveUEL": 0
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
         },
         {
           "niCategories": [
@@ -361,9 +361,9 @@
             "L",
             "Z"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0325,
-          "earningsAboveUEL": 0.0325
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0325,
+          "forEarningsAboveUEL": 0.0325
         }
       ],
       "directorEmployerRates": [
@@ -374,10 +374,10 @@
             "C",
             "J"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0.1453,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.1453,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
+          "forEarningsAboveUELOrUST": 0.1453
         },
         {
           "niCategories": [
@@ -386,10 +386,10 @@
             "L",
             "S"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
+          "forEarningsAboveUELOrUST": 0.1453
         },
         {
           "niCategories": [
@@ -398,10 +398,10 @@
             "V",
             "Z"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.1453
         }
       ],
       "directorEmployeeRates": [
@@ -413,27 +413,27 @@
             "M",
             "V"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.1273,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.1273,
+          "forEarningsAboveUEL": 0.0273
         },
         {
           "niCategories": [
             "B",
             "I"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0658,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0658,
+          "forEarningsAboveUEL": 0.0273
         },
         {
           "niCategories": [
             "C",
             "S"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0,
-          "earningsAboveUEL": 0
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
         },
         {
           "niCategories": [
@@ -441,9 +441,9 @@
             "L",
             "Z"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0273,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0273,
+          "forEarningsAboveUEL": 0.0273
         }
       ]
     },
@@ -513,10 +513,10 @@
             "C",
             "J"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0.138,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.138,
-          "earningsAboveUELOrUST": 0.138
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.138,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.138,
+          "forEarningsAboveUELOrUST": 0.138
         },
         {
           "niCategories": [
@@ -525,10 +525,10 @@
             "L",
             "S"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.138,
-          "earningsAboveUELOrUST": 0.138
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.138,
+          "forEarningsAboveUELOrUST": 0.138
         },
         {
           "niCategories": [
@@ -537,10 +537,10 @@
             "V",
             "Z"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0,
-          "earningsAboveUELOrUST": 0.138
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.138
         }
       ],
       "employeeRates": [
@@ -552,27 +552,27 @@
             "M",
             "V"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.12,
-          "earningsAboveUEL": 0.02
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.12,
+          "forEarningsAboveUEL": 0.02
         },
         {
           "niCategories": [
             "B",
             "I"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0585,
-          "earningsAboveUEL": 0.02
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0585,
+          "forEarningsAboveUEL": 0.02
         },
         {
           "niCategories": [
             "C",
             "S"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0,
-          "earningsAboveUEL": 0
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
         },
         {
           "niCategories": [
@@ -580,9 +580,9 @@
             "L",
             "Z"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.02,
-          "earningsAboveUEL": 0.02
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.02,
+          "forEarningsAboveUEL": 0.02
         }
       ],
       "directorEmployerRates": [
@@ -593,10 +593,10 @@
             "C",
             "J"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0.1453,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.1453,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
+          "forEarningsAboveUELOrUST": 0.1453
         },
         {
           "niCategories": [
@@ -605,10 +605,10 @@
             "L",
             "S"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.1453,
+          "forEarningsAboveUELOrUST": 0.1453
         },
         {
           "niCategories": [
@@ -617,10 +617,10 @@
             "V",
             "Z"
           ],
-          "earningsAtOrAboveLELUpToAndIncludingST": 0,
-          "earningsAboveSTUpToAndIncludingFUST": 0,
-          "earningsAboveFUSTUpToAndIncludingUELOrUST": 0,
-          "earningsAboveUELOrUST": 0.1453
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.1453
         }
       ],
       "directorEmployeeRates": [
@@ -632,27 +632,27 @@
             "M",
             "V"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.1273,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.1273,
+          "forEarningsAboveUEL": 0.0273
         },
         {
           "niCategories": [
             "B",
             "I"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0658,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0658,
+          "forEarningsAboveUEL": 0.0273
         },
         {
           "niCategories": [
             "C",
             "S"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0,
-          "earningsAboveUEL": 0
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
         },
         {
           "niCategories": [
@@ -660,9 +660,9 @@
             "L",
             "Z"
           ],
-          "earningsAtOrAboveLELUpTAndIncludingPT": 0,
-          "earningsAbovePTUpToAndIncludingUEL": 0.0273,
-          "earningsAboveUEL": 0.0273
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0273,
+          "forEarningsAboveUEL": 0.0273
         }
       ]
     }

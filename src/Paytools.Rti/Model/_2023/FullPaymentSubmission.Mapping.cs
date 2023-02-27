@@ -18,6 +18,7 @@ using Paytools.Employment.Model;
 using Paytools.Payroll;
 using Paytools.Payroll.Payruns;
 using Paytools.Rti.Extensions;
+using System.Collections.Concurrent;
 
 namespace Paytools.Rti.Model._2023;
 
@@ -50,7 +51,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
             } :
             throw new ArgumentException("", nameof(employer));
 
-    private object[] MakeEmployeeRecords(PayDate payDate, IList<IEmployeePayrunEntry> entries)
+    private object[] MakeEmployeeRecords(PayDate payDate, ConcurrentBag<IEmployeePayrunEntry> entries)
     {
         var items = new object[entries.Count];
 

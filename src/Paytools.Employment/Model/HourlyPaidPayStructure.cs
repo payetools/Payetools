@@ -26,5 +26,8 @@ public record HourlyPaidPayStructure : IEmployeePayStructure
     public decimal PayRate { get; init; }
 
     /// <inheritdoc/>>
-    public PayRateUnits PayRateUnits => PayRateUnits.Hourly;
+    public PayRateType PayRateType => PayRateType.HourlyPaid;
+
+    /// <inheritdoc/>>
+    public IPayComponent PayComponent { get; init; } = default!;
 }
