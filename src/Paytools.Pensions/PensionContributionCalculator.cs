@@ -90,10 +90,10 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             BandedEarnings = EarningsBasis == EarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
-            EmployeeContributionAmount = contributions.employeeContribution + avcForPeriod,
+            CalculatedEmployeeContributionAmount = contributions.employeeContribution + avcForPeriod,
             EmployeeContributionFixedAmount = employeeContributionIsFixedAmount ? employeeContribution : null,
             EmployeeContributionPercentage = employeeContributionIsFixedAmount ? null : employeeContribution,
-            EmployerContributionAmount = contributions.employerContribution,
+            CalculatedEmployerContributionAmount = contributions.employerContribution,
             EmployerContributionPercentage = employerContributionPercentage,
             EmployersNiReinvestmentPercentage = null,
             EmployerContributionAmountBeforeSalaryExchange = null,
@@ -148,10 +148,10 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             BandedEarnings = EarningsBasis == EarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
-            EmployeeContributionAmount = avcForPeriod,
+            CalculatedEmployeeContributionAmount = avcForPeriod,
             EmployeeContributionFixedAmount = employeeSalaryExchangedIsFixedAmount ? employeeSalaryExchanged : null,
             EmployeeContributionPercentage = employeeSalaryExchangedIsFixedAmount ? null : employeeSalaryExchanged,
-            EmployerContributionAmount = contributions.employerContribution +
+            CalculatedEmployerContributionAmount = contributions.employerContribution +
                 contributions.employeeContribution +
                 employerNiSavings,
             EmployerContributionPercentage = employerContributionPercentage,

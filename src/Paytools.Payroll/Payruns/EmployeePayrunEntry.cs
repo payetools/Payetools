@@ -91,7 +91,6 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     /// <param name="pensionContributionCalculation">Optional result of pension calculation.  Null if the
     /// employee is not a member of one of the company's schemes.</param>
     /// <param name="totalGrossPay">Total gross pay.</param>
-    /// <param name="netPay">Employee's net (aka take-home) pay.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayrunEntry(
@@ -102,7 +101,6 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
         IStudentLoanCalculationResult? studentLoanCalculationResult,
         IPensionContributionCalculationResult? pensionContributionCalculation,
         decimal totalGrossPay,
-        decimal netPay,
         EmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
         Employee = employee;
@@ -112,7 +110,21 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
         StudentLoanCalculationResult = studentLoanCalculationResult;
         PensionContributionCalculationResult = pensionContributionCalculation;
         TotalGrossPay = totalGrossPay;
-        NetPay = netPay;
+        NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.TaxDue, niCalculationResult.EmployeeContribution,
+            GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult?.TotalDeduction);
         EmployeePayrollHistoryYtd = employeePayrollHistoryYtd;
+    }
+
+    private decimal CalculateNetPay(decimal totalGrossPay, decimal incomeTax, decimal nationalInsurance, decimal employeePension, decimal? studentLoan) =>
+        totalGrossPay - incomeTax - nationalInsurance - employeePension - (studentLoan ?? 0.0m);
+
+    private decimal GetEmployeePensionDeduction(IPensionContributionCalculationResult? pensionContributionCalculation)
+    {
+        if (pensionContributionCalculation == null)
+            return 0.0m;
+
+        return pensionContributionCalculation.SalaryExchangeApplied ?
+            pensionContributionCalculation.SalaryExchangedAmount ?? 0.0m :
+            pensionContributionCalculation.CalculatedEmployeeContributionAmount;
     }
 }

@@ -93,12 +93,12 @@ public readonly struct PensionContributionCalculationResult : IPensionContributi
     /// Gets the employee contribution amount resulting from the calculation.  Will be zero if <see cref="SalaryExchangeApplied"/>
     /// is true.
     /// </summary>
-    public decimal EmployeeContributionAmount { get; init; }
+    public decimal CalculatedEmployeeContributionAmount { get; init; }
 
     /// <summary>
     /// Gets the employer contribution amount resulting from the calculation.  If<see cref="SalaryExchangeApplied"/> is true,
     /// includes both calculated amounts for employer and employee contributions and any NI reinvestment to be
     /// applied (based on the value of <see cref="EmployersNiReinvestmentPercentage"/>).
     /// </summary>
-    public decimal EmployerContributionAmount { get; init; }
+    public decimal CalculatedEmployerContributionAmount { get; init; }
 }

@@ -93,12 +93,12 @@ public interface IPensionContributionCalculationResult
     /// Gets the employee contribution amount resulting from the calculation.  Will be zero if <see cref="SalaryExchangeApplied"/>
     /// is true.
     /// </summary>
-    decimal EmployeeContributionAmount { get; }
+    decimal CalculatedEmployeeContributionAmount { get; }
 
     /// <summary>
     /// Gets the employer contribution amount resulting from the calculation.  If<see cref="SalaryExchangeApplied"/> is true,
     /// includes both calculated amounts for employer and employee contributions and any NI reinvestment to be
     /// applied (based on the value of <see cref="EmployersNiReinvestmentPercentage"/>).
     /// </summary>
-    decimal EmployerContributionAmount { get; }
+    decimal CalculatedEmployerContributionAmount { get; }
 }

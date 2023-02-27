@@ -76,8 +76,8 @@ public class NonSalaryExchangePensionablePaySetTests : IClassFixture<PensionCont
         result.EmployeeContributionPercentage.Should().Be(employeeContributionPct);
         result.EmployeeContributionFixedAmount.Should().Be(employeeContributionAmount);
         result.EmployerContributionPercentage.Should().Be(employerContributionPct);
-        result.EmployeeContributionAmount.Should().Be(expectedEmployeeContribution);
-        result.EmployerContributionAmount.Should().Be(expectedEmployerContribution);
+        result.CalculatedEmployeeContributionAmount.Should().Be(expectedEmployeeContribution);
+        result.CalculatedEmployerContributionAmount.Should().Be(expectedEmployerContribution);
         result.SalaryExchangeApplied.Should().Be(false);
         result.BandedEarnings.Should().BeNull();
         result.EarningsBasis.Should().BeOneOf(new[] { EarningsBasis.PensionablePaySet1, EarningsBasis.PensionablePaySet2, EarningsBasis.PensionablePaySet3 });

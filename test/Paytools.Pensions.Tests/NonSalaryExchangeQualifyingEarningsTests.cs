@@ -248,8 +248,8 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         result.EmployeeContributionPercentage.Should().Be(employeeContributionPct);
         result.EmployeeContributionFixedAmount.Should().Be(employeeContributionAmount);
         result.EmployerContributionPercentage.Should().Be(employerContributionPct);
-        result.EmployeeContributionAmount.Should().Be(expectedEmployeeContribution);
-        result.EmployerContributionAmount.Should().Be(expectedEmployerContribution);
+        result.CalculatedEmployeeContributionAmount.Should().Be(expectedEmployeeContribution);
+        result.CalculatedEmployerContributionAmount.Should().Be(expectedEmployerContribution);
         result.SalaryExchangeApplied.Should().Be(false);
         result.BandedEarnings.Should().Be(expectedBandedEarnings);
         result.EarningsBasis.Should().Be(EarningsBasis.QualifyingEarnings);
