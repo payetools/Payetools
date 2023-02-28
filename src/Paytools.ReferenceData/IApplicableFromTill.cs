@@ -17,7 +17,7 @@ namespace Paytools.ReferenceData;
 /// <summary>
 /// Interface for reference data that indicates the period that a reference data applies for.
 /// </summary>
-public interface IApplicableBetween
+public interface IApplicableFromTill
 {
     /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability.

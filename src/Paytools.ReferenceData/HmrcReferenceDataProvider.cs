@@ -249,7 +249,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         return referenceDataSet;
     }
 
-    private static T FindApplicableEntry<T>(IReadOnlyList<IApplicableBetween> entries, TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    private static T FindApplicableEntry<T>(IReadOnlyList<IApplicableFromTill> entries, TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
         var endDateOfPeriod = taxYear.GetLastDayOfTaxPeriod(payFrequency, taxPeriod);
 

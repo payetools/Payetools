@@ -18,7 +18,7 @@ namespace Paytools.ReferenceData.Pensions;
 /// Represents the reference data for pensions for a period; where there have been in-year changes,
 /// then there may be several such entries for a given tax year, although this is very uncommon.
 /// </summary>
-public class PensionsReferenceDataSet : IApplicableBetween
+public class PensionsReferenceDataSet : IApplicableFromTill
 {
     /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability.

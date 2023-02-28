@@ -19,7 +19,7 @@ namespace Paytools.ReferenceData.NationalMinimumWage;
 /// <summary>
 /// Represents the set of NMW/NLW levels for a given tax year (and potentially pay frequency/pay period combination.
 /// </summary>
-public class NmwReferenceDataEntry : INmwLevelSet, IApplicableBetween
+public class NmwReferenceDataEntry : INmwLevelSet, IApplicableFromTill
 {
     /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability.
