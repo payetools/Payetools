@@ -12,15 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Payroll.Model;
-using Paytools.Rti.Model;
+using Paytools.Common.Model;
+using System.Collections.Concurrent;
 
-namespace Paytools.Rti
+namespace Paytools.Payroll.Model;
+
+/// <summary>
+/// Interface that represents the output of a given payrun.
+/// </summary>
+public interface IPayrunResult : IEmployerInfoProvider
 {
-    public interface IRtiDocumentFactory
-    {
-        IRtiDocument<IPayrunResult> CreateFpsDocument();
-        IRtiDocument<object> CreateEpsDocument();
-        IRtiDocument<object> CreateNvrDocument();
-    }
+    /// <summary>
+    /// Gets the pay date for this payrun.
+    /// </summary>
+    PayDate PayDate { get; }
+
+    /// <summary>
+    /// Gets the list of employee payrun entries.
+    /// </summary>
+    ConcurrentBag<IEmployeePayrunResult> EmployeePayrunEntries { get; }
 }

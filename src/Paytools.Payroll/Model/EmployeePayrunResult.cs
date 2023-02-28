@@ -18,13 +18,15 @@ using Paytools.NationalInsurance;
 using Paytools.Pensions;
 using Paytools.StudentLoans;
 
-namespace Paytools.Payroll.Payruns;
+namespace Paytools.Payroll.Model;
 
 /// <summary>
 /// Represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public record EmployeePayrunEntry : IEmployeePayrunEntry
+public record EmployeePayrunResult : IEmployeePayrunResult
 {
+    private ITaxCalculationResult _taxCalculationResult;
+
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
@@ -44,7 +46,7 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
     /// </summary>
-    public ITaxCalculationResult TaxCalculationResult { get; }
+    public ref ITaxCalculationResult TaxCalculationResult => ref _taxCalculationResult;
 
     /// <summary>
     /// Gets the results of this employee's National Insurance calculation for this payrun.
@@ -80,7 +82,7 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     public decimal NetPay { get; }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="EmployeePayrunEntry"/>.
+    /// Initialises a new instance of <see cref="EmployeePayrunResult"/>.
     /// </summary>
     /// <param name="employee">Employee details.</param>
     /// <param name="isLeaverInThisPayrun">True if the employee is being marked as left in this payrun.</param>
@@ -93,10 +95,10 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     /// <param name="totalGrossPay">Total gross pay.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
-    public EmployeePayrunEntry(
+    public EmployeePayrunResult(
         IEmployee employee,
         bool isLeaverInThisPayrun,
-        ITaxCalculationResult taxCalculationResult,
+        ref ITaxCalculationResult taxCalculationResult,
         INiCalculationResult niCalculationResult,
         IStudentLoanCalculationResult? studentLoanCalculationResult,
         IPensionContributionCalculationResult? pensionContributionCalculation,
@@ -105,7 +107,7 @@ public record EmployeePayrunEntry : IEmployeePayrunEntry
     {
         Employee = employee;
         IsLeaverInThisPayrun = isLeaverInThisPayrun;
-        TaxCalculationResult = taxCalculationResult;
+        _taxCalculationResult = taxCalculationResult;
         NiCalculationResult = niCalculationResult;
         StudentLoanCalculationResult = studentLoanCalculationResult;
         PensionContributionCalculationResult = pensionContributionCalculation;

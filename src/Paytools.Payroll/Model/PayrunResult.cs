@@ -16,7 +16,7 @@ using Paytools.Common.Model;
 using Paytools.Employment.Model;
 using System.Collections.Concurrent;
 
-namespace Paytools.Payroll.Payruns;
+namespace Paytools.Payroll.Model;
 
 /// <summary>
 /// Represents the output of a payrun.
@@ -36,5 +36,5 @@ public record PayrunResult : IPayrunResult
     /// <summary>
     /// Gets the list of employee payrun entries.
     /// </summary>
-    public ConcurrentBag<IEmployeePayrunEntry> EmployeePayrunEntries { get; init; } = null!;
+    public ConcurrentBag<IEmployeePayrunResult> EmployeePayrunEntries { get; init; } = null!;
 }

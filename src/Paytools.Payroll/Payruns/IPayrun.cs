@@ -12,30 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Employment.Model;
+using Paytools.Payroll.Model;
+
+namespace Paytools.Payroll.Payruns;
 
 /// <summary>
-/// Interface that represents an employee's pay structure.
+/// Interface that represents a payrun, i.e., the running of payroll for a single pay reference period
+/// on a single pay date for a predefined set of employees within one employer's employment.
 /// </summary>
-public interface IEmployeePayStructure
+public interface IPayrun
 {
     /// <summary>
-    /// Gets the unique ID for this pay structure.
+    /// Processes this payrun.
     /// </summary>
-    Guid Id { get; }
-
-    /// <summary>
-    /// Gets the rate of pay.  The type of this rate of pay is given by <see cref="PayRateType"/>.
-    /// </summary>
-    decimal PayRate { get; }
-
-    /// <summary>
-    /// Gets the type of pay that <see cref="PayRate"/> represents.
-    /// </summary>
-    PayRateType PayRateType { get; }
-
-    /// <summary>
-    /// Gets the pay component that this pay structure is based on.
-    /// </summary>
-    IPayComponent PayComponent { get; }
+    /// <param name="employeePayrunEntries">List of payrun information for each employee in the payrun.</param>
+    /// <returns>An instance of a class that implements <see cref="IPayrunResult"/> containing the results
+    /// of this payrun.</returns>
+    ref IPayrunResult Process(List<IEmployeePayrunEntry> employeePayrunEntries);
 }

@@ -16,7 +16,7 @@ using Paytools.Common.Extensions;
 using Paytools.Common.Model;
 using Paytools.Employment.Model;
 using Paytools.Payroll;
-using Paytools.Payroll.Payruns;
+using Paytools.Payroll.Model;
 using Paytools.Rti.Extensions;
 using System.Collections.Concurrent;
 
@@ -51,7 +51,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
             } :
             throw new ArgumentException("", nameof(employer));
 
-    private object[] MakeEmployeeRecords(PayDate payDate, ConcurrentBag<IEmployeePayrunEntry> entries)
+    private object[] MakeEmployeeRecords(PayDate payDate, ConcurrentBag<IEmployeePayrunResult> entries)
     {
         var items = new object[entries.Count];
 
@@ -62,7 +62,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
         return items;
     }
 
-    private FullPaymentSubmissionEmployee CreateEmployeeRecord(PayDate payDate, IEmployeePayrunEntry payrunEntry) =>
+    private FullPaymentSubmissionEmployee CreateEmployeeRecord(PayDate payDate, IEmployeePayrunResult payrunEntry) =>
         new FullPaymentSubmissionEmployee()
         {
             EmployeeDetails = MakeEmployeeDetailsRecord(payrunEntry.Employee),
@@ -84,7 +84,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
             }
         };
 
-    private FullPaymentSubmissionEmployeeEmployment MakeEmploymentRecord(PayDate payDate, IEmployeePayrunEntry payrunEntry) =>
+    private FullPaymentSubmissionEmployeeEmployment MakeEmploymentRecord(PayDate payDate, IEmployeePayrunResult payrunEntry) =>
         new FullPaymentSubmissionEmployeeEmployment()
         {
             PayId = "1",
@@ -107,7 +107,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
             Sur = namedIndividual.LastName
         };
 
-    private FullPaymentSubmissionEmployeeEmploymentPayment MakeEmployeePaymentEntry(PayDate payDate, IEmployeePayrunEntry payrunEntry) =>
+    private FullPaymentSubmissionEmployeeEmploymentPayment MakeEmployeePaymentEntry(PayDate payDate, IEmployeePayrunResult payrunEntry) =>
         new FullPaymentSubmissionEmployeeEmploymentPayment()
         {
             Item = "10", // Month number

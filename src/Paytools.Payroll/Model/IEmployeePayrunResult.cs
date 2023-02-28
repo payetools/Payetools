@@ -18,12 +18,12 @@ using Paytools.NationalInsurance;
 using Paytools.Pensions;
 using Paytools.StudentLoans;
 
-namespace Paytools.Payroll.Payruns;
+namespace Paytools.Payroll.Model;
 
 /// <summary>
 /// INterface that represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public interface IEmployeePayrunEntry
+public interface IEmployeePayrunResult
 {
     /// <summary>
     /// Gets information about this payrun.
@@ -44,7 +44,7 @@ public interface IEmployeePayrunEntry
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
     /// </summary>
-    ITaxCalculationResult TaxCalculationResult { get; }
+    ref ITaxCalculationResult TaxCalculationResult { get; }
 
     /// <summary>
     /// Gets the results of this employee's National Insurance calculation for this payrun.

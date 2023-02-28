@@ -14,6 +14,7 @@
 
 using Paytools.Common.Model;
 using Paytools.IncomeTax;
+using Paytools.Pensions;
 using System.Net.Mail;
 
 namespace Paytools.Employment.Model;
@@ -26,47 +27,58 @@ public interface IEmployee : IEmployableIndividual
     /// <summary>
     /// Gets or sets the employee's email address, if known.
     /// </summary>
-    public MailAddress? EmailAddress { get; set; }
+    MailAddress? EmailAddress { get; set; }
 
     /// <summary>
     /// Gets or sets the employee's tax code.
     /// </summary>
-    public TaxCode TaxCode { get; set; }
+    TaxCode TaxCode { get; set; }
 
     /// <summary>
     /// Gets or sets the employee's postal address.
     /// </summary>
-    public UkPostalAddress PostalAddress { get; set; }
+    UkPostalAddress PostalAddress { get; set; }
 
     /// <summary>
     /// Gets or sets the employee's official employment start date.
     /// </summary>
-    public DateOnly EmploymentStartDate { get; set; }
+    DateOnly EmploymentStartDate { get; set; }
 
     /// <summary>
     /// Gets or sets the employee's official employment termination date, i.e., their last working
     /// day.  Null if the employee is still employed.
     /// </summary>
-    public DateOnly? EmploymentEndDate { get; set; }
+    DateOnly? EmploymentEndDate { get; set; }
 
     /// <summary>
     /// Gets or sets the employee's payroll ID, as reported to HMRC.  Sometimes known as "works number".
     /// </summary>
-    public PayrollId PayrollId { get; set; }
+    PayrollId PayrollId { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the employee is a company director.
     /// </summary>
-    public bool IsDirector { get; set; }
+    bool IsDirector { get; set; }
 
     /// <summary>
     /// Gets or sets the method for calculating National Insurance contributions.  Applicable only
     /// for directors; null otherwise.
     /// </summary>
-    public DirectorsNiCalculationMethod? DirectorsNiCalculationMethod { get; set; }
+    DirectorsNiCalculationMethod? DirectorsNiCalculationMethod { get; set; }
 
     /// <summary>
     /// Gets or sets the employee's current student loan status.
     /// </summary>
-    public StudentLoanStatus? StudentLoanStatus { get; set; }
+    StudentLoanStatus? StudentLoanStatus { get; set; }
+
+    /// <summary>
+    /// Gets or sets the employee's primary pay structure.
+    /// </summary>
+    IEmployeePayStructure PrimaryPayStructure { get; set; }
+
+    /// <summary>
+    /// Gets or sets the pension scheme that the employee is a member of.  Null if they are not a member of
+    /// any scheme.
+    /// </summary>
+    IPensionScheme? PensionScheme { get; set; }
 }

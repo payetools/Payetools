@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.Payroll.Payruns;
+using Paytools.Payroll.Model;
 using Paytools.Rti.Model;
 using System.Reflection;
 using System.Xml.Serialization;

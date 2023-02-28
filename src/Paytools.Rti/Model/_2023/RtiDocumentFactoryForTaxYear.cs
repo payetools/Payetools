@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Payroll.Payruns;
+using Paytools.Payroll.Model;
 
 namespace Paytools.Rti.Model._2023;
 

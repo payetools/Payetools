@@ -12,23 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
-using System.Collections.Concurrent;
-
-namespace Paytools.Payroll.Payruns;
+namespace Paytools.Employment.Model;
 
 /// <summary>
-/// Interface that represents the output of a given payrun.
+/// Interface that represents the various types of deduction that can be made from payroll.
 /// </summary>
-public interface IPayrunResult : IEmployerInfoProvider
+public interface IDeductionType
 {
     /// <summary>
-    /// Gets the pay date for this payrun.
+    /// Gets the short name for this type of deduction.
     /// </summary>
-    PayDate PayDate { get; }
+    string ShortName { get; }
 
     /// <summary>
-    /// Gets the list of employee payrun entries.
+    /// Gets the full name of this type of deduction.
     /// </summary>
-    ConcurrentBag<IEmployeePayrunEntry> EmployeePayrunEntries { get; }
+    string Name { get; }
+
+    /// <summary>
+    /// Gets the units for this deduction type, if applicable.  Null if not applicable.
+    /// </summary>
+    PayRateUnits? Units { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this type of deduction is applied before or after tax.
+    /// </summary>
+    bool ApplyBeforeTax { get; }
 }

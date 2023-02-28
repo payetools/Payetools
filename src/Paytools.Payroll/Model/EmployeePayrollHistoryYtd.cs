@@ -14,7 +14,7 @@
 
 using Paytools.NationalInsurance;
 
-namespace Paytools.Payroll;
+namespace Paytools.Payroll.Model;
 
 /// <summary>
 /// Represents the historical set of information for an employee's payroll for the
