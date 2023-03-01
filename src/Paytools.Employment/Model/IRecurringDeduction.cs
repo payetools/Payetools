@@ -19,6 +19,10 @@ namespace Paytools.Employment.Model;
 /// <summary>
 /// Interface that represents a recurring deduction for an employee.
 /// </summary>
-public interface IRecurringDeduction : IApplicableFromTill
+public interface IRecurringDeduction : IApplicableFromTill, IPayrollAmount
 {
+    /// <summary>
+    /// Gets the deduction type for this recurring deduction.
+    /// </summary>
+    IDeductionType DeductionType { get; }
 }

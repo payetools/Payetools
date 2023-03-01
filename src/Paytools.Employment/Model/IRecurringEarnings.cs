@@ -17,8 +17,12 @@ using Paytools.Common.Model;
 namespace Paytools.Employment.Model;
 
 /// <summary>
-/// Interface that represents recurring earnings for an employee.
+/// Interface that represents a recurring earnings for an employee.
 /// </summary>
-public interface IRecurringEarnings : IApplicableFromTill
+public interface IRecurringEarnings : IApplicableFromTill, IPayrollAmount
 {
+    /// <summary>
+    /// Gets the pay component for this recurring earnings.
+    /// </summary>
+    IPayComponent PayComponent { get; }
 }
