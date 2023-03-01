@@ -35,14 +35,15 @@ public interface IPensionContributionCalculator
     /// <param name="salaryForMaternityPurposes">Used to override the employer contribution when an individual is on
     /// maternity leave and should be paid employer contributions based on their contracted salary rather than their
     /// pensionable pay.</param>
-    /// <returns>An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
-    /// the results of the calculation.</returns>
-    IPensionContributionCalculationResult Calculate(decimal pensionableSalary,
+    /// <param name="result">An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
+    /// the results of the calculation.</param>
+    void Calculate(decimal pensionableSalary,
         decimal employerContributionPercentage,
         decimal employeeContribution,
-        bool employeeContributionIsFixedAmount = false,
-        decimal avcForPeriod = 0.0m,
-        decimal? salaryForMaternityPurposes = null);
+        bool employeeContributionIsFixedAmount,
+        decimal? avcForPeriod,
+        decimal? salaryForMaternityPurposes,
+        out IPensionContributionCalculationResult result);
 
     /// <summary>
     /// Calculates the appropriate employee and employer pension contributions based on the supplied employer
@@ -64,13 +65,14 @@ public interface IPensionContributionCalculator
     /// <param name="salaryForMaternityPurposes">Used to override the employer contribution when an individual is on
     /// maternity leave and should be paid employer contributions based on their contracted salary rather than their
     /// pensionable pay.</param>
-    /// <returns>An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
-    /// the results of the calculation.</returns>
-    IPensionContributionCalculationResult CalculateUnderSalaryExchange(decimal pensionableSalary,
+    /// <param name="result">An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
+    /// the results of the calculation.</param>
+    void CalculateUnderSalaryExchange(decimal pensionableSalary,
         decimal employerContributionPercentage,
         IEmployerNiSavingsCalculator employersNiSavingsCalculator,
         decimal employeeSalaryExchanged,
-        bool employeeSalaryExchangedIsFixedAmount = false,
-        decimal avcForPeriod = 0.0M,
-        decimal? salaryForMaternityPurposes = null);
+        bool employeeSalaryExchangedIsFixedAmount,
+        decimal? avcForPeriod,
+        decimal? salaryForMaternityPurposes,
+        out IPensionContributionCalculationResult result);
 }

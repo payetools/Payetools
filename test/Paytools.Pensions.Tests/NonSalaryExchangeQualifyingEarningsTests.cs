@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Paytools.Common.Model;
+using Paytools.Pensions.Model;
 using Paytools.Testing.Utils;
 using System.Runtime.CompilerServices;
 
@@ -240,9 +241,9 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         decimal? employeeContributionPct, decimal? employeeContributionAmount, decimal avc, 
         bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployeeContribution)
     {
-        var result = calculator.Calculate(pensionableSalary, employerContributionPct,
+        calculator.Calculate(pensionableSalary, employerContributionPct,
             (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
-            employeeContributionIsAmount, avc);
+            employeeContributionIsAmount, avc, null, out var result);
 
         result.PensionableSalaryInPeriod.Should().Be(pensionableSalary);
         result.EmployeeContributionPercentage.Should().Be(employeeContributionPct);

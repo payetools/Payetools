@@ -15,7 +15,7 @@
 using Paytools.Common.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
-using Paytools.Pensions;
+using Paytools.Pensions.Model;
 using System.Collections.Immutable;
 
 namespace Paytools.Employment.Model;
@@ -77,6 +77,12 @@ public interface IEmployment
     /// any scheme.
     /// </summary>
     IPensionScheme? PensionScheme { get; }
+
+    /// <summary>
+    /// Gets the default pension contributions to apply in each pay period, unless overridden by employee
+    /// or employer instruction for that pay period.
+    /// </summary>
+    IPensionContributionLevels DefaultPensionContributionLevels { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits that apply to this employment.

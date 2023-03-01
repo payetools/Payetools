@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Pensions.Model;
+
 namespace Paytools.Pensions;
 
 /// <summary>
 /// Represents a pension contribution calculator for Qualifying Earnings.
 /// </summary>
-public class QualifyingEarningsCalculator : PensionContributionCalculator
+public class QualifyingEarningsContributionsCalculator : PensionContributionCalculator
 {
     private readonly decimal _lowerLevelForQualifyingEarnings;
     private readonly decimal _upperLevelForQualifyingEarnings;
@@ -28,14 +30,14 @@ public class QualifyingEarningsCalculator : PensionContributionCalculator
     public override EarningsBasis EarningsBasis => EarningsBasis.QualifyingEarnings;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="QualifyingEarningsCalculator"/> with the specified tax treatment,
+    /// Initialises a new instance of <see cref="QualifyingEarningsContributionsCalculator"/> with the specified tax treatment,
     /// using the lower and upper thresholds supplied.
     /// </summary>
     /// <param name="taxTreatment">Tax treatment for the target pension, i.e., net pay arrangement vs relief at source.</param>
     /// <param name="lowerLevelForQualifyingEarnings">HMRC/TPR-supplied lower level for qualifying earnings.</param>
     /// <param name="upperLevelForQualifyingEarnings">HMRC/TPR-supplied upper level for qualifying earnings.</param>
     /// <param name="basicRateOfTax">Basic rate of tax to use for relief at source pensions.</param>
-    public QualifyingEarningsCalculator(PensionTaxTreatment taxTreatment,
+    public QualifyingEarningsContributionsCalculator(PensionTaxTreatment taxTreatment,
         decimal lowerLevelForQualifyingEarnings,
         decimal upperLevelForQualifyingEarnings,
         decimal? basicRateOfTax = null)

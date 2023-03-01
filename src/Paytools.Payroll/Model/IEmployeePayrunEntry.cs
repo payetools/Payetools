@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Employment.Model;
+using Paytools.Pensions.Model;
 
 namespace Paytools.Payroll.Model;
 
@@ -47,4 +48,9 @@ public interface IEmployeePayrunEntry
     /// no payrolled benefits.
     /// </summary>
     List<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
+
+    /// <summary>
+    /// Gets the pension contributions to apply for this pay period.
+    /// </summary>
+    IPensionContributionLevels PensionContributionLevels { get; }
 }

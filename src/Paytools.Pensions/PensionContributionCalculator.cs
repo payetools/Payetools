@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Pensions.Model;
+
 namespace Paytools.Pensions;
 
 /// <summary>
@@ -66,15 +68,16 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
     /// <param name="salaryForMaternityPurposes">Used to override the employer contribution when an individual is on
     /// maternity leave and should be paid employer contributions based on their contracted salary rather than their
     /// pensionable pay.</param>
-    /// <returns>An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
-    /// the results of the calculation.</returns>
-    public virtual IPensionContributionCalculationResult Calculate(
+    /// <param name="result">An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
+    /// the results of the calculation.</param>
+    public virtual void Calculate(
         decimal pensionableSalary,
         decimal employerContributionPercentage,
         decimal employeeContribution,
-        bool employeeContributionIsFixedAmount = false,
-        decimal avcForPeriod = 0.0M,
-        decimal? salaryForMaternityPurposes = null)
+        bool employeeContributionIsFixedAmount,
+        decimal? avcForPeriod,
+        decimal? salaryForMaternityPurposes,
+        out IPensionContributionCalculationResult result)
     {
         decimal adjustedEmployeeContribution = employeeContributionIsFixedAmount ? employeeContribution :
             _taxTreatment == PensionTaxTreatment.ReliefAtSource ? employeeContribution * TaxReliefFactor : employeeContribution;
@@ -85,12 +88,12 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             employeeContributionIsFixedAmount,
             salaryForMaternityPurposes);
 
-        return new PensionContributionCalculationResult()
+        result = new PensionContributionCalculationResult()
         {
             BandedEarnings = EarningsBasis == EarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
-            CalculatedEmployeeContributionAmount = contributions.employeeContribution + avcForPeriod,
+            CalculatedEmployeeContributionAmount = contributions.employeeContribution + (avcForPeriod ?? 0.0m),
             EmployeeContributionFixedAmount = employeeContributionIsFixedAmount ? employeeContribution : null,
             EmployeeContributionPercentage = employeeContributionIsFixedAmount ? null : employeeContribution,
             CalculatedEmployerContributionAmount = contributions.employerContribution,
@@ -124,16 +127,17 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
     /// <param name="salaryForMaternityPurposes">Used to override the employer contribution when an individual is on
     /// maternity leave and should be paid employer contributions based on their contracted salary rather than their
     /// pensionable pay.</param>
-    /// <returns>An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
-    /// the results of the calculation.</returns>
-    public IPensionContributionCalculationResult CalculateUnderSalaryExchange(
+    /// <param name="result">An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
+    /// the results of the calculation.</param>
+    public void CalculateUnderSalaryExchange(
         decimal pensionableSalary,
         decimal employerContributionPercentage,
         IEmployerNiSavingsCalculator employersNiSavingsCalculator,
         decimal employeeSalaryExchanged,
-        bool employeeSalaryExchangedIsFixedAmount = false,
-        decimal avcForPeriod = 0.0M,
-        decimal? salaryForMaternityPurposes = null)
+        bool employeeSalaryExchangedIsFixedAmount,
+        decimal? avcForPeriod,
+        decimal? salaryForMaternityPurposes,
+        out IPensionContributionCalculationResult result)
     {
         var contributions = CalculateContributions(pensionableSalary,
             employerContributionPercentage,
@@ -143,12 +147,12 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
 
         var employerNiSavings = employersNiSavingsCalculator.Calculate(contributions.employeeContribution);
 
-        return new PensionContributionCalculationResult()
+        result = new PensionContributionCalculationResult()
         {
             BandedEarnings = EarningsBasis == EarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
-            CalculatedEmployeeContributionAmount = avcForPeriod,
+            CalculatedEmployeeContributionAmount = avcForPeriod ?? 0.0m,
             EmployeeContributionFixedAmount = employeeSalaryExchangedIsFixedAmount ? employeeSalaryExchanged : null,
             EmployeeContributionPercentage = employeeSalaryExchangedIsFixedAmount ? null : employeeSalaryExchanged,
             CalculatedEmployerContributionAmount = contributions.employerContribution +

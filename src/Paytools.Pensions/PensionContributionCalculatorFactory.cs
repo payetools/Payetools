@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.Pensions.Model;
 using Paytools.Pensions.ReferenceData;
 
 namespace Paytools.Pensions;
@@ -77,7 +78,7 @@ public class PensionContributionCalculatorFactory : IPensionContributionCalculat
         {
             case EarningsBasis.QualifyingEarnings:
                 var thresholdsForPeriod = _provider.GetThresholdsForQualifyingEarnings(taxYear, payFrequency, taxPeriod);
-                return new QualifyingEarningsCalculator(taxTreatment, thresholdsForPeriod.LowerLimit, thresholdsForPeriod.UpperLimit, basicRateOfTax);
+                return new QualifyingEarningsContributionsCalculator(taxTreatment, thresholdsForPeriod.LowerLimit, thresholdsForPeriod.UpperLimit, basicRateOfTax);
 
             case EarningsBasis.PensionablePaySet1:
             case EarningsBasis.PensionablePaySet2:

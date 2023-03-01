@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Pensions;
+namespace Paytools.Pensions.Model;
 
 /// <summary>
 /// Interface for types that represent pension schemes.

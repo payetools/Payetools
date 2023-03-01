@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Pensions;
+namespace Paytools.Pensions.Model;
 
 /// <summary>
 /// Represents the earnings basis which is used to calculate pension contributions.

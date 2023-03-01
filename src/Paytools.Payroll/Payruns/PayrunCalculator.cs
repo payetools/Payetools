@@ -17,6 +17,7 @@ using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
 using Paytools.Payroll.Model;
 using Paytools.Pensions;
+using Paytools.Pensions.Model;
 using Paytools.StudentLoans;
 using System.Collections.Concurrent;
 
@@ -149,9 +150,10 @@ public class PayrunCalculator : IPayrunCalculator
                 }
             }
 
-            result = default(PensionContributionCalculationResult);
-
-            // calculator.Calculate(pensionablePay)
+            calculator.Calculate(pensionablePay, entry.PensionContributionLevels.EmployerContributionPercentage,
+                entry.PensionContributionLevels.EmployeeContribution, entry.PensionContributionLevels.EmployeeContributionIsFixedAmount,
+                entry.PensionContributionLevels.AvcForPeriod ?? 0.0m, entry.PensionContributionLevels.SalaryForMaternityPurposes,
+                out result);
         }
     }
 }

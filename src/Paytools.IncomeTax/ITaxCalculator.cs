@@ -26,6 +26,11 @@ namespace Paytools.IncomeTax;
 public interface ITaxCalculator
 {
     /// <summary>
+    /// Gets the tax year that this calculator pertains to.
+    /// </summary>
+    TaxYear TaxYear { get; }
+
+    /// <summary>
     /// Gets the set of pro-rata tax bandwidths in use for a given tax year, tax regime and tax period.
     /// </summary>
     TaxPeriodBandwidthSet TaxBandwidths { get; }

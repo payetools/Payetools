@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Paytools.Common.Model;
+using Paytools.Pensions.Model;
 
 namespace Paytools.Pensions.Tests;
 
@@ -37,9 +38,9 @@ public class SalaryExchangePensionablePaySetTests : IClassFixture<PensionContrib
     {
         var niSavingsCalculator = new EmployerNiSavingsCalculator(0.138m, 100.0m);
 
-        var result = calculator.CalculateUnderSalaryExchange(pensionableSalary, employerContributionPct,
+        calculator.CalculateUnderSalaryExchange(pensionableSalary, employerContributionPct,
             niSavingsCalculator, (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
-            employeeContributionIsAmount, avc);
+            employeeContributionIsAmount, avc, null, out var result);
 
         result.PensionableSalaryInPeriod.Should().Be(pensionableSalary);
         result.EmployeeContributionPercentage.Should().Be(employeeContributionPct);

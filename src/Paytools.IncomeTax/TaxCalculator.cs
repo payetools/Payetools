@@ -46,8 +46,12 @@ public class TaxCalculator : ITaxCalculator
         public decimal TaxInExcessOfRegulatoryLimit { get; set; }
     }
 
-    private readonly TaxYear _taxYear;
     private readonly CountriesForTaxPurposes _applicableCountries;
+
+    /// <summary>
+    /// Gets the tax year that this calculator pertains to.
+    /// </summary>
+    public TaxYear TaxYear { get; }
 
     /// <summary>
     /// Gets the set of pro-rata tax bandwidths in use for a given tax year, tax regime and tax period.
@@ -71,7 +75,7 @@ public class TaxCalculator : ITaxCalculator
 
     internal TaxCalculator(TaxYear taxYear, CountriesForTaxPurposes applicableCountries, TaxBandwidthSet annualTaxBandwidths, PayFrequency payFrequency, int taxPeriod)
     {
-        _taxYear = taxYear;
+        TaxYear = taxYear;
         _applicableCountries = applicableCountries;
         PayFrequency = payFrequency;
         TaxBandwidths = new TaxPeriodBandwidthSet(annualTaxBandwidths, payFrequency, taxPeriod);
