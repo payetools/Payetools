@@ -18,6 +18,7 @@ using Paytools.NationalInsurance;
 using Paytools.Payroll.Model;
 using Paytools.Pensions;
 using Paytools.StudentLoans;
+using System.Collections.Concurrent;
 
 namespace Paytools.Payroll.Payruns;
 
@@ -31,6 +32,8 @@ public class PayrunCalculator : IPayrunCalculator
     private readonly INiCalculator _niCalculator;
     private readonly IPensionContributionCalculatorFactory _pensionCalculatorFactory;
     private readonly IStudentLoanCalculator _studentLoanCalculator;
+    private readonly Dictionary<Tuple<EarningsBasis, PensionTaxTreatment>, IPensionContributionCalculator> _pensionCalculators;
+    private readonly PayDate _payDate;
 
     /// <summary>
     /// Initialises a new instance of <see cref="PayrunCalculator"/> with the supplied factories
@@ -54,6 +57,9 @@ public class PayrunCalculator : IPayrunCalculator
         _niCalculator = niCalcFactory.GetCalculator(payDate);
         _pensionCalculatorFactory = pensionCalcFactory;
         _studentLoanCalculator = studentLoanCalcFactory.GetCalculator(payDate);
+        _payDate = payDate;
+
+        _pensionCalculators = new Dictionary<Tuple<EarningsBasis, PensionTaxTreatment>, IPensionContributionCalculator>();
     }
 
     /// <summary>
@@ -82,6 +88,8 @@ public class PayrunCalculator : IPayrunCalculator
             _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay, out var niCalculationResult);
         else
             _niCalculator.Calculate(entry.Employment.NiCategory, nicablePay, out var niCalculationResult);
+
+        // _pensionCalculator
 
         throw new NotImplementedException();
     }
@@ -117,4 +125,33 @@ public class PayrunCalculator : IPayrunCalculator
 
     private static decimal GetTotalAmountForPayrolledBenefits(ref IEmployeePayrunEntry entry) =>
         entry.PayrolledBenefits.Sum(b => b.AmountForPeriod);
+
+    private void CalculatePensionContributions(ref IEmployeePayrunEntry entry, decimal pensionablePay, out IPensionContributionCalculationResult result)
+    {
+        if (entry.Employment.PensionScheme == null)
+        {
+            result = PensionContributionCalculationResult.NoPensionApplicable;
+        }
+        else
+        {
+            var key = Tuple.Create(entry.Employment.PensionScheme.EarningsBasis, entry.Employment.PensionScheme.TaxTreatment);
+
+            IPensionContributionCalculator? calculator;
+
+            lock (_pensionCalculators)
+            {
+                if (!_pensionCalculators.TryGetValue(key, out calculator))
+                {
+                    calculator = _pensionCalculatorFactory.GetCalculator(entry.Employment.PensionScheme.EarningsBasis,
+                            entry.Employment.PensionScheme.TaxTreatment, _payDate);
+
+                    _pensionCalculators.Add(key, calculator);
+                }
+            }
+
+            result = default(PensionContributionCalculationResult);
+
+            // calculator.Calculate(pensionablePay)
+        }
+    }
 }

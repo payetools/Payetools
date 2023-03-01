@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2022-2023 Paytools Ltd
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -19,6 +19,11 @@ namespace Paytools.Pensions;
 /// </summary>
 public readonly struct PensionContributionCalculationResult : IPensionContributionCalculationResult
 {
+    /// <summary>
+    /// Gets an empty <see cref="PensionContributionCalculationResult"/> that indicates that no pension is applicable.
+    /// </summary>
+    public static IPensionContributionCalculationResult NoPensionApplicable => default(PensionContributionCalculationResult);
+
     /// <summary>
     /// Gets the pensionable salary for the period.
     /// </summary>

@@ -162,6 +162,11 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             pensionsReferenceDataEntry.QualifyingEarningsUpperLevel.GetThresholdForPayFrequency(payFrequency));
     }
 
+    public decimal GetBasicRateOfTaxForTaxRelief(TaxYear taxYear)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Gets the NMW/NLW levels for the specified tax year and tax period, as denoted by the supplied pay frequency
     /// and pay period.

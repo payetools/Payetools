@@ -35,13 +35,15 @@ public class TaxCalculator : ITaxCalculator
 
         public decimal TaxDueBeforeRegulatoryLimit { get; init; }
 
-        public decimal TaxDue { get; set; }
+        public decimal FinalTaxDue { get; set; }
 
         public int HighestApplicableTaxBandIndex { get; init; }
 
         public decimal IncomeAtHighestApplicableBand { get; init; }
 
         public decimal TaxAtHighestApplicableBand { get; init; }
+
+        public decimal TaxInExcessOfRegulatoryLimit { get; set; }
     }
 
     private readonly TaxYear _taxYear;
@@ -104,21 +106,20 @@ public class TaxCalculator : ITaxCalculator
         if (taxCode.TaxTreatment != TaxTreatment.NT && taxCode.ApplicableCountries != _applicableCountries)
             throw new ArgumentException("Supplied tax code does not match tax regime for this tax calculator", nameof(taxCode));
 
-        Func<decimal, TaxCode, decimal, decimal, decimal, decimal, InternalTaxCalculationResult> calculation = taxCode switch
-        {
-            // NB Although '0T' is a fixed code, it is just a special case of the regular calculation,
-            // where the allowance is zero
-            { IsFixedCode: true } and not { TaxTreatment: TaxTreatment._0T } => CalculateTaxDueOnFixedTaxCode,
-            _ => CalculateTaxDueOnNonFixedTaxCode
-        };
+        InternalTaxCalculationResult internalResult;
 
-        InternalTaxCalculationResult internalResult = calculation(
-            totalTaxableSalaryInPeriod,
-            taxCode,
-            taxableSalaryYearToDate,
-            taxPaidYearToDate,
-            benefitsInKind,
-            taxUnpaidDueToRegulatoryLimit);
+        // NB Although '0T' is a fixed code, it is just a special case of the regular calculation,
+        // where the allowance is zero
+        if (taxCode.IsFixedCode && taxCode.TaxTreatment != TaxTreatment._0T)
+        {
+            CalculateTaxDueOnFixedTaxCode(totalTaxableSalaryInPeriod, taxCode, taxableSalaryYearToDate,
+                taxPaidYearToDate, benefitsInKind, taxUnpaidDueToRegulatoryLimit, out internalResult);
+        }
+        else
+        {
+            CalculateTaxDueOnNonFixedTaxCode(totalTaxableSalaryInPeriod, taxCode, taxableSalaryYearToDate,
+                taxPaidYearToDate, benefitsInKind, taxUnpaidDueToRegulatoryLimit, out internalResult);
+        }
 
         result = new TaxCalculationResult(
            this,
@@ -130,40 +131,48 @@ public class TaxCalculator : ITaxCalculator
            internalResult.HighestApplicableTaxBandIndex,
            internalResult.IncomeAtHighestApplicableBand,
            internalResult.TaxAtHighestApplicableBand,
-           taxUnpaidDueToRegulatoryLimit,
-           internalResult.TaxDue);
+           internalResult.TaxInExcessOfRegulatoryLimit,
+           internalResult.TaxDueBeforeRegulatoryLimit,
+           internalResult.FinalTaxDue);
     }
 
-    private InternalTaxCalculationResult CalculateTaxDueOnNonFixedTaxCode(
+    private void CalculateTaxDueOnNonFixedTaxCode(
         decimal totalTaxableSalaryInPeriod,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
         decimal benefitsInKind,
-        decimal taxUnpaidDueToRegulatoryLimit)
+        decimal taxUnpaidDueToRegulatoryLimit,
+        out InternalTaxCalculationResult result)
     {
         var taxFreePayToEndOfPeriod = taxCode.GetTaxFreePayForPeriod(TaxPeriod, TaxPeriodCount);
 
-        InternalTaxCalculationResult internalResult = taxCode.IsNonCumulative ?
-                    CalculateTaxDueNonCumulative(totalTaxableSalaryInPeriod, benefitsInKind, taxFreePayToEndOfPeriod) :
-                    CalculateTaxDueCumulative(totalTaxableSalaryInPeriod, benefitsInKind, taxableSalaryYearToDate, taxPaidYearToDate, taxFreePayToEndOfPeriod);
+        if (taxCode.IsNonCumulative)
+        {
+            CalculateTaxDueNonCumulativeNonFixedCode(totalTaxableSalaryInPeriod, benefitsInKind, taxFreePayToEndOfPeriod,
+                taxUnpaidDueToRegulatoryLimit, out result);
+        }
+        else
+        {
+            CalculateTaxDueCumulativeNonFixedCode(totalTaxableSalaryInPeriod, benefitsInKind, taxableSalaryYearToDate,
+                taxPaidYearToDate, taxFreePayToEndOfPeriod, taxUnpaidDueToRegulatoryLimit, out result);
+        }
 
-        internalResult.TaxDue = internalResult.TaxDueBeforeRegulatoryLimit > 0 ?
-            Math.Min(internalResult.TaxDueBeforeRegulatoryLimit, 0.5m * (totalTaxableSalaryInPeriod - benefitsInKind)) :
-            internalResult.TaxDueBeforeRegulatoryLimit;
+        // result.FinalTaxDue = result.TaxDueBeforeRegulatoryLimit > 0 ?
+        //    Math.Min(result.TaxDueBeforeRegulatoryLimit, 0.5m * (totalTaxableSalaryInPeriod - benefitsInKind)) :
+        //    result.TaxDueBeforeRegulatoryLimit;
 
-        internalResult.TaxFreePayForPeriod = taxFreePayToEndOfPeriod;
-
-        return internalResult;
+        result.TaxFreePayForPeriod = taxFreePayToEndOfPeriod;
     }
 
-    private InternalTaxCalculationResult CalculateTaxDueCumulative(
+    private void CalculateTaxDueCumulativeNonFixedCode(
         decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
         decimal taxFreePayToEndOfPeriod,
-        decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
+        decimal taxUnpaidDueToRegulatoryLimit,
+        out InternalTaxCalculationResult result)
     {
         var totalTaxableSalaryYtd = totalTaxableSalaryInPeriod + taxableSalaryYearToDate;
 
@@ -203,7 +212,7 @@ public class TaxCalculator : ITaxCalculator
 
         var taxPayable = taxDue - taxPaidYearToDate;
 
-        return new InternalTaxCalculationResult()
+        result = new InternalTaxCalculationResult()
         {
             TaxDueBeforeRegulatoryLimit = taxPayable,
             HighestApplicableTaxBandIndex = applicableEntry?.EntryIndex ?? 0,
@@ -211,13 +220,16 @@ public class TaxCalculator : ITaxCalculator
             TaxAtHighestApplicableBand = taxAtThisBand,
             TaxableSalary = taxableSalaryAfterAllowance
         };
+
+        ProcessRegulatoryLimit(totalTaxableSalaryInPeriod, benefitsInKind, taxUnpaidDueToRegulatoryLimit, ref result);
     }
 
-    private InternalTaxCalculationResult CalculateTaxDueNonCumulative(
+    private void CalculateTaxDueNonCumulativeNonFixedCode(
         decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         decimal taxFreePayToEndOfPeriod,
-        decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
+        decimal taxUnpaidDueToRegulatoryLimit,
+        out InternalTaxCalculationResult result)
     {
         // TODO: Process possible refund
         // if (totalTaxableSalaryYtd <= taxFreePayToEndOfPeriod)
@@ -247,6 +259,15 @@ public class TaxCalculator : ITaxCalculator
 
         var taxPayable = decimal.Round(taxDue, 2, MidpointRounding.ToZero);
 
+        decimal taxInExcessOfRegulatoryLimit = 0.0m;
+        decimal maxTaxPayableDueToRegulatoryLimit = (totalTaxableSalaryInPeriod - benefitsInKind) / 2;
+
+        if (taxPayable > maxTaxPayableDueToRegulatoryLimit)
+        {
+            taxInExcessOfRegulatoryLimit = taxPayable - maxTaxPayableDueToRegulatoryLimit;
+            taxPayable = maxTaxPayableDueToRegulatoryLimit;
+        }
+
         Debug.WriteLine(
             "Non-cumulative tax calculation: totalTaxableSalaryInPeriod = {0}, taxFreePayToEndOfPeriod = {1}, taxableSalaryAfterAllowance = {2}, applicableRate = {3}, taxPayable = {4}",
             totalTaxableSalaryInPeriod,
@@ -255,23 +276,26 @@ public class TaxCalculator : ITaxCalculator
             applicableRate,
             taxPayable);
 
-        return new InternalTaxCalculationResult()
+        result = new InternalTaxCalculationResult()
         {
             TaxDueBeforeRegulatoryLimit = taxPayable,
             HighestApplicableTaxBandIndex = applicableEntry?.EntryIndex ?? 0,
             IncomeAtHighestApplicableBand = taxableSalaryAtThisBand,
             TaxAtHighestApplicableBand = taxAtThisBand
         };
+
+        ProcessRegulatoryLimit(totalTaxableSalaryInPeriod, benefitsInKind, taxUnpaidDueToRegulatoryLimit, ref result);
     }
 
     // Used for all fixed tax codes _except_ 0T, which is treated like a normal code with zero allowance.
-    private InternalTaxCalculationResult CalculateTaxDueOnFixedTaxCode(
+    private void CalculateTaxDueOnFixedTaxCode(
         decimal taxableSalary,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
         decimal benefitsInKind,
-        decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
+        decimal taxUnpaidDueToRegulatoryLimit,
+        out InternalTaxCalculationResult result)
     {
         var effectiveTaxableSalary = taxableSalary;
         var bandIndex = 0;
@@ -299,7 +323,7 @@ public class TaxCalculator : ITaxCalculator
                 break;
         }
 
-        var internalResult = new InternalTaxCalculationResult()
+        result = new InternalTaxCalculationResult()
         {
             TaxDueBeforeRegulatoryLimit = taxDue,
             HighestApplicableTaxBandIndex = bandIndex,
@@ -307,10 +331,47 @@ public class TaxCalculator : ITaxCalculator
             TaxAtHighestApplicableBand = taxRate
         };
 
-        internalResult.TaxDue = internalResult.TaxDueBeforeRegulatoryLimit > 0 ?
-            Math.Min(internalResult.TaxDueBeforeRegulatoryLimit, 0.5m * (taxableSalary - benefitsInKind)) :
-            internalResult.TaxDueBeforeRegulatoryLimit;
+        ProcessRegulatoryLimit(taxableSalary, benefitsInKind, taxUnpaidDueToRegulatoryLimit, ref result);
+    }
 
-        return internalResult;
+    private static void ProcessRegulatoryLimit(
+        decimal totalTaxableSalaryInPeriod,
+        decimal benefitsInKind,
+        decimal taxUnpaidDueToRegulatoryLimit,
+        ref InternalTaxCalculationResult result)
+    {
+        // Regulatory limit does not apply to tax refunds
+        if (result.TaxDueBeforeRegulatoryLimit < 0)
+        {
+            result.FinalTaxDue = result.TaxDueBeforeRegulatoryLimit;
+            result.TaxInExcessOfRegulatoryLimit = 0.0m;
+
+            return;
+        }
+
+        decimal maxTaxPayableDueToRegulatoryLimit = (totalTaxableSalaryInPeriod - benefitsInKind) / 2;
+
+        // If the employee is due more tax than the regulatory limit allows, then cap their
+        // tax to that limit...
+        if (result.TaxDueBeforeRegulatoryLimit > maxTaxPayableDueToRegulatoryLimit)
+        {
+            result.TaxInExcessOfRegulatoryLimit = result.TaxDueBeforeRegulatoryLimit - maxTaxPayableDueToRegulatoryLimit;
+            result.FinalTaxDue = maxTaxPayableDueToRegulatoryLimit;
+
+            return;
+        }
+
+        // Otherwise check whether they have some prior underpayment to clear...
+        if (taxUnpaidDueToRegulatoryLimit > 0)
+        {
+            var maximumTaxDue = result.TaxDueBeforeRegulatoryLimit + taxUnpaidDueToRegulatoryLimit;
+            result.FinalTaxDue = maximumTaxDue <= maxTaxPayableDueToRegulatoryLimit ? maximumTaxDue : maxTaxPayableDueToRegulatoryLimit;
+            result.TaxInExcessOfRegulatoryLimit = maximumTaxDue > maxTaxPayableDueToRegulatoryLimit ? maximumTaxDue - maxTaxPayableDueToRegulatoryLimit : 0.0m;
+        }
+        else
+        {
+            result.FinalTaxDue = result.TaxDueBeforeRegulatoryLimit;
+            result.TaxInExcessOfRegulatoryLimit = 0.0m;
+        }
     }
 }

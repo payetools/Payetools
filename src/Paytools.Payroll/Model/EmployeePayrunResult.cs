@@ -127,7 +127,7 @@ public record EmployeePayrunResult : IEmployeePayrunResult
         _studentLoanCalculationResult = studentLoanCalculationResult;
         _pensionContributionCalculationResult = pensionContributionCalculation;
         TotalGrossPay = totalGrossPay;
-        NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.TaxDue, niCalculationResult.EmployeeContribution,
+        NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.FinalTaxDue, niCalculationResult.EmployeeContribution,
             GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult.TotalDeduction);
         _employeePayrollHistoryYtd = employeePayrollHistoryYtd;
     }

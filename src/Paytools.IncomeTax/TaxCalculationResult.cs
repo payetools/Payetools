@@ -62,9 +62,18 @@ public readonly struct TaxCalculationResult : ITaxCalculationResult
 
     /// <summary>
     /// Gets the tax due at the end of the period, based on the taxable earnings to the end of the period and
-    /// accounting for any tax-free pay up to the end of the period.
+    /// accounting for any tax-free pay up to the end of the period.  This figure takes account of both the
+    /// effect of the regulatory limit and the effect of any unpaid taxes due to the effect of the regulatory
+    /// limit in previous periods.
     /// </summary>
-    public decimal TaxDue { get; }
+    public decimal FinalTaxDue { get; }
+
+    /// <summary>
+    /// Gets the tax due at the end of the period, based on the taxable earnings to the end of the period and
+    /// accounting for any tax-free pay up to the end of the period.  This is before considering the effect of
+    /// regulatory limits.
+    /// </summary>
+    public decimal TaxDueBeforeApplicationOfRegulatoryLimit { get; }
 
     /// <summary>
     /// Gets the numberic index of the highest tax band used in the calculation.
@@ -95,8 +104,10 @@ public readonly struct TaxCalculationResult : ITaxCalculationResult
     /// <param name="incomeAtHighestApplicableBand">Total income to date that falls within the highest tax band used in the calculation.</param>
     /// <param name="taxAtHighestApplicableBand">Total tax due for income to date that falls within the highest tax band used in the calculation.</param>
     /// <param name="taxUnpaidDueToRegulatoryLimit">Previous period tax unpaid due to regulatory limit.</param>
-    /// <param name="taxDue">Tax due at the end of the period, based on the taxable earnings to the end of the period and
-    /// accounting for any tax-free pay up to the end of the period.</param>
+    /// <param name="taxDueBeforeRegulatoryLimitEffects">Tax due before considering the effects of regulatory limits.</param>
+    /// <param name="finalTaxDue">Tax due at the end of the period, based on the taxable earnings to the end of the period and
+    /// accounting for any tax-free pay up to the end of the period, accounting for the effects of regulatory limits, both from this
+    /// period and any prior periods.</param>
     public TaxCalculationResult(
         ITaxCalculator calculator,
         TaxCode taxCode,
@@ -108,7 +119,8 @@ public readonly struct TaxCalculationResult : ITaxCalculationResult
         decimal incomeAtHighestApplicableBand,
         decimal taxAtHighestApplicableBand,
         decimal taxUnpaidDueToRegulatoryLimit,
-        decimal taxDue)
+        decimal taxDueBeforeRegulatoryLimitEffects,
+        decimal finalTaxDue)
     {
         Calculator = calculator;
         TaxCode = taxCode;
@@ -120,6 +132,7 @@ public readonly struct TaxCalculationResult : ITaxCalculationResult
         PreviousPeriodSalaryYearToDate = previousPeriodSalaryYearToDate;
         PreviousPeriodTaxPaidYearToDate = previousPeriodTaxPaidYearToDate;
         TaxUnpaidDueToRegulatoryLimit = taxUnpaidDueToRegulatoryLimit;
-        TaxDue = taxDue;
+        TaxDueBeforeApplicationOfRegulatoryLimit = taxDueBeforeRegulatoryLimitEffects;
+        FinalTaxDue = finalTaxDue;
     }
 }

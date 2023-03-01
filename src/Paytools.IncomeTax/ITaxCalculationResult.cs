@@ -61,9 +61,18 @@ public interface ITaxCalculationResult
 
     /// <summary>
     /// Gets the tax due at the end of the period, based on the taxable earnings to the end of the period and
-    /// accounting for any tax-free pay up to the end of the period.
+    /// accounting for any tax-free pay up to the end of the period.  This figure takes account of both the
+    /// effect of the regulatory limit and the effect of any unpaid taxes due to the effect of the regulatory
+    /// limit in previous periods.
     /// </summary>
-    decimal TaxDue { get; }
+    decimal FinalTaxDue { get; }
+
+    /// <summary>
+    /// Gets the tax due at the end of the period, based on the taxable earnings to the end of the period and
+    /// accounting for any tax-free pay up to the end of the period.  This is before considering the effect of
+    /// regulatory limits.
+    /// </summary>
+    decimal TaxDueBeforeApplicationOfRegulatoryLimit { get; }
 
     /// <summary>
     /// Gets the numeric index of the highest tax band used in the calculation.

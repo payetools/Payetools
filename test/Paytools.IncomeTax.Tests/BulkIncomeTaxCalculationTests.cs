@@ -71,10 +71,10 @@ public class BulkIncomeTaxCalculationTests
 
             Debug.WriteLine("Running test {0} with tax code '{1}', period {2}", testIndex, fullTaxCode, test.Period);
 
-            if (test.TaxDue != result.TaxDue)
-                Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, fullTaxCode, test.TaxDue, result.TaxDue);
+            if (test.TaxDue != result.FinalTaxDue)
+                Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, fullTaxCode, test.TaxDue, result.FinalTaxDue);
 
-            result.TaxDue.Should().Be(test.TaxDue, $"test failed with {test.TaxDue} != {result.TaxDue} (Index {testIndex}, tax code {test.TaxCode})");
+            result.FinalTaxDue.Should().Be(test.TaxDue, $"test failed with {test.TaxDue} != {result.FinalTaxDue} (Index {testIndex}, tax code {test.TaxCode})");
 
             //            var totalTax = result.TaxAtEachBand.Select(tb => tb.TaxDue).Sum();
 
