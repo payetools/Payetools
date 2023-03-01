@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.Employment.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
 using Paytools.Payroll.Model;
@@ -69,8 +70,8 @@ public class PayrunCalculator : IPayrunCalculator
     /// </summary>
     /// <param name="entry">Instance of <see cref="IEmployeePayrunEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <returns>An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</returns>
-    public ref IEmployeePayrunResult Process(ref IEmployeePayrunEntry entry)
+    /// <param name="result">An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</param>
+    public void Process(ref IEmployeePayrunEntry entry, out IEmployeePayrunResult result)
     {
         var (grossPay,  taxablePay,  nicablePay,  pensionablePay) = GetTotalEarnings(ref entry);
 
@@ -85,14 +86,29 @@ public class PayrunCalculator : IPayrunCalculator
             entry.Employment.PayrollHistoryYtd.TaxPaidYtd, entry.Employment.PayrollHistoryYtd.TaxUnpaidDueToRegulatoryLimit,
             out var taxCalculationResult);
 
+        INiCalculationResult niCalculationResult;
+
         if (entry.Employment.IsDirector && entry.Employment.DirectorsNiCalculationMethod == Employment.DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod)
-            _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay, out var niCalculationResult);
+            _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay, out niCalculationResult);
         else
-            _niCalculator.Calculate(entry.Employment.NiCategory, nicablePay, out var niCalculationResult);
+            _niCalculator.Calculate(entry.Employment.NiCategory, nicablePay, out niCalculationResult);
 
-        // _pensionCalculator
+        CalculatePensionContributions(ref entry, pensionablePay, out var pensionContributions);
 
-        throw new NotImplementedException();
+        IStudentLoanCalculationResult studentLoanCalculationResult;
+
+        if (entry.Employment.StudentLoanStatus != null)
+        {
+            _studentLoanCalculator.Calculate(grossPay, entry.Employment.StudentLoanStatus?.StudentLoanType,
+                entry.Employment.StudentLoanStatus?.HasPostGradLoan == true, out studentLoanCalculationResult);
+        }
+        else
+        {
+            studentLoanCalculationResult = StudentLoanCalculationResult.NoStudentLoanApplicable;
+        }
+
+        result = new EmployeePayrunResult(entry.Employee, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
+            ref pensionContributions, grossPay, null);
     }
 
     private static (decimal grossPay, decimal taxablePay, decimal nicablePay, decimal pensionablePay) GetTotalEarnings(ref IEmployeePayrunEntry entry)

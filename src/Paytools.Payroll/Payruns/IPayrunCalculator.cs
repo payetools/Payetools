@@ -28,6 +28,6 @@ public interface IPayrunCalculator
     /// </summary>
     /// <param name="entry">Instance of <see cref="IEmployeePayrunEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <returns>An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</returns>
-    ref IEmployeePayrunResult Process(ref IEmployeePayrunEntry entry);
+    /// <param name="result">An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</param>
+    void Process(ref IEmployeePayrunEntry entry, out IEmployeePayrunResult result);
 }

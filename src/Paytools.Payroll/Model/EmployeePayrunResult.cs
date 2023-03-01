@@ -25,7 +25,6 @@ namespace Paytools.Payroll.Model;
 /// </summary>
 public record EmployeePayrunResult : IEmployeePayrunResult
 {
-    private IEmployee _employee;
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
     private IStudentLoanCalculationResult _studentLoanCalculationResult;
@@ -40,7 +39,7 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// <summary>
     /// Gets the employee's details.
     /// </summary>
-    public ref IEmployee Employee => ref _employee;
+    public IEmployee Employee { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
@@ -111,7 +110,7 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayrunResult(
-        ref IEmployee employee,
+        IEmployee employee,
         bool isLeaverInThisPayrun,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
@@ -120,7 +119,7 @@ public record EmployeePayrunResult : IEmployeePayrunResult
         decimal totalGrossPay,
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
-        _employee = employee;
+        Employee = employee;
         IsLeaverInThisPayrun = isLeaverInThisPayrun;
         _taxCalculationResult = taxCalculationResult;
         _niCalculationResult = niCalculationResult;

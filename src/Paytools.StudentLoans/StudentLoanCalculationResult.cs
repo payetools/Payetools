@@ -20,6 +20,11 @@ namespace Paytools.StudentLoans;
 public readonly struct StudentLoanCalculationResult : IStudentLoanCalculationResult
 {
     /// <summary>
+    /// Gets an empty <see cref="StudentLoanCalculationResult"/> that indicates that no pension is applicable.
+    /// </summary>
+    public static StudentLoanCalculationResult NoStudentLoanApplicable => default(StudentLoanCalculationResult);
+
+    /// <summary>
     /// Gets the optional student loan type.  Null if no student loan applied.  (Post-graduate loans
     /// are treated separately via <see cref="HasPostGradLoan"/>.
     /// </summary>

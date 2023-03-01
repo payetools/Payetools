@@ -33,7 +33,7 @@ public interface IEmployeePayrunResult
     /// <summary>
     /// Gets the employee's details.
     /// </summary>
-    ref IEmployee Employee { get; }
+    IEmployee Employee { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
