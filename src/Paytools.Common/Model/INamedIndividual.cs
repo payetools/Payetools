@@ -16,7 +16,7 @@ namespace Paytools.Common.Model;
 
 /// <summary>
 /// Represents a named individual, i.e., a (usually living) person.  This interface is provided for all the situations
-/// where a contact person is required, but is also the base entity for employees via <see cref="IEmployableIndividual"/>.
+/// where a contact person is required, but is also the base entity for employees.
 /// </summary>
 public interface INamedIndividual
 {
