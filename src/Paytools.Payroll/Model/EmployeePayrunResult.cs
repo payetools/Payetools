@@ -25,17 +25,22 @@ namespace Paytools.Payroll.Model;
 /// </summary>
 public record EmployeePayrunResult : IEmployeePayrunResult
 {
+    private IEmployee _employee;
     private ITaxCalculationResult _taxCalculationResult;
+    private INiCalculationResult _niCalculationResult;
+    private IStudentLoanCalculationResult _studentLoanCalculationResult;
+    private IPensionContributionCalculationResult _pensionContributionCalculationResult;
+    private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
 
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
-    public IPayrunInfo PayrunInfo { get => throw new NotImplementedException(); }
+    public ref IPayrunInfo PayrunInfo { get => throw new NotImplementedException(); }
 
     /// <summary>
     /// Gets the employee's details.
     /// </summary>
-    public IEmployee Employee { get; }
+    public ref IEmployee Employee => ref _employee;
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
@@ -51,25 +56,25 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// <summary>
     /// Gets the results of this employee's National Insurance calculation for this payrun.
     /// </summary>
-    public INiCalculationResult NiCalculationResult { get; }
+    public ref INiCalculationResult NiCalculationResult => ref _niCalculationResult;
 
     /// <summary>
     /// Gets the results of this employee's student loan calculation for this payrun, if applicable;
     /// null otherwise.
     /// </summary>
-    public IStudentLoanCalculationResult? StudentLoanCalculationResult { get; }
+    public ref IStudentLoanCalculationResult StudentLoanCalculationResult => ref _studentLoanCalculationResult;
 
     /// <summary>
     /// Gets the results of this employee's pension calculation for this payrun, if applicable.;
     /// null otherwise.
     /// </summary>
-    public IPensionContributionCalculationResult? PensionContributionCalculationResult { get; }
+    public ref IPensionContributionCalculationResult PensionContributionCalculationResult => ref _pensionContributionCalculationResult;
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,
     /// not including the effect of this payrun.
     /// </summary>
-    public IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
+    public ref IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd => ref _employeePayrollHistoryYtd;
 
     /// <summary>
     /// Gets the employee's total gross pay.
@@ -80,6 +85,16 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// Gets the employee's final net pay.
     /// </summary>
     public decimal NetPay { get; }
+
+    /// <summary>
+    /// Gets the employee's total pay that is subject to National Insurance.
+    /// </summary>
+    public decimal NicablePay { get; }
+
+    /// <summary>
+    /// Gets the employee's total taxable pay, before the application of any tax-free pay.
+    /// </summary>
+    public decimal TaxablePay { get; }
 
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayrunResult"/>.
@@ -96,35 +111,32 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayrunResult(
-        IEmployee employee,
+        ref IEmployee employee,
         bool isLeaverInThisPayrun,
         ref ITaxCalculationResult taxCalculationResult,
-        INiCalculationResult niCalculationResult,
-        IStudentLoanCalculationResult? studentLoanCalculationResult,
-        IPensionContributionCalculationResult? pensionContributionCalculation,
+        ref INiCalculationResult niCalculationResult,
+        ref IStudentLoanCalculationResult studentLoanCalculationResult,
+        ref IPensionContributionCalculationResult pensionContributionCalculation,
         decimal totalGrossPay,
-        EmployeePayrollHistoryYtd employeePayrollHistoryYtd)
+        ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
-        Employee = employee;
+        _employee = employee;
         IsLeaverInThisPayrun = isLeaverInThisPayrun;
         _taxCalculationResult = taxCalculationResult;
-        NiCalculationResult = niCalculationResult;
-        StudentLoanCalculationResult = studentLoanCalculationResult;
-        PensionContributionCalculationResult = pensionContributionCalculation;
+        _niCalculationResult = niCalculationResult;
+        _studentLoanCalculationResult = studentLoanCalculationResult;
+        _pensionContributionCalculationResult = pensionContributionCalculation;
         TotalGrossPay = totalGrossPay;
         NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.TaxDue, niCalculationResult.EmployeeContribution,
-            GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult?.TotalDeduction);
-        EmployeePayrollHistoryYtd = employeePayrollHistoryYtd;
+            GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult.TotalDeduction);
+        _employeePayrollHistoryYtd = employeePayrollHistoryYtd;
     }
 
-    private decimal CalculateNetPay(decimal totalGrossPay, decimal incomeTax, decimal nationalInsurance, decimal employeePension, decimal? studentLoan) =>
+    private static decimal CalculateNetPay(decimal totalGrossPay, decimal incomeTax, decimal nationalInsurance, decimal employeePension, decimal? studentLoan) =>
         totalGrossPay - incomeTax - nationalInsurance - employeePension - (studentLoan ?? 0.0m);
 
-    private decimal GetEmployeePensionDeduction(IPensionContributionCalculationResult? pensionContributionCalculation)
+    private static decimal GetEmployeePensionDeduction(IPensionContributionCalculationResult pensionContributionCalculation)
     {
-        if (pensionContributionCalculation == null)
-            return 0.0m;
-
         return pensionContributionCalculation.SalaryExchangeApplied ?
             pensionContributionCalculation.SalaryExchangedAmount ?? 0.0m :
             pensionContributionCalculation.CalculatedEmployeeContributionAmount;

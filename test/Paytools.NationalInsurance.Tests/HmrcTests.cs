@@ -54,10 +54,10 @@ public class HmrcTests
         {
             var calculator = factory.GetCalculator(taxYear, test.PayFrequency, test.Period);
 
-            var result1 = calculator.Calculate(test.NiCategory, test.GrossPay);
+            calculator.Calculate(test.NiCategory, test.GrossPay, out var result);
 
-            test.EmployeeNiContribution.Should().Be(result1.EmployeeContribution, "input is {0} and output is {{ {1} }} (test #{2})", test.ToDebugString(), result1.ToString(), (testsCompleted + 1).ToString());
-            test.EmployerNiContribution.Should().Be(result1.EmployerContribution, "input is {0} and output is {{ {1} }} (test #{2})", test.ToDebugString(), result1.ToString(), (testsCompleted + 1).ToString());
+            test.EmployeeNiContribution.Should().Be(result.EmployeeContribution, "input is {0} and output is {{ {1} }} (test #{2})", test.ToDebugString(), result.ToString(), (testsCompleted + 1).ToString());
+            test.EmployerNiContribution.Should().Be(result.EmployerContribution, "input is {0} and output is {{ {1} }} (test #{2})", test.ToDebugString(), result.ToString(), (testsCompleted + 1).ToString());
 
             testsCompleted++;
         }

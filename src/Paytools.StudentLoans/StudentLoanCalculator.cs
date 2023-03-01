@@ -43,8 +43,8 @@ public class StudentLoanCalculator : IStudentLoanCalculator
     /// <param name="grossSalary">Gross salary.</param>
     /// <param name="studentLoanType">Optional student loan type.  Null if no student loan applies.</param>
     /// <param name="hasPostGradLoan">True if post-graduate loan deductions should be applied; false otherwise.</param>
-    /// <returns>An implementation of <see cref="IStudentLoanCalculationResult"/> containing the results of the calculation.</returns>
-    public IStudentLoanCalculationResult Calculate(decimal grossSalary, StudentLoanType? studentLoanType, bool hasPostGradLoan)
+    /// <param name="result">An implementation of <see cref="IStudentLoanCalculationResult"/> containing the results of the calculation.</param>
+    public void Calculate(decimal grossSalary, StudentLoanType? studentLoanType, bool hasPostGradLoan, out IStudentLoanCalculationResult result)
     {
         if (studentLoanType == null && !hasPostGradLoan)
             throw new InvalidOperationException("Student loan calculations can only be performed when a student and/or post-graduate loan is in place");
@@ -70,7 +70,7 @@ public class StudentLoanCalculator : IStudentLoanCalculator
         if (hasPostGradLoan && grossSalary > _thresholds.PostGradPerPeriodThreshold)
             postGradLoanDeduction = decimal.Round((grossSalary - _thresholds.PostGradPerPeriodThreshold) * _rates.PostGrad, 0, MidpointRounding.ToZero);
 
-        return new StudentLoanCalculationResult()
+        result = new StudentLoanCalculationResult()
         {
             StudentLoanType = studentLoanType,
             HasPostGradLoan = hasPostGradLoan,

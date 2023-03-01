@@ -21,19 +21,19 @@ using Paytools.StudentLoans;
 namespace Paytools.Payroll.Model;
 
 /// <summary>
-/// INterface that represents a payrun entry for one employee for a specific payrun.
+/// Interface that represents a payrun entry for one employee for a specific payrun.
 /// </summary>
 public interface IEmployeePayrunResult
 {
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
-    IPayrunInfo PayrunInfo { get; }
+    ref IPayrunInfo PayrunInfo { get; }
 
     /// <summary>
     /// Gets the employee's details.
     /// </summary>
-    IEmployee Employee { get; }
+    ref IEmployee Employee { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
@@ -49,24 +49,34 @@ public interface IEmployeePayrunResult
     /// <summary>
     /// Gets the results of this employee's National Insurance calculation for this payrun.
     /// </summary>
-    INiCalculationResult NiCalculationResult { get; }
+    ref INiCalculationResult NiCalculationResult { get; }
 
     /// <summary>
     /// Gets the results of this employee's student loan calculation for this payrun, if applicable;
     /// null otherwise.
     /// </summary>
-    IStudentLoanCalculationResult? StudentLoanCalculationResult { get; }
+    ref IStudentLoanCalculationResult StudentLoanCalculationResult { get; }
 
     /// <summary>
     /// Gets the results of this employee's pension calculation for this payrun, if applicable.;
     /// null otherwise.
     /// </summary>
-    IPensionContributionCalculationResult? PensionContributionCalculationResult { get; }
+    ref IPensionContributionCalculationResult PensionContributionCalculationResult { get; }
 
     /// <summary>
     /// Gets the employee's total gross pay.
     /// </summary>
     decimal TotalGrossPay { get; }
+
+    /// <summary>
+    /// Gets the employee's total pay that is subject to National Insurance.
+    /// </summary>
+    decimal NicablePay { get; }
+
+    /// <summary>
+    /// Gets the employee's total taxable pay, before the application of any tax-free pay.
+    /// </summary>
+    decimal TaxablePay { get; }
 
     /// <summary>
     /// Gets the employee's final net pay.
@@ -77,5 +87,5 @@ public interface IEmployeePayrunResult
     /// Gets the historical set of information for an employee's payroll for the current tax year,
     /// not including the effect of this payrun.
     /// </summary>
-    IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
+    ref IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
 }

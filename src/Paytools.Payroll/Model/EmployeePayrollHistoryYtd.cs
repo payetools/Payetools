@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Employment.Model;
 using Paytools.NationalInsurance;
 
 namespace Paytools.Payroll.Model;
@@ -98,6 +99,12 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// Gets the total employer pension contributions made to date this tax year.
     /// </summary>
     public decimal EmployerPensionContributionsYtd { get; init; }
+
+    /// <summary>
+    /// Gets the tax that it has not been possible to collect so far this tax year due to the
+    /// regulatory limit on income tax deductions.
+    /// </summary>
+    public decimal TaxUnpaidDueToRegulatoryLimit { get; init; }
 
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/>.

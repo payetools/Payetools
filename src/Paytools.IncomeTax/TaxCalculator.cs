@@ -44,6 +44,9 @@ public class TaxCalculator : ITaxCalculator
         public decimal TaxAtHighestApplicableBand { get; init; }
     }
 
+    private readonly TaxYear _taxYear;
+    private readonly CountriesForTaxPurposes _applicableCountries;
+
     /// <summary>
     /// Gets the set of pro-rata tax bandwidths in use for a given tax year, tax regime and tax period.
     /// </summary>
@@ -64,8 +67,10 @@ public class TaxCalculator : ITaxCalculator
     /// </summary>
     public int TaxPeriodCount { get; }
 
-    internal TaxCalculator(TaxBandwidthSet annualTaxBandwidths, PayFrequency payFrequency, int taxPeriod)
+    internal TaxCalculator(TaxYear taxYear, CountriesForTaxPurposes applicableCountries, TaxBandwidthSet annualTaxBandwidths, PayFrequency payFrequency, int taxPeriod)
     {
+        _taxYear = taxYear;
+        _applicableCountries = applicableCountries;
         PayFrequency = payFrequency;
         TaxBandwidths = new TaxPeriodBandwidthSet(annualTaxBandwidths, payFrequency, taxPeriod);
         TaxPeriod = taxPeriod;
@@ -77,19 +82,28 @@ public class TaxCalculator : ITaxCalculator
     /// </summary>
     /// <param name="totalTaxableSalaryInPeriod">Taxable pay in period (i.e., gross less pre-tax deductions but including benefits in kind).</param>
     /// <param name="benefitsInKind">Benefits in kind element of the taxable pay for the period.</param>
-    /// <param name="taxCode">Individual's tax code.</param>
+    /// <param name="taxCode">Individual's tax code.  This is required in order to 1) determine the tax-free pay and 2) determine the
+    /// appropriate calculation to perform.  Note that an income tax calculator is specify to a given tax regime; an <see cref="ArgumentException"/> is
+    /// thrown if the tax code is inconsistent with the tax regime for this calculator.</param>
     /// <param name="taxableSalaryYearToDate">Total year to date taxable salary up to and including the end of the previous tax period.</param>
     /// <param name="taxPaidYearToDate">Total year to date tax paid up to and including the end of the previous tax period.</param>
-    /// <param name="taxUnpaidDueToRegulatoryLimit">Any tax outstanding due to the effect of the regulatory limit.  Optional.</param>
-    /// <returns>An <see cref="ITaxCalculationResult"/> containing the tax now due plus related information from the tax calculation.</returns>
-    public ITaxCalculationResult Calculate(
+    /// <param name="taxUnpaidDueToRegulatoryLimit">Any tax outstanding due to the effect of the regulatory limit.</param>
+    /// <param name="result">An <see cref="ITaxCalculationResult"/> containing the tax now due plus related information from the tax calculation.</param>
+    /// <exception cref="ArgumentException">Thrown if the tax code supplied is not consistent with the tax regime for this tax calculator.</exception>
+    /// <exception cref="InvalidReferenceDataException">Thrown if it is not possible to find an appropriate tax bandwidth in the reference
+    /// data for this tax regime.</exception>
+    public void Calculate(
         decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
-        decimal taxUnpaidDueToRegulatoryLimit = 0.0m)
+        decimal taxUnpaidDueToRegulatoryLimit,
+        out ITaxCalculationResult result)
     {
+        if (taxCode.TaxTreatment != TaxTreatment.NT && taxCode.ApplicableCountries != _applicableCountries)
+            throw new ArgumentException("Supplied tax code does not match tax regime for this tax calculator", nameof(taxCode));
+
         Func<decimal, TaxCode, decimal, decimal, decimal, decimal, InternalTaxCalculationResult> calculation = taxCode switch
         {
             // NB Although '0T' is a fixed code, it is just a special case of the regular calculation,
@@ -106,18 +120,18 @@ public class TaxCalculator : ITaxCalculator
             benefitsInKind,
             taxUnpaidDueToRegulatoryLimit);
 
-        return new TaxCalculationResult(
-            this,
-            taxCode,
-            internalResult.TaxFreePayForPeriod,
-            internalResult.TaxableSalary,
-            taxableSalaryYearToDate,
-            taxPaidYearToDate,
-            internalResult.HighestApplicableTaxBandIndex,
-            internalResult.IncomeAtHighestApplicableBand,
-            internalResult.TaxAtHighestApplicableBand,
-            taxUnpaidDueToRegulatoryLimit,
-            internalResult.TaxDue);
+        result = new TaxCalculationResult(
+           this,
+           taxCode,
+           internalResult.TaxFreePayForPeriod,
+           internalResult.TaxableSalary,
+           taxableSalaryYearToDate,
+           taxPaidYearToDate,
+           internalResult.HighestApplicableTaxBandIndex,
+           internalResult.IncomeAtHighestApplicableBand,
+           internalResult.TaxAtHighestApplicableBand,
+           taxUnpaidDueToRegulatoryLimit,
+           internalResult.TaxDue);
     }
 
     private InternalTaxCalculationResult CalculateTaxDueOnNonFixedTaxCode(
@@ -128,8 +142,6 @@ public class TaxCalculator : ITaxCalculator
         decimal benefitsInKind,
         decimal taxUnpaidDueToRegulatoryLimit)
     {
-        var totalTaxableSalaryYtd = totalTaxableSalaryInPeriod + taxableSalaryYearToDate;
-
         var taxFreePayToEndOfPeriod = taxCode.GetTaxFreePayForPeriod(TaxPeriod, TaxPeriodCount);
 
         InternalTaxCalculationResult internalResult = taxCode.IsNonCumulative ?

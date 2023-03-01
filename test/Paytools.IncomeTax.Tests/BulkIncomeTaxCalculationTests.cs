@@ -61,11 +61,13 @@ public class BulkIncomeTaxCalculationTests
 
             var calculator = taxCalculatorFactory.GetCalculator(applicableCountries, taxYear, test.PayFrequency, test.Period);
 
-            var result = calculator.Calculate(test.GrossPay,
+            calculator.Calculate(test.GrossPay,
                 0.0m,
                 (TaxCode)taxCode,
                 test.TaxablePayToDate - test.GrossPay,
-                test.TaxDueToDate - test.TaxDue);
+                test.TaxDueToDate - test.TaxDue,
+                0.0m,
+                out var result);
 
             Debug.WriteLine("Running test {0} with tax code '{1}', period {2}", testIndex, fullTaxCode, test.Period);
 

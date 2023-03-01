@@ -62,6 +62,6 @@ public class TaxCalculatorFactory : ITaxCalculatorFactory
         if (!taxBandwidthSets.TryGetValue(applicableCountries, out var taxBandwidthSet))
             throw new InvalidReferenceDataException($"Unable to find unique tax bands for countries/tax year combination [{applicableCountries}] {taxYear}");
 
-        return new TaxCalculator(taxBandwidthSet, payFrequency, taxPeriod);
+        return new TaxCalculator(taxYear, applicableCountries, taxBandwidthSet, payFrequency, taxPeriod);
     }
 }

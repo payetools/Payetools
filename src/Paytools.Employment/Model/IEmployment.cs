@@ -92,4 +92,9 @@ public interface IEmployment
     /// Gets the list of recurring deductions for an employee.
     /// </summary>
     ImmutableList<IRecurringDeduction> RecurringDeductions { get; }
+
+    /// <summary>
+    /// Gets the key figures from the employee's payroll history for the tax year to date.
+    /// </summary>
+    IEmployeePayrollHistoryYtd PayrollHistoryYtd { get; }
 }

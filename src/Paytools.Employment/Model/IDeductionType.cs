@@ -37,5 +37,11 @@ public interface IDeductionType
     /// <summary>
     /// Gets a value indicating whether this type of deduction is applied before or after tax.
     /// </summary>
-    bool ApplyBeforeTax { get; }
+    bool ReducesTaxablePay { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this type of deduction affects pay for National Insurance
+    /// purposes.
+    /// </summary>
+    bool ReducesNicablePay { get; }
 }

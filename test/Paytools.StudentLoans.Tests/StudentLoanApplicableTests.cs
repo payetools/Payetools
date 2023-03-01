@@ -34,25 +34,13 @@ public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFac
     {
         var calculator = await GetCalculator(_taxYear, PayFrequency.Monthly, 1);
 
-        var expectedDeduction = 0.0m;
-        var grossSalary = 1500.00m;
-        var result = calculator.Calculate(grossSalary, StudentLoanType.Plan1, false);
-        result.TotalDeduction.Should().Be(expectedDeduction);
+        RunTest(calculator, 1500.00m, StudentLoanType.Plan1, false, 0.0m, 0.0m, 1682.91m, null);
 
-        expectedDeduction = 0.0m;
-        grossSalary = 1694.02m;
-        result = calculator.Calculate(grossSalary, StudentLoanType.Plan1, false);
-        result.TotalDeduction.Should().Be(expectedDeduction);
+        RunTest(calculator, 1694.02m, StudentLoanType.Plan1, false, 0.0m, 0.0m, 1682.91m, null);
 
-        expectedDeduction = 1.0m;
-        grossSalary = 1694.03m;
-        result = calculator.Calculate(grossSalary, StudentLoanType.Plan1, false);
-        result.TotalDeduction.Should().Be(expectedDeduction);
+        RunTest(calculator, 1694.03m, StudentLoanType.Plan1, false, 1.0m, 0.0m, 1682.91m, null);
 
-        expectedDeduction = 571.0m;
-        grossSalary = 8027.36m;
-        result = calculator.Calculate(grossSalary, StudentLoanType.Plan1, false);
-        result.TotalDeduction.Should().Be(expectedDeduction);
+        RunTest(calculator, 8027.36m, StudentLoanType.Plan1, false, 571.0m, 0.0m, 1682.91m, null);
     }
 
     [Fact]
@@ -115,7 +103,7 @@ public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFac
         decimal expectedStudentLoanDeduction, decimal expectedPostGradLoanDeduction, decimal? expectedStudentLoanThreshold,
         decimal? expectedPostGradLoanThreshold)
     {
-        var result = calculator.Calculate(grossSalary, studentLoanType, hasPostGradLoan);
+        calculator.Calculate(grossSalary, studentLoanType, hasPostGradLoan, out var result);
 
         result.StudentLoanType.Should().Be(studentLoanType);
         result.HasPostGradLoan.Should().Be(hasPostGradLoan, $"gross salary of £{grossSalary}");

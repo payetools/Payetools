@@ -65,6 +65,56 @@ public class PayrunCalculator : IPayrunCalculator
     /// <returns>An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</returns>
     public ref IEmployeePayrunResult Process(ref IEmployeePayrunEntry entry)
     {
+        var (grossPay,  taxablePay,  nicablePay,  pensionablePay) = GetTotalEarnings(ref entry);
+
+        if (!_incomeTaxCalculators.TryGetValue(entry.Employment.TaxCode.ApplicableCountries, out var taxCalculator))
+            throw new InvalidOperationException($"Unable to perform tax calculation as calculator for tax regime '{entry.Employment.TaxCode.TaxRegimeLetter}' is not available");
+
+        var payrolledBenefitsAmount = GetTotalAmountForPayrolledBenefits(ref entry);
+        var taxablePayWithBenefits = taxablePay + payrolledBenefitsAmount;
+
+        taxCalculator.Calculate(taxablePayWithBenefits, payrolledBenefitsAmount,
+            entry.Employment.TaxCode, entry.Employment.PayrollHistoryYtd.TaxablePayYtd,
+            entry.Employment.PayrollHistoryYtd.TaxPaidYtd, entry.Employment.PayrollHistoryYtd.TaxUnpaidDueToRegulatoryLimit,
+            out var taxCalculationResult);
+
+        if (entry.Employment.IsDirector && entry.Employment.DirectorsNiCalculationMethod == Employment.DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod)
+            _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay, out var niCalculationResult);
+        else
+            _niCalculator.Calculate(entry.Employment.NiCategory, nicablePay, out var niCalculationResult);
+
         throw new NotImplementedException();
     }
+
+    private static (decimal grossPay, decimal taxablePay, decimal nicablePay, decimal pensionablePay) GetTotalEarnings(ref IEmployeePayrunEntry entry)
+    {
+        decimal grossPay = 0.0m;
+        decimal taxablePay = 0.0m;
+        decimal nicablePay = 0.0m;
+        decimal pensionablePay = 0.0m;
+
+        entry.Earnings.ForEach(e =>
+        {
+            grossPay += e.TotalEarnings;
+            taxablePay += e.EarningsType.IsSubjectToTax ? e.TotalEarnings : 0.0m;
+            nicablePay += e.EarningsType.IsSubjectToNi ? e.TotalEarnings : 0.0m;
+            pensionablePay += e.EarningsType.IsPensionable ? e.TotalEarnings : 0.0m;
+        });
+
+        entry.Deductions.ForEach(d =>
+        {
+            taxablePay -= d.DeductionType.ReducesTaxablePay ? d.TotalDeduction : 0.0m;
+            nicablePay -= d.DeductionType.ReducesNicablePay ? d.TotalDeduction : 0.0m;
+        });
+
+        entry.PayrolledBenefits.ForEach(b =>
+        {
+            taxablePay += b.AmountForPeriod;
+        });
+
+        return (grossPay, taxablePay, nicablePay, pensionablePay);
+    }
+
+    private static decimal GetTotalAmountForPayrolledBenefits(ref IEmployeePayrunEntry entry) =>
+        entry.PayrolledBenefits.Sum(b => b.AmountForPeriod);
 }

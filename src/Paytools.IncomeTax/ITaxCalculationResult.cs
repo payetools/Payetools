@@ -35,7 +35,7 @@ public interface ITaxCalculationResult
     /// Gets the taxable salary used in this calculation.  This is the gross salary less any tax-free pay (or plus any additional
     /// notional pay in the case of K tax codes).
     /// </summary>
-    decimal TaxableSalary { get; }
+    decimal TaxableSalaryAfterTaxFreePay { get; }
 
     /// <summary>
     /// Gets the tax-free pay applicable to the end of the period, as given by the specified tax code.  May be negative

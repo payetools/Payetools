@@ -26,6 +26,6 @@ public interface IStudentLoanCalculator
     /// <param name="grossSalary">Gross salary.</param>
     /// <param name="studentLoanType">Optional student loan type.  Null if no student loan applies.</param>
     /// <param name="hasPostGradLoan">True if post-graduate loan deductions should be applied; false otherwise.</param>
-    /// <returns>An implementation of <see cref="IStudentLoanCalculationResult"/> containing the results of the calculation.</returns>
-    IStudentLoanCalculationResult Calculate(decimal grossSalary, StudentLoanType? studentLoanType, bool hasPostGradLoan);
+    /// <param name="result">An implementation of <see cref="IStudentLoanCalculationResult"/> containing the results of the calculation.</param>
+    void Calculate(decimal grossSalary, StudentLoanType? studentLoanType, bool hasPostGradLoan, out IStudentLoanCalculationResult result);
 }

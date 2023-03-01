@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Paytools Foundation.  All rights reserved.
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 using Paytools.NationalInsurance;
 
-namespace Paytools.Payroll;
+namespace Paytools.Employment.Model;
 
 /// <summary>
 /// Interface for types that represent the historical set of information for an employee's payroll for the
@@ -98,4 +98,10 @@ public interface IEmployeePayrollHistoryYtd
     /// Gets the total employer pension contributions made to date this tax year.
     /// </summary>
     decimal EmployerPensionContributionsYtd { get; }
+
+    /// <summary>
+    /// Gets the tax that it has not been possible to collect so far this tax year due to the
+    /// regulatory limit on income tax deductions.
+    /// </summary>
+    decimal TaxUnpaidDueToRegulatoryLimit { get; }
 }

@@ -25,8 +25,8 @@ public interface INiCalculator
     /// </summary>
     /// <param name="niCategory">National Insurance category.</param>
     /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
-    /// <returns>NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</returns>
-    INiCalculationResult Calculate(NiCategory niCategory, decimal nicableEarningsInPeriod);
+    /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
+    void Calculate(NiCategory niCategory, decimal nicableEarningsInPeriod, out INiCalculationResult result);
 
     /// <summary>
     /// Calculates the National Insurance contributions required for a company director for a given pay period,
@@ -34,6 +34,6 @@ public interface INiCalculator
     /// </summary>
     /// <param name="niCategory">National Insurance category.</param>
     /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
-    /// <returns>NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</returns>
-    INiCalculationResult CalculateDirectors(NiCategory niCategory, decimal nicableEarningsInPeriod);
+    /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
+    void CalculateDirectors(NiCategory niCategory, decimal nicableEarningsInPeriod, out INiCalculationResult result);
 }

@@ -54,12 +54,13 @@ public interface ITaxCalculator
     /// <param name="taxableSalaryYearToDate">Total year to date taxable salary up to and including the end of the previous tax period.</param>
     /// <param name="taxPaidYearToDate">Total year to date tax paid up to and including the end of the previous tax period.</param>
     /// <param name="taxUnpaidDueToRegulatoryLimit">Any tax outstanding due to the effect of the regulatory limit.</param>
-    /// <returns>An <see cref="ITaxCalculationResult"/> containing the tax now due plus related information from the tax calculation.</returns>
-    ITaxCalculationResult Calculate(
+    /// <param name="result">An <see cref="ITaxCalculationResult"/> containing the tax now due plus related information from the tax calculation.</param>
+    void Calculate(
         decimal totalTaxableSalaryInPeriod,
         decimal benefitsInKind,
         TaxCode taxCode,
         decimal taxableSalaryYearToDate,
         decimal taxPaidYearToDate,
-        decimal taxUnpaidDueToRegulatoryLimit = 0.0m);
+        decimal taxUnpaidDueToRegulatoryLimit,
+        out ITaxCalculationResult result);
 }

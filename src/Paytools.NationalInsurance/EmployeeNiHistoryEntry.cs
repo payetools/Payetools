@@ -20,9 +20,9 @@ namespace Paytools.NationalInsurance;
 /// applicable.  But it is of course possible for an employee's NI category to change throughout the tax year (for example
 /// because they turned 21 years of age), and in this case, multiple records must be held.
 /// </summary>
-public record EmployeeNiHistoryEntry
+public readonly struct EmployeeNiHistoryEntry
 {
-    private NiEarningsBreakdown _niEarningsBreakdown = default;
+    private readonly NiEarningsBreakdown _niEarningsBreakdown = default;
 
     /// <summary>
     /// Gets the National Insurance category letter pertaining to this record.
@@ -88,4 +88,29 @@ public record EmployeeNiHistoryEntry
     /// for this record.
     /// </summary>
     public decimal EarningsAboveSTUpToAndIncludingUEL => _niEarningsBreakdown.EarningsAboveSTUpToAndIncludingUEL;
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="EmployeeNiHistoryEntry"/>.
+    /// </summary>
+    /// <param name="niCategoryPertaining">NI category for this record.</param>
+    /// <param name="niEarningsBreakdown">NI earnings breakdown for this record.</param>
+    /// <param name="grossNicableEarnings">Gross Nicable earnings for this record.</param>
+    /// <param name="employeeContribution">Employee contribution for this record.</param>
+    /// <param name="employerContribution">Employer contribution for this record.</param>
+    /// <param name="totalContribution">Total (i.e., employee + employer) contribution for this record.</param>
+    public EmployeeNiHistoryEntry(
+        NiCategory niCategoryPertaining,
+        NiEarningsBreakdown niEarningsBreakdown,
+        decimal grossNicableEarnings,
+        decimal employeeContribution,
+        decimal employerContribution,
+        decimal totalContribution)
+    {
+        NiCategoryPertaining = niCategoryPertaining;
+        _niEarningsBreakdown = niEarningsBreakdown;
+        GrossNicableEarnings = grossNicableEarnings;
+        EmployeeContribution = employeeContribution;
+        EmployerContribution = employerContribution;
+        TotalContribution = totalContribution;
+    }
 }

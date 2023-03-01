@@ -36,7 +36,7 @@ public readonly struct TaxCalculationResult : ITaxCalculationResult
     /// Gets the taxable salary used in this calculation.  This is the gross salary less any tax-free pay (or plus any additional
     /// notional pay in the case of K tax codes).
     /// </summary>
-    public decimal TaxableSalary { get; }
+    public decimal TaxableSalaryAfterTaxFreePay { get; }
 
     /// <summary>
     /// Gets the tax-free pay applicable to the end of the period, as given by the specified tax code.  May be negative
@@ -116,7 +116,7 @@ public readonly struct TaxCalculationResult : ITaxCalculationResult
         HighestApplicableTaxBandIndex = highestApplicableTaxBandIndex;
         IncomeAtHighestApplicableBand = incomeAtHighestApplicableBand;
         TaxAtHighestApplicableBand = taxAtHighestApplicableBand;
-        TaxableSalary = taxableSalary;
+        TaxableSalaryAfterTaxFreePay = taxableSalary;
         PreviousPeriodSalaryYearToDate = previousPeriodSalaryYearToDate;
         PreviousPeriodTaxPaidYearToDate = previousPeriodTaxPaidYearToDate;
         TaxUnpaidDueToRegulatoryLimit = taxUnpaidDueToRegulatoryLimit;

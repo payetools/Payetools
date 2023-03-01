@@ -28,6 +28,11 @@ public interface IEmployeePayrunEntry
     IEmployee Employee { get; }
 
     /// <summary>
+    /// Gets the employment details for the employee for this entry.
+    /// </summary>
+    IEmployment Employment { get; }
+
+    /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
     List<DeductionEntry> Deductions { get; }
@@ -41,5 +46,5 @@ public interface IEmployeePayrunEntry
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
     /// no payrolled benefits.
     /// </summary>
-    List<IPayrolledBenefit> PayrolledBenefits { get; }
+    List<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 }

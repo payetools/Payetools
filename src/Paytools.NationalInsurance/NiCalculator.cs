@@ -56,8 +56,8 @@ public class NiCalculator : INiCalculator
     /// </summary>
     /// <param name="niCategory">National Insurance category.</param>
     /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
-    /// <returns>NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</returns>
-    public INiCalculationResult Calculate(NiCategory niCategory, decimal nicableEarningsInPeriod)
+    /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
+    public void Calculate(NiCategory niCategory, decimal nicableEarningsInPeriod, out INiCalculationResult result)
     {
         decimal[] results = new decimal[CalculationStepCount];
 
@@ -68,7 +68,11 @@ public class NiCalculator : INiCalculator
         decimal resultOfStep1 = nicableEarningsInPeriod - threshold;
 
         if (resultOfStep1 < 0.0m)
-            return NiCalculationResult.NoRecordingRequired;
+        {
+            result = NiCalculationResult.NoRecordingRequired;
+
+            return;
+        }
 
         results[0] = threshold;
 
@@ -107,7 +111,7 @@ public class NiCalculator : INiCalculator
         if (!_niRateEntries.TryGetValue(niCategory, out var rates))
             throw new InvalidOperationException($"Unable to obtain National Insurance rates for category {niCategory}");
 
-        return new NiCalculationResult(
+        result = new NiCalculationResult(
             rates,
             _niPeriodThresholds,
             GetNiEarningsBreakdownFromCalculationResults(results),
@@ -121,8 +125,8 @@ public class NiCalculator : INiCalculator
     /// </summary>
     /// <param name="niCategory">National Insurance category.</param>
     /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
-    /// <returns>NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</returns>
-    public INiCalculationResult CalculateDirectors(NiCategory niCategory, decimal nicableEarningsInPeriod)
+    /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
+    public void CalculateDirectors(NiCategory niCategory, decimal nicableEarningsInPeriod, out INiCalculationResult result)
     {
         throw new NotImplementedException();
     }
