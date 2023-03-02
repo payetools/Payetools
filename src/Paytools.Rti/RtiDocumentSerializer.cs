@@ -39,7 +39,7 @@ public static class RtiDocumentSerializer
     {
         var payload = GetPayload(rtiDocument);
 
-        message.Body = new()
+        message.Body = new ()
         {
             Any = new XmlElement[]
             {

@@ -17,34 +17,16 @@ using Paytools.Payroll.Model;
 namespace Paytools.Payroll.Payruns;
 
 /// <summary>
-/// Represents a payrun, i.e., the running of payroll for a single pay reference period
+/// Interface that represents a payrun, i.e., the running of payroll for a single pay reference period
 /// on a single pay date for a predefined set of employees within one employer's employment.
 /// </summary>
-public class Payrun : IPayrun
+public interface IPayrunProcessor
 {
-    private readonly IPayrunCalculator _payrunCalculator;
-
-    /// <summary>
-    /// Initialises a new instance of <see cref="Payrun"/> with the supplied calculator.
-    /// </summary>
-    /// <param name="calculator">Calculator to be used to calculate earnings, deductions
-    /// and net pay.</param>
-    public Payrun(IPayrunCalculator calculator)
-    {
-        _payrunCalculator = calculator;
-    }
-
     /// <summary>
     /// Processes this payrun.
     /// </summary>
     /// <param name="employeePayrunEntries">List of payrun information for each employee in the payrun.</param>
-    /// <returns>An instance of a class that implements <see cref="IPayrunResult"/> containing the results
-    /// of this payrun.</returns>
-    public ref IPayrunResult Process(List<IEmployeePayrunEntry> employeePayrunEntries)
-    {
-        // employeePayrunEntries.ForEach.Process(employeePayrunEntries)
-        //    {
-        // }
-        throw new NotImplementedException();
-    }
+    /// <param name="result">An instance of a class that implements <see cref="IPayrunResult"/> containing the results
+    /// of this payrun.</param>
+    void Process(List<IEmployeePayrunInputEntry> employeePayrunEntries, out IPayrunResult result);
 }

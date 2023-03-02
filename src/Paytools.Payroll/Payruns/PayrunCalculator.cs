@@ -13,14 +13,12 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.Employment.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
 using Paytools.Payroll.Model;
 using Paytools.Pensions;
 using Paytools.Pensions.Model;
 using Paytools.StudentLoans;
-using System.Collections.Concurrent;
 
 namespace Paytools.Payroll.Payruns;
 
@@ -35,7 +33,16 @@ public class PayrunCalculator : IPayrunCalculator
     private readonly IPensionContributionCalculatorFactory _pensionCalculatorFactory;
     private readonly IStudentLoanCalculator _studentLoanCalculator;
     private readonly Dictionary<Tuple<EarningsBasis, PensionTaxTreatment>, IPensionContributionCalculator> _pensionCalculators;
-    private readonly PayDate _payDate;
+
+    /// <summary>
+    /// Gets the pay date for this payrun calculator.
+    /// </summary>
+    public PayDate PayDate { get; }
+
+    /// <summary>
+    /// Gets the pay period for this payrun calculator.
+    /// </summary>
+    public PayReferencePeriod PayPeriod { get; }
 
     /// <summary>
     /// Initialises a new instance of <see cref="PayrunCalculator"/> with the supplied factories
@@ -46,12 +53,14 @@ public class PayrunCalculator : IPayrunCalculator
     /// <param name="pensionCalcFactory">Pension contributions calculator factory.</param>
     /// <param name="studentLoanCalcFactory">Student loan calculator factory.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
+    /// <param name="payPeriod">Applicable pay period for this calculator.</param>
     public PayrunCalculator(
         ITaxCalculatorFactory incomeTaxCalcFactory,
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
         IStudentLoanCalculatorFactory studentLoanCalcFactory,
-        PayDate payDate)
+        PayDate payDate,
+        PayReferencePeriod payPeriod)
     {
         _incomeTaxCalculators = payDate.TaxYear.GetCountriesForYear()
             .Select(regime => (regime, calculator: incomeTaxCalcFactory.GetCalculator(regime, payDate)))
@@ -59,7 +68,8 @@ public class PayrunCalculator : IPayrunCalculator
         _niCalculator = niCalcFactory.GetCalculator(payDate);
         _pensionCalculatorFactory = pensionCalcFactory;
         _studentLoanCalculator = studentLoanCalcFactory.GetCalculator(payDate);
-        _payDate = payDate;
+        PayDate = payDate;
+        PayPeriod = payPeriod;
 
         _pensionCalculators = new Dictionary<Tuple<EarningsBasis, PensionTaxTreatment>, IPensionContributionCalculator>();
     }
@@ -68,12 +78,12 @@ public class PayrunCalculator : IPayrunCalculator
     /// Processes the supplied payrun entry calculating all the earnings and deductions, income tax, national insurance and
     /// other statutory deductions, and generating a result structure which includes the final net pay.
     /// </summary>
-    /// <param name="entry">Instance of <see cref="IEmployeePayrunEntry"/> containing all the necessary input data for the
+    /// <param name="entry">Instance of <see cref="IEmployeePayrunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
     /// <param name="result">An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</param>
-    public void Process(ref IEmployeePayrunEntry entry, out IEmployeePayrunResult result)
+    public void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResult result)
     {
-        var (grossPay,  taxablePay,  nicablePay,  pensionablePay) = GetTotalEarnings(ref entry);
+        var (grossPay, taxablePay, nicablePay, pensionablePay) = GetTotalEarnings(ref entry);
 
         if (!_incomeTaxCalculators.TryGetValue(entry.Employment.TaxCode.ApplicableCountries, out var taxCalculator))
             throw new InvalidOperationException($"Unable to perform tax calculation as calculator for tax regime '{entry.Employment.TaxCode.TaxRegimeLetter}' is not available");
@@ -111,7 +121,9 @@ public class PayrunCalculator : IPayrunCalculator
             ref pensionContributions, grossPay, ref entry.Employment.PayrollHistoryYtd);
     }
 
-    private static (decimal grossPay, decimal taxablePay, decimal nicablePay, decimal pensionablePay) GetTotalEarnings(ref IEmployeePayrunEntry entry)
+    // Implementation note: In order to process salary exchange correctly, we must first calculate the pension contributions,
+    // or at least the effect of the pension on gross salary.
+    private static (decimal grossPay, decimal taxablePay, decimal nicablePay, decimal pensionablePay) GetTotalEarnings(ref IEmployeePayrunInputEntry entry)
     {
         decimal grossPay = 0.0m;
         decimal taxablePay = 0.0m;
@@ -130,6 +142,7 @@ public class PayrunCalculator : IPayrunCalculator
         {
             taxablePay -= d.DeductionType.ReducesTaxablePay ? d.TotalDeduction : 0.0m;
             nicablePay -= d.DeductionType.ReducesNicablePay ? d.TotalDeduction : 0.0m;
+            pensionablePay -= d.DeductionType.ReducesPensionablePay ? d.TotalDeduction : 0.0m;
         });
 
         entry.PayrolledBenefits.ForEach(b =>
@@ -140,10 +153,10 @@ public class PayrunCalculator : IPayrunCalculator
         return (grossPay, taxablePay, nicablePay, pensionablePay);
     }
 
-    private static decimal GetTotalAmountForPayrolledBenefits(ref IEmployeePayrunEntry entry) =>
+    private static decimal GetTotalAmountForPayrolledBenefits(ref IEmployeePayrunInputEntry entry) =>
         entry.PayrolledBenefits.Sum(b => b.AmountForPeriod);
 
-    private void CalculatePensionContributions(ref IEmployeePayrunEntry entry, decimal pensionablePay, out IPensionContributionCalculationResult result)
+    private void CalculatePensionContributions(ref IEmployeePayrunInputEntry entry, decimal pensionablePay, out IPensionContributionCalculationResult result)
     {
         if (entry.Employment.PensionScheme == null)
         {
@@ -160,7 +173,7 @@ public class PayrunCalculator : IPayrunCalculator
                 if (!_pensionCalculators.TryGetValue(key, out calculator))
                 {
                     calculator = _pensionCalculatorFactory.GetCalculator(entry.Employment.PensionScheme.EarningsBasis,
-                            entry.Employment.PensionScheme.TaxTreatment, _payDate);
+                            entry.Employment.PensionScheme.TaxTreatment, PayDate);
 
                     _pensionCalculators.Add(key, calculator);
                 }

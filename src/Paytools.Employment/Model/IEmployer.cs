@@ -24,10 +24,10 @@ public interface IEmployer
     /// <summary>
     /// Gets or sets the employer's HMRC PAYE reference, if known.
     /// </summary>
-    public HmrcPayeReference? HmrcPayeReference { get; set; }
+    HmrcPayeReference? HmrcPayeReference { get; set; }
 
     /// <summary>
     /// Gets or sets the employer's HMRC Accounts Office reference, if known.
     /// </summary>
-    public HmrcAccountsOfficeReference AccountsOfficeReference { get; set; }
+    HmrcAccountsOfficeReference? AccountsOfficeReference { get; set; }
 }

@@ -12,21 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Payroll.Model;
+using Paytools.Common.Model;
+using Paytools.Employment.Model;
 
-namespace Paytools.Payroll.Payruns;
+namespace Paytools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents a payrun, i.e., the running of payroll for a single pay reference period
-/// on a single pay date for a predefined set of employees within one employer's employment.
+/// Represents an employer for payroll purposes.
 /// </summary>
-public interface IPayrun
+public record Employer : IEmployer
 {
     /// <summary>
-    /// Processes this payrun.
+    /// Gets or sets the employer's HMRC PAYE reference, if known.
     /// </summary>
-    /// <param name="employeePayrunEntries">List of payrun information for each employee in the payrun.</param>
-    /// <returns>An instance of a class that implements <see cref="IPayrunResult"/> containing the results
-    /// of this payrun.</returns>
-    ref IPayrunResult Process(List<IEmployeePayrunEntry> employeePayrunEntries);
+    public HmrcPayeReference? HmrcPayeReference { get; set; }
+
+    /// <summary>
+    /// Gets or sets the employer's HMRC Accounts Office reference, if known.
+    /// </summary>
+    public HmrcAccountsOfficeReference? AccountsOfficeReference { get; set; }
 }

@@ -19,6 +19,13 @@ using Microsoft.Extensions.Logging;
 using Paytools.ReferenceData;
 using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using Paytools.Payroll.Payruns;
+using Paytools.Common.Model;
+using Paytools.Employment.Model;
+using Paytools.Payroll.Model;
+using Paytools.IncomeTax;
+using Paytools.NationalInsurance;
+using System.Security.AccessControl;
 
 Console.WriteLine("Hello, World!");
 
@@ -45,7 +52,41 @@ var loggerFactory = serviceProvider.GetService<ILoggerFactory>() ??
 var factory = new HmrcReferenceDataProviderFactory(httpClientFactory, 
     loggerFactory.CreateLogger<HmrcReferenceDataProviderFactory>());
 
-var provider = await factory.CreateProviderAsync(new Uri("https://stellular-bombolone-34e67e.netlify.app/index.json"));
+IPayrunProcessorFactory payrunProcessorFactory = new PayrunProcessorFactory(factory, new Uri("https://stellular-bombolone-34e67e.netlify.app/index.json"));
+
+PayDate payDate = new PayDate(2022, 8, 20, PayFrequency.Monthly);
+PayReferencePeriod payPeriod = new PayReferencePeriod(new DateOnly(), new DateOnly());
+
+IEmployer employer = new Employer();
+
+var processor = await payrunProcessorFactory.GetProcessorAsync(employer, payDate, payPeriod);
+
+List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
+
+var employee = new Employee()
+{ };
+
+IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd() { TaxablePayYtd = 28333.32m -1841.69m + 450.12m, TaxPaidYtd = 6533.86m };
+
+TaxCode.TryParse("1296L", out var taxCode);
+
+var employment = new Employment(ref history) { TaxCode = taxCode, NiCategory = NiCategory.A};
+
+var entry = new EmployeePayrunInputEntry(employee,
+    employment,
+    new List<EarningsEntry>() { 
+        new EarningsEntry() { EarningsType = new GenericPayComponent() { IsSubjectToTax = true,  IsSubjectToNi = true,  IsPensionable = true, IsNetToGross = false         }, 
+            FixedAmount = 7083.33m - 495.64m + 150.05m}
+    },
+    new List<DeductionEntry>() {
+    },
+    new List<IPayrolledBenefitForPeriod>() { },
+    new PensionContributionLevels() {  });
+
+
+entries.Add(entry);
+processor.Process(entries, out var result);
+
 
 Console.WriteLine();
 

@@ -51,7 +51,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
             } :
             throw new ArgumentException("", nameof(employer));
 
-    private object[] MakeEmployeeRecords(PayDate payDate, ConcurrentBag<IEmployeePayrunResult> entries)
+    private object[] MakeEmployeeRecords(PayDate payDate, List<IEmployeePayrunResult> entries)
     {
         var items = new object[entries.Count];
 

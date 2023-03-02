@@ -14,9 +14,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Paytools.Common\Paytools.Common.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.Employment\Paytools.Employment.csproj" />
     <ProjectReference Include="..\..\src\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
     <ProjectReference Include="..\..\src\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.NationalMinimumWage\Paytools.NationalMinimumWage.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.Payroll\Paytools.Payroll.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.Pensions\Paytools.Pensions.csproj" />
     <ProjectReference Include="..\..\src\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.Rti\Paytools.Rti.csproj" />
+    <ProjectReference Include="..\..\src\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
   </ItemGroup>
 
   <ItemGroup>

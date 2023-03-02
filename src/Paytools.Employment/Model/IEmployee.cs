@@ -25,12 +25,12 @@ public interface IEmployee : INamedIndividual
     /// <summary>
     /// Gets the individual's National Insurance number.
     /// </summary>
-    public NiNumber NiNumber { get; init; }
+    NiNumber NiNumber { get; init; }
 
     /// <summary>
     /// Gets the individual's date of birth.
     /// </summary>
-    public DateOnly DateOfBirth { get; init; }
+    DateOnly DateOfBirth { get; init; }
 
     /// <summary>
     /// Gets the individual's "official" gender as recognised by HMRC for payroll purposes.

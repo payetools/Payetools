@@ -44,4 +44,10 @@ public interface IDeductionType
     /// purposes.
     /// </summary>
     bool ReducesNicablePay { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this type of deduction affects pay for pension
+    /// purposes.
+    /// </summary>
+    bool ReducesPensionablePay { get; }
 }

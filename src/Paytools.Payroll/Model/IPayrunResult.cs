@@ -30,5 +30,5 @@ public interface IPayrunResult : IEmployerInfoProvider
     /// <summary>
     /// Gets the list of employee payrun entries.
     /// </summary>
-    ConcurrentBag<IEmployeePayrunResult> EmployeePayrunEntries { get; }
+    List<IEmployeePayrunResult> EmployeePayrunEntries { get; }
 }

@@ -36,5 +36,5 @@ public record PayrunResult : IPayrunResult
     /// <summary>
     /// Gets the list of employee payrun entries.
     /// </summary>
-    public ConcurrentBag<IEmployeePayrunResult> EmployeePayrunEntries { get; init; } = null!;
+    public List<IEmployeePayrunResult> EmployeePayrunEntries { get; init; } = null!;
 }
