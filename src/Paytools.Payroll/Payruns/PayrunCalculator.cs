@@ -108,7 +108,7 @@ public class PayrunCalculator : IPayrunCalculator
         }
 
         result = new EmployeePayrunResult(entry.Employee, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
-            ref pensionContributions, grossPay, null);
+            ref pensionContributions, grossPay, ref entry.Employment.PayrollHistoryYtd);
     }
 
     private static (decimal grossPay, decimal taxablePay, decimal nicablePay, decimal pensionablePay) GetTotalEarnings(ref IEmployeePayrunEntry entry)

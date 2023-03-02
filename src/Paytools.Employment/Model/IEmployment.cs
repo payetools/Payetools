@@ -102,5 +102,5 @@ public interface IEmployment
     /// <summary>
     /// Gets the key figures from the employee's payroll history for the tax year to date.
     /// </summary>
-    IEmployeePayrollHistoryYtd PayrollHistoryYtd { get; }
+    ref IEmployeePayrollHistoryYtd PayrollHistoryYtd { get; }
 }

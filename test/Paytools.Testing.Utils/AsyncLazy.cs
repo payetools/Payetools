@@ -30,7 +30,7 @@ namespace Paytools.Testing.Utils
         private readonly Lazy<Task<T>> instance;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncLazy&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="AsyncLazy{T}"/> class.
         /// </summary>
         /// <param name="factory">The delegate that is invoked on a background thread to produce the value when it is needed.</param>
         public AsyncLazy(Func<T> factory)
@@ -39,7 +39,7 @@ namespace Paytools.Testing.Utils
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncLazy&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="AsyncLazy{T}"/> class.
         /// </summary>
         /// <param name="factory">The asynchronous delegate that is invoked on a background thread to produce the value when it is needed.</param>
         public AsyncLazy(Func<Task<T>> factory)
@@ -48,7 +48,7 @@ namespace Paytools.Testing.Utils
         }
 
         /// <summary>
-        /// Asynchronous infrastructure support. This method permits instances of <see cref="AsyncLazy&lt;T&gt;"/> to be await'ed.
+        /// Asynchronous infrastructure support. This method permits instances of <see cref="AsyncLazy{T}"/> to be await'ed.
         /// </summary>
         public TaskAwaiter<T> GetAwaiter()
         {

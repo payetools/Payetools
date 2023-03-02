@@ -25,10 +25,7 @@ namespace Paytools.ReferenceData;
 /// Factory class that is used to create new HMRC reference data providers that implement
 /// <see cref="IHmrcReferenceDataProvider"/>.
 /// </summary>
-/// <remarks>If the CreateProviderAsync method completes successfully, the <see cref="IHmrcReferenceDataProvider.Health"/>
-/// property of the created <see cref="IHmrcReferenceDataProvider"/> provides human-readable information on
-/// the status of each tax year loaded.</remarks>
-public class HmrcReferenceDataProviderFactory
+public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactory
 {
     private readonly IHttpClientFactory? _httpClientFactory;
     private readonly ILogger<HmrcReferenceDataProviderFactory>? _logger;
@@ -81,6 +78,9 @@ public class HmrcReferenceDataProviderFactory
     /// </summary>
     /// <param name="referenceDataStreams">Array of data streams to load HMRC reference data from.</param>
     /// <returns>An instance of a type that implements <see cref="IHmrcReferenceDataProvider"/>.</returns>
+    /// <remarks>If the method completes successfully, the <see cref="IHmrcReferenceDataProvider.Health"/>
+    /// property of the created <see cref="IHmrcReferenceDataProvider"/> provides human-readable information on
+    /// the status of each tax year loaded.</remarks>
     /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to load
     /// reference data from the supplied set of streams.</exception>
     public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Stream[] referenceDataStreams)
@@ -118,9 +118,9 @@ public class HmrcReferenceDataProviderFactory
     /// reference data from the supplied endpoint.</exception>
     /// <exception cref="InvalidOperationException">Thrown if this factory was created without a valid <see cref="IHttpClientFactory"/>
     /// instance.</exception>
-    /// <remarks>Original implementation of <see cref="HmrcReferenceDataProvider"/> used Parallel.Foreach()
-    /// loop to retrieve entries in parallel but there must be some issue with the default IHttpClientFactory
-    /// implementation that prevents parallel usage (or some other non-obvious issue).</remarks>
+    /// <remarks>If the method completes successfully, the <see cref="IHmrcReferenceDataProvider.Health"/>
+    /// property of the created <see cref="IHmrcReferenceDataProvider"/> provides human-readable information on
+    /// the status of each tax year loaded.</remarks>
     public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Uri referenceDataEndpoint)
     {
         if (_httpClientFactory == null)
