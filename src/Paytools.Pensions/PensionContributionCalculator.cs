@@ -115,8 +115,9 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
     /// </summary>
     /// <param name="pensionableSalary">Pensionable salary to be used for calculation.</param>
     /// <param name="employerContributionPercentage">Employer contribution level, expressed in percentage points (i.e., 3% = 3.0m).</param>
-    /// <param name="employersNiSavingsCalculator">Instance of <see cref="IEmployerNiSavingsCalculator"/> that knows how
-    /// to calculate employer NI savings.</param>
+    /// <param name="employerNiSavings">Savings in employer's NI due to the salary exchanged.</param>
+    /// <param name="employerNiSavingsReinvestmentPercentage">Percentage of employer NI savings to be reinvested in the employee's
+    /// pension, expressed in percentage points (i.e., 100% = 100.0m).</param>
     /// <param name="employeeSalaryExchanged">The level of employee's salary forgone as set out in the salary
     /// exchange arrangements.  Expressed either as a percentage in percentage points (e.g., 5% = 5.0m), or as a fixed
     /// amount, as indicated by the following parameter.  NB If fixed amount is given, it relates to the pay period
@@ -132,7 +133,8 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
     public void CalculateUnderSalaryExchange(
         decimal pensionableSalary,
         decimal employerContributionPercentage,
-        IEmployerNiSavingsCalculator employersNiSavingsCalculator,
+        decimal employerNiSavings,
+        decimal employerNiSavingsReinvestmentPercentage,
         decimal employeeSalaryExchanged,
         bool employeeSalaryExchangedIsFixedAmount,
         decimal? avcForPeriod,
@@ -145,7 +147,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             employeeSalaryExchangedIsFixedAmount,
             salaryForMaternityPurposes);
 
-        var employerNiSavings = employersNiSavingsCalculator.Calculate(contributions.employeeContribution);
+        var employerNiSavingsToReinvest = employerNiSavings * employerNiSavingsReinvestmentPercentage / 100.0m;
 
         result = new PensionContributionCalculationResult()
         {
@@ -157,16 +159,33 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             EmployeeContributionPercentage = employeeSalaryExchangedIsFixedAmount ? null : employeeSalaryExchanged,
             CalculatedEmployerContributionAmount = contributions.employerContribution +
                 contributions.employeeContribution +
-                employerNiSavings,
+                employerNiSavingsToReinvest,
             EmployerContributionPercentage = employerContributionPercentage,
-            EmployersNiReinvestmentPercentage = null,
+            EmployersNiReinvestmentPercentage = employerNiSavingsReinvestmentPercentage,
             EmployerContributionAmountBeforeSalaryExchange = contributions.employerContribution,
-            EmployerNiSavingsToReinvest = employerNiSavings,
+            EmployerNiSavingsToReinvest = employerNiSavingsToReinvest,
             PensionableSalaryInPeriod = pensionableSalary,
             SalaryExchangeApplied = true,
             SalaryExchangedAmount = contributions.employeeContribution
         };
     }
+
+    /// <summary>
+    /// Gets the absolute amount of employee salary exchanged, either as a result of a fixed amount being passed in,
+    /// or as a percentage of pensionable salary (banded in the case of Qualifying Earnings.
+    /// </summary>
+    /// <param name="pensionableSalary">Pensionable salary to be used for calculation.</param>
+    /// <param name="employeeSalaryExchanged">The level of employee's salary forgone as set out in the salary
+    /// exchange arrangements.  Expressed either as a percentage in percentage points (e.g., 5% = 5.0m), or as a fixed
+    /// amount, as indicated by the following parameter.  NB If fixed amount is given, it relates to the pay period
+    /// (as opposed to annually).</param>
+    /// <param name="employeeSalaryExchangedIsFixedAmount">True if the previous parameter should be treated as a fixed amount; false if
+    /// it should be treated as a percentage.</param>
+    /// <returns>Value of employee salary being exchanged.</returns>
+    public decimal GetSalaryExchangedAmount(decimal pensionableSalary, decimal employeeSalaryExchanged, bool employeeSalaryExchangedIsFixedAmount) =>
+        employeeSalaryExchangedIsFixedAmount ?
+            employeeSalaryExchanged :
+                decimal.Round(GetEarningsForPensionCalculation(pensionableSalary) * employeeSalaryExchanged / 100.0m, 2, MidpointRounding.AwayFromZero);
 
     /// <summary>
     /// Abstract method signature for calculating pension contributions based on the supplied inputs.
@@ -188,4 +207,12 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
         decimal employeeContribution,
         bool employeeContributionIsFixedAmount,
         decimal? salaryForMaternityPurposes = null);
+
+    /// <summary>
+    /// Gets the earnings to be used for the pensionable salary calculation.  For Pensionable Pay Set X, this is the same
+    /// as the earnings; for QualifyingEarnings, this is the banded amount.
+    /// </summary>
+    /// <param name="pensionableSalary">Original pensionable salary.</param>
+    /// <returns>Earnings to be used for the pensionable salary calculation.</returns>
+    protected abstract decimal GetEarningsForPensionCalculation(decimal pensionableSalary);
 }

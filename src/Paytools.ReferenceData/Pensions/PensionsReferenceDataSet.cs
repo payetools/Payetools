@@ -33,6 +33,13 @@ public class PensionsReferenceDataSet : IApplicableFromTill
     public DateOnly ApplicableTill { get; init; }
 
     /// <summary>
+    /// Gets the basic rate of tax applicable across all tax regimes for relief at source pension contributions, for the specified
+    /// tax year.  (As at the time of writing, one basic rate of tax is used across all jurisdictions in spite of the fact that
+    /// some have a lower basic rate of tax.)
+    /// </summary>
+    public decimal BasicRateOfTaxForTaxRelief { get; init; }
+
+    /// <summary>
     /// Gets the lower set of earnings thresholds for Qualifying Earnings (i.e., per week, per 2-weeks, etc.).
     /// </summary>
     public PensionsThresholdEntry QualifyingEarningsLowerLevel { get; init; }

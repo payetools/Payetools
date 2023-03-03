@@ -14,6 +14,7 @@
 
 using Paytools.Employment.Model;
 using Paytools.Pensions.Model;
+using System.Collections.Immutable;
 
 namespace Paytools.Payroll.Model;
 
@@ -36,18 +37,18 @@ public interface IEmployeePayrunInputEntry
     /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
-    List<DeductionEntry> Deductions { get; }
+    ImmutableList<DeductionEntry> Deductions { get; }
 
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    List<EarningsEntry> Earnings { get; }
+    ImmutableList<EarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
     /// no payrolled benefits.
     /// </summary>
-    List<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
+    ImmutableList<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 
     /// <summary>
     /// Gets the pension contributions to apply for this pay period.

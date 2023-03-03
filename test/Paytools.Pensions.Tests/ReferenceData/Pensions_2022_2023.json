@@ -7,6 +7,7 @@
     {
       "applicableFrom": "2022-04-06",
       "applicableTill": "2023-04-05",
+      "basicRateOfTaxForTaxRelief": 0.2,
       "qualifyingEarningsLowerLevel": {
         "perWeek": 120,
         "perTwoWeeks": 240,

@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
-
-namespace Paytools.Employment.Model;
+namespace Paytools.Pensions.Model;
 
 /// <summary>
-/// Interface that represents a recurring deduction for an employee.
+/// Represents a workplace pension scheme.
 /// </summary>
-public interface IRecurringDeduction : IApplicableFromTill, IPayrollAmount
+public record PensionScheme : IPensionScheme
 {
     /// <summary>
-    /// Gets the deduction type for this recurring deduction.
+    /// Gets the earnings basis for this pension scheme.
     /// </summary>
-    IDeduction DeductionType { get; }
+    public EarningsBasis EarningsBasis { get; init; }
+
+    /// <summary>
+    /// Gets the tax treatment for this pension scheme.
+    /// </summary>
+    public PensionTaxTreatment TaxTreatment { get; init; }
 }

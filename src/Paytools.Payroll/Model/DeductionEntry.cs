@@ -24,7 +24,7 @@ public record DeductionEntry
     /// <summary>
     /// Gets the type of deduction.
     /// </summary>
-    public IDeductionType DeductionType { get; init; } = default!;
+    public IDeduction DeductionType { get; init; } = default!;
 
     /// <summary>
     /// Gets the quantity of this deduction that when multiplied by the <see cref="ValuePerUnit"/> gives the total deduction.

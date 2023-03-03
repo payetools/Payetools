@@ -80,7 +80,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
     public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
@@ -101,7 +101,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
     public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
@@ -122,7 +122,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An instance of <see cref="INiThresholdSet"/> containing the thresholds for the specified point
     /// in time.</returns>
     public INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
@@ -149,7 +149,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>A tuple containing the lower and upper thresholds for the specified pay frequency and point in time.</returns>
     public (decimal LowerLimit, decimal UpperLimit) GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
@@ -162,9 +162,23 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             pensionsReferenceDataEntry.QualifyingEarningsUpperLevel.GetThresholdForPayFrequency(payFrequency));
     }
 
-    public decimal GetBasicRateOfTaxForTaxRelief(TaxYear taxYear)
+    /// <summary>
+    /// Gets the basic rate of tax applicable across all tax regimes for relief at source pension contributions, for the specified
+    /// tax year.  (As at the time of writing, one basic rate of tax is used across all jurisdictions in spite of the fact that
+    /// some have a lower basic rate of tax.)
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.  Only used if there has been an in-year change.</param>
+    /// <param name="taxPeriod">Applicable tax period.  Only used if there has been an in-year change.</param>
+    /// <returns>Basic rate of tax applicable for the tax year.</returns>
+    public decimal GetBasicRateOfTaxForTaxRelief(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
-        throw new NotImplementedException();
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        var pensionsReferenceDataEntry = FindApplicableEntry<PensionsReferenceDataSet>(referenceDataSet.Pensions,
+            taxYear, payFrequency, taxPeriod);
+
+        return pensionsReferenceDataEntry.BasicRateOfTaxForTaxRelief;
     }
 
     /// <summary>
@@ -173,7 +187,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An instance of <see cref="INmwLevelSet"/> containing the levels for the specified point
     /// in time.</returns>
     public INmwLevelSet GetNmwLevelsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
@@ -189,7 +203,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An implementation of <see cref="IStudentLoanThresholdSet"/> that provides the appropriate set of annual
     /// thresholds for the specified point.</returns>
     public IStudentLoanThresholdSet GetStudentLoanThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
@@ -215,7 +229,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An instance of <see cref="IStudentLoanRateSet"/> containing the rates for the specified point
     /// in time.</returns>
     public IStudentLoanRateSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)

@@ -53,8 +53,9 @@ public interface IPensionContributionCalculator
     /// </summary>
     /// <param name="pensionableSalary">Pensionable salary to be used for calculation.</param>
     /// <param name="employerContributionPercentage">Employer contribution level, expressed in percentage points (i.e., 3% = 3.0m).</param>
-    /// <param name="employersNiSavingsCalculator">Instance of <see cref="IEmployerNiSavingsCalculator"/> that knows how
-    /// to calculate employer NI savings.</param>
+    /// <param name="employerNiSavings">Savings in employer's NI due to the salary exchanged.</param>
+    /// <param name="employerNiSavingsReinvestmentPercentage">Percentage of employer NI savings to be reinvested in the employee's
+    /// pension, expressed in percentage points (i.e., 100% = 100.0m).</param>
     /// <param name="employeeSalaryExchanged">The level of employee's salary forgone as set out in the salary
     /// exchange arrangements.  Expressed either as a percentage in percentage points (e.g., 5% = 5.0m), or as a fixed
     /// amount, as indicated by the following parameter.  NB If fixed amount is given, it relates to the pay period
@@ -69,10 +70,28 @@ public interface IPensionContributionCalculator
     /// the results of the calculation.</param>
     void CalculateUnderSalaryExchange(decimal pensionableSalary,
         decimal employerContributionPercentage,
-        IEmployerNiSavingsCalculator employersNiSavingsCalculator,
+        decimal employerNiSavings,
+        decimal employerNiSavingsReinvestmentPercentage,
         decimal employeeSalaryExchanged,
         bool employeeSalaryExchangedIsFixedAmount,
         decimal? avcForPeriod,
         decimal? salaryForMaternityPurposes,
         out IPensionContributionCalculationResult result);
+
+    /// <summary>
+    /// Gets the absolute amount of employee salary exchanged, either as a result of a fixed amount being passed in,
+    /// or as a percentage of pensionable salary (banded in the case of Qualifying Earnings.
+    /// </summary>
+    /// <param name="pensionableSalary">Pensionable salary to be used for calculation.</param>
+    /// <param name="employeeSalaryExchanged">The level of employee's salary forgone as set out in the salary
+    /// exchange arrangements.  Expressed either as a percentage in percentage points (e.g., 5% = 5.0m), or as a fixed
+    /// amount, as indicated by the following parameter.  NB If fixed amount is given, it relates to the pay period
+    /// (as opposed to annually).</param>
+    /// <param name="employeeSalaryExchangedIsFixedAmount">True if the previous parameter should be treated as a fixed amount; false if
+    /// it should be treated as a percentage.</param>
+    /// <returns>Value of employee salary being exchanged.</returns>
+    decimal GetSalaryExchangedAmount(
+        decimal pensionableSalary,
+        decimal employeeSalaryExchanged,
+        bool employeeSalaryExchangedIsFixedAmount);
 }

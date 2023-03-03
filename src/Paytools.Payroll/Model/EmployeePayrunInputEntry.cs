@@ -14,6 +14,7 @@
 
 using Paytools.Employment.Model;
 using Paytools.Pensions.Model;
+using System.Collections.Immutable;
 
 namespace Paytools.Payroll.Model;
 
@@ -36,18 +37,18 @@ public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
     /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
-    public List<DeductionEntry> Deductions { get; }
+    public ImmutableList<DeductionEntry> Deductions { get; }
 
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    public List<EarningsEntry> Earnings { get; }
+    public ImmutableList<EarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
     /// no payrolled benefits.
     /// </summary>
-    public List<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
+    public ImmutableList<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 
     /// <summary>
     /// Gets the pension contributions to apply for this pay period.
@@ -66,9 +67,9 @@ public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
     public EmployeePayrunInputEntry(
         IEmployee employee,
         IEmployment employment,
-        List<EarningsEntry> earnings,
-        List<DeductionEntry> deductions,
-        List<IPayrolledBenefitForPeriod> payrolledBenefits,
+        ImmutableList<EarningsEntry> earnings,
+        ImmutableList<DeductionEntry> deductions,
+        ImmutableList<IPayrolledBenefitForPeriod> payrolledBenefits,
         IPensionContributionLevels pensionContributionLevels)
     {
         Employee = employee;

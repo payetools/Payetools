@@ -14,18 +14,18 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE EXAMPLE OR THE USE OR OTHER DEALINGS IN THE EXAMPLE.
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Paytools.ReferenceData;
-using System.Diagnostics;
-using Microsoft.Extensions.Configuration;
-using Paytools.Payroll.Payruns;
 using Paytools.Common.Model;
 using Paytools.Employment.Model;
-using Paytools.Payroll.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
-using System.Security.AccessControl;
+using Paytools.Payroll.Model;
+using Paytools.Payroll.Payruns;
+using Paytools.Pensions.Model;
+using Paytools.ReferenceData;
+using System.Collections.Immutable;
 
 Console.WriteLine("Hello, World!");
 
@@ -49,7 +49,7 @@ var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>() ??
 var loggerFactory = serviceProvider.GetService<ILoggerFactory>() ??
     throw new InvalidOperationException("Unable to create ILoggerFactory");
 
-var factory = new HmrcReferenceDataProviderFactory(httpClientFactory, 
+var factory = new HmrcReferenceDataProviderFactory(httpClientFactory,
     loggerFactory.CreateLogger<HmrcReferenceDataProviderFactory>());
 
 IPayrunProcessorFactory payrunProcessorFactory = new PayrunProcessorFactory(factory, new Uri("https://stellular-bombolone-34e67e.netlify.app/index.json"));
@@ -66,22 +66,66 @@ List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
 var employee = new Employee()
 { };
 
-IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd() { TaxablePayYtd = 28333.32m -1841.69m + 450.12m, TaxPaidYtd = 6533.86m };
+IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd() { TaxablePayYtd = 28333.32m - 1841.69m + 450.12m, TaxPaidYtd = 6533.86m };
 
 TaxCode.TryParse("1296L", out var taxCode);
 
-var employment = new Employment(ref history) { TaxCode = taxCode, NiCategory = NiCategory.A};
+var employment = new Employment(ref history)
+{
+    TaxCode = taxCode,
+    NiCategory = NiCategory.A,
+    PensionScheme = new PensionScheme()
+    {
+        EarningsBasis = EarningsBasis.PensionablePaySet1,
+        TaxTreatment = PensionTaxTreatment.ReliefAtSource
+    }
+};
+
+var earnings = ImmutableList<EarningsEntry>.Empty;
+var deductions = ImmutableList<DeductionEntry>.Empty;
+var payrolledBenefits = ImmutableList<IPayrolledBenefitForPeriod>.Empty;
+
+earnings = earnings.Add(new EarningsEntry()
+{
+    EarningsType = new GenericPayComponent()
+    {
+        IsSubjectToTax = true,
+        IsSubjectToNi = true,
+        IsPensionable = true,
+        IsNetToGross = false
+    },
+    FixedAmount = 6083.33m
+});
+
+earnings = earnings.Add(new EarningsEntry()
+{
+    EarningsType = new GenericPayComponent()
+    {
+        IsSubjectToTax = true,
+        IsSubjectToNi = true,
+        IsPensionable = true,
+        IsNetToGross = false
+    },
+    FixedAmount = 1000.0m
+});
+
+payrolledBenefits = payrolledBenefits.Add(new PayrolledBenefitForPeriod(150.05m));
+
+var pensionContributionLevels = new PensionContributionLevels()
+{
+    EmployeeContribution = 495.64m,
+    EmployeeContributionIsFixedAmount = true,
+    EmployerContributionPercentage = 3,
+    EmployersNiReinvestmentPercentage = 100,
+    SalaryExchangeApplied = true
+};
 
 var entry = new EmployeePayrunInputEntry(employee,
     employment,
-    new List<EarningsEntry>() { 
-        new EarningsEntry() { EarningsType = new GenericPayComponent() { IsSubjectToTax = true,  IsSubjectToNi = true,  IsPensionable = true, IsNetToGross = false         }, 
-            FixedAmount = 7083.33m - 495.64m + 150.05m}
-    },
-    new List<DeductionEntry>() {
-    },
-    new List<IPayrolledBenefitForPeriod>() { },
-    new PensionContributionLevels() {  });
+    earnings,
+    deductions,
+    payrolledBenefits,
+    pensionContributionLevels);
 
 
 entries.Add(entry);

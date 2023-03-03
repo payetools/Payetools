@@ -34,6 +34,12 @@ public class NiReferenceDataEntry : IApplicableFromTill
     public DateOnly ApplicableTill { get; init; }
 
     /// <summary>
+    /// Gets the basic rate of tax to be applied for tax relief on employee pension contributions
+    /// for relief at source pensions.
+    /// </summary>
+    public decimal BasicRateOfTaxForTaxRelief { get; init; }
+
+    /// <summary>
     /// Gets a read-only list of applicable NI thresholds.
     /// </summary>
     public ImmutableList<NiThresholdEntry> NiThresholds { get; init; } = default!;

@@ -30,13 +30,11 @@ public interface IPensionContributionCalculatorFactory
     /// <param name="earningsBasis">Earnings basis for pension calculation (Qualifying Earnings vs Pensionable Pay Set x.</param>
     /// <param name="taxTreatment">Tax treatment (net pay arrangement vs relief at source).</param>
     /// <param name="payDate">Applicable pay date.</param>
-    /// <param name="basicRateOfTax">Basic rate of tax.  Optional.  [NOT YET IMPLEMENTED].</param>
     /// <returns>A new calculator instance.</returns>
     IPensionContributionCalculator GetCalculator(
         EarningsBasis earningsBasis,
         PensionTaxTreatment taxTreatment,
-        PayDate payDate,
-        decimal? basicRateOfTax = null);
+        PayDate payDate);
 
     /// <summary>
     /// Gets a new <see cref="IPensionContributionCalculator"/> based on the specified tax year, pay frequency and pay period, along with the
@@ -48,13 +46,11 @@ public interface IPensionContributionCalculatorFactory
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
     /// <param name="taxPeriod">Applicable tax period.</param>
-    /// <param name="basicRateOfTax">Basic rate of tax.  Optional.  [NOT YET IMPLEMENTED].</param>
     /// <returns>A new calculator instance.</returns>
     IPensionContributionCalculator GetCalculator(
         EarningsBasis earningsBasis,
         PensionTaxTreatment taxTreatment,
         TaxYear taxYear,
         PayFrequency payFrequency,
-        int taxPeriod,
-        decimal? basicRateOfTax = null);
+        int taxPeriod);
 }

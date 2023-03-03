@@ -28,7 +28,7 @@ public interface IPensionsReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>A tuple containing the lower and upper thresholds for the specified pay frequency and point in time.</returns>
     (decimal LowerLimit, decimal UpperLimit) GetThresholdsForQualifyingEarnings(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 
@@ -38,6 +38,8 @@ public interface IPensionsReferenceDataProvider
     /// some have a lower basic rate of tax.)
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payFrequency">Applicable pay frequency.  Only used if there has been an in-year change.</param>
+    /// <param name="taxPeriod">Applicable tax period.  Only used if there has been an in-year change.</param>
     /// <returns>Basic rate of tax applicable for the tax year.</returns>
-    decimal GetBasicRateOfTaxForTaxRelief(TaxYear taxYear);
+    decimal GetBasicRateOfTaxForTaxRelief(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
 }

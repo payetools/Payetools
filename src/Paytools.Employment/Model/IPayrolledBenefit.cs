@@ -17,6 +17,6 @@ namespace Paytools.Employment.Model;
 /// <summary>
 /// Represents a payrolled benefit.
 /// </summary>
-public class IPayrolledBenefit
+public interface IPayrolledBenefit
 {
 }

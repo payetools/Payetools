@@ -27,7 +27,7 @@ public interface IStudentLoanReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An implementation of <see cref="IStudentLoanThresholdSet"/> that provides the appropriate set of annual
     /// thresholds for the specified point.</returns>
     IStudentLoanThresholdSet GetStudentLoanThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
@@ -39,7 +39,7 @@ public interface IStudentLoanReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An instance of <see cref="IStudentLoanRateSet"/> containing the rates for the specified point
     /// in time.</returns>
     IStudentLoanRateSet GetStudentLoanRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);

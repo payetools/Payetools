@@ -23,7 +23,7 @@ using Paytools.StudentLoans;
 namespace Paytools.Payroll.Payruns;
 
 /// <summary>
-/// Represents a factory object that creates payrun calculator instances that implement <see cref="IPayrunCalculator"/>.
+/// Represents a factory object that creates payrun calculator instances that implement <see cref="IPayrunEntryProcessor"/>.
 /// </summary>
 public class PayrunProcessorFactory : IPayrunProcessorFactory
 {
@@ -68,7 +68,7 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
     {
         var factories = await GetFactories(_hmrcReferenceDataProviderFactory, _referenceDataEndpoint);
 
-        var calculator = new PayrunCalculator(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
+        var calculator = new PayrunEntryProcessor(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
             factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
             payDate, payPeriod);
 

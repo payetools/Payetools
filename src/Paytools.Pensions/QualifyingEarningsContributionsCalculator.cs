@@ -58,17 +58,18 @@ public class QualifyingEarningsContributionsCalculator : PensionContributionCalc
         decimal bandedEarnings = pensionableSalary <= _lowerLevelForQualifyingEarnings ?
             0.0m : Math.Min(pensionableSalary, _upperLevelForQualifyingEarnings) - _lowerLevelForQualifyingEarnings;
 
-        var employerBandedEarnings = GetBandedEarnings(salaryForMaternityPurposes ?? pensionableSalary);
+        var employerBandedEarnings = GetEarningsForPensionCalculation(salaryForMaternityPurposes ?? pensionableSalary);
         var employerContribution = employerBandedEarnings * employerContributionPercentage / 100.0m;
 
-        return (GetBandedEarnings(pensionableSalary),
+        return (GetEarningsForPensionCalculation(pensionableSalary),
             decimal.Round(employerContribution, 2, MidpointRounding.AwayFromZero),
             employeeContributionIsFixedAmount ?
                 employeeContribution :
                 decimal.Round(bandedEarnings * employeeContribution / 100.0m, 2, MidpointRounding.AwayFromZero));
     }
 
-    private decimal GetBandedEarnings(decimal pensionableSalary) =>
+    /// <inheritdoc/>
+    protected override decimal GetEarningsForPensionCalculation(decimal pensionableSalary) =>
         pensionableSalary <= _lowerLevelForQualifyingEarnings ?
             0.0m :
             Math.Min(pensionableSalary, _upperLevelForQualifyingEarnings) - _lowerLevelForQualifyingEarnings;

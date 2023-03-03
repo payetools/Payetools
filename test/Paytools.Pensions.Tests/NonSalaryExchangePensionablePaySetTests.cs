@@ -49,7 +49,7 @@ public class NonSalaryExchangePensionablePaySetTests : IClassFixture<PensionCont
     [Fact]
     public async Task TestPensionablePay_RASAsync()
     {
-        var calculator = await GetCalculator(EarningsBasis.PensionablePaySet2, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.PensionablePaySet2, PensionTaxTreatment.ReliefAtSource);
 
         var pensionableSalary = 3769.42m;
         var employerContributionPct = 3.0m;
@@ -87,10 +87,10 @@ public class NonSalaryExchangePensionablePaySetTests : IClassFixture<PensionCont
         result.EmployerNiSavingsToReinvest.Should().BeNull();
     }
 
-    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)
+    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
     {
         var provider = await _factoryProviderFixture.GetFactory();
 
-        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate, basicRateOfTax);
+        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate);
     }
 }

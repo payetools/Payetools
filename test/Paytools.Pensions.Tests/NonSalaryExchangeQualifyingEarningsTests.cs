@@ -1,8 +1,20 @@
+// Copyright (c) 2023 Paytools Foundation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License") ~
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.Pensions.Model;
-using Paytools.Testing.Utils;
-using System.Runtime.CompilerServices;
 
 namespace Paytools.Pensions.Tests;
 
@@ -121,7 +133,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         var avc = 0.0m;
         var employeeContributionIsAmount = false;
 
-        TestCalculation(calculator, pensionableSalary, expectedBandedEarnings, employerContributionPct, 
+        TestCalculation(calculator, pensionableSalary, expectedBandedEarnings, employerContributionPct,
             employerContributionAmount, employeeContributionPct, employeeContributionAmount, avc, employeeContributionIsAmount,
             110.07m, 183.45m);
     }
@@ -132,7 +144,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource);
 
         var pensionableSalary = 519.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -154,7 +166,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource);
 
         var pensionableSalary = 520.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -176,7 +188,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource);
 
         var pensionableSalary = 4188.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -198,7 +210,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource);
 
         var pensionableSalary = 4189.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -220,7 +232,7 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         var lowerLimit = 520.0m;
         var upperLimit = 4189.0m;
 
-        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource, 0.2m);
+        var calculator = await GetCalculator(EarningsBasis.QualifyingEarnings, PensionTaxTreatment.ReliefAtSource);
 
         var pensionableSalary = 5000.0m;
         var expectedBandedEarnings = pensionableSalary > lowerLimit ? Math.Min(pensionableSalary, upperLimit) - lowerLimit : 0.0m;
@@ -236,9 +248,9 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
             110.07m, 146.76m);
     }
 
-    private static void TestCalculation(IPensionContributionCalculator calculator, decimal pensionableSalary, 
-        decimal expectedBandedEarnings, decimal employerContributionPct, decimal? employerContributionAmount, 
-        decimal? employeeContributionPct, decimal? employeeContributionAmount, decimal avc, 
+    private static void TestCalculation(IPensionContributionCalculator calculator, decimal pensionableSalary,
+        decimal expectedBandedEarnings, decimal employerContributionPct, decimal? employerContributionAmount,
+        decimal? employeeContributionPct, decimal? employeeContributionAmount, decimal avc,
         bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployeeContribution)
     {
         calculator.Calculate(pensionableSalary, employerContributionPct,
@@ -259,10 +271,10 @@ public class NonSalaryExchangeQualifyingEarningsTests : IClassFixture<PensionCon
         result.EmployerNiSavingsToReinvest.Should().BeNull();
     }
 
-    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax =null)
+    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
     {
         var provider = await _factoryProviderFixture.GetFactory();
 
-        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate, basicRateOfTax);
+        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate);
     }
 }

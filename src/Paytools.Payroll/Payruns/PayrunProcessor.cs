@@ -23,7 +23,7 @@ namespace Paytools.Payroll.Payruns;
 /// </summary>
 public class PayrunProcessor : IPayrunProcessor
 {
-    private readonly IPayrunCalculator _payrunCalculator;
+    private readonly IPayrunEntryProcessor _payrunCalculator;
     private readonly IEmployer _employer;
 
     /// <summary>
@@ -32,7 +32,7 @@ public class PayrunProcessor : IPayrunProcessor
     /// <param name="calculator">Calculator to be used to calculate earnings, deductions
     /// and net pay.</param>
     /// <param name="employer">Employer that this payrun processor relates to.</param>
-    public PayrunProcessor(IPayrunCalculator calculator, IEmployer employer)
+    public PayrunProcessor(IPayrunEntryProcessor calculator, IEmployer employer)
     {
         _payrunCalculator = calculator;
         _employer = employer;

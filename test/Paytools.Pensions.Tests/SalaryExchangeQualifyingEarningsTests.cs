@@ -1,4 +1,18 @@
-﻿using FluentAssertions;
+﻿// Copyright (c) 2023 Paytools Foundation.
+//
+// Licensed under the Apache License, Version 2.0 (the "License") ~
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.Pensions.Model;
 
@@ -130,10 +144,12 @@ public class SalaryExchangeQualifyingEarningsTests : IClassFixture<PensionContri
         bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployerContributionBeforeSE,
         decimal expectedEmployerNiSaving)
     {
-        var niSavingsCalculator = new EmployerNiSavingsCalculator(0.138m, 100.0m);
+        decimal employersNiSaving = 0.138m * (employeeContributionIsAmount ?
+            employeeContributionAmount :
+            (employeeContributionPct / 100.0m) * expectedBandedEarnings) ?? 0.0m;
 
         calculator.CalculateUnderSalaryExchange(pensionableSalary, employerContributionPct,
-            niSavingsCalculator, (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
+            employersNiSaving, 100.0m, (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
             employeeContributionIsAmount, avc, null, out var result);
 
         result.PensionableSalaryInPeriod.Should().Be(pensionableSalary);
@@ -150,10 +166,10 @@ public class SalaryExchangeQualifyingEarningsTests : IClassFixture<PensionContri
         result.EmployerNiSavingsToReinvest.Should().Be(expectedEmployerNiSaving);
     }
 
-    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)
+    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
     {
         var provider = await _factoryProviderFixture.GetFactory();
 
-        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate, basicRateOfTax);
+        return provider.GetCalculator(earningsBasis, taxTreatment, _payDate);
     }
 }

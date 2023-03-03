@@ -29,7 +29,7 @@ public interface INiReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An instance of <see cref="INiThresholdSet"/> containing the thresholds for the specified point
     /// in time.</returns>
     INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
@@ -40,7 +40,7 @@ public interface INiReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
     ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(
@@ -56,7 +56,7 @@ public interface INiReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
     ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForTaxYearAndPeriod(

@@ -81,6 +81,12 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     public decimal TotalGrossPay { get; }
 
     /// <summary>
+    /// Gets the employee's working gross pay, the figure used as the starting point for calculating take-home
+    /// pay.
+    /// </summary>
+    public decimal WorkingGrossPay { get; }
+
+    /// <summary>
     /// Gets the employee's final net pay.
     /// </summary>
     public decimal NetPay { get; }
@@ -107,6 +113,10 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// <param name="pensionContributionCalculation">Optional result of pension calculation.  Null if the
     /// employee is not a member of one of the company's schemes.</param>
     /// <param name="totalGrossPay">Total gross pay.</param>
+    /// <param name="workingGrossPay">Total gross pay less any deductions that reduce taxable/Nicable pay
+    /// and should be deducted before calculating net pay.</param>
+    /// <param name="taxablePay">Pay subject to income tax.</param>
+    /// <param name="nicablePay">Pay subject to National Insurance.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayrunResult(
@@ -117,6 +127,9 @@ public record EmployeePayrunResult : IEmployeePayrunResult
         ref IStudentLoanCalculationResult studentLoanCalculationResult,
         ref IPensionContributionCalculationResult pensionContributionCalculation,
         decimal totalGrossPay,
+        decimal workingGrossPay,
+        decimal taxablePay,
+        decimal nicablePay,
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
         Employee = employee;
@@ -126,6 +139,9 @@ public record EmployeePayrunResult : IEmployeePayrunResult
         _studentLoanCalculationResult = studentLoanCalculationResult;
         _pensionContributionCalculationResult = pensionContributionCalculation;
         TotalGrossPay = totalGrossPay;
+        WorkingGrossPay = workingGrossPay;
+        TaxablePay = taxablePay;
+        NicablePay = nicablePay;
         NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.FinalTaxDue, niCalculationResult.EmployeeContribution,
             GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult.TotalDeduction);
         _employeePayrollHistoryYtd = employeePayrollHistoryYtd;

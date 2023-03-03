@@ -56,4 +56,7 @@ public class PensionablePaySetCalculator : PensionContributionCalculator
             employeeContribution :
             decimal.Round(pensionableSalary * employeeContribution / 100.0m, 2, MidpointRounding.AwayFromZero));
     }
+
+    /// <inheritdoc/>
+    protected override decimal GetEarningsForPensionCalculation(decimal pensionableSalary) => pensionableSalary;
 }

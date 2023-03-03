@@ -27,7 +27,7 @@ public interface INmwReferenceDataProvider
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
     /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Application tax period.</param>
+    /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>An instance of <see cref="INmwLevelSet"/> containing the levels for the specified point
     /// in time.</returns>
     INmwLevelSet GetNmwLevelsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
