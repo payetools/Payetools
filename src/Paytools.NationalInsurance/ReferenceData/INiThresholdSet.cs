@@ -32,4 +32,11 @@ public interface INiThresholdSet
     /// Gets the number of threshold value this threshold set contains.
     /// </summary>
     int Count { get; }
+
+    /// <summary>
+    /// Gets the annual threshold for the period for the specified threshold type.
+    /// </summary>
+    /// <param name="thresholdType">Applicable threshold (e.g., LEL, UEL, PT).</param>
+    /// <returns>Annual threshold value applicable to threshold type.</returns>
+    public decimal GetThreshold(NiThresholdType thresholdType);
 }

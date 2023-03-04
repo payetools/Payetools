@@ -24,7 +24,7 @@ using static NiThresholdType;
 /// </summary>
 public class NiCalculator : INiCalculator
 {
-    // Step constants to assist readability
+    // Step constants to assist readability of the code
     private const int Step1 = 0;
     private const int Step2 = 1;
     private const int Step3 = 2;
@@ -32,8 +32,10 @@ public class NiCalculator : INiCalculator
     private const int Step5 = 4;
     private const int Step6 = 5;
 
-    private readonly ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> _niRateEntries;
-    private readonly NiPeriodThresholdSet _niPeriodThresholds;
+    private readonly ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> _niRateEntriesForRegularEmployees;
+    private readonly ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> _niRateEntriesForDirectors;
+    private readonly INiThresholdSet _niAnnualThresholds;
+    private readonly INiPeriodThresholdSet _niPeriodThresholds;
 
     private static readonly (NiThresholdType, NiThresholdType)[] _thresholdPairs = { (LEL, ST), (ST, PT), (PT, FUST), (FUST, UEL) };
 
@@ -42,12 +44,20 @@ public class NiCalculator : INiCalculator
     /// <summary>
     /// Initialises a new <see cref="NiCalculator"/> with the supplied thresholds and rates for the period.
     /// </summary>
+    /// <param name="niAnnualThresholds">NI threshold set for the full tax year applicable to this NI calculator.</param>
     /// <param name="niPeriodThresholds">NI threshold set for the tax period applicable to this NI calculator.</param>
-    /// <param name="niRateEntries">NI rates for the tax period applicable to this NI calculator.</param>
-    public NiCalculator(NiPeriodThresholdSet niPeriodThresholds, ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> niRateEntries)
+    /// <param name="niRateEntriesForRegularEmployees">NI rates for the tax period applicable to non-directors for this NI calculator.</param>
+    /// <param name="niDirectorsRateEntries">NI rates for the tax period applicable to directors for this NI calculator.  Optional;
+    /// where the same set of rates applies to both non-directors and directors, this parameter should be null.</param>
+    public NiCalculator(INiThresholdSet niAnnualThresholds,
+        INiPeriodThresholdSet niPeriodThresholds,
+        ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> niRateEntriesForRegularEmployees,
+        ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>? niDirectorsRateEntries = null)
     {
+        _niAnnualThresholds = niAnnualThresholds;
         _niPeriodThresholds = niPeriodThresholds;
-        _niRateEntries = niRateEntries;
+        _niRateEntriesForRegularEmployees = niRateEntriesForRegularEmployees;
+        _niRateEntriesForDirectors = niDirectorsRateEntries ?? niRateEntriesForRegularEmployees;
     }
 
     /// <summary>
@@ -108,7 +118,7 @@ public class NiCalculator : INiCalculator
         // Step 7: Calculate employee NICs
         // Step 8: Calculate employer NICs
 
-        if (!_niRateEntries.TryGetValue(niCategory, out var rates))
+        if (!_niRateEntriesForRegularEmployees.TryGetValue(niCategory, out var rates))
             throw new InvalidOperationException($"Unable to obtain National Insurance rates for category {niCategory}");
 
         result = new NiCalculationResult(
@@ -124,11 +134,80 @@ public class NiCalculator : INiCalculator
     /// based on their NI-able salary and their allocated National Insurance category letter.
     /// </summary>
     /// <param name="niCategory">National Insurance category.</param>
-    /// <param name="nicableEarningsInPeriod">NI-able salary for the period.</param>
+    /// <param name="nicableEarningsYearToDate">NI-able salary for the period.</param>
+    /// <param name="employeesNiPaidYearToDate">Total employees NI paid so far this tax year up to and including the end of the
+    /// previous period.</param>
+    /// <param name="employersNiPaidYearToDate">Total employers NI paid so far this tax year up to and including the end of the
+    /// previous period.</param>
+    /// <param name="proRataFactor">Factor to apply to annual thresholds when the employee starts being a director part way through
+    /// the tax year.  Null if not applicable.</param>
     /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
-    public void CalculateDirectors(NiCategory niCategory, decimal nicableEarningsInPeriod, out INiCalculationResult result)
+    public void CalculateDirectors(
+        NiCategory niCategory,
+        decimal nicableEarningsYearToDate,
+        decimal employeesNiPaidYearToDate,
+        decimal employersNiPaidYearToDate,
+        decimal? proRataFactor,
+        out INiCalculationResult result)
     {
-        throw new NotImplementedException();
+        decimal[] results = new decimal[CalculationStepCount];
+
+        // Step 1: Earnings up to and including LEL. If answer is negative no NICs due and no recording required. If answer is zero
+        // or positive record result and proceed to Step 2.
+
+        decimal threshold = _niAnnualThresholds.GetThreshold(LEL) * (proRataFactor ?? 1.0m);
+        decimal resultOfStep1 = nicableEarningsYearToDate - threshold;
+
+        if (resultOfStep1 < 0.0m)
+        {
+            result = NiCalculationResult.NoRecordingRequired;
+
+            return;
+        }
+
+        results[0] = threshold;
+
+        // Step 2: Earnings above LEL up to and including ST. If answer is zero (or negative) no NICs due and the payroll record
+        // should be zero filled. If answer is positive enter on the payroll record and proceed to Step 3.
+        // Step 3: Earnings above ST up to and including PT. If answer is zero (or negative) no NICs due and the payroll record
+        // should be zero filled. If answer is positive enter on the payroll record and proceed to Step 4.
+        // Step 4: Earnings above PT up to and including FUST. If answer is zero (or negative) enter result of calculation
+        // of Step 3 on the payroll record. If answer is positive enter result of Step 3 on the payroll record and proceed to Step 5.
+        // Step 5: Earnings above FUST up to and including UEL. If answer is zero (or negative) enter result of calculation
+        // of Step 4 on the payroll record. If answer is positive enter result of Step 4 on the payroll record and proceed to Step 6.
+
+        decimal previousEarningsAboveThreshold = resultOfStep1;
+
+        for (int stepIndex = 0; stepIndex < _thresholdPairs.Length; stepIndex++)
+        {
+            decimal upperThreshold = _niAnnualThresholds.GetThreshold(_thresholdPairs[stepIndex].Item2) * (proRataFactor ?? 1.0m);
+            decimal earningsAboveUpperThreshold = Math.Max(0.0m, nicableEarningsYearToDate - upperThreshold);
+
+            decimal resultOfStep = previousEarningsAboveThreshold - earningsAboveUpperThreshold;
+
+            if (resultOfStep == 0.0m)
+                break;
+
+            results[stepIndex + 1] = decimal.Round(resultOfStep, 4, MidpointRounding.ToZero);
+            previousEarningsAboveThreshold = earningsAboveUpperThreshold;
+        }
+
+        // Step 6: Earnings above UEL. If answer is zero or negative no earnings above UEL.
+
+        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsYearToDate - _niPeriodThresholds.GetThreshold1(UEL));
+
+        // Step 7: Calculate employee NICs
+        // Step 8: Calculate employer NICs
+
+        if (!_niRateEntriesForDirectors.TryGetValue(niCategory, out var rates))
+            throw new InvalidOperationException($"Unable to obtain director's National Insurance rates for category {niCategory}");
+
+        result = new NiCalculationResult(
+            rates,
+            _niPeriodThresholds,
+            GetNiEarningsBreakdownFromCalculationResults(results),
+            CalculateEmployeesNi(rates, results) - employeesNiPaidYearToDate,
+            CalculateEmployersNi(rates, results) - employersNiPaidYearToDate);
     }
 
     private static decimal CalculateEmployeesNi(INiCategoryRatesEntry rates, decimal[] calculationStepResults)

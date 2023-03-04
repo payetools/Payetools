@@ -33,7 +33,7 @@ public readonly struct NiCalculationResult : INiCalculationResult
     /// Gets the set of thresholds used for this calculation.  These thresholds are adjusted to match the
     /// length of the pay period.
     /// </summary>
-    public NiPeriodThresholdSet PeriodThresholdsUsed { get; }
+    public INiPeriodThresholdSet PeriodThresholdsUsed { get; }
 
     /// <summary>
     /// Gets the breakdown of earnings across each of the different National Insurance thresholds.
@@ -76,7 +76,7 @@ public readonly struct NiCalculationResult : INiCalculationResult
     /// <param name="totalContribution">Total contribution due (employee + employer) as a result of this calculation.</param>
     public NiCalculationResult(
         INiCategoryRatesEntry ratesUsed,
-        NiPeriodThresholdSet periodThresholdsUsed,
+        INiPeriodThresholdSet periodThresholdsUsed,
         NiEarningsBreakdown earningsBreakdown,
         decimal employeeContribution,
         decimal employerContribution,

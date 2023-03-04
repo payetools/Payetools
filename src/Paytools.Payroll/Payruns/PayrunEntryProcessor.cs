@@ -219,9 +219,16 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     private void CalculateNiContributions(ref IEmployeePayrunInputEntry entry, decimal nicablePay, out INiCalculationResult result)
     {
         if (entry.Employment.IsDirector && entry.Employment.DirectorsNiCalculationMethod == Employment.DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod)
-            _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay, out result);
+        {
+            var (employeesNiPaidYtd, employersNiPaidYtd) = entry.Employment.PayrollHistoryYtd.EmployeeNiHistoryEntries.GetNiYtdTotals();
+
+            _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay + entry.Employment.PayrollHistoryYtd.NicablePayYtd,
+                 employeesNiPaidYtd, employersNiPaidYtd, null, out result);
+        }
         else
+        {
             _niCalculator.Calculate(entry.Employment.NiCategory, nicablePay, out result);
+        }
     }
 
     private void CalculatePensionContributions(ref IEmployeePayrunInputEntry entry, decimal pensionablePay, decimal employersNiSavings,

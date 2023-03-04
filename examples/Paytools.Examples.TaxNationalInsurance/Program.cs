@@ -66,7 +66,16 @@ List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
 var employee = new Employee()
 { };
 
-IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd() { TaxablePayYtd = 28333.32m - 1841.69m + 450.12m, TaxPaidYtd = 6533.86m };
+var niEntries = ImmutableList<EmployeeNiHistoryEntry>.Empty;
+
+niEntries = niEntries.Add(new EmployeeNiHistoryEntry(NiCategory.A, new NiEarningsBreakdown(), 0.0m, 2070.55m, 3530.64m, 0.0m));
+
+IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd(niEntries)
+{
+    TaxablePayYtd = 28333.32m - 1841.69m + 450.12m,
+    NicablePayYtd = 28333.32m - 1841.69m,
+    TaxPaidYtd = 6533.86m
+};
 
 TaxCode.TryParse("1296L", out var taxCode);
 

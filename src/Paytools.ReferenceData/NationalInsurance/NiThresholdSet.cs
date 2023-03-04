@@ -61,4 +61,12 @@ public class NiThresholdSet : INiThresholdSet
 
         _niThresholds = niThresholds;
     }
+
+    /// <summary>
+    /// Gets the annual threshold for the period for the specified threshold type.
+    /// </summary>
+    /// <param name="thresholdType">Applicable threshold (e.g., LEL, UEL, PT).</param>
+    /// <returns>Annual threshold value applicable to threshold type.</returns>
+    public decimal GetThreshold(NiThresholdType thresholdType) =>
+        _niThresholds[thresholdType.GetIndex()].ThresholdValuePerYear;
 }

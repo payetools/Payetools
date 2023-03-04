@@ -30,7 +30,7 @@ public interface INiCalculationResult
     /// Gets the set of thresholds used for this calculation.  These thresholds are adjusted to match the
     /// length of the pay period.
     /// </summary>
-    NiPeriodThresholdSet PeriodThresholdsUsed { get; }
+    INiPeriodThresholdSet PeriodThresholdsUsed { get; }
 
     /// <summary>
     /// Gets the breakdown of earnings across each of the different National Insurance thresholds.

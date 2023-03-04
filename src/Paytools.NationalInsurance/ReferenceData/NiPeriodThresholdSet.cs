@@ -19,7 +19,7 @@ namespace Paytools.NationalInsurance.ReferenceData;
 /// <summary>
 /// Represents a set of NI thresholds that have been adjusted to a proportion of the tax year.
 /// </summary>
-public record NiPeriodThresholdSet
+public record NiPeriodThresholdSet : INiPeriodThresholdSet
 {
     private readonly NiPeriodThresholdEntry[] _thresholdEntries;
 

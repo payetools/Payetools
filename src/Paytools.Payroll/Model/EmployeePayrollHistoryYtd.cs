@@ -14,6 +14,7 @@
 
 using Paytools.Employment.Model;
 using Paytools.NationalInsurance;
+using System.Collections.Immutable;
 
 namespace Paytools.Payroll.Model;
 
@@ -53,7 +54,7 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// transition between NI categories during the tax year and each NI category's payment
     /// record must be retained.
     /// </summary>
-    public List<EmployeeNiHistoryEntry> EmployeeNiHistoryEntries { get; init; }
+    public NiYtdHistory EmployeeNiHistoryEntries { get; init; }
 
     /// <summary>
     /// Gets the gross pay paid to date this tax year.
@@ -64,6 +65,11 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// Gets the taxable pay paid to date this tax year.
     /// </summary>
     public decimal TaxablePayYtd { get; init; }
+
+    /// <summary>
+    /// Gets the NI-able pay paid to date this tax year.
+    /// </summary>
+    public decimal NicablePayYtd { get; init; }
 
     /// <summary>
     /// Gets the income tax paid to date this tax year.
@@ -109,8 +115,9 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/>.
     /// </summary>
-    public EmployeePayrollHistoryYtd()
+    /// <param name="employeeNiHistoryEntries">List of employees history entries for National Insurance.</param>
+    public EmployeePayrollHistoryYtd(ImmutableList<EmployeeNiHistoryEntry> employeeNiHistoryEntries)
     {
-        EmployeeNiHistoryEntries = new List<EmployeeNiHistoryEntry>();
+        EmployeeNiHistoryEntries = new NiYtdHistory(employeeNiHistoryEntries);
     }
 }
