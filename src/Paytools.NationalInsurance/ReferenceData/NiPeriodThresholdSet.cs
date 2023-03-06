@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using System.Collections;
 
 namespace Paytools.NationalInsurance.ReferenceData;
 
@@ -44,6 +45,14 @@ public record NiPeriodThresholdSet : INiPeriodThresholdSet
         }
     }
 
+    /// <inheritdoc/>
+    public INiThresholdEntry this[int index] => throw new NotImplementedException();
+
+    /// <summary>
+    /// Gets the number of threshold value this threshold set contains.
+    /// </summary>
+    public int Count => _thresholdEntries.Length;
+
     /// <summary>
     /// Gets the base threshold for the period, as distinct from the value returned by <see cref="GetThreshold1"/> (see below).
     /// </summary>
@@ -68,4 +77,22 @@ public record NiPeriodThresholdSet : INiPeriodThresholdSet
     /// <returns>String representation of this instance.</returns>
     public override string ToString() =>
         string.Join(" | ", _thresholdEntries.Select(te => te.ToString()).ToArray());
+
+    /// <summary>
+    /// Returns an enumerator that iterates through the thresholds (of type <see cref="INiThresholdEntry"/>).
+    /// </summary>
+    /// <returns>An enumerator that can be used to iterate through the collection of thresholds.</returns>
+    /// <exception cref="InvalidOperationException">Throw if the enumerator cannot be obtained.  (Should never be thrown).</exception>
+    public IEnumerator<INiThresholdEntry> GetEnumerator() =>
+        (_thresholdEntries as IEnumerable<INiThresholdEntry>)?.GetEnumerator() ??
+        throw new InvalidOperationException("Unexpected type mismatch when obtaining enumerator");
+
+    /// <summary>
+    /// Returns an enumerator that iterates through the thresholds (of type <see cref="INiThresholdEntry"/>).
+    /// </summary>
+    /// <returns>An enumerator that can be used to iterate through the collection of thresholds.</returns>
+    /// <exception cref="InvalidOperationException">Throw if the enumerator cannot be obtained.  (Should never be thrown).</exception>
+    IEnumerator IEnumerable.GetEnumerator() =>
+        (_thresholdEntries as IEnumerable)?.GetEnumerator() ??
+        throw new InvalidOperationException("Unexpected type mismatch when obtaining enumerator");
 }

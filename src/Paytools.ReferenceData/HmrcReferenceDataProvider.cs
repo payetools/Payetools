@@ -132,13 +132,13 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
             taxYear, payFrequency, taxPeriod);
 
-        var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiThresholdEntry()
+        var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiReferenceDataThresholdEntry()
         {
             ThresholdType = nit.ThresholdType,
             ThresholdValuePerWeek = nit.ThresholdValuePerWeek,
             ThresholdValuePerMonth = nit.ThresholdValuePerMonth,
             ThresholdValuePerYear = nit.ThresholdValuePerYear
-        }).ToImmutableList();
+        }).ToImmutableList<INiThresholdEntry>();
 
         return new NiThresholdSet(thresholds);
     }

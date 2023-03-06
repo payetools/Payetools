@@ -121,10 +121,12 @@ public class NiCalculator : INiCalculator
         if (!_niRateEntriesForRegularEmployees.TryGetValue(niCategory, out var rates))
             throw new InvalidOperationException($"Unable to obtain National Insurance rates for category {niCategory}");
 
+        GetNiEarningsBreakdownFromCalculationResults(results, out var earningsBreakdown);
+
         result = new NiCalculationResult(
             rates,
             _niPeriodThresholds,
-            GetNiEarningsBreakdownFromCalculationResults(results),
+            earningsBreakdown,
             CalculateEmployeesNi(rates, results),
             CalculateEmployersNi(rates, results));
     }
@@ -151,6 +153,13 @@ public class NiCalculator : INiCalculator
         out INiCalculationResult result)
     {
         decimal[] results = new decimal[CalculationStepCount];
+
+        INiThresholdSet thresholds;
+
+        if (proRataFactor == null)
+            thresholds = _niAnnualThresholds;
+        else
+            GetProRataAnnualThresholds((decimal)proRataFactor, out thresholds);
 
         // Step 1: Earnings up to and including LEL. If answer is negative no NICs due and no recording required. If answer is zero
         // or positive record result and proceed to Step 2.
@@ -194,7 +203,7 @@ public class NiCalculator : INiCalculator
 
         // Step 6: Earnings above UEL. If answer is zero or negative no earnings above UEL.
 
-        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsYearToDate - _niPeriodThresholds.GetThreshold1(UEL));
+        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsYearToDate - _niAnnualThresholds.GetThreshold(UEL));
 
         // Step 7: Calculate employee NICs
         // Step 8: Calculate employer NICs
@@ -202,12 +211,19 @@ public class NiCalculator : INiCalculator
         if (!_niRateEntriesForDirectors.TryGetValue(niCategory, out var rates))
             throw new InvalidOperationException($"Unable to obtain director's National Insurance rates for category {niCategory}");
 
+        GetNiEarningsBreakdownFromCalculationResults(results, out var earningsBreakdown);
+
         result = new NiCalculationResult(
             rates,
-            _niPeriodThresholds,
-            GetNiEarningsBreakdownFromCalculationResults(results),
+            _niAnnualThresholds,
+            earningsBreakdown,
             CalculateEmployeesNi(rates, results) - employeesNiPaidYearToDate,
             CalculateEmployersNi(rates, results) - employersNiPaidYearToDate);
+    }
+
+    private void GetProRataAnnualThresholds(decimal proRataFactor, out INiThresholdSet thresholds)
+    {
+        thresholds = new NiThresholdSet(_niAnnualThresholds, proRataFactor);
     }
 
     private static decimal CalculateEmployeesNi(INiCategoryRatesEntry rates, decimal[] calculationStepResults)
@@ -239,12 +255,12 @@ public class NiCalculator : INiCalculator
             .NiRound();
     }
 
-    private static NiEarningsBreakdown GetNiEarningsBreakdownFromCalculationResults(decimal[] calculationStepResults)
+    private static void GetNiEarningsBreakdownFromCalculationResults(decimal[] calculationStepResults, out NiEarningsBreakdown breakdown)
     {
         if (calculationStepResults.Length != NiCalculator.CalculationStepCount)
             throw new InvalidOperationException($"Unexpected number of calculation step results; should be {NiCalculator.CalculationStepCount}, was {calculationStepResults.Length}");
 
-        return new NiEarningsBreakdown()
+        breakdown = new NiEarningsBreakdown()
         {
             EarningsUpToAndIncludingLEL = calculationStepResults[Step1],
             EarningsAboveLELUpToAndIncludingST = calculationStepResults[Step2],

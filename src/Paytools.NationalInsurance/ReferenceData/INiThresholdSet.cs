@@ -19,7 +19,7 @@ namespace Paytools.NationalInsurance.ReferenceData;
 /// tax year or portion of a tax year.  The list isn't specifically ordered; the items within the list provide
 /// their own mapping to <see cref="NiThresholdType"/> values.
 /// </summary>
-public interface INiThresholdSet
+public interface INiThresholdSet : IEnumerable<INiThresholdEntry>
 {
     /// <summary>
     /// Gets the <see cref="INiThresholdEntry"/> at the specified index.

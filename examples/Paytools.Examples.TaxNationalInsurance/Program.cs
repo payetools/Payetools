@@ -87,7 +87,9 @@ var employment = new Employment(ref history)
     {
         EarningsBasis = EarningsBasis.PensionablePaySet1,
         TaxTreatment = PensionTaxTreatment.ReliefAtSource
-    }
+    }, 
+    IsDirector = true,
+    DirectorsNiCalculationMethod = Paytools.Employment.DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod
 };
 
 var earnings = ImmutableList<EarningsEntry>.Empty;

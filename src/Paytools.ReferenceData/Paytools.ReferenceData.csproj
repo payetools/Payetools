@@ -40,4 +40,8 @@
     <ProjectReference Include="..\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

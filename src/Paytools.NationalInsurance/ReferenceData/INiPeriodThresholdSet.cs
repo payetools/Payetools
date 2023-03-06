@@ -17,15 +17,8 @@ namespace Paytools.NationalInsurance.ReferenceData;
 /// <summary>
 /// Interface that represents a set of NI thresholds that have been adjusted to a proportion of the tax year.
 /// </summary>
-public interface INiPeriodThresholdSet
+public interface INiPeriodThresholdSet : INiThresholdSet
 {
-    /// <summary>
-    /// Gets the base threshold for the period, as distinct from the value returned by <see cref="GetThreshold1"/> (see below).
-    /// </summary>
-    /// <param name="thresholdType">Applicable threshold (e.g., LEL, UEL, PT).</param>
-    /// <returns>Pro-rata threshold value applicable to the period and threshold type.</returns>
-    decimal GetThreshold(NiThresholdType thresholdType);
-
     /// <summary>
     /// Gets the modified threshold for the period (as distinct from the value returned by <see cref="GetThreshold1"/>)
     /// where rounding is applied based on whether the pay frequency is weekly or monthly, or otherwise.  As detailed in

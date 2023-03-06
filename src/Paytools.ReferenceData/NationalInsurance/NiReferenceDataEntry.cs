@@ -42,7 +42,7 @@ public class NiReferenceDataEntry : IApplicableFromTill
     /// <summary>
     /// Gets a read-only list of applicable NI thresholds.
     /// </summary>
-    public ImmutableList<NiThresholdEntry> NiThresholds { get; init; } = default!;
+    public ImmutableList<NiReferenceDataThresholdEntry> NiThresholds { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable NI rates for employees.

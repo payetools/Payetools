@@ -22,10 +22,10 @@ public interface INiThresholdEntry
     /// <summary>
     /// Gets the type of threshold this instance pertains to.
     /// </summary>
-    public NiThresholdType ThresholdType { get; }
+    NiThresholdType ThresholdType { get; }
 
     /// <summary>
     /// Gets the per annum value of the threshold.
     /// </summary>
-    public decimal ThresholdValuePerYear { get; }
+    decimal ThresholdValuePerYear { get; }
 }

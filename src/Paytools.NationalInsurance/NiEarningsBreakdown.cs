@@ -17,7 +17,7 @@ namespace Paytools.NationalInsurance;
 /// <summary>
 /// Represents the breakdown of earnings against each of the relevant National Insurance thresholds.
 /// </summary>
-public readonly struct NiEarningsBreakdown
+public struct NiEarningsBreakdown
 {
     /// <summary>
     /// Gets the earnings up to and including the Lower Earnings Limit for this record.
