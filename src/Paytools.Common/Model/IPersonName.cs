@@ -18,7 +18,7 @@ namespace Paytools.Common.Model;
 /// Represents a named individual, i.e., a (usually living) person.  This interface is provided for all the situations
 /// where a contact person is required, but is also the base entity for employees.
 /// </summary>
-public interface INamedIndividual
+public interface IPersonName
 {
     /// <summary>
     /// Gets the individual's title, e.g., Mr, Mrs, Miss, Dr., etc.

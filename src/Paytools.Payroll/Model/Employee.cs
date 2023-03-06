@@ -84,5 +84,5 @@ public record Employee : IEmployee
     /// <summary>
     /// Gets or sets the employee's postal address.
     /// </summary>
-    public UkPostalAddress PostalAddress { get; set; } = default!;
+    public PostalAddress PostalAddress { get; set; } = default!;
 }

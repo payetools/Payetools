@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Common.Model;
+namespace Paytools.Documents.Model;
 
-namespace Paytools.Rti.Extensions;
-
-public static class INamedIndividualExtensions
+/// <summary>
+/// Interface that represents an item group on a payslip.
+/// </summary>
+public interface IPayslipItemGroup
 {
-    public static string[]? ToRtiFore(this IPersonName individual) =>
-        individual.FirstName == null ?
-            null :
-                individual.MiddleNames == null ?
-                new[] { individual.FirstName } :
-                new[] { individual.FirstName, individual.MiddleNames };
+    /// <summary>
+    /// Gets the title of this group.
+    /// </summary>
+    string GroupTitle { get; }
+
+    /// <summary>
+    /// Gets the list of items in this group.
+    /// </summary>
+    List<IPayslipLineItem> Items { get; }
 }

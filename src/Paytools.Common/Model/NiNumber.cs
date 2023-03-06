@@ -28,6 +28,21 @@ public readonly struct NiNumber
 
     private readonly string _value;
 
+    private static readonly NiNumber _unknown = new NiNumber(true);
+
+    /// <summary>
+    /// Gets the NiNumber to be used when an employee does not know their National Insurance number.
+    /// </summary>
+    public static NiNumber Unknown => _unknown;
+
+    private NiNumber(bool isUnknown)
+    {
+        if (!isUnknown)
+            throw new ArgumentException("This constructor can only be used for unknown NI numbers", nameof(isUnknown));
+
+        _value = "UNKNOWN";
+    }
+
     /// <summary>
     /// Initialises a new <see cref="NiNumber"/> instance.
     /// </summary>

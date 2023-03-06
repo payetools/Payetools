@@ -14,10 +14,16 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE EXAMPLE OR THE USE OR OTHER DEALINGS IN THE EXAMPLE.
 
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.ObjectPool;
+using Microsoft.Extensions.PlatformAbstractions;
 using Paytools.Common.Model;
+using Paytools.Documents.Rendering;
 using Paytools.Employment.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
@@ -26,6 +32,8 @@ using Paytools.Payroll.Payruns;
 using Paytools.Pensions.Model;
 using Paytools.ReferenceData;
 using System.Collections.Immutable;
+using System.Diagnostics;
+using System.Reflection;
 
 Console.WriteLine("Hello, World!");
 
@@ -234,4 +242,36 @@ static EmployeePayrunInputEntry GetNovemberEntry(IEmployer employer)
         deductions,
         payrolledBenefits,
         pensionContributionLevels);
+}
+
+static RazorViewToStringRenderer BuildServiceProvider()
+{
+    var services = new ServiceCollection();
+    var applicationEnvironment = PlatformServices.Default.Application;
+    services.AddSingleton(applicationEnvironment);
+
+    var appDirectory = Directory.GetCurrentDirectory();
+
+    var environment = new HostingEnvironment
+    {
+        ApplicationName = Assembly.GetEntryAssembly().GetName().Name
+    };
+    services.AddSingleton<IHostingEnvironment>(environment);
+
+    services.Configure<RazorViewEngineOptions>(options =>
+    {
+        options.FileProviders.Clear();
+        options.FileProviders.Add(new PhysicalFileProvider(appDirectory));
+    });
+
+    services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
+
+    var diagnosticSource = new DiagnosticListener("Microsoft.AspNetCore");
+    services.AddSingleton<DiagnosticSource>(diagnosticSource);
+
+    services.AddLogging();
+    services.AddMvc();
+    services.AddSingleton<RazorViewToStringRenderer>();
+    var provider = services.BuildServiceProvider();
+    return provider.GetRequiredService<RazorViewToStringRenderer>();
 }

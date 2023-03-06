@@ -1,0 +1,15 @@
+﻿@using Paytools.Documents.Model
+
+@model IPayslip
+
+@{
+    Layout = "/Views/Payslips/Shared/_Layout.cshtml";
+}
+
+<div class="grid-container">
+    <div class="item1">@Model.EmployerName</div>
+    <div class="item2">Menu</div>
+    <div class="item3">Main</div>
+    <div class="item4">Right</div>
+    <div class="item5">Footer</div>
+</div>

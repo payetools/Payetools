@@ -15,9 +15,11 @@
 namespace Paytools.Common.Model;
 
 /// <summary>
-/// Represents a UK postal address.
+/// Represents a postal address.  If it is a UK address, <see cref="Postcode"/> should be supplied
+/// <see cref="ForeignCountry"/> set to null; if the address is non-UK, then Postcode should
+/// be null and ForeignCountry should be provided.
 /// </summary>
-public class UkPostalAddress
+public class PostalAddress
 {
     /// <summary>Gets or sets the first line of the address.</summary>
     public string AddressLine1 { get; set; } = null!;

@@ -98,7 +98,7 @@ public partial class FullPaymentSubmission : IRtiDataTarget
             PaymentToANonIndividualSpecified = false
         };
 
-    private FullPaymentSubmissionEmployeeEmployeeDetailsName MakeEmployeeDetailsName(INamedIndividual namedIndividual) =>
+    private FullPaymentSubmissionEmployeeEmployeeDetailsName MakeEmployeeDetailsName(IPersonName namedIndividual) =>
         new FullPaymentSubmissionEmployeeEmployeeDetailsName()
         {
             Ttl = namedIndividual.Title,

@@ -20,7 +20,7 @@ namespace Paytools.Employment.Model;
 /// <summary>
 /// Interface that represents an employee for payroll purposes.
 /// </summary>
-public interface IEmployee : INamedIndividual
+public interface IEmployee : IPersonName
 {
     /// <summary>
     /// Gets the individual's National Insurance number.
@@ -45,5 +45,5 @@ public interface IEmployee : INamedIndividual
     /// <summary>
     /// Gets or sets the employee's postal address.
     /// </summary>
-    UkPostalAddress PostalAddress { get; set; }
+    PostalAddress PostalAddress { get; set; }
 }
