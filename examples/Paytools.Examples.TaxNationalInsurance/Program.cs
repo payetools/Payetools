@@ -258,11 +258,11 @@ static RazorViewToStringRenderer BuildServiceProvider()
     };
     services.AddSingleton<IHostingEnvironment>(environment);
 
-    services.Configure<RazorViewEngineOptions>(options =>
-    {
-        options.FileProviders.Clear();
-        options.FileProviders.Add(new PhysicalFileProvider(appDirectory));
-    });
+    //services.Configure<RazorViewEngineOptions>(options =>
+    //{
+    //    options.FileProviders.Clear();
+    //    options.FileProviders.Add(new PhysicalFileProvider(appDirectory));
+    //});
 
     services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
 
