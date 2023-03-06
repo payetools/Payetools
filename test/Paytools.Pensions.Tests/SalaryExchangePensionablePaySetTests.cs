@@ -44,7 +44,6 @@ public class SalaryExchangePensionablePaySetTests : IClassFixture<PensionContrib
             employeeContributionAmount :
             (employeeContributionPct / 100.0m) * pensionableSalary) ?? 0.0m;
 
-
         TestCalculation(calculator, pensionableSalary, employerContributionPct,
             employeeContributionPct, employeeContributionAmount, avc, employeeContributionIsAmount,
             employersNiSaving, 405.28m, 161.0m, 29.62m);
