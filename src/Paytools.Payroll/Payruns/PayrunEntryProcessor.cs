@@ -218,12 +218,13 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
 
     private void CalculateNiContributions(ref IEmployeePayrunInputEntry entry, decimal nicablePay, out INiCalculationResult result)
     {
-        if (entry.Employment.IsDirector && entry.Employment.DirectorsNiCalculationMethod == Employment.DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod)
+        if (entry.Employment.IsDirector)
         {
             var (employeesNiPaidYtd, employersNiPaidYtd) = entry.Employment.PayrollHistoryYtd.EmployeeNiHistoryEntries.GetNiYtdTotals();
 
-            _niCalculator.CalculateDirectors(entry.Employment.NiCategory, nicablePay + entry.Employment.PayrollHistoryYtd.NicablePayYtd,
-                 employeesNiPaidYtd, employersNiPaidYtd, null, out result);
+            _niCalculator.CalculateDirectors(entry.Employment.DirectorsNiCalculationMethod ?? DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod,
+                entry.Employment.NiCategory, nicablePay + entry.Employment.PayrollHistoryYtd.NicablePayYtd,
+                employeesNiPaidYtd, employersNiPaidYtd, null, out result);
         }
         else
         {

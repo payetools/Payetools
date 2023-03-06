@@ -57,8 +57,9 @@ public class NiCalculatorFactory : INiCalculatorFactory
     {
         var annualThresholds = _niReferenceDataProvider.GetNiThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
         var periodThresholds = new NiPeriodThresholdSet(annualThresholds, payFrequency, numberOfTaxPeriods);
+        var rates = _niReferenceDataProvider.GetNiRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
+        var directorsRates = _niReferenceDataProvider.GetDirectorsNiRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
 
-        return new NiCalculator(annualThresholds, periodThresholds,
-            _niReferenceDataProvider.GetNiRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod));
+        return new NiCalculator(annualThresholds, periodThresholds, rates, directorsRates);
     }
 }

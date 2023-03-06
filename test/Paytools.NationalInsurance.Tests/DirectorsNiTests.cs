@@ -48,7 +48,8 @@ public class DirectorsNiTests : IClassFixture<NiCalculatorFactoryDataFixture>
 
             var calculator = await GetCalculator(payDate);
 
-            calculator.CalculateDirectors(test.NiCategory, test.GrossPay, 0, 0, null, out var result);
+            calculator.CalculateDirectors(DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod,
+                test.NiCategory, test.GrossPay, 0, 0, null, out var result);
 
             result.EmployeeContribution.Should().Be(test.EmployeeNiContribution, "(test #{0}) input is {1} and output is {{ {2} }}", (testsCompleted + 1).ToString(), test.ToDebugString(), result.ToString());
             result.EmployerContribution.Should().Be(test.EmployerNiContribution, "(test #{0}) input is {1} and output is {{ {2} }}", (testsCompleted + 1).ToString(), test.ToDebugString(), result.ToString());
@@ -142,13 +143,29 @@ public class DirectorsNiTests : IClassFixture<NiCalculatorFactoryDataFixture>
                 NiCategory = niCategory,
                 Period = taxPeriod,
                 RelatesTo = "Director",
-                GrossPay = 9101,
+                GrossPay = 11908,
                 EarningsAtLEL_YTD = 6396.0m,
-                EarningsLELtoPT_YTD = 0,
+                EarningsLELtoPT_YTD = 11908-6396,
                 EarningsPTtoUEL_YTD = 0,
                 EmployeeNiContribution = 0,
-                EmployerNiContribution = 0.15m,
-                TotalNiContribution = 0.14m,
+                EmployerNiContribution = 408.0m,
+                TotalNiContribution = 408.0m,
+                TotalEmployeeContributions_YTD = 0,
+                TotalEmployerContributions_YTD = 0,
+            },
+            new HmrcNiTestDataEntry()
+            {
+                PayFrequency = payFrequency,
+                NiCategory = niCategory,
+                Period = taxPeriod,
+                RelatesTo = "Director",
+                GrossPay = 11909,
+                EarningsAtLEL_YTD = 6396.0m,
+                EarningsLELtoPT_YTD = 11908-6396,
+                EarningsPTtoUEL_YTD = 1,
+                EmployeeNiContribution = 0.13m,
+                EmployerNiContribution = 408.15m,
+                TotalNiContribution = 408.28m,
                 TotalEmployeeContributions_YTD = 0,
                 TotalEmployerContributions_YTD = 0,
             },

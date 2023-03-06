@@ -99,7 +99,7 @@ public readonly struct NiCalculationResult : INiCalculationResult
     public override string ToString()
     {
         if (NoRecordingRequiredIndicator)
-            return "{{ NoRecordingRequiredIndicator }}";
+            return "{{ NoRecordingRequiredIndicator: true }}";
 
         var sb = new StringBuilder();
 

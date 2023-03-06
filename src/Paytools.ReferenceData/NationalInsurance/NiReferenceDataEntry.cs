@@ -58,7 +58,7 @@ public class NiReferenceDataEntry : IApplicableFromTill
     /// Gets applicable employer NI rates for directors.  Only applicable when there has been an in-year
     /// change to National Insurance rates.
     /// </summary>
-    public ImmutableList<NiEmployeeRatesEntry>? DirectorEmployerRates { get; init; } = default!;
+    public ImmutableList<NiEmployerRatesEntry>? DirectorEmployerRates { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable employee NI rates for directors.  Only applicable when there has been an in-year

@@ -32,6 +32,7 @@ public interface INiCalculator
     /// Calculates the National Insurance contributions required for a company director for a given pay period,
     /// based on their NI-able salary and their allocated National Insurance category letter.
     /// </summary>
+    /// <param name="calculationMethod">Calculation method to use.</param>
     /// <param name="niCategory">National Insurance category.</param>
     /// <param name="nicableEarningsYearToDate">NI-able salary for the period.</param>
     /// <param name="employeesNiPaidYearToDate">Total employees NI paid so far this tax year up to and including the end of the
@@ -42,6 +43,7 @@ public interface INiCalculator
     /// the tax year.  Null if not applicable.</param>
     /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
     void CalculateDirectors(
+        DirectorsNiCalculationMethod calculationMethod,
         NiCategory niCategory,
         decimal nicableEarningsYearToDate,
         decimal employeesNiPaidYearToDate,

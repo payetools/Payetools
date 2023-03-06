@@ -49,13 +49,4 @@ public record NiReferenceDataThresholdEntry : INiThresholdEntry
     /// </summary>
     [JsonPropertyName("perYear")]
     public decimal ThresholdValuePerYear { get; init; }
-
-    /// <summary>
-    /// Gets an abbreviated string representation of this type, primarily for debugging purposes.
-    /// </summary>
-    /// <returns>Abbreviated string representation of this type.</returns>
-    public override string ToString()
-    {
-        return $"{{ {ThresholdType}: {ThresholdValuePerYear} p.a. }}";
-    }
 }

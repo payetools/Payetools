@@ -61,88 +61,15 @@ IEmployer employer = new Employer();
 
 var processor = await payrunProcessorFactory.GetProcessorAsync(employer, payDate, payPeriod);
 
+var entry = GetAugustEntry(employer);
+
 List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
-
-var employee = new Employee()
-{ };
-
-var niEntries = ImmutableList<EmployeeNiHistoryEntry>.Empty;
-
-niEntries = niEntries.Add(new EmployeeNiHistoryEntry(NiCategory.A, new NiEarningsBreakdown(), 0.0m, 2070.55m, 3530.64m, 0.0m));
-
-IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd(niEntries)
-{
-    TaxablePayYtd = 28333.32m - 1841.69m + 450.12m,
-    NicablePayYtd = 28333.32m - 1841.69m,
-    TaxPaidYtd = 6533.86m
-};
-
-TaxCode.TryParse("1296L", out var taxCode);
-
-var employment = new Employment(ref history)
-{
-    TaxCode = taxCode,
-    NiCategory = NiCategory.A,
-    PensionScheme = new PensionScheme()
-    {
-        EarningsBasis = EarningsBasis.PensionablePaySet1,
-        TaxTreatment = PensionTaxTreatment.ReliefAtSource
-    }, 
-    IsDirector = true,
-    DirectorsNiCalculationMethod = Paytools.Employment.DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod
-};
-
-var earnings = ImmutableList<EarningsEntry>.Empty;
-var deductions = ImmutableList<DeductionEntry>.Empty;
-var payrolledBenefits = ImmutableList<IPayrolledBenefitForPeriod>.Empty;
-
-earnings = earnings.Add(new EarningsEntry()
-{
-    EarningsType = new GenericPayComponent()
-    {
-        IsSubjectToTax = true,
-        IsSubjectToNi = true,
-        IsPensionable = true,
-        IsNetToGross = false
-    },
-    FixedAmount = 6083.33m
-});
-
-earnings = earnings.Add(new EarningsEntry()
-{
-    EarningsType = new GenericPayComponent()
-    {
-        IsSubjectToTax = true,
-        IsSubjectToNi = true,
-        IsPensionable = true,
-        IsNetToGross = false
-    },
-    FixedAmount = 1000.0m
-});
-
-payrolledBenefits = payrolledBenefits.Add(new PayrolledBenefitForPeriod(150.05m));
-
-var pensionContributionLevels = new PensionContributionLevels()
-{
-    EmployeeContribution = 495.64m,
-    EmployeeContributionIsFixedAmount = true,
-    EmployerContributionPercentage = 3,
-    EmployersNiReinvestmentPercentage = 100,
-    SalaryExchangeApplied = true
-};
-
-var entry = new EmployeePayrunInputEntry(employee,
-    employment,
-    earnings,
-    deductions,
-    payrolledBenefits,
-    pensionContributionLevels);
 
 
 entries.Add(entry);
 processor.Process(entries, out var result);
 
-
+Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
 Console.WriteLine();
 
 
@@ -151,4 +78,160 @@ static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEv
 {
     // Log the exception, display it, etc
     Console.WriteLine((e.ExceptionObject as Exception).Message);
+}
+
+static EmployeePayrunInputEntry GetAugustEntry(IEmployer employer)
+{
+    var employee = new Employee()
+    { };
+
+    var niEntries = ImmutableList<EmployeeNiHistoryEntry>.Empty;
+
+    niEntries = niEntries.Add(new EmployeeNiHistoryEntry(NiCategory.A, new NiEarningsBreakdown(), 28333.32m - 1841.69m, 2070.55m, 3530.64m, 2070.55m + 3530.64m));
+
+    IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd(niEntries)
+    {
+        TaxablePayYtd = 28333.32m - 1841.69m + 450.12m,
+        NicablePayYtd = 28333.32m - 1841.69m,
+        TaxPaidYtd = 6533.86m
+    };
+
+    TaxCode.TryParse("1296L", out var taxCode);
+
+    var employment = new Employment(ref history)
+    {
+        TaxCode = taxCode,
+        NiCategory = NiCategory.A,
+        PensionScheme = new PensionScheme()
+        {
+            EarningsBasis = EarningsBasis.PensionablePaySet1,
+            TaxTreatment = PensionTaxTreatment.ReliefAtSource
+        },
+        IsDirector = true,
+        DirectorsNiCalculationMethod = DirectorsNiCalculationMethod.AlternativeMethod
+    };
+
+    var earnings = ImmutableList<EarningsEntry>.Empty;
+    var deductions = ImmutableList<DeductionEntry>.Empty;
+    var payrolledBenefits = ImmutableList<IPayrolledBenefitForPeriod>.Empty;
+
+    earnings = earnings.Add(new EarningsEntry()
+    {
+        EarningsType = new GenericPayComponent()
+        {
+            IsSubjectToTax = true,
+            IsSubjectToNi = true,
+            IsPensionable = true,
+            IsNetToGross = false
+        },
+        FixedAmount = 6083.33m
+    });
+
+    earnings = earnings.Add(new EarningsEntry()
+    {
+        EarningsType = new GenericPayComponent()
+        {
+            IsSubjectToTax = true,
+            IsSubjectToNi = true,
+            IsPensionable = true,
+            IsNetToGross = false
+        },
+        FixedAmount = 1000.0m
+    });
+
+    payrolledBenefits = payrolledBenefits.Add(new PayrolledBenefitForPeriod(150.05m));
+
+    var pensionContributionLevels = new PensionContributionLevels()
+    {
+        EmployeeContribution = 495.84m,
+        EmployeeContributionIsFixedAmount = true,
+        EmployerContributionPercentage = 3,
+        EmployersNiReinvestmentPercentage = 100,
+        SalaryExchangeApplied = true
+    };
+
+    return new EmployeePayrunInputEntry(employee,
+        employment,
+        earnings,
+        deductions,
+        payrolledBenefits,
+        pensionContributionLevels);
+}
+
+static EmployeePayrunInputEntry GetNovemberEntry(IEmployer employer)
+{
+    var employee = new Employee()
+    { };
+
+    var niEntries = ImmutableList<EmployeeNiHistoryEntry>.Empty;
+
+    niEntries = niEntries.Add(new EmployeeNiHistoryEntry(NiCategory.A, new NiEarningsBreakdown(), 0.0m, 2070.55m, 3530.64m, 0.0m));
+
+    IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd(niEntries)
+    {
+        TaxablePayYtd = 28333.32m - 1841.69m + 450.12m,
+        NicablePayYtd = 28333.32m - 1841.69m,
+        TaxPaidYtd = 6533.86m
+    };
+
+    TaxCode.TryParse("1296L", out var taxCode);
+
+    var employment = new Employment(ref history)
+    {
+        TaxCode = taxCode,
+        NiCategory = NiCategory.A,
+        PensionScheme = new PensionScheme()
+        {
+            EarningsBasis = EarningsBasis.PensionablePaySet1,
+            TaxTreatment = PensionTaxTreatment.ReliefAtSource
+        },
+        IsDirector = true,
+        DirectorsNiCalculationMethod = DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod
+    };
+
+    var earnings = ImmutableList<EarningsEntry>.Empty;
+    var deductions = ImmutableList<DeductionEntry>.Empty;
+    var payrolledBenefits = ImmutableList<IPayrolledBenefitForPeriod>.Empty;
+
+    earnings = earnings.Add(new EarningsEntry()
+    {
+        EarningsType = new GenericPayComponent()
+        {
+            IsSubjectToTax = true,
+            IsSubjectToNi = true,
+            IsPensionable = true,
+            IsNetToGross = false
+        },
+        FixedAmount = 6083.33m
+    });
+
+    earnings = earnings.Add(new EarningsEntry()
+    {
+        EarningsType = new GenericPayComponent()
+        {
+            IsSubjectToTax = true,
+            IsSubjectToNi = true,
+            IsPensionable = true,
+            IsNetToGross = false
+        },
+        FixedAmount = 1000.0m
+    });
+
+    payrolledBenefits = payrolledBenefits.Add(new PayrolledBenefitForPeriod(150.05m));
+
+    var pensionContributionLevels = new PensionContributionLevels()
+    {
+        EmployeeContribution = 495.64m,
+        EmployeeContributionIsFixedAmount = true,
+        EmployerContributionPercentage = 3,
+        EmployersNiReinvestmentPercentage = 100,
+        SalaryExchangeApplied = true
+    };
+
+    return new EmployeePayrunInputEntry(employee,
+        employment,
+        earnings,
+        deductions,
+        payrolledBenefits,
+        pensionContributionLevels);
 }

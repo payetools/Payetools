@@ -90,7 +90,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
             taxYear, payFrequency, taxPeriod);
 
-        var rates = GetNiCategoryRatesEntries(niReferenceDataEntry.EmployerRates, niReferenceDataEntry.EmployeeRates);
+        var rates = MakeNiCategoryRatesEntries(niReferenceDataEntry.EmployerRates, niReferenceDataEntry.EmployeeRates);
 
         return new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(rates);
     }
@@ -104,14 +104,20 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>? GetDirectorsNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
         var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
 
         var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
             taxYear, payFrequency, taxPeriod);
 
-        var rates = GetNiCategoryRatesEntries(niReferenceDataEntry.EmployerRates, niReferenceDataEntry.EmployeeRates);
+        if (niReferenceDataEntry.DirectorEmployerRates == null && niReferenceDataEntry.DirectorEmployeeRates == null)
+            return null;
+
+        var employerRates = niReferenceDataEntry.DirectorEmployerRates ?? niReferenceDataEntry.EmployerRates;
+        var employeeRates = niReferenceDataEntry.DirectorEmployeeRates ?? niReferenceDataEntry.EmployeeRates;
+
+        var rates = MakeNiCategoryRatesEntries(employerRates, employeeRates);
 
         return new ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>(rates);
     }
@@ -132,11 +138,9 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
             taxYear, payFrequency, taxPeriod);
 
-        var thresholds = niReferenceDataEntry.NiThresholds.Select(nit => new NiReferenceDataThresholdEntry()
+        var thresholds = niReferenceDataEntry.NiThresholds.OrderBy(nit => nit.ThresholdType).Select(nit => new NiThresholdEntry()
         {
             ThresholdType = nit.ThresholdType,
-            ThresholdValuePerWeek = nit.ThresholdValuePerWeek,
-            ThresholdValuePerMonth = nit.ThresholdValuePerMonth,
             ThresholdValuePerYear = nit.ThresholdValuePerYear
         }).ToImmutableList<INiThresholdEntry>();
 
@@ -281,7 +285,7 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         return (T)entry;
     }
 
-    private static Dictionary<NiCategory, INiCategoryRatesEntry> GetNiCategoryRatesEntries(
+    private static Dictionary<NiCategory, INiCategoryRatesEntry> MakeNiCategoryRatesEntries(
         ImmutableList<NiEmployerRatesEntry> employerRateEntries,
         ImmutableList<NiEmployeeRatesEntry> employeeRateEntries)
     {

@@ -38,6 +38,7 @@ public class NiCalculator : INiCalculator
     private readonly INiPeriodThresholdSet _niPeriodThresholds;
 
     private static readonly (NiThresholdType, NiThresholdType)[] _thresholdPairs = { (LEL, ST), (ST, PT), (PT, FUST), (FUST, UEL) };
+    private static readonly (NiThresholdType, NiThresholdType)[] _directorThresholdPairs = { (LEL, ST), (ST, DPT), (DPT, FUST), (FUST, UEL) };
 
     internal const int CalculationStepCount = 6;
 
@@ -135,6 +136,7 @@ public class NiCalculator : INiCalculator
     /// Calculates the National Insurance contributions required for a company director for a given pay period,
     /// based on their NI-able salary and their allocated National Insurance category letter.
     /// </summary>
+    /// <param name="calculationMethod">Calculation method to use.</param>
     /// <param name="niCategory">National Insurance category.</param>
     /// <param name="nicableEarningsYearToDate">NI-able salary for the period.</param>
     /// <param name="employeesNiPaidYearToDate">Total employees NI paid so far this tax year up to and including the end of the
@@ -145,6 +147,7 @@ public class NiCalculator : INiCalculator
     /// the tax year.  Null if not applicable.</param>
     /// <param name="result">The NI contributions due via an instance of a type that implements <see cref="INiCalculationResult"/>.</param>
     public void CalculateDirectors(
+        DirectorsNiCalculationMethod calculationMethod,
         NiCategory niCategory,
         decimal nicableEarningsYearToDate,
         decimal employeesNiPaidYearToDate,
@@ -152,6 +155,13 @@ public class NiCalculator : INiCalculator
         decimal? proRataFactor,
         out INiCalculationResult result)
     {
+        if (calculationMethod == DirectorsNiCalculationMethod.AlternativeMethod)
+        {
+            Calculate(niCategory, nicableEarningsYearToDate, out result);
+
+            return;
+        }
+
         decimal[] results = new decimal[CalculationStepCount];
 
         INiThresholdSet thresholds;
@@ -164,7 +174,7 @@ public class NiCalculator : INiCalculator
         // Step 1: Earnings up to and including LEL. If answer is negative no NICs due and no recording required. If answer is zero
         // or positive record result and proceed to Step 2.
 
-        decimal threshold = _niAnnualThresholds.GetThreshold(LEL) * (proRataFactor ?? 1.0m);
+        decimal threshold = thresholds.GetThreshold(LEL);
         decimal resultOfStep1 = nicableEarningsYearToDate - threshold;
 
         if (resultOfStep1 < 0.0m)
@@ -187,9 +197,9 @@ public class NiCalculator : INiCalculator
 
         decimal previousEarningsAboveThreshold = resultOfStep1;
 
-        for (int stepIndex = 0; stepIndex < _thresholdPairs.Length; stepIndex++)
+        for (int stepIndex = 0; stepIndex < _directorThresholdPairs.Length; stepIndex++)
         {
-            decimal upperThreshold = _niAnnualThresholds.GetThreshold(_thresholdPairs[stepIndex].Item2) * (proRataFactor ?? 1.0m);
+            decimal upperThreshold = thresholds.GetThreshold(_directorThresholdPairs[stepIndex].Item2) * (proRataFactor ?? 1.0m);
             decimal earningsAboveUpperThreshold = Math.Max(0.0m, nicableEarningsYearToDate - upperThreshold);
 
             decimal resultOfStep = previousEarningsAboveThreshold - earningsAboveUpperThreshold;
@@ -203,7 +213,7 @@ public class NiCalculator : INiCalculator
 
         // Step 6: Earnings above UEL. If answer is zero or negative no earnings above UEL.
 
-        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsYearToDate - _niAnnualThresholds.GetThreshold(UEL));
+        results[CalculationStepCount - 1] = Math.Max(0.0m, nicableEarningsYearToDate - thresholds.GetThreshold(UEL));
 
         // Step 7: Calculate employee NICs
         // Step 8: Calculate employer NICs
@@ -215,7 +225,7 @@ public class NiCalculator : INiCalculator
 
         result = new NiCalculationResult(
             rates,
-            _niAnnualThresholds,
+            thresholds,
             earningsBreakdown,
             CalculateEmployeesNi(rates, results) - employeesNiPaidYearToDate,
             CalculateEmployersNi(rates, results) - employersNiPaidYearToDate);
