@@ -40,20 +40,21 @@ public class SalaryExchangePensionablePaySetTests : IClassFixture<PensionContrib
         var avc = 0.0m;
         var employeeContributionIsAmount = false;
 
+        decimal employersNiSaving = 0.138m * (employeeContributionIsAmount ?
+            employeeContributionAmount :
+            (employeeContributionPct / 100.0m) * pensionableSalary) ?? 0.0m;
+
+
         TestCalculation(calculator, pensionableSalary, employerContributionPct,
             employeeContributionPct, employeeContributionAmount, avc, employeeContributionIsAmount,
-            405.28m, 161.0m, 29.62m);
+            employersNiSaving, 405.28m, 161.0m, 29.62m);
     }
 
     private static void TestCalculation(IPensionContributionCalculator calculator, decimal pensionableSalary,
         decimal employerContributionPct, decimal? employeeContributionPct, decimal? employeeContributionAmount, decimal avc,
-        bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployerContributionBeforeSE,
+        bool employeeContributionIsAmount, decimal employersNiSaving, decimal expectedEmployerContribution, decimal expectedEmployerContributionBeforeSE,
         decimal expectedEmployerNiSaving)
     {
-        decimal employersNiSaving = 0.138m * (employeeContributionIsAmount ?
-            employeeContributionAmount :
-            employeeContributionPct * pensionableSalary) ?? 0.0m;
-
         calculator.CalculateUnderSalaryExchange(pensionableSalary, employerContributionPct,
             employersNiSaving, 100.0m, (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
             employeeContributionIsAmount, avc, null, out var result);

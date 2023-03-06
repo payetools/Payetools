@@ -147,7 +147,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
             employeeSalaryExchangedIsFixedAmount,
             salaryForMaternityPurposes);
 
-        var employerNiSavingsToReinvest = employerNiSavings * employerNiSavingsReinvestmentPercentage / 100.0m;
+        var employerNiSavingsToReinvest = decimal.Round(employerNiSavings * employerNiSavingsReinvestmentPercentage / 100.0m, 2, MidpointRounding.AwayFromZero);
 
         result = new PensionContributionCalculationResult()
         {
