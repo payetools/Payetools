@@ -62,4 +62,10 @@ public class GenericPayComponent : IPayComponent
     /// "grossed up", ensuring the employee receives the net amount in their take-home pay.
     /// </summary>
     public bool IsNetToGross { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this pay component should be treated as overtime for the
+    /// purposes of average overtime calculations.
+    /// </summary>
+    public bool IsTreatedAsOvertime { get; set; }
 }

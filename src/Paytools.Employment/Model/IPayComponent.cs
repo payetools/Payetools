@@ -60,4 +60,10 @@ public interface IPayComponent
     /// "grossed up", ensuring the employee receives the net amount in their take-home pay.
     /// </summary>
     bool IsNetToGross { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this pay component should be treated as overtime for the
+    /// purposes of average overtime calculations.
+    /// </summary>
+    bool IsTreatedAsOvertime { get; }
 }
