@@ -14,8 +14,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Paytools.Documents.Mapping;
-using Paytools.Documents.Rendering;
 using Paytools.Payroll.Model;
+using RazorLight;
 
 namespace Paytools.Documents.Services;
 
@@ -25,16 +25,15 @@ namespace Paytools.Documents.Services;
 /// </summary>
 public class HtmlPayslipService : IHtmlPayslipService
 {
-    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IRazorLightEngine _engine;
 
     /// <summary>
     /// Initialises a new instance of <see cref="HtmlPayslipService"/>.
     /// </summary>
-    /// <param name="serviceScopeFactory">Factory for creating instances of IServiceScope, which is used to create
-    /// services within a scope.  Required for <see cref="RazorViewToStringRenderer"/>.</param>
-    public HtmlPayslipService(IServiceScopeFactory serviceScopeFactory)
+    /// <param name="engine">Instance of RazorLight engine to use to render payslips to HTML.</param>
+    public HtmlPayslipService(IRazorLightEngine engine)
     {
-        _serviceScopeFactory = serviceScopeFactory;
+        _engine = engine;
     }
 
     /// <summary>

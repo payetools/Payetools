@@ -23,6 +23,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.PlatformAbstractions;
 using Paytools.Common.Model;
+using Paytools.Documents.Mapping;
+using Paytools.Documents.Model;
 using Paytools.Documents.Rendering;
 using Paytools.Employment.Model;
 using Paytools.IncomeTax;
@@ -31,6 +33,7 @@ using Paytools.Payroll.Model;
 using Paytools.Payroll.Payruns;
 using Paytools.Pensions.Model;
 using Paytools.ReferenceData;
+using RazorLight;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
@@ -80,6 +83,16 @@ processor.Process(entries, out var result);
 Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
 Console.WriteLine();
 
+IPayslip payslip = PayslipModelMapper.Map(result.EmployeePayrunEntries[0]);
+
+IRazorLightEngine engine = new RazorLightEngineBuilder()
+    .UseEmbeddedResourcesProject(typeof(Paytools.Documents.Model.Payslip).Assembly, "RazorLight_Test.Views")
+    // required to have a default RazorLightProject type,
+    // but not required to create a template from string.
+    //.UseEmbeddedResourcesProject(typeof(ViewModel))
+    .SetOperatingAssembly(typeof(ViewModel).Assembly)
+    .UseMemoryCachingProvider()
+    .Build();
 
 
 static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

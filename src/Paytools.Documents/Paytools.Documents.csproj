@@ -16,16 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\common\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+    <Compile Include="..\common\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\common\stylecop.json" Link="stylecop.json" />
+    <Content Include="..\common\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="RazorLight" Version="2.3.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
