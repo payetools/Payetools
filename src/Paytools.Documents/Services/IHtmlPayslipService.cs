@@ -26,9 +26,9 @@ public interface IHtmlPayslipService
     /// Renders the supplied payrun output for a given employee to an HTML payslip,
     /// returned as a string.
     /// </summary>
+    /// <param name="template">Template name (which points to embedded resource).</param>
     /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the
     /// payrun output for a given employee.</param>
-    /// <param name="view">Path to view template.</param>
     /// <returns>Rendered HTML payslip as string.</returns>
-    Task<string> RenderAsync(IEmployeePayrunResult payrunResult, string view);
+    Task<string> RenderAsync(string template, IEmployeePayrunResult payrunResult);
 }

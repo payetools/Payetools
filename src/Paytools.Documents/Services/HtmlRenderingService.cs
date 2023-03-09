@@ -12,15 +12,67 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing.Template;
+using RazorLight;
+using System.Collections.Concurrent;
+using System.Reflection;
 
-namespace Paytools.Documents.Services
+namespace Paytools.Documents.Services;
+
+/// <summary>
+/// Represents a service that can render view models into Razor templates providing HTML output.
+/// </summary>
+public class HtmlRenderingService : IHtmlRenderingService
 {
-    internal class HtmlRenderingService
+    private static readonly Assembly _assembly = Assembly.GetExecutingAssembly();
+
+    private readonly IRazorLightEngine _engine;
+    private readonly ConcurrentDictionary<string, string> _templates;
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="HtmlRenderingService"/> using Paytools.Documents as
+    /// the assembly for both templates and view models.
+    /// </summary>
+    public HtmlRenderingService()
+        : this(_assembly, _assembly, _assembly.GetName().Name)
     {
+    }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="HtmlRenderingService"/>.
+    /// </summary>
+    /// <param name="templateAssembly">Assembly that contains templates as embedded resources.</param>
+    /// <param name="viewModelAssembly">Assembly that contains view models.</param>
+    /// <param name="defaultViewNamespace">Optional namespace for embedded templates.</param>
+    public HtmlRenderingService(Assembly templateAssembly, Assembly viewModelAssembly, string? defaultViewNamespace = "")
+    {
+        _engine = new RazorLightEngineBuilder()
+            .UseEmbeddedResourcesProject(templateAssembly, defaultViewNamespace)
+            .SetOperatingAssembly(viewModelAssembly)
+            .UseMemoryCachingProvider()
+            .Build();
+
+        _templates = new ConcurrentDictionary<string, string>();
+    }
+
+    /// <summary>
+    /// Renders the supplied model into the specified template and provides the output as
+    /// an HTML string.
+    /// </summary>
+    /// <typeparam name="T">Type of view model provided.</typeparam>
+    /// <param name="templateName">Template name that points to embedded resource.</param>
+    /// <param name="model">View model data source.</param>
+    /// <returns>Rendered output as HTML string.</returns>
+    public async Task<string> RenderAsync<T>(string templateName, T model)
+    {
+        ITemplatePage templatePage;
+
+        var cacheResult = _engine.Handler.Cache.RetrieveTemplate(templateName);
+
+        templatePage = cacheResult.Success ?
+            cacheResult.Template.TemplatePageFactory() :
+            await _engine.CompileTemplateAsync(templateName);
+
+        return await _engine.RenderTemplateAsync(templatePage, model);
     }
 }

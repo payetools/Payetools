@@ -19,4 +19,33 @@ namespace Paytools.Documents.Model;
 /// </summary>
 public interface IPayslipLineItem
 {
+    /// <summary>
+    /// Gets the descriptive text for this line item.
+    /// </summary>
+    string Description { get; }
+
+    /// <summary>
+    /// Gets the optional quantity for this line item.  Null if not applicable.
+    /// </summary>
+    decimal? Quantity { get;  }
+
+    /// <summary>
+    /// Gets the optional units for this line item.  Null if not applicable.
+    /// </summary>
+    string? Units { get; }
+
+    /// <summary>
+    /// Gets the optional rate for this line item.  Null if not applicable.
+    /// </summary>
+    decimal? Rate { get; }
+
+    /// <summary>
+    /// Gets the amount for this payslip period.
+    /// </summary>
+    decimal AmountForPeriod { get; }
+
+    /// <summary>
+    /// Gets the amount for the tax year to date.
+    /// </summary>
+    decimal AmountYtd { get; }
 }

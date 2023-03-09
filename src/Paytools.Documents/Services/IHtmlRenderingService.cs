@@ -12,15 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
-namespace Paytools.Documents.Services
+namespace Paytools.Documents.Services;
+
+/// <summary>
+/// Interface that represents a generic rendering service that can render HTML from models using
+/// pre-defined templates.
+/// </summary>
+public interface IHtmlRenderingService
 {
-    internal class IHtmlRenderingService
-    {
-    }
+    /// <summary>
+    /// Renders the supplied model into the specified template and provides the output as
+    /// an HTML string.
+    /// </summary>
+    /// <typeparam name="T">Type of view model provided.</typeparam>
+    /// <param name="templateName">Template name that points to embedded resource.</param>
+    /// <param name="model">View model data source.</param>
+    /// <returns>Rendered output as HTML string.</returns>
+    Task<string> RenderAsync<T>(string templateName, T model);
 }

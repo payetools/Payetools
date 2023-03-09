@@ -106,5 +106,5 @@ public interface IPayslip
     /// <summary>
     /// Gets the employer items group.
     /// </summary>
-    IPayslipItemGroup Employer { get; }
+    IPayslipItemGroup EmployerSpecificEntries { get; }
 }

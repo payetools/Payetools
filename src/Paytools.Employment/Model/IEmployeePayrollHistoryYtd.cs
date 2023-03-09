@@ -109,4 +109,14 @@ public interface IEmployeePayrollHistoryYtd
     /// regulatory limit on income tax deductions.
     /// </summary>
     decimal TaxUnpaidDueToRegulatoryLimit { get; }
+
+    /// <summary>
+    /// Gets the employee's earnings history for the tax year to date.
+    /// </summary>
+    IEarningsHistoryYtd EarningsHistoryYtd { get; }
+
+    /// <summary>
+    /// Gets the employee's deduction history for the tax year to date.
+    /// </summary>
+    IDeductionHistoryYtd DeductionHistoryYtd { get; }
 }

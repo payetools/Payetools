@@ -16,6 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Templates\Payslips\Default.cshtml" />
+    <None Remove="Templates\Payslips\styles.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\common\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
@@ -24,8 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <EmbeddedResource Include="Templates\Payslips\Default.cshtml">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Payslips\Styles.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="RazorLight" Version="2.3.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -41,15 +51,6 @@
     <ProjectReference Include="..\Paytools.Payroll\Paytools.Payroll.csproj" />
     <ProjectReference Include="..\Paytools.Pensions\Paytools.Pensions.csproj" />
     <ProjectReference Include="..\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Views\Payslips\Default.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-    </None>
-    <None Update="Views\Payslips\Shared\_Layout.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-    </None>
   </ItemGroup>
 
 </Project>

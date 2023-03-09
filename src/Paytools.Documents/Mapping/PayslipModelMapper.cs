@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Documents.Model;
+using Paytools.Employment.Model;
 using Paytools.Payroll.Model;
 
 namespace Paytools.Documents.Mapping;
@@ -27,14 +28,26 @@ public static class PayslipModelMapper
     /// Maps the supplied payrun output for an employee to a payslip model ready for
     /// rendering.
     /// </summary>
-    /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the
-    /// payrun output for a given employee.</param>
+    /// <param name="employer">Employee's employer.</param>
+    /// <param name="payrollInput">Payroll inputs for this employee for this payrun.</param>
+    /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the results of this
+    /// employee's payrun processing.</param>
+    /// <param name="historyYtd">Employee's payroll history to date, including this payrun.</param>
     /// <returns>An implementation of <see cref="IPayslip"/> ready for rendering.</returns>
-    public static IPayslip Map(IEmployeePayrunResult payrunResult)
+    public static IPayslip Map(
+        in IEmployer employer,
+        in IEmployeePayrunInputEntry payrollInput,
+        in IEmployeePayrunResult payrunResult,
+        IEmployeePayrollHistoryYtd historyYtd)
     {
         var payslipModel = new Payslip();
 
-        payslipModel.EmployerName = "Test Employer One";
+        payslipModel.EmployerName = employer.BusinessLegalName;
+
+        payslipModel.SetEarnings("Earnings",
+            payrollInput.Earnings
+            .Select(e => new PayslipLineItem(e, historyYtd))
+            .ToList<IPayslipLineItem>());
 
         return payslipModel;
     }

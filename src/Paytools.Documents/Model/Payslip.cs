@@ -72,5 +72,15 @@ public class Payslip : IPayslip
     public IPayslipItemGroup Pension { get; private set; } = default!;
 
     /// <inheritdoc/>
-    public IPayslipItemGroup Employer { get; private set; } = default!;
+    public IPayslipItemGroup EmployerSpecificEntries { get; private set; } = default!;
+
+    /// <summary>
+    /// Sets the earnings line group for this payslip.
+    /// </summary>
+    /// <param name="title">Group title.</param>
+    /// <param name="earningsLines">List of earnings lines.</param>
+    public void SetEarnings(string title, List<IPayslipLineItem> earningsLines)
+    {
+        Earnings = new PayslipItemGroup(title, earningsLines);
+    }
 }

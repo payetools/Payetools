@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Microsoft.Extensions.DependencyInjection;
 using Paytools.Documents.Mapping;
+using Paytools.Documents.Model;
+using Paytools.Employment.Model;
 using Paytools.Payroll.Model;
-using RazorLight;
 
 namespace Paytools.Documents.Services;
 
@@ -25,36 +25,55 @@ namespace Paytools.Documents.Services;
 /// </summary>
 public class HtmlPayslipService : IHtmlPayslipService
 {
-    private readonly IRazorLightEngine _engine;
+    private readonly IHtmlRenderingService _renderingService;
 
     /// <summary>
     /// Initialises a new instance of <see cref="HtmlPayslipService"/>.
     /// </summary>
-    /// <param name="engine">Instance of RazorLight engine to use to render payslips to HTML.</param>
-    public HtmlPayslipService(IRazorLightEngine engine)
+    /// <param name="renderingService">Instance of <see cref="IHtmlRenderingService"/> to use to render payslips to HTML.</param>
+    public HtmlPayslipService(IHtmlRenderingService renderingService)
     {
-        _engine = engine;
+        _renderingService = renderingService;
     }
 
     /// <summary>
     /// Renders the supplied payrun output for a given employee to an HTML payslip,
     /// returned as a string.
     /// </summary>
+    /// <param name="payrunInput"></param>
+    /// <param name="template">Template name (which points to embedded resource).</param>
     /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the
     /// payrun output for a given employee.</param>
-    /// <param name="view">Optional path to view.</param>
+    /// <param name="historyYtd"></param>
+    ///     /// <param name="employer">Employee's employer.</param>
+    /// <param name="payrollInput">Payroll inputs for this employee for this payrun.</param>
+    /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the results of this
+    /// employee's payrun processing.</param>
+    /// <param name="historyYtd">Employee's payroll history to date, including this payrun.</param>
+
     /// <returns>Rendered HTML payslip as string.</returns>
-    public async Task<string> RenderAsync(
+    public async Task<string> RenderAsync(string template, IPayslip payslip)
+        ,
+        IEmployer employer,
+        IEmployeePayrunInputEntry payrunInput,
         IEmployeePayrunResult payrunResult,
-        string view = "/Views/Payslips/Default.cshtml")
+        IEmployeePayrollHistoryYtd historyYtd)
     {
-        using var scope = _serviceScopeFactory.CreateScope();
 
-        var renderer = scope.ServiceProvider.GetService<IRazorViewToStringRenderer>() ??
-            throw new InvalidOperationException("Unable to obtain renderer to render email body");
+        return await _renderingService.RenderAsync(template, payslip);
+    }
 
-        var model = PayslipModelMapper.Map(payrunResult);
+    /// <summary>
+    /// Renders the supplied payrun output for a given employee to an HTML payslip,
+    /// returned as a string.  Uses the default template.
+    /// </summary>
+    /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the
+    /// payrun output for a given employee.</param>
+    /// <returns>Rendered HTML payslip as string.</returns>
+    public async Task<string> RenderAsync(IEmployeePayrunResult payrunResult)
+    {
+        IPayslip payslip = PayslipModelMapper.Map(payrunResult);
 
-        return await renderer.RenderViewToStringAsync(view, model);
+        return await _renderingService.RenderAsync("Templates.Payslips.Default.cshtml", payslip);
     }
 }

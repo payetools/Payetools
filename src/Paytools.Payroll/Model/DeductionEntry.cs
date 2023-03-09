@@ -19,7 +19,7 @@ namespace Paytools.Payroll.Model;
 /// <summary>
 /// Represents a deduction from payroll.
 /// </summary>
-public record DeductionEntry
+public record DeductionEntry : IDeductionEntry
 {
     /// <summary>
     /// Gets the type of deduction.

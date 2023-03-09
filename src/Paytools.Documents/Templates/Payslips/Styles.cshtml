@@ -1,0 +1,139 @@
+﻿<style>
+    body {
+        margin: 10px;
+        font-size: calc(10px + 1vw);
+    }
+
+    .wrapper {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(6, [col] 1fr );
+        grid-template-rows: repeat(5, [row] auto);
+        background-color: #fff;
+        color: #444;
+    }
+
+    .box {
+        background-color: #444;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .box .box {
+        background-color: #ccc;
+        color: #444;
+    }
+
+    .logo-field {
+        grid-column: col 0 / span 3;
+        grid-row: row 0;
+    }
+
+    .employee-field {
+        grid-column: col 0 / span 3;
+        grid-row: row 2;
+    }
+
+    .employee-address-field {
+        grid-column: col 0 / span 2;
+        grid-row: row 3;
+    }
+
+    .summary-details {
+        grid-column: col 5 / span 2;
+        grid-row: row 1;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .logo-employee-details {
+        grid-column: col 1 / span 3;
+        grid-row: row 1;
+        display: grid;
+        grid-gap: 5px;
+    }
+
+    .employer-field {
+        grid-column: 1 / span 2;
+        grid-row: 1;
+    }
+
+    .f {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .g {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .h {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .j {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    .k {
+        grid-column: 1;
+        grid-row: 4;
+    }
+
+    .l {
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+    .m {
+        grid-column: 1;
+        grid-row: 5;
+    }
+
+    .n {
+        grid-column: 2;
+        grid-row: 5;
+    }
+
+    .o {
+        grid-column: 1;
+        grid-row: 6;
+    }
+
+    .p {
+        grid-column: 2;
+        grid-row: 6;
+    }
+
+    .wrapper2 {
+        width: 100%;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(6, [col] 1fr );
+        grid-template-rows: repeat(5, [row] auto);
+        background-color: #fff;
+        color: #444;
+    }
+
+    .pay-details {
+        grid-column: col 0 / span 5;
+        grid-row: row 1;
+        display: grid;
+        grid-gap: 10px;
+    }
+
+    .details-col-1 {
+        grid-column: 0;
+        grid-row: 0;
+    }
+
+    .details-col-4 {
+        grid-column: 5;
+        grid-row: 0;
+    }
+</style>

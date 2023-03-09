@@ -15,17 +15,15 @@
 // WITH THE EXAMPLE OR THE USE OR OTHER DEALINGS IN THE EXAMPLE.
 
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.PlatformAbstractions;
 using Paytools.Common.Model;
 using Paytools.Documents.Mapping;
 using Paytools.Documents.Model;
-using Paytools.Documents.Rendering;
+using Paytools.Documents.Services;
 using Paytools.Employment.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
@@ -33,7 +31,6 @@ using Paytools.Payroll.Model;
 using Paytools.Payroll.Payruns;
 using Paytools.Pensions.Model;
 using Paytools.ReferenceData;
-using RazorLight;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
@@ -83,17 +80,17 @@ processor.Process(entries, out var result);
 Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
 Console.WriteLine();
 
-IPayslip payslip = PayslipModelMapper.Map(result.EmployeePayrunEntries[0]);
+IHtmlPayslipService service = new HtmlPayslipService(new HtmlRenderingService());
 
-IRazorLightEngine engine = new RazorLightEngineBuilder()
-    .UseEmbeddedResourcesProject(typeof(Paytools.Documents.Model.Payslip).Assembly, "RazorLight_Test.Views")
-    // required to have a default RazorLightProject type,
-    // but not required to create a template from string.
-    //.UseEmbeddedResourcesProject(typeof(ViewModel))
-    .SetOperatingAssembly(typeof(ViewModel).Assembly)
-    .UseMemoryCachingProvider()
-    .Build();
+IPayslip payslip = PayslipModelMapper.Map(employer, payrunInput, payrunResult, historyYtd);
 
+var html = await service.RenderAsync("Templates.Payslips.Default.cshtml", payslip);
+
+Console.WriteLine(html);
+
+File.WriteAllText(@"c:\temp\output.html", html);
+
+Console.WriteLine();
 
 static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 {
@@ -257,34 +254,3 @@ static EmployeePayrunInputEntry GetNovemberEntry(IEmployer employer)
         pensionContributionLevels);
 }
 
-static RazorViewToStringRenderer BuildServiceProvider()
-{
-    var services = new ServiceCollection();
-    var applicationEnvironment = PlatformServices.Default.Application;
-    services.AddSingleton(applicationEnvironment);
-
-    var appDirectory = Directory.GetCurrentDirectory();
-
-    var environment = new HostingEnvironment
-    {
-        ApplicationName = Assembly.GetEntryAssembly().GetName().Name
-    };
-    services.AddSingleton<IHostingEnvironment>(environment);
-
-    //services.Configure<RazorViewEngineOptions>(options =>
-    //{
-    //    options.FileProviders.Clear();
-    //    options.FileProviders.Add(new PhysicalFileProvider(appDirectory));
-    //});
-
-    services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-
-    var diagnosticSource = new DiagnosticListener("Microsoft.AspNetCore");
-    services.AddSingleton<DiagnosticSource>(diagnosticSource);
-
-    services.AddLogging();
-    services.AddMvc();
-    services.AddSingleton<RazorViewToStringRenderer>();
-    var provider = services.BuildServiceProvider();
-    return provider.GetRequiredService<RazorViewToStringRenderer>();
-}

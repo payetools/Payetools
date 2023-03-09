@@ -19,7 +19,7 @@ namespace Paytools.Payroll.Model;
 /// <summary>
 /// Represents an element of an employee's pay.
 /// </summary>
-public class EarningsEntry
+public class EarningsEntry : IEarningsEntry
 {
     /// <summary>
     /// Gets the type of deduction.

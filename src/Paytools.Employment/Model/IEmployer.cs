@@ -22,12 +22,17 @@ namespace Paytools.Employment.Model;
 public interface IEmployer
 {
     /// <summary>
-    /// Gets or sets the employer's HMRC PAYE reference, if known.
+    /// Gets the legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.
     /// </summary>
-    HmrcPayeReference? HmrcPayeReference { get; set; }
+    string BusinessLegalName { get; }
 
     /// <summary>
-    /// Gets or sets the employer's HMRC Accounts Office reference, if known.
+    /// Gets the employer's HMRC PAYE reference, if known.
     /// </summary>
-    HmrcAccountsOfficeReference? AccountsOfficeReference { get; set; }
+    HmrcPayeReference? HmrcPayeReference { get; }
+
+    /// <summary>
+    /// Gets the employer's HMRC Accounts Office reference, if known.
+    /// </summary>
+    HmrcAccountsOfficeReference? AccountsOfficeReference { get; }
 }

@@ -1,0 +1,72 @@
+﻿@using Paytools.Documents.Model
+@using RazorLight
+
+@inherits TemplatePage<IPayslip>
+
+@model IPayslip
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{
+        await IncludeAsync("Templates.Payslips.Styles.cshtml", null);
+    }
+    <meta name="viewport" content="width=device-width" />
+    <title>Payslip title</title>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="box logo-employee-details">
+            <div class="box logo-field"><img src="https://huskyfinance.com/wp-content/uploads/2020/04/husky_shield_with_name_keyline_256x73.png" height="42"></img></div>
+            <div class="box employee-field">Stephen Wilkinson</div>
+            <div class="box employee-address-field">3 Osborne Road, Brentwood, Essex CM15 9LE</div>
+        </div>
+        <div class="box summary-details">
+            <div class="box employer-field">FINANCIAL SATNAV LTD</div>
+            <div class="box f">F</div>
+            <div class="box g">G</div>
+            <div class="box h">H</div>
+            <div class="box j">J</div>
+            <div class="box k">K</div>
+            <div class="box l">L</div>
+            <div class="box m">K</div>
+            <div class="box n">L</div>
+            <div class="box o">K</div>
+            <div class="box p">L</div>
+        </div>
+    </div>
+    @foreach (var group in new IPayslipItemGroup[] { Model.Earnings, Model.Deductions, Model.PayrolledBenefits, Model.Pension, Model.EmployerSpecificEntries })
+    {
+        <div>@group?.GroupTitle</div>
+
+        <div>
+
+            <div class="wrapper2">
+                @for (int index = 1; index <= (group?.Items?.Count ?? 0); index++)
+        {
+                <div class="box" style="grid-column:1;grid-row:@index">
+                    @group?.Items[index - 1].Description
+                </div>
+                <div class="box" style="grid-column:2;grid-row:@index">
+                        @group?.Items[index - 1]?.Quantity
+                </div>
+                <div class="box" style="grid-column:3;grid-row:@index">
+                        @group?.Items[index - 1]?.Units
+                </div>
+                <div class="box" style="grid-column:4;grid-row:@index">
+                        @group?.Items[index - 1]?.Rate
+                </div>
+                <div class="box" style="grid-column:5;grid-row:@index">
+                        @group?.Items[index - 1]?.AmountForPeriod
+                </div>
+                <div class="box" style="grid-column:6;grid-row:@index">
+                        @group?.Items[index - 1]?.AmountYtd
+                </div>
+        }
+            </div>
+        </div>
+    }
+</body>
+</html>

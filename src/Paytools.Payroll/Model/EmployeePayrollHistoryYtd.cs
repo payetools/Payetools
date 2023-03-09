@@ -113,6 +113,16 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     public decimal TaxUnpaidDueToRegulatoryLimit { get; init; }
 
     /// <summary>
+    /// Gets the employee's earnings history for the tax year to date.
+    /// </summary>
+    public IEarningsHistoryYtd EarningsHistoryYtd { get; init; } = default!;
+
+    /// <summary>
+    /// Gets the employee's deduction history for the tax year to date.
+    /// </summary>
+    public IDeductionHistoryYtd DeductionHistoryYtd { get; init; } = default!;
+
+    /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/>.
     /// </summary>
     /// <param name="employeeNiHistoryEntries">List of employees history entries for National Insurance.</param>

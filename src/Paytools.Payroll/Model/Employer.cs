@@ -23,6 +23,11 @@ namespace Paytools.Payroll.Model;
 public record Employer : IEmployer
 {
     /// <summary>
+    /// Gets or sets the legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.
+    /// </summary>
+    public string BusinessLegalName { get; set; } = default!;
+
+    /// <summary>
     /// Gets or sets the employer's HMRC PAYE reference, if known.
     /// </summary>
     public HmrcPayeReference? HmrcPayeReference { get; set; }
