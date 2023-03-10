@@ -1,6 +1,6 @@
 // Copyright info - to follow
 using Paytools.Common.Model;
-using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
 
 namespace Paytools.Testing.Data.NationalInsurance;
 

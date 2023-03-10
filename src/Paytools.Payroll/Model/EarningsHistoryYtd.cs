@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Employment.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -19,28 +20,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paytools.NationalInsurance;
+namespace Paytools.Payroll.Model;
 
 /// <summary>
-/// Represents an employee's year to date National Insurance history.
+/// Represents an employee's earnings history for the tax year to date.
 /// </summary>
-public class NiYtdHistory
+public record EarningsHistoryYtd : IEarningsHistoryYtd
 {
-    private readonly ImmutableList<EmployeeNiHistoryEntry> _entries;
+    /// <summary>
+    /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
+    /// </summary>
+    public ImmutableList<IEarningsEntry> Earnings { get; }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="NiYtdHistory"/>.
+    /// Initialises a new empoty <see cref="EarningsHistoryYtd"/>.
     /// </summary>
-    /// <param name="entries">NI history entries for the tax year to date.</param>
-    public NiYtdHistory(ImmutableList<EmployeeNiHistoryEntry> entries)
+    public EarningsHistoryYtd()
     {
-        _entries = entries;
+        Earnings = ImmutableList<IEarningsEntry>.Empty;
     }
-
-    /// <summary>
-    /// Gets the totals of employee and employer NI contributions paid to date across all entries.
-    /// </summary>
-    /// <returns>Totals of employee and employer NI contributions paid tear to date.</returns>
-    public (decimal employeeTotal, decimal employerTotal) GetNiYtdTotals() =>
-        (_entries.Sum(e => e.EmployeeContribution), _entries.Sum(e => e.EmployerContribution));
 }

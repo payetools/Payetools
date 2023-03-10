@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.NationalInsurance.Model;
+
 namespace Paytools.NationalInsurance;
 
 using Paytools.NationalInsurance.Extensions;
+using Paytools.NationalInsurance.Model;
 using Paytools.NationalInsurance.ReferenceData;
 using System.Collections.ObjectModel;
 using static NiThresholdType;
@@ -125,6 +128,8 @@ public class NiCalculator : INiCalculator
         GetNiEarningsBreakdownFromCalculationResults(results, out var earningsBreakdown);
 
         result = new NiCalculationResult(
+            niCategory,
+            nicableEarningsInPeriod,
             rates,
             _niPeriodThresholds,
             earningsBreakdown,
@@ -155,6 +160,7 @@ public class NiCalculator : INiCalculator
         decimal? proRataFactor,
         out INiCalculationResult result)
     {
+        // TODO: This is broken as it uses the wrong rates
         if (calculationMethod == DirectorsNiCalculationMethod.AlternativeMethod)
         {
             Calculate(niCategory, nicableEarningsYearToDate, out result);
@@ -224,6 +230,8 @@ public class NiCalculator : INiCalculator
         GetNiEarningsBreakdownFromCalculationResults(results, out var earningsBreakdown);
 
         result = new NiCalculationResult(
+            niCategory,
+            nicableEarningsYearToDate,
             rates,
             thresholds,
             earningsBreakdown,

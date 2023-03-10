@@ -13,8 +13,8 @@
 // limitations under the License.
 
 using Paytools.Employment.Model;
-using Paytools.NationalInsurance;
-using System.Collections.Immutable;
+using Paytools.NationalInsurance.Model;
+using Paytools.Pensions.Model;
 
 namespace Paytools.Payroll.Model;
 
@@ -54,7 +54,7 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// transition between NI categories during the tax year and each NI category's payment
     /// record must be retained.
     /// </summary>
-    public NiYtdHistory EmployeeNiHistoryEntries { get; init; }
+    public NiYtdHistory EmployeeNiHistoryEntries { get; init; } = default!;
 
     /// <summary>
     /// Gets the gross pay paid to date this tax year.
@@ -123,11 +123,46 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     public IDeductionHistoryYtd DeductionHistoryYtd { get; init; } = default!;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/>.
+    /// Initialises a new empty instance of <see cref="EmployeePayrollHistoryYtd"/>.
     /// </summary>
-    /// <param name="employeeNiHistoryEntries">List of employees history entries for National Insurance.</param>
-    public EmployeePayrollHistoryYtd(ImmutableList<EmployeeNiHistoryEntry> employeeNiHistoryEntries)
+    public EmployeePayrollHistoryYtd()
     {
-        EmployeeNiHistoryEntries = new NiYtdHistory(employeeNiHistoryEntries);
+        EarningsHistoryYtd = new EarningsHistoryYtd();
+    }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/> with the supplied payrun result for a
+    /// given employee.  This constructor is intended for use to create the first history record from the first
+    /// payrun of the tax year.
+    /// </summary>
+    /// <param name="initialResult">Payrun calculation result for the given employee.</param>
+    public EmployeePayrollHistoryYtd(IEmployeePayrunResult initialResult)
+    {
+        // StatutoryMaternityPayYtd +=
+        // StatutoryPaternityPayYtd +=
+        // StatutoryAdoptionPayYtd += q
+        // SharedParentalPayYtd +=
+        // StatutoryParentalBereavementPayYtd +=
+
+        EmployeeNiHistoryEntries = new NiYtdHistory(initialResult.NiCalculationResult);
+        GrossPayYtd = initialResult.TotalGrossPay;
+        TaxablePayYtd = initialResult.TaxablePay;
+        NicablePayYtd = initialResult.NicablePay;
+        TaxPaidYtd = initialResult.TaxCalculationResult.FinalTaxDue;
+        StudentLoanRepaymentsYtd = initialResult.StudentLoanCalculationResult.StudentLoanDeduction;
+        GraduateLoanRepaymentsYtd = initialResult.StudentLoanCalculationResult.PostGraduateLoanDeduction;
+
+        // PayrolledBenefitsYtd = value.PayrolledBenefitsYtd + initialResult.PayrolledBenefits,
+
+        EmployeePensionContributionsUnderNpaYtd = initialResult.PensionContributionCalculationResult.TaxTreatment == PensionTaxTreatment.NetPayArrangement ?
+            initialResult.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount : 0.0m;
+        EmployeePensionContributionsUnderRasYtd = initialResult.PensionContributionCalculationResult.TaxTreatment == PensionTaxTreatment.ReliefAtSource ?
+                initialResult.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount : 0.0m;
+        EmployerPensionContributionsYtd = initialResult.PensionContributionCalculationResult.CalculatedEmployerContributionAmount;
+
+        TaxUnpaidDueToRegulatoryLimit = initialResult.TaxCalculationResult.TaxUnpaidDueToRegulatoryLimit;
+
+        // EarningsHistoryYtd +=
+        // IDeductionHistoryYtd DeductionHistoryYtd +=
     }
 }

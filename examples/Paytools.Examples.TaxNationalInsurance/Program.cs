@@ -26,7 +26,8 @@ using Paytools.Documents.Model;
 using Paytools.Documents.Services;
 using Paytools.Employment.Model;
 using Paytools.IncomeTax;
-using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
+using Paytools.Payroll.Extensions;
 using Paytools.Payroll.Model;
 using Paytools.Payroll.Payruns;
 using Paytools.Pensions.Model;
@@ -69,7 +70,12 @@ IEmployer employer = new Employer();
 
 var processor = await payrunProcessorFactory.GetProcessorAsync(employer, payDate, payPeriod);
 
-var entry = GetAugustEntry(employer);
+GetHistory(out var prevHistory);
+
+if (prevHistory == null)
+    throw new InvalidOperationException("History can't be null");
+
+var entry = GetAugustEntry(employer, prevHistory);
 
 List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
 
@@ -77,12 +83,14 @@ List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
 entries.Add(entry);
 processor.Process(entries, out var result);
 
+IEmployeePayrollHistoryYtd historyYtd = prevHistory.Add(result.EmployeePayrunEntries[0]);
+
 Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
 Console.WriteLine();
 
-IHtmlPayslipService service = new HtmlPayslipService(new HtmlRenderingService());
+IHtmlPayslipService service = new HtmlPayslipService(new RazorHtmlRenderingService());
 
-IPayslip payslip = PayslipModelMapper.Map(employer, payrunInput, payrunResult, historyYtd);
+IPayslip payslip = PayslipModelMapper.Map(employer, entry, result.EmployeePayrunEntries[0], historyYtd);
 
 var html = await service.RenderAsync("Templates.Payslips.Default.cshtml", payslip);
 
@@ -98,25 +106,34 @@ static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEv
     Console.WriteLine((e.ExceptionObject as Exception).Message);
 }
 
-static EmployeePayrunInputEntry GetAugustEntry(IEmployer employer)
+static void GetHistory(out IEmployeePayrollHistoryYtd history)
 {
-    var employee = new Employee()
-    { };
-
-    var niEntries = ImmutableList<EmployeeNiHistoryEntry>.Empty;
+    var niEntries = ImmutableList<IEmployeeNiHistoryEntry>.Empty;
 
     niEntries = niEntries.Add(new EmployeeNiHistoryEntry(NiCategory.A, new NiEarningsBreakdown(), 28333.32m - 1841.69m, 2070.55m, 3530.64m, 2070.55m + 3530.64m));
 
-    IEmployeePayrollHistoryYtd history = new EmployeePayrollHistoryYtd(niEntries)
+    NiYtdHistory niHistory = new NiYtdHistory(niEntries);
+
+    history = new EmployeePayrollHistoryYtd()
     {
+        EmployeeNiHistoryEntries = niHistory,
         TaxablePayYtd = 28333.32m - 1841.69m + 450.12m,
         NicablePayYtd = 28333.32m - 1841.69m,
         TaxPaidYtd = 6533.86m
     };
+}
+
+static EmployeePayrunInputEntry GetAugustEntry(in IEmployer employer, in IEmployeePayrollHistoryYtd history)
+{
+    var employee = new Employee()
+    {
+        FirstName = "Stephen",
+        LastName = "Wilkinson"
+    };
 
     TaxCode.TryParse("1296L", out var taxCode);
 
-    var employment = new Employment(ref history)
+    var employment = new Employment(history)
     {
         TaxCode = taxCode,
         NiCategory = NiCategory.A,
@@ -176,6 +193,7 @@ static EmployeePayrunInputEntry GetAugustEntry(IEmployer employer)
         pensionContributionLevels);
 }
 
+/*
 static EmployeePayrunInputEntry GetNovemberEntry(IEmployer employer)
 {
     var employee = new Employee()
@@ -253,4 +271,5 @@ static EmployeePayrunInputEntry GetNovemberEntry(IEmployer employer)
         payrolledBenefits,
         pensionContributionLevels);
 }
+*/
 

@@ -15,7 +15,7 @@
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Model;
 using Paytools.IncomeTax.ReferenceData;
-using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
 using Paytools.NationalInsurance.ReferenceData;
 using Paytools.NationalMinimumWage.ReferenceData;
 using Paytools.ReferenceData.IncomeTax;

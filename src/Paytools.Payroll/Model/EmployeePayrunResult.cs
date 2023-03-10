@@ -14,7 +14,7 @@
 
 using Paytools.Employment.Model;
 using Paytools.IncomeTax;
-using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
 using Paytools.Pensions;
 using Paytools.StudentLoans;
 

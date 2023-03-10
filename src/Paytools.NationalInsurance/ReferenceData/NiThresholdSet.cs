@@ -14,6 +14,7 @@
 
 using System.Collections;
 using System.Collections.Immutable;
+using Paytools.NationalInsurance.Model;
 
 namespace Paytools.NationalInsurance.ReferenceData;
 

@@ -15,6 +15,7 @@
 using Paytools.Common.Model;
 using Paytools.IncomeTax;
 using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
 using Paytools.Payroll.Model;
 using Paytools.Pensions;
 using Paytools.Pensions.Model;

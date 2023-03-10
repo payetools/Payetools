@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

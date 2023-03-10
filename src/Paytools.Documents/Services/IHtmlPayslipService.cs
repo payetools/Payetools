@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Payroll.Model;
+using Paytools.Documents.Model;
 
 namespace Paytools.Documents.Services;
 
@@ -26,9 +26,16 @@ public interface IHtmlPayslipService
     /// Renders the supplied payrun output for a given employee to an HTML payslip,
     /// returned as a string.
     /// </summary>
-    /// <param name="template">Template name (which points to embedded resource).</param>
-    /// <param name="payrunResult">An instance of <see cref="IEmployeePayrunResult"/> containing the
-    /// payrun output for a given employee.</param>
+    /// <param name="template">Path to embedded resource template.</param>
+    /// <param name="payslip">Instance of <see cref="IPayslip"/> containing the data to be rendered.</param>
     /// <returns>Rendered HTML payslip as string.</returns>
-    Task<string> RenderAsync(string template, IEmployeePayrunResult payrunResult);
+    Task<string> RenderAsync(string template, IPayslip payslip);
+
+    /// <summary>
+    /// Renders the supplied payrun output for a given employee to an HTML payslip,
+    /// returned as a string.  Uses the default template.
+    /// </summary>
+    /// <param name="payslip">Instance of <see cref="IPayslip"/> containing the data to be rendered.</param>
+    /// <returns>Rendered HTML payslip as string.</returns>
+    Task<string> RenderAsync(IPayslip payslip);
 }

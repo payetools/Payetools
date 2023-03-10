@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Microsoft.AspNetCore.Routing.Template;
 using RazorLight;
 using System.Collections.Concurrent;
 using System.Reflection;
@@ -22,7 +21,7 @@ namespace Paytools.Documents.Services;
 /// <summary>
 /// Represents a service that can render view models into Razor templates providing HTML output.
 /// </summary>
-public class HtmlRenderingService : IHtmlRenderingService
+public class RazorHtmlRenderingService : IHtmlRenderingService
 {
     private static readonly Assembly _assembly = Assembly.GetExecutingAssembly();
 
@@ -30,21 +29,21 @@ public class HtmlRenderingService : IHtmlRenderingService
     private readonly ConcurrentDictionary<string, string> _templates;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="HtmlRenderingService"/> using Paytools.Documents as
+    /// Initialises a new instance of <see cref="RazorHtmlRenderingService"/> using Paytools.Documents as
     /// the assembly for both templates and view models.
     /// </summary>
-    public HtmlRenderingService()
+    public RazorHtmlRenderingService()
         : this(_assembly, _assembly, _assembly.GetName().Name)
     {
     }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="HtmlRenderingService"/>.
+    /// Initialises a new instance of <see cref="RazorHtmlRenderingService"/>.
     /// </summary>
     /// <param name="templateAssembly">Assembly that contains templates as embedded resources.</param>
     /// <param name="viewModelAssembly">Assembly that contains view models.</param>
     /// <param name="defaultViewNamespace">Optional namespace for embedded templates.</param>
-    public HtmlRenderingService(Assembly templateAssembly, Assembly viewModelAssembly, string? defaultViewNamespace = "")
+    public RazorHtmlRenderingService(Assembly templateAssembly, Assembly viewModelAssembly, string? defaultViewNamespace = "")
     {
         _engine = new RazorLightEngineBuilder()
             .UseEmbeddedResourcesProject(templateAssembly, defaultViewNamespace)

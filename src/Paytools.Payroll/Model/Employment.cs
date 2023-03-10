@@ -16,7 +16,7 @@ using Paytools.Common.Model;
 using Paytools.Employment;
 using Paytools.Employment.Model;
 using Paytools.IncomeTax;
-using Paytools.NationalInsurance;
+using Paytools.NationalInsurance.Model;
 using Paytools.Pensions.Model;
 using System.Collections.Immutable;
 
@@ -112,7 +112,7 @@ public record Employment : IEmployment
     /// Initialises a new instance of <see cref="Employment"/>.
     /// </summary>
     /// <param name="payrollHistoryYtd">Employee's year-to-date payroll history.</param>
-    public Employment(ref IEmployeePayrollHistoryYtd payrollHistoryYtd)
+    public Employment(in IEmployeePayrollHistoryYtd payrollHistoryYtd)
     {
         _payrollHistoryYtd = payrollHistoryYtd;
     }

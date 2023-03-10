@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using Paytools.NationalInsurance.Model;
 using System.Collections.ObjectModel;
 
 namespace Paytools.NationalInsurance.ReferenceData;
