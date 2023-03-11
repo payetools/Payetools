@@ -40,8 +40,18 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
         public IPensionContributionCalculatorFactory PensionContributionCalculatorFactory { get; init; } = default!;
     }
 
-    private readonly IHmrcReferenceDataProviderFactory _hmrcReferenceDataProviderFactory;
-    private readonly Uri _referenceDataEndpoint;
+    private readonly IHmrcReferenceDataProviderFactory? _hmrcReferenceDataProviderFactory;
+    private readonly IHmrcReferenceDataProvider? _hmrcReferenceDataProvider;
+    private readonly Uri? _referenceDataEndpoint;
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="PayrunProcessorFactory"/>.
+    /// </summary>
+    /// <param name="hmrcReferenceDataProvider">HMRC reference data provider.</param>
+    public PayrunProcessorFactory(in IHmrcReferenceDataProvider hmrcReferenceDataProvider)
+    {
+        _hmrcReferenceDataProvider = hmrcReferenceDataProvider;
+    }
 
     /// <summary>
     /// Initialises a new instance of <see cref="PayrunProcessorFactory"/>.
@@ -49,8 +59,8 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
     /// <param name="hmrcReferenceDataProviderFactory">HMRC reference data provider factory.</param>
     /// <param name="referenceDataEndpoint">HTTP(S) endpoint to retrieve reference data from.</param>
     public PayrunProcessorFactory(
-        IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory,
-        Uri referenceDataEndpoint)
+        in IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory,
+        in Uri referenceDataEndpoint)
     {
         _hmrcReferenceDataProviderFactory = hmrcReferenceDataProviderFactory;
         _referenceDataEndpoint = referenceDataEndpoint;
@@ -66,7 +76,11 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
     /// and pay period.</returns>
     public async Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
     {
-        var factories = await GetFactories(_hmrcReferenceDataProviderFactory, _referenceDataEndpoint);
+        var factories = _hmrcReferenceDataProviderFactory != null && _referenceDataEndpoint != null ?
+                            GetFactories(await _hmrcReferenceDataProviderFactory.CreateProviderAsync((Uri)_referenceDataEndpoint)) :
+                            (_hmrcReferenceDataProvider != null ?
+                                GetFactories(_hmrcReferenceDataProvider) :
+                                throw new InvalidOperationException("Either an HMRC reference data provider or a suitable factory and address must be provided"));
 
         var calculator = new PayrunEntryProcessor(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
             factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
@@ -75,16 +89,21 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
         return new PayrunProcessor(calculator, employer);
     }
 
+    private static async Task<FactorySet> GetFactories(IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory,
+        Uri referenceDataEndpoint)
+    {
+        var referenceDataProvider = await hmrcReferenceDataProviderFactory.CreateProviderAsync(referenceDataEndpoint);
+
+        return GetFactories(referenceDataProvider);
+    }
+
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data
     // provider, on the basis that payruns are not created frequently.  However, in a large scale SaaS implementation,
     // we probably need to do something more sophisticated.  One advantage of the current approach is that reference
     // data is refreshed every time a payrun calculator is created; a mechanism to declare the data stale and
     // refresh it is probably needed in the long run.
-    private static async Task<FactorySet> GetFactories(IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory, Uri referenceDataEndpoint)
-    {
-        IHmrcReferenceDataProvider referenceDataProvider = await hmrcReferenceDataProviderFactory.CreateProviderAsync(referenceDataEndpoint);
-
-        return new FactorySet()
+    private static FactorySet GetFactories(in IHmrcReferenceDataProvider referenceDataProvider) =>
+        new FactorySet()
         {
             HmrcReferenceDataProvider = referenceDataProvider,
             TaxCalculatorFactory = new TaxCalculatorFactory(referenceDataProvider),
@@ -92,5 +111,4 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
             PensionContributionCalculatorFactory = new PensionContributionCalculatorFactory(referenceDataProvider),
             StudentLoanCalculatorFactory = new StudentLoanCalculatorFactory(referenceDataProvider)
         };
-    }
 }

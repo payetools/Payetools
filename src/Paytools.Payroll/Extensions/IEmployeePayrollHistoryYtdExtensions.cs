@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using Paytools.Employment.Model;
-using Paytools.NationalInsurance.Model;
 using Paytools.Payroll.Model;
 using Paytools.Pensions.Model;
 

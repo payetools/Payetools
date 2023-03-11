@@ -60,6 +60,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Payroll", "src\Pay
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paytools.Documents", "src\Paytools.Documents\Paytools.Documents.csproj", "{EC65E04E-9431-4AA3-9092-94B234A10B26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paytools.Payroll.Tests", "test\Paytools.Payroll.Tests\Paytools.Payroll.Tests.csproj", "{90F6D62A-6623-4392-977E-D364CEE7C13F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +156,10 @@ Global
 		{EC65E04E-9431-4AA3-9092-94B234A10B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC65E04E-9431-4AA3-9092-94B234A10B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC65E04E-9431-4AA3-9092-94B234A10B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F6D62A-6623-4392-977E-D364CEE7C13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F6D62A-6623-4392-977E-D364CEE7C13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F6D62A-6623-4392-977E-D364CEE7C13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F6D62A-6623-4392-977E-D364CEE7C13F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +187,7 @@ Global
 		{E93AF842-B497-4081-9EA4-09B8E172A3F2} = {17075853-7B07-44FD-8FDB-B917A9E51140}
 		{6B065DEA-CA7D-4100-A286-1344B06CF80B} = {9316B808-4E93-4E7C-B5D6-1C87B65E72A8}
 		{EC65E04E-9431-4AA3-9092-94B234A10B26} = {9316B808-4E93-4E7C-B5D6-1C87B65E72A8}
+		{90F6D62A-6623-4392-977E-D364CEE7C13F} = {17075853-7B07-44FD-8FDB-B917A9E51140}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEF0603C-E049-4F35-B083-9EC35309E23C}
