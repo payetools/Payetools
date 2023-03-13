@@ -29,5 +29,5 @@ public record SalariedPayStructure : IEmployeePayStructure
     public PayRateType PayRateType => PayRateType.Salaried;
 
     /// <inheritdoc/>>
-    public IPayComponent PayComponent { get; init; } = default!;
+    public IEarningsDetails PayComponent { get; init; } = default!;
 }

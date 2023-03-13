@@ -37,5 +37,5 @@ public interface IEmployeePayStructure
     /// <summary>
     /// Gets the pay component that this pay structure is based on.
     /// </summary>
-    IPayComponent PayComponent { get; }
+    IEarningsDetails PayComponent { get; }
 }

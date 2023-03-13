@@ -24,5 +24,5 @@ public interface IRecurringDeduction : IApplicableFromTill, IPayrollAmount
     /// <summary>
     /// Gets the deduction type for this recurring deduction.
     /// </summary>
-    IDeduction DeductionType { get; }
+    IDeductionDetails DeductionType { get; }
 }

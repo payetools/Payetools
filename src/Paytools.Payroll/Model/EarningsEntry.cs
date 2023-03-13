@@ -24,7 +24,7 @@ public class EarningsEntry : IEarningsEntry
     /// <summary>
     /// Gets the type of deduction.
     /// </summary>
-    public IPayComponent EarningsType { get; init; } = default!;
+    public IEarningsDetails EarningsDetails { get; init; } = default!;
 
     /// <summary>
     /// Gets the quantity of this earnings entry that when multiplied by the <see cref="ValuePerUnit"/> gives the total earnings.

@@ -22,7 +22,7 @@ public interface IEarningsEntry
     /// <summary>
     /// Gets the type of deduction.
     /// </summary>
-    IPayComponent EarningsType { get; }
+    IEarningsDetails EarningsDetails { get; }
 
     /// <summary>
     /// Gets the quantity of this earnings entry that when multiplied by the <see cref="ValuePerUnit"/> gives the total earnings.

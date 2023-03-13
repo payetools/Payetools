@@ -19,7 +19,7 @@ namespace Paytools.Payroll.Model;
 /// <summary>
 /// Represents a generic pay component (e.g., salary, bonus, sick pay, etc.).
 /// </summary>
-public class GenericPayComponent : IPayComponent
+public class GenericEarnings : IEarningsDetails
 {
     /// <summary>
     /// Gets or sets the unique ID for this pay component.

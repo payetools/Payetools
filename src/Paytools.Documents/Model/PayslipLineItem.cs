@@ -77,7 +77,7 @@ public record PayslipLineItem : IPayslipLineItem
     /// <param name="historyYtd">Employeee's earnings history for the tax year to date, including this payrun.</param>
     public PayslipLineItem(in IEarningsEntry earnings, in IEmployeePayrollHistoryYtd historyYtd)
     {
-        var earningsType = earnings.EarningsType;
+        var earningsType = earnings.EarningsDetails;
 
         Description = earningsType.Name;
         Quantity = earnings.QuantityInUnits;
@@ -85,7 +85,7 @@ public record PayslipLineItem : IPayslipLineItem
         Rate = earnings.ValuePerUnit;
         AmountForPeriod = earnings.TotalEarnings;
         AmountYtd = historyYtd.EarningsHistoryYtd.Earnings
-            .Where(e => e.EarningsType == earningsType)
+            .Where(e => e.EarningsDetails == earningsType)
             .Select(e => e.TotalEarnings)
             ?.Sum() ?? earnings.TotalEarnings;
     }
@@ -97,7 +97,7 @@ public record PayslipLineItem : IPayslipLineItem
     /// <param name="historyYtd">Employeee's deductions history for the tax year to date, including this payrun.</param>
     public PayslipLineItem(in IDeductionEntry deduction, in IEmployeePayrollHistoryYtd historyYtd)
     {
-        var deductionType = deduction.DeductionType;
+        var deductionType = deduction.DeductionClassification;
 
         Description = deductionType.Name;
         Quantity = deduction.QuantityInUnits;
@@ -105,7 +105,7 @@ public record PayslipLineItem : IPayslipLineItem
         Rate = deduction.ValuePerUnit;
         AmountForPeriod = deduction.TotalDeduction;
         AmountYtd = historyYtd.DeductionHistoryYtd.Deductions
-            .Where(e => e.DeductionType == deductionType)
+            .Where(e => e.DeductionClassification == deductionType)
             .Select(e => e.TotalDeduction)
             ?.Sum() ?? deduction.TotalDeduction;
     }

@@ -24,5 +24,5 @@ public interface IRecurringEarnings : IApplicableFromTill, IPayrollAmount
     /// <summary>
     /// Gets the pay component for this recurring earnings.
     /// </summary>
-    IPayComponent PayComponent { get; }
+    IEarningsDetails PayComponent { get; }
 }

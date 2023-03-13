@@ -34,7 +34,7 @@ public record NmwHourlyPaidPayStructure : IEmployeePayStructure
     public PayRateType PayRateType => PayRateType.HourlyPaid;
 
     /// <inheritdoc/>>
-    public IPayComponent PayComponent { get; init; } = default!;
+    public IEarningsDetails PayComponent { get; init; } = default!;
 
     /// <summary>
     /// Updates the <see cref="PayRate"/> based on the applicable NMW/NLW wage rate for the employee

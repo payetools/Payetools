@@ -185,19 +185,19 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
         entry.Earnings.ForEach(e =>
         {
             grossPay += e.TotalEarnings;
-            taxablePay += e.EarningsType.IsSubjectToTax ? e.TotalEarnings : 0.0m;
-            nicablePay += e.EarningsType.IsSubjectToNi ? e.TotalEarnings : 0.0m;
-            pensionablePay += e.EarningsType.IsPensionable ? e.TotalEarnings : 0.0m;
+            taxablePay += e.EarningsDetails.IsSubjectToTax ? e.TotalEarnings : 0.0m;
+            nicablePay += e.EarningsDetails.IsSubjectToNi ? e.TotalEarnings : 0.0m;
+            pensionablePay += e.EarningsDetails.IsPensionable ? e.TotalEarnings : 0.0m;
         });
 
         workingGrossPay = grossPay;
 
         entry.Deductions.ForEach(d =>
         {
-            taxablePay -= d.DeductionType.ReducesTaxablePay ? d.TotalDeduction : 0.0m;
-            nicablePay -= d.DeductionType.ReducesNicablePay ? d.TotalDeduction : 0.0m;
-            pensionablePay -= d.DeductionType.ReducesPensionablePay ? d.TotalDeduction : 0.0m;
-            workingGrossPay -= d.DeductionType.ReducesGrossPay ? d.TotalDeduction : 0.0m;
+            taxablePay -= d.DeductionClassification.ReducesTaxablePay ? d.TotalDeduction : 0.0m;
+            nicablePay -= d.DeductionClassification.ReducesNicablePay ? d.TotalDeduction : 0.0m;
+            pensionablePay -= d.DeductionClassification.ReducesPensionablePay ? d.TotalDeduction : 0.0m;
+            workingGrossPay -= d.DeductionClassification.ReducesGrossPay ? d.TotalDeduction : 0.0m;
         });
 
         entry.PayrolledBenefits.ForEach(b =>

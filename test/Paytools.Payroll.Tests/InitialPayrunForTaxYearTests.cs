@@ -123,7 +123,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         earnings = earnings.Add(new EarningsEntry()
         {
-            EarningsType = new GenericPayComponent()
+            EarningsDetails = new GenericEarnings()
             {
                 IsSubjectToTax = true,
                 IsSubjectToNi = true,
@@ -135,7 +135,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         earnings = earnings.Add(new EarningsEntry()
         {
-            EarningsType = new GenericPayComponent()
+            EarningsDetails = new GenericEarnings()
             {
                 IsSubjectToTax = true,
                 IsSubjectToNi = true,

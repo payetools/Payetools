@@ -17,7 +17,7 @@ namespace Paytools.Employment.Model;
 /// <summary>
 /// Interface that represents a pay component (e.g., salary, bonus, sick pay, etc.).
 /// </summary>
-public interface IPayComponent
+public interface IEarningsDetails
 {
     /// <summary>
     /// Gets the unique ID for this pay component.

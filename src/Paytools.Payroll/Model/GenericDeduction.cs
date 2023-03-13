@@ -19,7 +19,7 @@ namespace Paytools.Payroll.Model;
 /// <summary>
 /// Represents the various types of deduction that can be made from payroll.
 /// </summary>
-public record GenericDeduction : IDeduction
+public record GenericDeduction : IDeductionDetails
 {
     /// <summary>
     /// Gets or sets the short name for this type of deduction.
@@ -58,4 +58,14 @@ public record GenericDeduction : IDeduction
     /// purposes.
     /// </summary>
     public bool ReducesPensionablePay { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this type of deduction is made as part of a salary exchange
+    /// (aka salary sacrifice) arrangement.  Note that when this flag is set, <see cref="ReducesGrossPay"/>,
+    /// <see cref="ReducesTaxablePay"/> and <see cref="ReducesNicablePay"/> will also normally be
+    /// set to true.
+    /// </summary>
+    /// <remarks>This property is primarily included to assist when it is time to show the deduction on the
+    /// payslip, enabling all salary exchange deductions including pensions to be grouped together.</remarks>
+    public bool IsUnderSalaryExchangeArrangement { get; set; }
 }

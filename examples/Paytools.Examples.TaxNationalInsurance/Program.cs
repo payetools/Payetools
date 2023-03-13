@@ -152,7 +152,7 @@ static EmployeePayrunInputEntry GetAugustEntry(in IEmployer employer, in IEmploy
 
     earnings = earnings.Add(new EarningsEntry()
     {
-        EarningsType = new GenericPayComponent()
+        EarningsDetails = new GenericEarnings()
         {
             IsSubjectToTax = true,
             IsSubjectToNi = true,
@@ -164,7 +164,7 @@ static EmployeePayrunInputEntry GetAugustEntry(in IEmployer employer, in IEmploy
 
     earnings = earnings.Add(new EarningsEntry()
     {
-        EarningsType = new GenericPayComponent()
+        EarningsDetails = new GenericEarnings()
         {
             IsSubjectToTax = true,
             IsSubjectToNi = true,

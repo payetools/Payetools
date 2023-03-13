@@ -22,7 +22,7 @@ public interface IDeductionEntry
     /// <summary>
     /// Gets the type of deduction.
     /// </summary>
-    IDeduction DeductionType { get; }
+    IDeductionDetails DeductionClassification { get; }
 
     /// <summary>
     /// Gets the quantity of this deduction that when multiplied by the <see cref="ValuePerUnit"/> gives the total deduction.  Optional.
