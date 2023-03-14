@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.IncomeTax;
+namespace Paytools.IncomeTax.Model;
 
 /// <summary>
 /// Enum representing the tax treatment aspect of the tax code.

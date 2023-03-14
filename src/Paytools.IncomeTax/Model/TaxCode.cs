@@ -17,7 +17,7 @@ using Paytools.Common.Model;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace Paytools.IncomeTax;
+namespace Paytools.IncomeTax.Model;
 
 /// <summary>
 /// Represents a UK tax code, with the ability to calculate tax-free pay based the code and the relevant tax period.

@@ -16,7 +16,7 @@ using FluentAssertions;
 using Paytools.Common;
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Model;
-
+using Paytools.IncomeTax.Model;
 using Test = Paytools.IncomeTax.Tests.TaxCodeTestHelper;
 
 namespace Paytools.IncomeTax.Tests;

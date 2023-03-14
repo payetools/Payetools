@@ -14,6 +14,7 @@
 
 using Paytools.Common.Diagnostics;
 using Paytools.Common.Model;
+using Paytools.IncomeTax.Model;
 using Paytools.IncomeTax.ReferenceData;
 using System.Diagnostics;
 

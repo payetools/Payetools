@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
+using Paytools.IncomeTax.Model;
 using Paytools.IncomeTax.ReferenceData;
 using Paytools.IncomeTax.Tests.TestData;
 using Paytools.Testing.Utils;

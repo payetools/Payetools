@@ -21,8 +21,8 @@ using Paytools.Payroll.Payruns;
 using System.Collections.Immutable;
 using Paytools.Payroll.Extensions;
 using Paytools.NationalInsurance.Model;
-using Paytools.IncomeTax;
 using Paytools.Pensions.Model;
+using Paytools.IncomeTax.Model;
 
 namespace Paytools.Payroll.Tests;
 

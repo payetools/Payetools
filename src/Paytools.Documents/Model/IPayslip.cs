@@ -13,7 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.IncomeTax;
+using Paytools.IncomeTax.Model;
 using Paytools.NationalInsurance.Model;
 
 namespace Paytools.Documents.Model;

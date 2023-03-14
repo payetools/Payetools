@@ -25,7 +25,7 @@ using Paytools.Documents.Mapping;
 using Paytools.Documents.Model;
 using Paytools.Documents.Services;
 using Paytools.Employment.Model;
-using Paytools.IncomeTax;
+using Paytools.IncomeTax.Model;
 using Paytools.NationalInsurance.Model;
 using Paytools.Payroll.Extensions;
 using Paytools.Payroll.Model;

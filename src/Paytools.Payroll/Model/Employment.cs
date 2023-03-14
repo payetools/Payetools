@@ -15,7 +15,7 @@
 using Paytools.Common.Model;
 using Paytools.Employment;
 using Paytools.Employment.Model;
-using Paytools.IncomeTax;
+using Paytools.IncomeTax.Model;
 using Paytools.NationalInsurance.Model;
 using Paytools.Pensions.Model;
 using System.Collections.Immutable;
