@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Extensions;
 using System.Collections.Immutable;
 
 namespace Paytools.NationalInsurance.Model;
@@ -33,19 +34,11 @@ public record NiYtdHistory
     /// payrun result.</returns>
     public NiYtdHistory Add(in INiCalculationResult latestNiCalculationResult)
     {
-        var prevCount = _entries.Count;
-        var lastEntry = prevCount > 0 ? _entries.Last() : null;
+        var lastEntry = _entries.Any() ? _entries.Last() : null;
 
-        if (lastEntry != null && lastEntry.NiCategoryPertaining != latestNiCalculationResult.NiCategory)
-        {
-            return new NiYtdHistory(_entries
-                    .RemoveAt(prevCount - 1)
-                    .Add(lastEntry.Add(latestNiCalculationResult)));
-        }
-        else
-        {
-            return new NiYtdHistory(_entries.Add(new EmployeeNiHistoryEntry(latestNiCalculationResult)));
-        }
+        return lastEntry?.NiCategoryPertaining == latestNiCalculationResult.NiCategory ?
+            new NiYtdHistory(_entries.ReplaceLast(lastEntry.Add(latestNiCalculationResult))) :
+            new NiYtdHistory(_entries.Add(new EmployeeNiHistoryEntry(latestNiCalculationResult)));
     }
 
     /// <summary>
