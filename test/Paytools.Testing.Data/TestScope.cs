@@ -21,5 +21,6 @@ public enum TestScope
     NationalInsurance,
     Pensions,
     StudentLoans,
-    Payroll_Employees
+    Payroll_Employees,
+    EndToEnd
 }

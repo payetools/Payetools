@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using LiteDB;
+using Paytools.IncomeTax.Model;
 using Paytools.Testing.Data.NationalInsurance;
 using System.Reflection;
 
@@ -31,6 +32,9 @@ public class TestDataRepository : IDisposable
 
         var fi = new FileInfo(dbPath);
 
+        BsonMapper.Global.RegisterType<TaxCode>(tc => tc.ToString(true, true),
+            tc => TaxCode.TryParse(tc, out var result) ? result : throw new InvalidCastException($"Unable to parse tax code '{tc}'"));
+
         _database = new LiteDatabase(dbPath);
     }
 
@@ -40,6 +44,8 @@ public class TestDataRepository : IDisposable
         {
             (TestSource.Hmrc, TestScope.NationalInsurance) when typeof(T) == typeof(IHmrcNiTestDataEntry) =>
                 _database.GetCollection<HmrcNiTestDataEntry>("HMRC_NationalInsurance").Query(),
+            //(TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IHmrcNiTestDataEntry) =>
+            //    _database.GetCollection<HmrcNiTestDataEntry>("HMRC_NationalInsurance").Query(),
             _ => throw new NotImplementedException()
         };
 
