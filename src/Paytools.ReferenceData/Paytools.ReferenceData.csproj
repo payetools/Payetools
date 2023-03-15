@@ -16,11 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\common\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+    <Compile Remove="Extensions\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\common\stylecop.json" Link="stylecop.json" />
+    <Compile Include="..\shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\shared\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,10 +44,6 @@
     <ProjectReference Include="..\Paytools.NationalMinimumWage\Paytools.NationalMinimumWage.csproj" />
     <ProjectReference Include="..\Paytools.Pensions\Paytools.Pensions.csproj" />
     <ProjectReference Include="..\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

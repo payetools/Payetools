@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.Model;
 using Paytools.IncomeTax.ReferenceData;
 
-namespace Paytools.IncomeTax;
+namespace Paytools.IncomeTax.Model;
 
 /// <summary>
 /// Represents the result of an income tax calculation for an individual, providing the tax due plus a rich set of information about

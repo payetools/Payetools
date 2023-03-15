@@ -13,7 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Common.Tests", "te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6E337BD9-2FCA-4C69-B47C-5926F44FBD2F}"
 	ProjectSection(SolutionItems) = preProject
-		docs\BasicPayrunWorkflow.md = docs\BasicPayrunWorkflow.md
 		KnownIssues.md = KnownIssues.md
 		docs\README.md = docs\README.md
 	EndProjectSection

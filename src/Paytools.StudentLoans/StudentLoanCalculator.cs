@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.StudentLoans.Model;
 using Paytools.StudentLoans.ReferenceData;
 
 namespace Paytools.StudentLoans;

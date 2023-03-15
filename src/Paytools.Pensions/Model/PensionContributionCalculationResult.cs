@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Pensions.Model;
-
-namespace Paytools.Pensions;
+namespace Paytools.Pensions.Model;
 
 /// <summary>
 /// Represents a pension contribution calculation result.

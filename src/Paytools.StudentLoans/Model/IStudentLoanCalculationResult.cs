@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.StudentLoans;
+namespace Paytools.StudentLoans.Model;
 
 /// <summary>
 /// Interface that types implement to provide access to the results of a student loan calculation.

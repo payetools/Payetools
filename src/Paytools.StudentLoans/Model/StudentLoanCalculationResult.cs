@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.StudentLoans;
+namespace Paytools.StudentLoans.Model;
 
 /// <summary>
 /// Represents the result of a student loan calculation.
@@ -22,7 +22,7 @@ public readonly struct StudentLoanCalculationResult : IStudentLoanCalculationRes
     /// <summary>
     /// Gets an empty <see cref="StudentLoanCalculationResult"/> that indicates that no pension is applicable.
     /// </summary>
-    public static StudentLoanCalculationResult NoStudentLoanApplicable => default(StudentLoanCalculationResult);
+    public static StudentLoanCalculationResult NoStudentLoanApplicable => default;
 
     /// <summary>
     /// Gets the optional student loan type.  Null if no student loan applied.  (Post-graduate loans

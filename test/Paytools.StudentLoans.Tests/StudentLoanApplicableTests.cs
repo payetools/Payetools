@@ -15,6 +15,7 @@
 using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.NationalMinimumWage.Tests;
+using Paytools.StudentLoans.Model;
 
 namespace Paytools.StudentLoans.Tests;
 

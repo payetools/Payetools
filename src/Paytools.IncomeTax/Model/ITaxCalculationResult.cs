@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.Model;
-
-namespace Paytools.IncomeTax;
+namespace Paytools.IncomeTax.Model;
 
 /// <summary>
 /// Interface that represents the result of an income tax calculation.  The purpose of this interface (and its implementations)
