@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.StudentLoans;
+using Paytools.StudentLoans.Model;
 
 namespace Paytools.Employment.Model;
 

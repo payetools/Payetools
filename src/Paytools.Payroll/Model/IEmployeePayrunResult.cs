@@ -13,10 +13,10 @@
 // limitations under the License.
 
 using Paytools.Employment.Model;
-using Paytools.IncomeTax;
+using Paytools.IncomeTax.Model;
 using Paytools.NationalInsurance.Model;
-using Paytools.Pensions;
-using Paytools.StudentLoans;
+using Paytools.Pensions.Model;
+using Paytools.StudentLoans.Model;
 
 namespace Paytools.Payroll.Model;
 

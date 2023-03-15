@@ -20,6 +20,7 @@ using Paytools.Payroll.Model;
 using Paytools.Pensions;
 using Paytools.Pensions.Model;
 using Paytools.StudentLoans;
+using Paytools.StudentLoans.Model;
 
 namespace Paytools.Payroll.Payruns;
 
