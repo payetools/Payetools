@@ -68,7 +68,7 @@ public class TestDataRepository : IDisposable
 
     private IEnumerable<Tinterface> GetTestData<Tinterface, Tclass>(string collectionName) 
         where Tinterface: class where Tclass  : class =>
-        _database.GetCollection<Tclass>("Paytools_EndToEnd_Deductions").Query().ToEnumerable()
+        _database.GetCollection<Tclass>(collectionName).Query().ToEnumerable()
             .Select(e => e as Tinterface ?? throw new InvalidOperationException($"Unable to cast entry to type {typeof(Tinterface).Name}"));
 
     protected virtual void Dispose(bool disposing)
