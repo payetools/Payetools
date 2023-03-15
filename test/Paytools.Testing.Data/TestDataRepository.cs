@@ -14,6 +14,7 @@
 
 using LiteDB;
 using Paytools.IncomeTax.Model;
+using Paytools.Testing.Data.EndToEnd;
 using Paytools.Testing.Data.NationalInsurance;
 using System.Reflection;
 
@@ -38,21 +39,37 @@ public class TestDataRepository : IDisposable
         _database = new LiteDatabase(dbPath);
     }
 
-    public IEnumerable<T> GetTestData<T>(TestSource source, TestScope scope) where T : class
-    {
-        var data = (source, scope) switch
+    public IEnumerable<T> GetTestData<T>(TestSource source, TestScope scope) where T : class =>
+        (source, scope) switch
         {
             (TestSource.Hmrc, TestScope.NationalInsurance) when typeof(T) == typeof(IHmrcNiTestDataEntry) =>
-                _database.GetCollection<HmrcNiTestDataEntry>("HMRC_NationalInsurance").Query(),
-            //(TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IHmrcNiTestDataEntry) =>
-            //    _database.GetCollection<HmrcNiTestDataEntry>("HMRC_NationalInsurance").Query(),
+                GetTestData<T, HmrcNiTestDataEntry>("HMRC_NationalInsurance"),
+
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IDeductionsTestDataEntry) =>
+                GetTestData<T, DeductionsTestDataEntry>("Paytools_EndToEnd_Deductions"),
+
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IEarningsTestDataEntry) =>
+                GetTestData<T, EarningsTestDataEntry>("Paytools_EndToEnd_Earnings"),
+
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IExpectedOutputTestDataEntry) =>
+                GetTestData<T, ExpectedOutputTestDataEntry>("Paytools_EndToEnd_ExpectedOutput"),
+
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPeriodInputTestDataEntry) =>
+                GetTestData<T, PeriodInputTestDataEntry>("Paytools_EndToEnd_PeriodInput"),
+
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPreviousYtdTestDataEntry) =>
+                GetTestData<T, PreviousYtdTestDataEntry>("Paytools_EndToEnd_PreviousYTD"),
+
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IStaticInputTestDataEntry) =>
+                GetTestData<T, StaticInputTestDataEntry>("Paytools_EndToEnd_Deductions"),
+
             _ => throw new NotImplementedException()
         };
 
-        return data.ToEnumerable()
-            .Select(e => e as T ?? throw new InvalidOperationException($"Unable to cast entry to type {typeof(T).Name}"))
-            .ToList();
-    }
+    private IEnumerable<Tinterface> GetTestData<Tinterface, Tclass>(string collectionName) 
+        where Tinterface: class where Tclass  : class =>
+        _database.GetCollection<Tclass>("Paytools_EndToEnd_Deductions").Query().ToEnumerable()
+            .Select(e => e as Tinterface ?? throw new InvalidOperationException($"Unable to cast entry to type {typeof(Tinterface).Name}"));
 
     protected virtual void Dispose(bool disposing)
     {
