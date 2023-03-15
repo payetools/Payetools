@@ -27,5 +27,7 @@ Support for running a complete set of payroll calculations is planned for releas
 ### Contributing
 Given the current pipeline of work, we are not quite ready to receive contributions at this stage but if you are interested in joining the project, please contact paytools-master via Github.
 
+**It isn't recommended to fork this repo at this time, on the basis that there are a lot of changes coming in fairly short order.**  Once again, if there is a feature or capability you require, please contact us in the first instance.
+
 ### License
 This project is licensed under the Apache 2.0 open source license (see LICENSE.md).
