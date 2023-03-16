@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\src\Paytools.Pensions\Paytools.Pensions.csproj" />
     <ProjectReference Include="..\..\src\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
     <ProjectReference Include="..\..\src\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
+    <ProjectReference Include="..\Paytools.Testing.Data\Paytools.Testing.Data.csproj" />
     <ProjectReference Include="..\Paytools.Testing.Utils\Paytools.Testing.Utils.csproj" />
   </ItemGroup>
 

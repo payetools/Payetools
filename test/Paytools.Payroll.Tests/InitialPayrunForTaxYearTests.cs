@@ -23,6 +23,7 @@ using Paytools.Payroll.Extensions;
 using Paytools.NationalInsurance.Model;
 using Paytools.Pensions.Model;
 using Paytools.IncomeTax.Model;
+using Paytools.Testing.Data.EndToEnd;
 
 namespace Paytools.Payroll.Tests;
 
@@ -38,6 +39,8 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
     [Fact]
     public async Task Test1Async()
     {
+        IEndToEndTestDataSet testData = EndToEndTestDataSource.GetAllData();
+
         PayDate payDate = new PayDate(2022, 8, 20, PayFrequency.Monthly);
         PayReferencePeriod payPeriod = new PayReferencePeriod(new DateOnly(), new DateOnly());
 

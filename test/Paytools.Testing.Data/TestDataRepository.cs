@@ -60,6 +60,9 @@ public class TestDataRepository : IDisposable
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPreviousYtdTestDataEntry) =>
                 GetTestData<T, PreviousYtdTestDataEntry>("Paytools_EndToEnd_PreviousYTD"),
 
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(INiYtdHistoryTestDataEntry) =>
+                GetTestData<T, NiYtdHistoryTestDataEntry>("Paytools_EndToEnd_NIYTDHistory"),
+
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IStaticInputTestDataEntry) =>
                 GetTestData<T, StaticInputTestDataEntry>("Paytools_EndToEnd_Deductions"),
 
