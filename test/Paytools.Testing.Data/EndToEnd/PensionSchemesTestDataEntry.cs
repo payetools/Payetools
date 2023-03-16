@@ -12,28 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.IncomeTax.Model;
-using Paytools.NationalInsurance.Model;
-using Paytools.StudentLoans.Model;
+using Paytools.Pensions.Model;
 using Paytools.Common.Model;
 
 namespace Paytools.Testing.Data.EndToEnd;
 
-public class StaticInputTestDataEntry : IStaticInputTestDataEntry
+public class PensionSchemesTestDataEntry : IPensionSchemesTestDataEntry
 {
     public string DefinitionVersion { get; set; } = string.Empty;
     public string TestIdentifier { get; set; } = string.Empty;
     public TaxYearEnding TaxYearEnding { get; set; }
-    public string TestReference { get; set; } = string.Empty;
-    public string EmployeeFirstName { get; set; } = string.Empty;
-    public string EmployeeLastName { get; set; } = string.Empty;
-    public TaxCode TaxCode { get; set; }
-    public NiCategory NiCategory { get; set; }
-    public StudentLoanType? StudentLoanPlan { get; set; }
-    public bool GraduateLoan { get; set; }
-    public string? PensionScheme { get; set; }
-    public bool UsesSalaryExchange { get; set; }
-    public decimal? EmployeePercentage { get; set; }
-    public decimal? EmployeeFixedAmount { get; set; }
-    public decimal? EmployerPercentage { get; set; }
+    public string SchemeName { get; set; } = string.Empty;
+    public EarningsBasis EarningsBasis { get; set; }
+    public PensionTaxTreatment TaxTreatment { get; set; }
 }

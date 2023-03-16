@@ -16,11 +16,12 @@ namespace Paytools.Testing.Data.EndToEnd;
 
 public interface IEndToEndTestDataSet
 {
-    IEnumerable<IDeductionsTestDataEntry> DeductionDefinitions { get; }
-    IEnumerable<IEarningsTestDataEntry> EarningsDefinitions { get; }
-    IEnumerable<IExpectedOutputTestDataEntry> ExpectedOutputs { get; }
-    IEnumerable<IPeriodInputTestDataEntry> PeriodInputs { get; }
-    IEnumerable<IPreviousYtdTestDataEntry> PreviousYtdInputs { get; }
-    IEnumerable<IStaticInputTestDataEntry> StaticInputs { get; }
-    IEnumerable<INiYtdHistoryTestDataEntry> NiYtdHistory { get; }
+    List<IDeductionsTestDataEntry> DeductionDefinitions { get; }
+    List<IEarningsTestDataEntry> EarningsDefinitions { get; }
+    List<IExpectedOutputTestDataEntry> ExpectedOutputs { get; }
+    List<IPeriodInputTestDataEntry> PeriodInputs { get; }
+    List<IPreviousYtdTestDataEntry> PreviousYtdInputs { get; }
+    List<IStaticInputTestDataEntry> StaticInputs { get; }
+    List<INiYtdHistoryTestDataEntry> NiYtdHistory { get; }
+    List<IPensionSchemesTestDataEntry> PensionSchemes { get; }
 }

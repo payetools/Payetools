@@ -28,5 +28,5 @@ public interface IPeriodInputTestDataEntry
     decimal? Qty { get; }
     decimal? Rate { get; }
     decimal? FixedAmount { get; }
-    decimal EmployerPercentage { get; }
+    decimal FinalAmount { get; }
 }

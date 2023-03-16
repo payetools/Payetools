@@ -28,5 +28,5 @@ public class PeriodInputTestDataEntry : IPeriodInputTestDataEntry
     public decimal? Qty { get; set; }
     public decimal? Rate { get; set; }
     public decimal? FixedAmount { get; set; }
-    public decimal EmployerPercentage { get; set; }
+    public decimal FinalAmount { get; set; }
 }

@@ -25,7 +25,7 @@ public readonly struct StudentLoanStatus
     /// Gets the student loan applicable for an employee.  Null if the employee does not have an
     /// outstanding student loan.
     /// </summary>
-    public StudentLoanType StudentLoanType { get; init; }
+    public StudentLoanType? StudentLoanType { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether the employee has an outstanding post-graduate loan.
