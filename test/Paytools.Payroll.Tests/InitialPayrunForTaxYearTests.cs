@@ -47,36 +47,37 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             testData.NiYtdHistory.Where(nyh => nyh.TestReference == "Pay1").ToList(),
             out var employeePayrollHistory);
 
+        if (employeePayrollHistory == null)
+            throw new InvalidOperationException("History can't be null");
+
         var staticInput = testData.StaticInputs.Where(si => si.TestReference == "Pay1").First();
 
         IEmployer employer = new Employer();
+
+        MakePayrollLineItems(testData.PeriodInputs.Where(pi => pi.TestReference == "Pay1"),
+            testData.EarningsDefinitions,
+            testData.DeductionDefinitions,
+            out var earnings,
+            out var deductions,
+            out var payrolledBenefits);
 
         MakeEmployeePayrunInput(employer,
             staticInput,
             testData.PensionSchemes.Where(ps => ps.SchemeName == staticInput.PensionScheme).FirstOrDefault(),
             employeePayrollHistory,
-            testData.PeriodInputs,
+            earnings,
+            deductions,
+            payrolledBenefits,
             out var payrunEntry);
-
-
 
         PayDate payDate = new PayDate(2022, 8, 20, PayFrequency.Monthly);
         PayReferencePeriod payPeriod = new PayReferencePeriod(new DateOnly(), new DateOnly());
 
-
         var processor = await GetProcessor(employer, payDate, payPeriod);
 
-        //MakeEmployeePayrollHistory(out var prevHistory);
-
-        if (employeePayrollHistory == null)
-            throw new InvalidOperationException("History can't be null");
-
-        var entry = GetAugustEntry(employer, employeePayrollHistory);
-
         List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
+        entries.Add(payrunEntry);
 
-
-        entries.Add(entry);
         processor.Process(entries, out var result);
 
         IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayrunEntries[0]);
@@ -84,37 +85,8 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
         Console.WriteLine();
 
-        //IHtmlPayslipService service = new HtmlPayslipService(new RazorHtmlRenderingService());
-
-        //IPayslip payslip = PayslipModelMapper.Map(employer, entry, result.EmployeePayrunEntries[0], historyYtd);
-
-        //var html = await service.RenderAsync("Templates.Payslips.Default.cshtml", payslip);
-
-        //Console.WriteLine(html);
-
-        //File.WriteAllText(@"c:\temp\output.html", html);
-
         Console.WriteLine();
-
     }
-
-    //static void MakeEmployeePayrollHistory(out IEmployeePayrollHistoryYtd history)
-    //{
-    //    var niEntries = ImmutableList<IEmployeeNiHistoryEntry>.Empty;
-
-    //    niEntries = niEntries.Add(new EmployeeNiHistoryEntry(NiCategory.A, new NiEarningsBreakdown(), 28333.32m - 1841.69m, 2070.55m, 3530.64m, 2070.55m + 3530.64m));
-
-    //    NiYtdHistory niHistory = new NiYtdHistory(niEntries);
-
-    //    history = new EmployeePayrollHistoryYtd()
-    //    {
-    //        EmployeeNiHistoryEntries = niHistory,
-    //        TaxablePayYtd = 28333.32m - 1841.69m + 450.12m,
-    //        NicablePayYtd = 28333.32m - 1841.69m,
-    //        TaxPaidYtd = 6533.86m
-    //    };
-    //}
-
 
     static void MakeEmployeePayrollHistory(in IPreviousYtdTestDataEntry previousYtd, 
         in List<INiYtdHistoryTestDataEntry> niYtdHistory, out IEmployeePayrollHistoryYtd history)
@@ -161,13 +133,84 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         };
     }
 
+    static void MakePayrollLineItems(
+        in IEnumerable<IPeriodInputTestDataEntry> periodInputs,
+        in List<IEarningsTestDataEntry> earningsDetails,
+        in List <IDeductionsTestDataEntry> deductionDetails,
+        out List<IEarningsEntry> earnings,
+        out List<IDeductionEntry> deductions,
+        out List<IPayrolledBenefitForPeriod> benefits)
+    {
+        earnings = new List<IEarningsEntry>();
+        deductions = new List<IDeductionEntry>();
+        benefits = new List<IPayrolledBenefitForPeriod>();
+
+        foreach (var pi in periodInputs)
+        {
+            if (pi.FixedAmount == null && (pi.Rate == null || pi.Qty == null))
+                        throw new ArgumentException($"Invalid earnings/deduction/benefits entry '{pi.EntryType}' with description '{pi.Description}'; insufficient data supplied", nameof(periodInputs));
+
+            switch (pi.EntryType)
+            {
+                case "Earnings":
+                    var thisEarnings = new EarningsEntry()
+                    {
+                        EarningsDetails = earningsDetails.Where(ed => ed.ShortName == pi.ShortName).Select(ed => 
+                            new GenericEarnings()
+                            {
+                                Id = Guid.NewGuid(),
+                                ShortName = ed.ShortName,
+                                IsNetToGross = false,
+                                IsPensionable = ed.IsPensionable,
+                                IsSubjectToNi = ed.IsSubjectToNi,
+                                IsSubjectToTax = ed.IsSubjectToTax,
+                                IsTreatedAsOvertime = ed.IsTreatedAsOvertime
+                            }).First(),
+                        FixedAmount = pi.FixedAmount,
+                        QuantityInUnits = pi.Qty,
+                        ValuePerUnit = pi.Rate
+                    };
+                    earnings.Add(thisEarnings);
+                    break;
+
+                case "Deduction":
+                    var thisDeduction = new DeductionEntry()
+                    {
+                        DeductionClassification = deductionDetails.Where(d => d.ShortName == pi.ShortName).Select(d =>
+                            new GenericDeduction()
+                            {
+                                ShortName = d.ShortName,
+                                ReducesTaxablePay = d.ReducesTaxablePay,
+                                ReducesNicablePay = d.ReducesNicablePay,
+                                ReducesPensionablePay = d.ReducesPensionablePay,
+                                IsUnderSalaryExchangeArrangement = d.IsUnderSalaryExchangeArrangement
+                            }).First(),
+                        FixedAmount = pi.FixedAmount,
+                        QuantityInUnits = pi.Qty,
+                        ValuePerUnit = pi.Rate
+                    };
+                    deductions.Add(thisDeduction);
+                    break;
+
+                case "PayrolledBenefit":
+                    var thisBenefit = new PayrolledBenefitForPeriod(pi.FixedAmount ?? pi.Qty * pi.Rate ?? 0.0m);
+                    benefits.Add(thisBenefit);
+                    break;
+
+                default:
+                    throw new ArgumentException($"Unrecognised period input type '{pi.EntryType}'; must be one of 'Earnings', 'Deduction' or 'PayrolledBenefit'", nameof(periodInputs));
+            }
+        }
+    }
 
     static void MakeEmployeePayrunInput(
         in IEmployer employer,
         in IStaticInputTestDataEntry staticEntry,
         in IPensionSchemesTestDataEntry? pensionScheme,
         in IEmployeePayrollHistoryYtd history,
-        in List<IPeriodInputTestDataEntry> periodInputs,
+        in List<IEarningsEntry> earnings,
+        in List<IDeductionEntry> deductions,
+        in List<IPayrolledBenefitForPeriod> benefits,
         out EmployeePayrunInputEntry entry)
     {
         var employee = new Employee()
@@ -188,129 +231,22 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
                 TaxTreatment = pensionScheme?.TaxTreatment ?? throw new ArgumentNullException("Pension scheme name doesn't match a value pension", nameof(pensionScheme)),
                 EarningsBasis = pensionScheme?.EarningsBasis ?? throw new ArgumentNullException("Pension scheme name doesn't match a value pension", nameof(pensionScheme))
             } : null,
-            DefaultPensionContributionLevels = staticEntry.PensionScheme != null ? new PensionContributionLevels()
-            {
-                EmployerContributionPercentage = staticEntry.EmployerPercentage ?? 0.0m,
-                EmployeeContribution = staticEntry.EmployeeFixedAmount ?? staticEntry.EmployeePercentage ?? 0.0m,
-                EmployeeContributionIsFixedAmount = staticEntry.EmployeeFixedAmount != null
-            } :
-            new PensionContributionLevels(),
+            DefaultPensionContributionLevels = new PensionContributionLevels()         
         };
 
-        var earnings = ImmutableList<EarningsEntry>.Empty;
-        var deductions = ImmutableList<DeductionEntry>.Empty;
-        var payrolledBenefits = ImmutableList<IPayrolledBenefitForPeriod>.Empty;
-
-        earnings = earnings.Add(new EarningsEntry()
+        var pensionContributionLevels = staticEntry.PensionScheme != null ? new PensionContributionLevels()
         {
-            EarningsDetails = new GenericEarnings()
-            {
-                IsSubjectToTax = true,
-                IsSubjectToNi = true,
-                IsPensionable = true,
-                IsNetToGross = false
-            },
-            FixedAmount = 6083.33m
-        });
+            EmployerContributionPercentage = staticEntry.EmployerPercentage ?? 0.0m,
+            EmployeeContribution = staticEntry.EmployeeFixedAmount ?? staticEntry.EmployeePercentage ?? 0.0m,
+            EmployeeContributionIsFixedAmount = staticEntry.EmployeeFixedAmount != null
+        } : new PensionContributionLevels();
 
-        earnings = earnings.Add(new EarningsEntry()
-        {
-            EarningsDetails = new GenericEarnings()
-            {
-                IsSubjectToTax = true,
-                IsSubjectToNi = true,
-                IsPensionable = true,
-                IsNetToGross = false
-            },
-            FixedAmount = 1000.0m
-        });
-
-        payrolledBenefits = payrolledBenefits.Add(new PayrolledBenefitForPeriod(150.05m));
-
-        var pensionContributionLevels = new PensionContributionLevels()
-        {
-            EmployeeContribution = 495.84m,
-            EmployeeContributionIsFixedAmount = true,
-            EmployerContributionPercentage = 3,
-            EmployersNiReinvestmentPercentage = 100,
-            SalaryExchangeApplied = true
-        };
 
         entry = new EmployeePayrunInputEntry(employee,
             employment,
-            earnings,
-            deductions,
-            payrolledBenefits,
-            pensionContributionLevels);
-    }
-
-    static EmployeePayrunInputEntry GetAugustEntry(in IEmployer employer, in IEmployeePayrollHistoryYtd history)
-    {
-        var employee = new Employee()
-        {
-            FirstName = "Stephen",
-            LastName = "Wilkinson"
-        };
-
-        TaxCode.TryParse("1296L", out var taxCode);
-
-        var employment = new Paytools.Payroll.Model.Employment(history)
-        {
-            TaxCode = taxCode,
-            NiCategory = NiCategory.A,
-            PensionScheme = new PensionScheme()
-            {
-                EarningsBasis = EarningsBasis.PensionablePaySet1,
-                TaxTreatment = PensionTaxTreatment.ReliefAtSource
-            },
-            //IsDirector = true,
-            //DirectorsNiCalculationMethod = DirectorsNiCalculationMethod.AlternativeMethod
-        };
-
-        var earnings = ImmutableList<EarningsEntry>.Empty;
-        var deductions = ImmutableList<DeductionEntry>.Empty;
-        var payrolledBenefits = ImmutableList<IPayrolledBenefitForPeriod>.Empty;
-
-        earnings = earnings.Add(new EarningsEntry()
-        {
-            EarningsDetails = new GenericEarnings()
-            {
-                IsSubjectToTax = true,
-                IsSubjectToNi = true,
-                IsPensionable = true,
-                IsNetToGross = false
-            },
-            FixedAmount = 6083.33m
-        });
-
-        earnings = earnings.Add(new EarningsEntry()
-        {
-            EarningsDetails = new GenericEarnings()
-            {
-                IsSubjectToTax = true,
-                IsSubjectToNi = true,
-                IsPensionable = true,
-                IsNetToGross = false
-            },
-            FixedAmount = 1000.0m
-        });
-
-        payrolledBenefits = payrolledBenefits.Add(new PayrolledBenefitForPeriod(150.05m));
-
-        var pensionContributionLevels = new PensionContributionLevels()
-        {
-            EmployeeContribution = 495.84m,
-            EmployeeContributionIsFixedAmount = true,
-            EmployerContributionPercentage = 3,
-            EmployersNiReinvestmentPercentage = 100,
-            SalaryExchangeApplied = true
-        };
-
-        return new EmployeePayrunInputEntry(employee,
-            employment,
-            earnings,
-            deductions,
-            payrolledBenefits,
+            earnings.ToImmutableList(),
+            deductions.ToImmutableList(),
+            benefits.ToImmutableList(),
             pensionContributionLevels);
     }
 

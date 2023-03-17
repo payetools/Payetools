@@ -37,12 +37,12 @@ public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
     /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
-    public ImmutableList<DeductionEntry> Deductions { get; }
+    public ImmutableList<IDeductionEntry> Deductions { get; }
 
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    public ImmutableList<EarningsEntry> Earnings { get; }
+    public ImmutableList<IEarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
@@ -67,8 +67,8 @@ public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
     public EmployeePayrunInputEntry(
         IEmployee employee,
         IEmployment employment,
-        ImmutableList<EarningsEntry> earnings,
-        ImmutableList<DeductionEntry> deductions,
+        ImmutableList<IEarningsEntry> earnings,
+        ImmutableList<IDeductionEntry> deductions,
         ImmutableList<IPayrolledBenefitForPeriod> payrolledBenefits,
         IPensionContributionLevels pensionContributionLevels)
     {

@@ -37,12 +37,12 @@ public interface IEmployeePayrunInputEntry
     /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
-    ImmutableList<DeductionEntry> Deductions { get; }
+    ImmutableList<IDeductionEntry> Deductions { get; }
 
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    ImmutableList<EarningsEntry> Earnings { get; }
+    ImmutableList<IEarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
