@@ -12,19 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.Employment.Model;
-using Paytools.NationalMinimumWage;
-using Paytools.Payroll;
+using Paytools.NationalInsurance.Model;
+using Paytools.Payroll.Extensions;
 using Paytools.Payroll.Model;
 using Paytools.Payroll.Payruns;
-using System.Collections.Immutable;
-using Paytools.Payroll.Extensions;
-using Paytools.NationalInsurance.Model;
 using Paytools.Pensions.Model;
-using Paytools.IncomeTax.Model;
 using Paytools.Testing.Data.EndToEnd;
-using System.Collections.Specialized;
+using System.Collections.Immutable;
 
 namespace Paytools.Payroll.Tests;
 
@@ -70,8 +67,10 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             payrolledBenefits,
             out var payrunEntry);
 
-        PayDate payDate = new PayDate(2022, 8, 20, PayFrequency.Monthly);
-        PayReferencePeriod payPeriod = new PayReferencePeriod(new DateOnly(), new DateOnly());
+        var payrunInfo = testData.PayrunInfo.Where(pi => pi.TestReference == "Pay1").First();
+
+        PayDate payDate = new PayDate(payrunInfo.PayDay, payrunInfo.PayFrequency);
+        PayReferencePeriod payPeriod = new PayReferencePeriod(payrunInfo.PayPeriodStart, payrunInfo.PayPeriodEnd);
 
         var processor = await GetProcessor(employer, payDate, payPeriod);
 
@@ -82,13 +81,35 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayrunEntries[0]);
 
+        foreach (var employeeResult in result.EmployeePayrunEntries)
+        {
+            CheckResult("Pay1", employeeResult, testData.ExpectedOutputs.Where(eo => eo.TestReference == "Pay1").First());
+        }
+
         Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
         Console.WriteLine();
 
         Console.WriteLine();
     }
 
-    static void MakeEmployeePayrollHistory(in IPreviousYtdTestDataEntry previousYtd, 
+    static void CheckResult(string testReference, in IEmployeePayrunResult result, in IExpectedOutputTestDataEntry expected)
+    {
+        var because = $"TestReference = '{testReference}'";
+
+        result.TotalGrossPay.Should().Be(expected.GrossPay, because);
+        result.TaxablePay.Should().Be(expected.TaxablePay, because);
+        result.NicablePay.Should().Be(expected.NicablePay, because);
+        result.TaxCalculationResult.FinalTaxDue.Should().Be(expected.TaxPaid, because);
+        result.NiCalculationResult.EmployeeContribution.Should().Be(expected.EmployeeNiContribution, because);
+        result.NiCalculationResult.EmployerContribution.Should().Be(expected.EmployerNiContribution, because);
+        result.StudentLoanCalculationResult.StudentLoanDeduction.Should().Be(expected.StudentLoanRepayments, because);
+        result.StudentLoanCalculationResult.PostGraduateLoanDeduction.Should().Be(expected.GraduateLoanRepayments, because);
+        result.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount.Should().Be(expected.EmployeePensionContribution, because);
+        result.PensionContributionCalculationResult.CalculatedEmployerContributionAmount.Should().Be(expected.EmployerPensionContribution, because);
+
+    }
+
+    static void MakeEmployeePayrollHistory(in IPreviousYtdTestDataEntry previousYtd,
         in List<INiYtdHistoryTestDataEntry> niYtdHistory, out IEmployeePayrollHistoryYtd history)
     {
         var niHistoryEntries = niYtdHistory.Select(nih => new EmployeeNiHistoryEntry(
@@ -136,7 +157,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
     static void MakePayrollLineItems(
         in IEnumerable<IPeriodInputTestDataEntry> periodInputs,
         in List<IEarningsTestDataEntry> earningsDetails,
-        in List <IDeductionsTestDataEntry> deductionDetails,
+        in List<IDeductionsTestDataEntry> deductionDetails,
         out List<IEarningsEntry> earnings,
         out List<IDeductionEntry> deductions,
         out List<IPayrolledBenefitForPeriod> benefits)
@@ -148,14 +169,14 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         foreach (var pi in periodInputs)
         {
             if (pi.FixedAmount == null && (pi.Rate == null || pi.Qty == null))
-                        throw new ArgumentException($"Invalid earnings/deduction/benefits entry '{pi.EntryType}' with description '{pi.Description}'; insufficient data supplied", nameof(periodInputs));
+                throw new ArgumentException($"Invalid earnings/deduction/benefits entry '{pi.EntryType}' with description '{pi.Description}'; insufficient data supplied", nameof(periodInputs));
 
             switch (pi.EntryType)
             {
                 case "Earnings":
                     var thisEarnings = new EarningsEntry()
                     {
-                        EarningsDetails = earningsDetails.Where(ed => ed.ShortName == pi.ShortName).Select(ed => 
+                        EarningsDetails = earningsDetails.Where(ed => ed.ShortName == pi.ShortName).Select(ed =>
                             new GenericEarnings()
                             {
                                 Id = Guid.NewGuid(),
@@ -231,7 +252,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
                 TaxTreatment = pensionScheme?.TaxTreatment ?? throw new ArgumentNullException("Pension scheme name doesn't match a value pension", nameof(pensionScheme)),
                 EarningsBasis = pensionScheme?.EarningsBasis ?? throw new ArgumentNullException("Pension scheme name doesn't match a value pension", nameof(pensionScheme))
             } : null,
-            DefaultPensionContributionLevels = new PensionContributionLevels()         
+            DefaultPensionContributionLevels = new PensionContributionLevels()
         };
 
         var pensionContributionLevels = staticEntry.PensionScheme != null ? new PensionContributionLevels()

@@ -31,4 +31,6 @@ public record EndToEndTestDataSet : IEndToEndTestDataSet
     public List<INiYtdHistoryTestDataEntry> NiYtdHistory { get; set; } = default!;
 
     public List<IPensionSchemesTestDataEntry> PensionSchemes { get; set; } = default!;
+
+    public List<IPayrunInfoTestDataEntry> PayrunInfo { get; set; } = default!;
 }

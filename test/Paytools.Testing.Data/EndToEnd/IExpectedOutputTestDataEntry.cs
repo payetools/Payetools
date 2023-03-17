@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Paytools.Common.Model;
 
 namespace Paytools.Testing.Data.EndToEnd;
@@ -31,6 +32,8 @@ public interface IExpectedOutputTestDataEntry
     decimal TaxablePay { get; }
     decimal NicablePay { get; }
     decimal TaxPaid { get; }
+    decimal EmployeeNiContribution { get; }
+    decimal EmployerNiContribution { get; }
     decimal StudentLoanRepayments { get; }
     decimal GraduateLoanRepayments { get; }
     decimal PayrolledBenefits { get; }
@@ -38,6 +41,8 @@ public interface IExpectedOutputTestDataEntry
     decimal EmployerPensionContribution { get; }
     bool PensionUnderNpa { get; }
     decimal EmployeePensionContribution { get; }
+    decimal OtherDeductions { get; }
+    decimal NetPay { get; }
     decimal StatutoryMaternityPayYtd { get; }
     decimal StatutoryPaternityPayYtd { get; }
     decimal StatutoryAdoptionPayYtd { get; }

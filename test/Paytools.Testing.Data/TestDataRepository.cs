@@ -66,9 +66,12 @@ public class TestDataRepository : IDisposable
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IStaticInputTestDataEntry) =>
                 GetTestData<T, StaticInputTestDataEntry>("Paytools_EndToEnd_StaticInput"),
 
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPayrunInfoTestDataEntry) =>
+                GetTestData<T, PayrunInfoTestDataEntry>("Paytools_EndToEnd_PayrunInfo"),
+
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPensionSchemesTestDataEntry) =>
                 GetTestData<T, PensionSchemesTestDataEntry>("Paytools_EndToEnd_PensionSchemes"),
-            
+
             _ => throw new NotImplementedException()
         };
 

@@ -100,7 +100,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     /// <param name="result">An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</param>
     public void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResult result)
     {
-        GetAllEarningsTypes(ref entry, out var earningsTotals);
+        GetAllEarningsTypes(entry, out var earningsTotals);
 
         decimal employersNiSavings = 0.0m;
         var workingGrossPay = earningsTotals.WorkingGrossPay;
@@ -109,7 +109,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
         INiCalculationResult niCalculationResult;
         IPensionContributionCalculationResult pensionContributions;
 
-        CalculateNiContributions(ref entry, nicablePay, out niCalculationResult);
+        CalculateNiContributions(entry, nicablePay, out niCalculationResult);
 
         if (entry.Employment.PensionScheme == null)
         {
@@ -132,7 +132,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
                 taxablePay -= salaryExchangedAmount;
 
                 // Have to recalculate the NI contributions based on the adjusted salary
-                CalculateNiContributions(ref entry, nicablePay, out niCalculationResult);
+                CalculateNiContributions(entry, nicablePay, out niCalculationResult);
 
                 employersNiSavings = originalEmployersNi - niCalculationResult.EmployerContribution;
             }
@@ -171,7 +171,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
             ref pensionContributions, earningsTotals.GrossPay, workingGrossPay, taxablePay, nicablePay, ref entry.Employment.PayrollHistoryYtd);
     }
 
-    private static void GetAllEarningsTypes(ref IEmployeePayrunInputEntry entry, out EarningsTotals earningsTotals)
+    private static void GetAllEarningsTypes(in IEmployeePayrunInputEntry entry, out EarningsTotals earningsTotals)
     {
         // The distinction between gross pay and working gross pay is that the former is the sum of all
         // earned income for the period, whereas the latter is that figure less any pre-tax deductions,
@@ -209,16 +209,16 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
 
         earningsTotals = new EarningsTotals()
         {
-            GrossPay = grossPay,
-            WorkingGrossPay = workingGrossPay,
-            TaxablePay = taxablePay,
-            NicablePay = nicablePay,
-            PensionablePay = pensionablePay,
-            BenefitsInKind = benefitsInKind
+            GrossPay = decimal.Round(grossPay, 2, MidpointRounding.AwayFromZero),
+            WorkingGrossPay = decimal.Round(workingGrossPay, 2, MidpointRounding.AwayFromZero),
+            TaxablePay = decimal.Round(taxablePay, 2, MidpointRounding.AwayFromZero),
+            NicablePay = decimal.Round(nicablePay, 2, MidpointRounding.AwayFromZero),
+            PensionablePay = decimal.Round(pensionablePay, 2, MidpointRounding.AwayFromZero),
+            BenefitsInKind = decimal.Round(benefitsInKind, 2, MidpointRounding.AwayFromZero)
         };
     }
 
-    private void CalculateNiContributions(ref IEmployeePayrunInputEntry entry, decimal nicablePay, out INiCalculationResult result)
+    private void CalculateNiContributions(in IEmployeePayrunInputEntry entry, decimal nicablePay, out INiCalculationResult result)
     {
         if (entry.Employment.IsDirector)
         {
