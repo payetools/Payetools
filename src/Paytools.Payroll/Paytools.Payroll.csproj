@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\shared\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paytools.Common\Paytools.Common.csproj" />
+    <ProjectReference Include="..\Paytools.Employment\Paytools.Employment.csproj" />
+    <ProjectReference Include="..\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
+    <ProjectReference Include="..\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />
+    <ProjectReference Include="..\Paytools.Pensions\Paytools.Pensions.csproj" />
+    <ProjectReference Include="..\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
+    <ProjectReference Include="..\Paytools.StudentLoans\Paytools.StudentLoans.csproj" />
+  </ItemGroup>
+
+</Project>
