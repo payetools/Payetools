@@ -7,7 +7,7 @@ namespace Paytools.IncomeTax.Tests.TestData
     {
         public static List<IncomeTaxTestEntry> Load()
         {
-            var json = File.ReadAllText(@"TestData\income-tax-tests-2022-23-eng-nir.json");
+            var json = File.ReadAllText(@"TestData/income-tax-tests-2022-23-eng-nir.json");
 
             var testEntries = JsonSerializer.Deserialize<List<IncomeTaxTestEntry>>(json, new JsonSerializerOptions()
             {
