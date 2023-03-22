@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
+using System.Globalization;
 
 namespace Paytools.Common.Extensions;
 
@@ -66,4 +67,11 @@ public static class DateOnlyExtensions
 
         return dateOfBirth > date.AddYears(-age) ? --age : age;
     }
+
+    /// <summary>
+    /// Returns the date as a string in UK format (dd/mm/yyyy).
+    /// </summary>
+    /// <param name="date">Date to get string representation for.</param>
+    /// <returns>UK format date string.</returns>
+    public static string ToUk(this DateOnly date) => date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 }

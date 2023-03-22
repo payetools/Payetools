@@ -29,7 +29,7 @@ public class TestDataRepository : IDisposable
     {
         var thisAssembly = Assembly.GetExecutingAssembly();
         var thisAssemblyName = thisAssembly.GetName().Name;
-        var dbPath = Path.Combine(thisAssembly.Location, @"..\..\..\..\..", @$"{thisAssemblyName}\Db\{thisAssemblyName}.db");
+        var dbPath = Path.Combine(thisAssembly.Location, @"../../../../..", @$"{thisAssemblyName}\Db\{thisAssemblyName}.db");
 
         var fi = new FileInfo(dbPath);
 

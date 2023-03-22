@@ -37,4 +37,10 @@
     <ProjectReference Include="..\Paytools.Testing.Utils\Paytools.Testing.Utils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\income-tax-tests-2022-23-eng-nir.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
