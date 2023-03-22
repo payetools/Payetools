@@ -13,14 +13,15 @@
 // limitations under the License.
 
 using System;
+using Xunit.Abstractions;
 
 namespace Paytools.Testing.Data.EndToEnd;
 
 public static class EndToEndTestDataSource
 {
-    public static IEndToEndTestDataSet GetAllData()
+    public static IEndToEndTestDataSet GetAllData(ITestOutputHelper output)
     {
-        using var db = new TestDataRepository();
+        using var db = new TestDataRepository("End-to-end", output);
 
         return new EndToEndTestDataSet()
         {

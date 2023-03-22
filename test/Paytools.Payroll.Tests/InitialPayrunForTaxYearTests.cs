@@ -41,7 +41,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
     [Fact]
     public async Task Test1Async()
     {
-        IEndToEndTestDataSet testData = EndToEndTestDataSource.GetAllData();
+        IEndToEndTestDataSet testData = EndToEndTestDataSource.GetAllData(Output);
 
         Output.WriteLine($"Fetched test data; {testData.StaticInputs.Count} static input items returned");
 

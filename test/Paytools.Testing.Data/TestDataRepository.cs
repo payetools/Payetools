@@ -17,26 +17,34 @@ using Paytools.IncomeTax.Model;
 using Paytools.Testing.Data.EndToEnd;
 using Paytools.Testing.Data.NationalInsurance;
 using System.Reflection;
+using Xunit.Abstractions;
 
 namespace Paytools.Testing.Data;
 
 public class TestDataRepository : IDisposable
 {
+    private readonly ITestOutputHelper TestOutput;
     private readonly ILiteDatabase _database;
     private bool _disposedValue;
 
-    public TestDataRepository()
+    public TestDataRepository(string testContext, ITestOutputHelper output)
     {
+        TestOutput = output;
+
         var thisAssembly = Assembly.GetExecutingAssembly();
         var thisAssemblyName = thisAssembly.GetName().Name;
         var dbPath = Path.Combine(thisAssembly.Location, @"../../../../..", @$"{thisAssemblyName}\Db\{thisAssemblyName}.db");
 
+        TestOutput.WriteLine($"Opening test database at '{dbPath}' for test '{testContext}'");
+
         var fi = new FileInfo(dbPath);
+
+        TestOutput.WriteLine($"Test database FileInfo path = '{fi.FullName}' for test '{testContext}'");
 
         BsonMapper.Global.RegisterType<TaxCode>(tc => tc.ToString(true, true),
             tc => TaxCode.TryParse(tc, out var result) ? result : throw new InvalidCastException($"Unable to parse tax code '{tc}'"));
 
-        _database = new LiteDatabase(dbPath);
+        _database = new LiteDatabase(fi.FullName);
     }
 
     public IEnumerable<T> GetTestData<T>(TestSource source, TestScope scope) where T : class =>
