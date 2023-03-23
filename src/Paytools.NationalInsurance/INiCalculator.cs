@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
 using Paytools.NationalInsurance.Model;
 
 namespace Paytools.NationalInsurance;

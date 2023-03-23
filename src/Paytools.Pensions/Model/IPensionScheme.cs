@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
+
 namespace Paytools.Pensions.Model;
 
 /// <summary>
@@ -28,7 +30,7 @@ public interface IPensionScheme
     /// <summary>
     /// Gets the earnings basis for this pension scheme.
     /// </summary>
-    EarningsBasis EarningsBasis { get; }
+    PensionsEarningsBasis EarningsBasis { get; }
 
     /// <summary>
     /// Gets the tax treatment for this pension scheme.

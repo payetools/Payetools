@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.StudentLoans.Model;
+namespace Paytools.Common.Model;
 
 /// <summary>
 /// Enum that represents a given type of student loan plan.  Post-graduate loans are handled separately.

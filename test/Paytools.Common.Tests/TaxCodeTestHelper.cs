@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -13,11 +13,9 @@
 // limitations under the License.
 
 using FluentAssertions;
-using Paytools.Common;
 using Paytools.Common.Model;
-using Paytools.IncomeTax.Model;
 
-namespace Paytools.IncomeTax.Tests;
+namespace Paytools.Common.Tests;
 
 public static class TaxCodeTestHelper
 {
@@ -41,7 +39,7 @@ public static class TaxCodeTestHelper
     public static void RunInvalidCodeTest(string input)
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
-        
+
         result.Should().BeFalse();
         result.ShouldHaveDefaultValue();
 

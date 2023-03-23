@@ -13,11 +13,10 @@
 // limitations under the License.
 
 using Paytools.Common.Diagnostics;
-using Paytools.Common.Model;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace Paytools.IncomeTax.Model;
+namespace Paytools.Common.Model;
 
 /// <summary>
 /// Represents a UK tax code, with the ability to calculate tax-free pay based the code and the relevant tax period.
@@ -269,7 +268,7 @@ public readonly struct TaxCode
         if (fixedCode == null)
             return false;
 
-        var code = fixedCode.Value.ToUpper();
+        var code = fixedCode.Value.ToUpperInvariant();
 
         TaxTreatment treatment = code switch
         {
@@ -359,5 +358,5 @@ public readonly struct TaxCode
         return match.Success && !string.IsNullOrEmpty(match.Groups[_nonCumulative]?.Value);
     }
 
-    private static char? ToChar(string s) => s.Length == 1 ? s.ToUpper()[0] : null;
+    private static char? ToChar(string s) => s.Length == 1 ? s.ToUpperInvariant()[0] : null;
 }

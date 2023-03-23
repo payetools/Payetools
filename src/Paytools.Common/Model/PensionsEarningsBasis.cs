@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Pensions.Model;
+namespace Paytools.Common.Model;
 
 /// <summary>
 /// Represents the earnings basis which is used to calculate pension contributions.
 /// </summary>
-public enum EarningsBasis
+public enum PensionsEarningsBasis
 {
     /// <summary>Not specified.</summary>
     Unspecified,

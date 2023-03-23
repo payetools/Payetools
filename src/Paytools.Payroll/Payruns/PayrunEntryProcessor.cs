@@ -49,7 +49,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     private readonly INiCalculator _niCalculator;
     private readonly IPensionContributionCalculatorFactory _pensionCalculatorFactory;
     private readonly IStudentLoanCalculator _studentLoanCalculator;
-    private readonly Dictionary<(EarningsBasis, PensionTaxTreatment), IPensionContributionCalculator> _pensionCalculators;
+    private readonly Dictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator> _pensionCalculators;
 
     /// <summary>
     /// Gets the pay date for this payrun calculator.
@@ -88,7 +88,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
         PayDate = payDate;
         PayPeriod = payPeriod;
 
-        _pensionCalculators = new Dictionary<(EarningsBasis, PensionTaxTreatment), IPensionContributionCalculator>();
+        _pensionCalculators = new Dictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator>();
     }
 
     /// <summary>
@@ -264,7 +264,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
         }
     }
 
-    private IPensionContributionCalculator GetPensionCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
+    private IPensionContributionCalculator GetPensionCalculator(PensionsEarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
     {
         IPensionContributionCalculator? calculator;
 

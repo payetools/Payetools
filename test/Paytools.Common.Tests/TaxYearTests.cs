@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -84,7 +84,7 @@ public class TaxYearTests
     {
         RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 4, 6), PayFrequency.FourWeekly, 1);
         RunTaxPeriodTest(TaxYearEnding.Apr5_2023, new DateOnly(2022, 5, 5), PayFrequency.FourWeekly, 2);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2019, new DateOnly(2018, 6, 1), PayFrequency.FourWeekly , 3);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2019, new DateOnly(2018, 6, 1), PayFrequency.FourWeekly, 3);
         RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 12, 31), PayFrequency.FourWeekly, 10);
         RunTaxPeriodTest(TaxYearEnding.Apr5_2020, new DateOnly(2020, 1, 5), PayFrequency.FourWeekly, 10);
         RunTaxPeriodTest(TaxYearEnding.Apr5_2021, new DateOnly(2021, 1, 11), PayFrequency.FourWeekly, 11);

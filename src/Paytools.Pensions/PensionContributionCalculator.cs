@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
 using Paytools.Pensions.Model;
 
 namespace Paytools.Pensions;
@@ -28,7 +29,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
     /// Gets the earnings basis of this pension contribution calculator i.e., Qualifying Earnings vs Pensionable
     /// Pay Set X.
     /// </summary>
-    public abstract EarningsBasis EarningsBasis { get; }
+    public abstract PensionsEarningsBasis EarningsBasis { get; }
 
     /// <summary>
     /// Gets the tax relief factor to apply for relief at source pensions.  For example, if the basic rate of
@@ -90,7 +91,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
 
         result = new PensionContributionCalculationResult()
         {
-            BandedEarnings = EarningsBasis == EarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
+            BandedEarnings = EarningsBasis == PensionsEarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
             CalculatedEmployeeContributionAmount = contributions.employeeContribution + (avcForPeriod ?? 0.0m),
@@ -151,7 +152,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
 
         result = new PensionContributionCalculationResult()
         {
-            BandedEarnings = EarningsBasis == EarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
+            BandedEarnings = EarningsBasis == PensionsEarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
             CalculatedEmployeeContributionAmount = avcForPeriod ?? 0.0m,

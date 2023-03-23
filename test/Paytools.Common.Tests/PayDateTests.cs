@@ -14,11 +14,6 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paytools.Common.Tests;
 
@@ -54,7 +49,7 @@ public class PayDateTests
     }
 
     [Fact]
-    public void TestInvalidPayDates() 
+    public void TestInvalidPayDates()
     {
         var date = new DateOnly(2018, 4, 5);
         var action = () => new PayDate(date, PayFrequency.Monthly);

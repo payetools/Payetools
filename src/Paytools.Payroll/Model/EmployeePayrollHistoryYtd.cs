@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
 using Paytools.Employment.Model;
 using Paytools.NationalInsurance.Model;
-using Paytools.Pensions.Model;
 
 namespace Paytools.Payroll.Model;
 
