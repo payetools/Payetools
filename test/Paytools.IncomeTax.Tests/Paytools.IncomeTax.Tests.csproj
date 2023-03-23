@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -35,6 +35,12 @@
     <ProjectReference Include="..\..\src\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
     <ProjectReference Include="..\..\src\Paytools.ReferenceData\Paytools.ReferenceData.csproj" />
     <ProjectReference Include="..\Paytools.Testing.Utils\Paytools.Testing.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\income-tax-tests-2022-23-eng-nir.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

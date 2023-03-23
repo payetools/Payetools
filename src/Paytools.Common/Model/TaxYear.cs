@@ -123,7 +123,7 @@ public record TaxYear
     public int GetTaxPeriod(DateOnly payDate, PayFrequency payFrequency)
     {
         if (payDate < StartOfTaxYear || payDate > EndOfTaxYear)
-            throw new ArgumentException($"Pay date of {payDate:d} is outside this tax year {StartOfTaxYear:d} - {EndOfTaxYear:d}", nameof(payDate));
+            throw new ArgumentException($"Pay date of {payDate.ToUk()} is outside this tax year {StartOfTaxYear.ToUk()} - {EndOfTaxYear.ToUk()}", nameof(payDate));
 
         switch (payFrequency)
         {

@@ -22,23 +22,28 @@ using Paytools.Payroll.Payruns;
 using Paytools.Pensions.Model;
 using Paytools.Testing.Data.EndToEnd;
 using System.Collections.Immutable;
+using Xunit.Abstractions;
 
 namespace Paytools.Payroll.Tests;
 
 public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactoryFixture>
 {
+    private readonly ITestOutputHelper Output;
     private readonly PayDate _payDate = new PayDate(2022, 5, 5, PayFrequency.Monthly);
     private readonly PayrollProcessorFactoryFixture _payrollProcessorFactoryFixture;
 
-    public InitialPayrunForTaxYearTests(PayrollProcessorFactoryFixture payrollProcessorFactoryFixture)
+    public InitialPayrunForTaxYearTests(PayrollProcessorFactoryFixture payrollProcessorFactoryFixture, ITestOutputHelper output)
     {
         _payrollProcessorFactoryFixture = payrollProcessorFactoryFixture;
+        Output = output;
     }
 
     [Fact]
     public async Task Test1Async()
     {
-        IEndToEndTestDataSet testData = EndToEndTestDataSource.GetAllData();
+        IEndToEndTestDataSet testData = EndToEndTestDataSource.GetAllData(Output);
+
+        Output.WriteLine($"Fetched test data; {testData.StaticInputs.Count} static input items returned");
 
         MakeEmployeePayrollHistory(testData.PreviousYtdInputs.Where(pyi => pyi.TestReference == "Pay1").First(),
             testData.NiYtdHistory.Where(nyh => nyh.TestReference == "Pay1").ToList(),
@@ -47,9 +52,15 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         if (employeePayrollHistory == null)
             throw new InvalidOperationException("History can't be null");
 
+        Output.WriteLine("Employee payroll history created okay");
+
         var staticInput = testData.StaticInputs.Where(si => si.TestReference == "Pay1").First();
 
+        Output.WriteLine("Static inputs retrieved okay");
+
         IEmployer employer = new Employer();
+
+        Output.WriteLine("Making payroll line items...");
 
         MakePayrollLineItems(testData.PeriodInputs.Where(pi => pi.TestReference == "Pay1"),
             testData.EarningsDefinitions,
@@ -57,6 +68,8 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             out var earnings,
             out var deductions,
             out var payrolledBenefits);
+
+        Output.WriteLine("Making payrun input...");
 
         MakeEmployeePayrunInput(employer,
             staticInput,

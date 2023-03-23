@@ -36,7 +36,7 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
     {
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
 
-        using var db = new TestDataRepository();
+        using var db = new TestDataRepository("National Insurance", Output);
 
         var testData = db.GetTestData<IHmrcNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance);
 
