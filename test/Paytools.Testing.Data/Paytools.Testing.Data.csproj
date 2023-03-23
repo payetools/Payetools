@@ -4,12 +4,15 @@
 	<TargetFrameworks>net6.0</TargetFrameworks>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+	
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <CopyLocalReferenceAssemblies>true</CopyLocalReferenceAssemblies>
   </PropertyGroup>
 	
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="5.0.*" />
-    <PackageReference Include="Microsoft.TestPlatform" Version="17.5.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
 
