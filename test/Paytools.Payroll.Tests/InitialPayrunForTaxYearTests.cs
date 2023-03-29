@@ -22,17 +22,19 @@ using Paytools.Payroll.Payruns;
 using Paytools.Pensions.Model;
 using Paytools.Testing.Data.EndToEnd;
 using System.Collections.Immutable;
+using Xunit.Abstractions;
 
 namespace Paytools.Payroll.Tests;
 
 public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactoryFixture>
 {
-    private readonly PayDate _payDate = new PayDate(2022, 5, 5, PayFrequency.Monthly);
+    private readonly ITestOutputHelper Output;
     private readonly PayrollProcessorFactoryFixture _payrollProcessorFactoryFixture;
 
-    public InitialPayrunForTaxYearTests(PayrollProcessorFactoryFixture payrollProcessorFactoryFixture)
+    public InitialPayrunForTaxYearTests(PayrollProcessorFactoryFixture payrollProcessorFactoryFixture, ITestOutputHelper output)
     {
         _payrollProcessorFactoryFixture = payrollProcessorFactoryFixture;
+        Output = output;
     }
 
     [Fact]
@@ -92,7 +94,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         Console.WriteLine();
     }
 
-    static void CheckResult(string testReference, in IEmployeePayrunResult result, in IExpectedOutputTestDataEntry expected)
+    void CheckResult(string testReference, in IEmployeePayrunResult result, in IExpectedOutputTestDataEntry expected)
     {
         var because = $"TestReference = '{testReference}'";
 
@@ -107,6 +109,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         result.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount.Should().Be(expected.EmployeePensionContribution, because);
         result.PensionContributionCalculationResult.CalculatedEmployerContributionAmount.Should().Be(expected.EmployerPensionContribution, because);
 
+        Output.WriteLine($"Completed test reference '{testReference}'");
     }
 
     static void MakeEmployeePayrollHistory(in IPreviousYtdTestDataEntry previousYtd,
