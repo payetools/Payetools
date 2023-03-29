@@ -26,14 +26,14 @@ jobs:
       with:
         dotnet-version: 6.0.x
         
-    - name: Install dependencies
-      run: dotnet add package LiteDB --version 5.0.16   
-      
     - name: Restore dependencies
       run: dotnet restore
       
     - name: Build
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
+      
+    - name: Install dependencies
+      run: dotnet add package LiteDB --version 5.0.16   
       
     - name: Test
       run: dotnet test /p:Configuration=$BUILD_CONFIG --no-build --verbosity normal
