@@ -33,4 +33,4 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
       
     - name: Test
-      run: dotnet test /p:Configuration=$BUILD_CONFIG --no-build --verbosity normal
+      run: dotnet test Paytools.NationalInsurance.Tests /p:Configuration=$BUILD_CONFIG --no-build --verbosity normal
