@@ -20,6 +20,12 @@ namespace Paytools.Common.Tests;
 public class TitleTests
 {
     [Fact]
+    public void FailTest()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Fact]
     public void TestStandardisedTitles()
     {
         Title.Parse("mr").ToString().Should().Be("Mr");
