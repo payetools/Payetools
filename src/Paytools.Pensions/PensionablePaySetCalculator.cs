@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Pensions.Model;
+using Paytools.Common.Model;
 
 namespace Paytools.Pensions;
 
@@ -22,7 +22,7 @@ namespace Paytools.Pensions;
 public class PensionablePaySetCalculator : PensionContributionCalculator
 {
     /// <inheritdoc/>
-    public override EarningsBasis EarningsBasis { get; }
+    public override PensionsEarningsBasis EarningsBasis { get; }
 
     /// <summary>
     /// Initialises a new instance of <see cref="PensionablePaySetCalculator"/> for the specified earnings basic and tax treatment.
@@ -32,12 +32,12 @@ public class PensionablePaySetCalculator : PensionContributionCalculator
     /// <param name="taxTreatment">Tax treatment for the target pension, i.e., net pay arrangement vs relief at source.</param>
     /// <param name="basicRateOfTax">Basic rate of tax to use for relief at source pensions.</param>
     /// <exception cref="ArgumentException">Thrown if an invalid earnings basis is supplied.</exception>
-    public PensionablePaySetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)
+    public PensionablePaySetCalculator(PensionsEarningsBasis earningsBasis, PensionTaxTreatment taxTreatment, decimal? basicRateOfTax = null)
         : base(taxTreatment, basicRateOfTax)
     {
-        if (earningsBasis != EarningsBasis.PensionablePaySet1 &&
-            earningsBasis != EarningsBasis.PensionablePaySet2 &&
-            earningsBasis != EarningsBasis.PensionablePaySet3)
+        if (earningsBasis != PensionsEarningsBasis.PensionablePaySet1 &&
+            earningsBasis != PensionsEarningsBasis.PensionablePaySet2 &&
+            earningsBasis != PensionsEarningsBasis.PensionablePaySet3)
             throw new ArgumentException("Earnings basis must be one of PensionablePaySet1, PensionablePaySet2 or PensionablePaySet3", nameof(earningsBasis));
 
         EarningsBasis = earningsBasis;

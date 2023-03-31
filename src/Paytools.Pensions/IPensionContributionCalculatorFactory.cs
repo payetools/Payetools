@@ -32,7 +32,7 @@ public interface IPensionContributionCalculatorFactory
     /// <param name="payDate">Applicable pay date.</param>
     /// <returns>A new calculator instance.</returns>
     IPensionContributionCalculator GetCalculator(
-        EarningsBasis earningsBasis,
+        PensionsEarningsBasis earningsBasis,
         PensionTaxTreatment taxTreatment,
         PayDate payDate);
 
@@ -48,7 +48,7 @@ public interface IPensionContributionCalculatorFactory
     /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>A new calculator instance.</returns>
     IPensionContributionCalculator GetCalculator(
-        EarningsBasis earningsBasis,
+        PensionsEarningsBasis earningsBasis,
         PensionTaxTreatment taxTreatment,
         TaxYear taxYear,
         PayFrequency payFrequency,

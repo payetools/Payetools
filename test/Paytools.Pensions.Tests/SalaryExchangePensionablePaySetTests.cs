@@ -31,7 +31,7 @@ public class SalaryExchangePensionablePaySetTests : IClassFixture<PensionContrib
     [Fact]
     public async Task TestPensionablePayAsync()
     {
-        var calculator = await GetCalculator(EarningsBasis.PensionablePaySet1, PensionTaxTreatment.NetPayArrangement);
+        var calculator = await GetCalculator(PensionsEarningsBasis.PensionablePaySet1, PensionTaxTreatment.NetPayArrangement);
 
         var pensionableSalary = 5366.59m;
         var employerContributionPct = 3.0m;
@@ -66,13 +66,13 @@ public class SalaryExchangePensionablePaySetTests : IClassFixture<PensionContrib
         result.CalculatedEmployerContributionAmount.Should().Be(expectedEmployerContribution);
         result.SalaryExchangeApplied.Should().Be(true);
         result.BandedEarnings.Should().BeNull();
-        result.EarningsBasis.Should().BeOneOf(new[] { EarningsBasis.PensionablePaySet1, EarningsBasis.PensionablePaySet2, EarningsBasis.PensionablePaySet3 });
+        result.EarningsBasis.Should().BeOneOf(new[] { PensionsEarningsBasis.PensionablePaySet1, PensionsEarningsBasis.PensionablePaySet2, PensionsEarningsBasis.PensionablePaySet3 });
         result.EmployeeAvcAmount.Should().Be(avc);
         result.EmployerContributionAmountBeforeSalaryExchange.Should().Be(expectedEmployerContributionBeforeSE);
         result.EmployerNiSavingsToReinvest.Should().Be(expectedEmployerNiSaving);
     }
 
-    private async Task<IPensionContributionCalculator> GetCalculator(EarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
+    private async Task<IPensionContributionCalculator> GetCalculator(PensionsEarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
     {
         var provider = await _factoryProviderFixture.GetFactory();
 

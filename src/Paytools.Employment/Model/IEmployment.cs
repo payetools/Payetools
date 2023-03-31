@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using Paytools.Common.Model;
-using Paytools.IncomeTax.Model;
 using Paytools.NationalInsurance.Model;
 using Paytools.Pensions.Model;
 using System.Collections.Immutable;

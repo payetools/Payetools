@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using LiteDB;
+using Paytools.Common.Model;
 using Paytools.IncomeTax.Model;
 using Paytools.Testing.Data.EndToEnd;
 using Paytools.Testing.Data.NationalInsurance;

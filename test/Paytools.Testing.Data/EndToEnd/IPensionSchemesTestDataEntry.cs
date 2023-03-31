@@ -23,6 +23,6 @@ public interface IPensionSchemesTestDataEntry
     string TestIdentifier { get; }
     TaxYearEnding TaxYearEnding { get; }
     string SchemeName { get; }
-    EarningsBasis EarningsBasis { get; }
+    PensionsEarningsBasis EarningsBasis { get; }
     PensionTaxTreatment TaxTreatment { get; }
 }

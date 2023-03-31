@@ -46,7 +46,7 @@ public class PensionContributionCalculatorFactory : IPensionContributionCalculat
     /// <returns>A new calculator instance.</returns>
     /// <exception cref="ArgumentException">Thrown if an unsupported earnings basis is provided.</exception>
     public IPensionContributionCalculator GetCalculator(
-        EarningsBasis earningsBasis,
+        PensionsEarningsBasis earningsBasis,
         PensionTaxTreatment taxTreatment,
         PayDate payDate) =>
             GetCalculator(earningsBasis, taxTreatment, payDate.TaxYear, payDate.PayFrequency, payDate.TaxPeriod);
@@ -64,7 +64,7 @@ public class PensionContributionCalculatorFactory : IPensionContributionCalculat
     /// <returns>A new calculator instance.</returns>
     /// <exception cref="ArgumentException">Thrown if an unsupported earnings basis is provided.</exception>
     public IPensionContributionCalculator GetCalculator(
-        EarningsBasis earningsBasis,
+        PensionsEarningsBasis earningsBasis,
         PensionTaxTreatment taxTreatment,
         TaxYear taxYear,
         PayFrequency payFrequency,
@@ -76,13 +76,13 @@ public class PensionContributionCalculatorFactory : IPensionContributionCalculat
 
         switch (earningsBasis)
         {
-            case EarningsBasis.QualifyingEarnings:
+            case PensionsEarningsBasis.QualifyingEarnings:
                 var (lowerLimit, upperLimit) = _provider.GetThresholdsForQualifyingEarnings(taxYear, payFrequency, taxPeriod);
                 return new QualifyingEarningsContributionsCalculator(taxTreatment, lowerLimit, upperLimit, basicRateOfTax);
 
-            case EarningsBasis.PensionablePaySet1:
-            case EarningsBasis.PensionablePaySet2:
-            case EarningsBasis.PensionablePaySet3:
+            case PensionsEarningsBasis.PensionablePaySet1:
+            case PensionsEarningsBasis.PensionablePaySet2:
+            case PensionsEarningsBasis.PensionablePaySet3:
                 return new PensionablePaySetCalculator(earningsBasis, taxTreatment, basicRateOfTax);
 
             default:

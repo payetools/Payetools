@@ -4,7 +4,11 @@
 	<TargetFrameworks>net6.0</TargetFrameworks>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+	
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <CopyLocalReferenceAssemblies>true</CopyLocalReferenceAssemblies>
   </PropertyGroup>
 	
   <ItemGroup>

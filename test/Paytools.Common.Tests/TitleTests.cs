@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -70,7 +70,7 @@ public class TitleTests
         Action action = () => Title.Parse("The Right Honourable Mighty One and Only Most Majestic And Humble");
 
         action.Should().Throw<ArgumentException>()
-            .WithMessage("Titles may not exceed 35 characters in length (Parameter 'title')");            
+            .WithMessage("Titles may not exceed 35 characters in length (Parameter 'title')");
     }
 
     [Fact]

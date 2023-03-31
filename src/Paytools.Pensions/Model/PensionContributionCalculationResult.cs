@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.Common.Model;
+
 namespace Paytools.Pensions.Model;
 
 /// <summary>
@@ -32,7 +34,7 @@ public readonly struct PensionContributionCalculationResult : IPensionContributi
     /// <summary>
     /// Gets the earnings basis for the pension calculation (e.g., Qualifying Earnings).
     /// </summary>
-    public EarningsBasis EarningsBasis { get; init; }
+    public PensionsEarningsBasis EarningsBasis { get; init; }
 
     /// <summary>
     /// Gets the employee contribution percentage, expressed in percentage points, i.e., 5% = 5.0m.

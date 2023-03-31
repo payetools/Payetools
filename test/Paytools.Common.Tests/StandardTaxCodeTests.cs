@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+﻿// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -14,10 +14,9 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
-using Paytools.IncomeTax.Model;
-using Test = Paytools.IncomeTax.Tests.TaxCodeTestHelper;
+using Test = Paytools.Common.Tests.TaxCodeTestHelper;
 
-namespace Paytools.IncomeTax.Tests;
+namespace Paytools.Common.Tests;
 
 public class StandardTaxCodeTests
 {

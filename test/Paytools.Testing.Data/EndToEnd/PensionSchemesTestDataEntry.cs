@@ -23,6 +23,6 @@ public class PensionSchemesTestDataEntry : IPensionSchemesTestDataEntry
     public string TestIdentifier { get; set; } = string.Empty;
     public TaxYearEnding TaxYearEnding { get; set; }
     public string SchemeName { get; set; } = string.Empty;
-    public EarningsBasis EarningsBasis { get; set; }
+    public PensionsEarningsBasis EarningsBasis { get; set; }
     public PensionTaxTreatment TaxTreatment { get; set; }
 }

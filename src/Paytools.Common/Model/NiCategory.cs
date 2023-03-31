@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.NationalInsurance.Model;
+namespace Paytools.Common.Model;
 
 /// <summary>
 /// Represents the set of National Insurance category letters assigned by HMRC.  Taken from

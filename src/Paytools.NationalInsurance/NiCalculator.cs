@@ -16,6 +16,7 @@ using Paytools.NationalInsurance.Model;
 
 namespace Paytools.NationalInsurance;
 
+using Paytools.Common.Model;
 using Paytools.NationalInsurance.Extensions;
 using Paytools.NationalInsurance.Model;
 using Paytools.NationalInsurance.ReferenceData;

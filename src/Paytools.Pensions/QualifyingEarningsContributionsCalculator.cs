@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.Pensions.Model;
+using Paytools.Common.Model;
 
 namespace Paytools.Pensions;
 
@@ -25,9 +25,9 @@ public class QualifyingEarningsContributionsCalculator : PensionContributionCalc
     private readonly decimal _upperLevelForQualifyingEarnings;
 
     /// <summary>
-    /// Gets the earnings basis for this calculator.  Always returns <see cref="EarningsBasis.QualifyingEarnings"/>.
+    /// Gets the earnings basis for this calculator.  Always returns <see cref="PensionsEarningsBasis.QualifyingEarnings"/>.
     /// </summary>
-    public override EarningsBasis EarningsBasis => EarningsBasis.QualifyingEarnings;
+    public override PensionsEarningsBasis EarningsBasis => PensionsEarningsBasis.QualifyingEarnings;
 
     /// <summary>
     /// Initialises a new instance of <see cref="QualifyingEarningsContributionsCalculator"/> with the specified tax treatment,

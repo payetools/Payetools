@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Paytools.Pensions.Model;
+namespace Paytools.Common.Model;
 
 /// <summary>
 /// Enum that represents the tax treatment to be applied to employee pension contributions.

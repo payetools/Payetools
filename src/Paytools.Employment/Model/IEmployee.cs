@@ -20,7 +20,7 @@ namespace Paytools.Employment.Model;
 /// <summary>
 /// Interface that represents an employee for payroll purposes.
 /// </summary>
-public interface IEmployee : IPersonName
+public interface IEmployee : INamedPerson
 {
     /// <summary>
     /// Gets the individual's National Insurance number.
