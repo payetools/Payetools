@@ -40,6 +40,11 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
 
         var testData = db.GetTestData<IHmrcNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance);
 
+        if (!testData.Any())
+            Assert.Fail("No National Insurance tests found");
+
+        Console.WriteLine($"{testData.Count()} tests found");
+
         int testsCompleted = 0;
 
         foreach (var test in testData.ToList().Where(t => t.RelatesTo == "Employee" &&
