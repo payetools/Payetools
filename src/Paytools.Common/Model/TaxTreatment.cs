@@ -62,15 +62,16 @@ public static class TaxTreatmentExtensions
     /// Gets the zero-based index of the band that a given tax code (BR, D0, D1, D2) applies to.
     /// </summary>
     /// <param name="taxTreatment">Tax treatment to determine band index for.</param>
+    /// <param name="applicableCountries">Applicable countries for the input tax treatment.</param>
     /// <returns>Band index for supplied tax treatment.</returns>
     /// <exception cref="ArgumentException">Thrown if it is not possible to retrieve a band index for ththe supplied tax treatment.</exception>
-    public static int GetBandIndex(this TaxTreatment taxTreatment) =>
+    public static int GetBandIndex(this TaxTreatment taxTreatment, CountriesForTaxPurposes applicableCountries) =>
         taxTreatment switch
         {
-            TaxTreatment.BR => 0,
-            TaxTreatment.D0 => 1,
-            TaxTreatment.D1 => 2,
-            TaxTreatment.D2 => 3,
+            TaxTreatment.BR => applicableCountries == CountriesForTaxPurposes.Scotland ? 1 : 0,
+            TaxTreatment.D0 => applicableCountries == CountriesForTaxPurposes.Scotland ? 2 : 1,
+            TaxTreatment.D1 => applicableCountries == CountriesForTaxPurposes.Scotland ? 3 : 2,
+            TaxTreatment.D2 => applicableCountries == CountriesForTaxPurposes.Scotland ? 4 : throw new ArgumentOutOfRangeException(nameof(taxTreatment), "Invalid tax treatment for applicable tax regime"),
             _ => throw new ArgumentException($"Band index not valid for tax treatment {taxTreatment}", nameof(taxTreatment))
         };
 }

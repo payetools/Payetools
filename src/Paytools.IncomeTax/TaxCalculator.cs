@@ -318,7 +318,7 @@ public class TaxCalculator : ITaxCalculator
             case TaxTreatment.D0:
             case TaxTreatment.D1:
             case TaxTreatment.D2:
-                bandIndex = taxCode.TaxTreatment.GetBandIndex();
+                bandIndex = taxCode.TaxTreatment.GetBandIndex(taxCode.ApplicableCountries);
                 if (bandIndex >= TaxBandwidths.TaxBandwidthEntries.Length)
                     throw new InconsistentDataException($"Tax code {taxCode.TaxTreatment} invalid for tax year/countries combination");
                 taxRate = TaxBandwidths.TaxBandwidthEntries[bandIndex].Rate;
