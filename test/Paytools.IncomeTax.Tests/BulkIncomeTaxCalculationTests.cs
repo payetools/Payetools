@@ -38,7 +38,6 @@ public class BulkIncomeTaxCalculationTests
     [Fact]
     public async Task RunTests()
     {
-
         var provider = await
             Testing.Utils.ReferenceDataHelper.CreateProviderAsync<ITaxReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
 
@@ -52,6 +51,7 @@ public class BulkIncomeTaxCalculationTests
             Assert.Fail("No National Insurance tests found");
 
         Console.WriteLine($"{testData.Count()} tests found");
+        Output.WriteLine($"{testData.Count()} tests found");
 
         int testIndex = 1;
         int testCompleted = 0;
@@ -60,10 +60,6 @@ public class BulkIncomeTaxCalculationTests
         {
             var taxYear = new TaxYear(test.TaxYearEnding);
             var taxCode = test.GetFullTaxCode(taxYear);
-
-            // Workaround for failing SXX tests
-            if (test.TaxCode == "SBR" || test.TaxCode == "SD0" || test.TaxCode == "SD1" || test.TaxCode == "SD2")
-                continue;
 
             var applicableCountries = CountriesForTaxPurposesConverter.ToEnum(test.RelatesTo);
 
@@ -83,10 +79,6 @@ public class BulkIncomeTaxCalculationTests
                 Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, taxCode, test.TaxDueInPeriod, result.FinalTaxDue);
 
             result.FinalTaxDue.Should().Be(test.TaxDueInPeriod, $"test failed with {test.TaxDueInPeriod} != {result.FinalTaxDue} (Index {testIndex}, tax code {test.TaxCode})");
-
-            //            var totalTax = result.TaxAtEachBand.Select(tb => tb.TaxDue).Sum();
-
-            //totalTax.Should().Be(test.TaxDueToDate);
 
             testCompleted++;
             testIndex++;
