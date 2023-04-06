@@ -109,7 +109,7 @@ public class TaxCalculator : ITaxCalculator
         out ITaxCalculationResult result)
     {
         if (taxCode.TaxTreatment != TaxTreatment.NT && taxCode.ApplicableCountries != _applicableCountries)
-            throw new ArgumentException("Supplied tax code does not match tax regime for this tax calculator", nameof(taxCode));
+            throw new ArgumentException($"Supplied tax code '{taxCode.ToString(true, true)}' does not match tax regime '{_applicableCountries}' for tax calculator for tax year {TaxYear.TaxYearEnding}", nameof(taxCode));
 
         InternalTaxCalculationResult internalResult;
 

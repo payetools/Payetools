@@ -1,6 +1,6 @@
-﻿// Copyright (c) 2023 Paytools Foundation
+// Copyright (c) 2023 Paytools Foundation.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")~
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -12,21 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using Paytools.Common.Model;
 
-namespace Paytools.IncomeTax.Tests.TestData;
+namespace Paytools.Testing.Data.IncomeTax;
 
-public class IncomeTaxTestEntry
+public class HmrcIncomeTaxTestDataEntry : IHmrcIncomeTaxTestDataEntry
 {
-    public string Description { get; set; } = default!;
+    public string DefinitionVersion { get; set; } = string.Empty;
+    public string TestIdentifier { get; set; } = string.Empty;
+    public TaxYearEnding TaxYearEnding { get; set; }
+    public string RelatesTo { get; set; } = string.Empty;
+    public PayFrequency PayFrequency { get; set; }
     public decimal GrossPay { get; set; }
     public decimal TaxablePayToDate { get; set; }
-    public string TaxCode { get; set; } = default!;
-    public string Wk1 { get; set; } = default!;
+    public string TaxCode { get; set; } = string.Empty;
+    public string? W1M1Flag { get; set; }
     public int Period { get; set; }
-    public decimal TaxDue { get; set; }
+    public decimal TaxDueInPeriod { get; set; }
     public decimal TaxDueToDate { get; set; }
-    public PayFrequency PayFrequency { get; set; }
-
-    public bool IsNonCumulative => Wk1 == "WM1";
 }

@@ -16,6 +16,7 @@ using LiteDB;
 using Paytools.Common.Model;
 using Paytools.IncomeTax.Model;
 using Paytools.Testing.Data.EndToEnd;
+using Paytools.Testing.Data.IncomeTax;
 using Paytools.Testing.Data.NationalInsurance;
 using System.Reflection;
 using Xunit.Abstractions;
@@ -51,6 +52,9 @@ public class TestDataRepository : IDisposable
     public IEnumerable<T> GetTestData<T>(TestSource source, TestScope scope) where T : class =>
         (source, scope) switch
         {
+            (TestSource.Hmrc, TestScope.IncomeTax) when typeof(T) == typeof(IHmrcIncomeTaxTestDataEntry) =>
+                GetTestData<T, HmrcIncomeTaxTestDataEntry>("HMRC_IncomeTax"),
+
             (TestSource.Hmrc, TestScope.NationalInsurance) when typeof(T) == typeof(IHmrcNiTestDataEntry) =>
                 GetTestData<T, HmrcNiTestDataEntry>("HMRC_NationalInsurance"),
 
@@ -80,7 +84,7 @@ public class TestDataRepository : IDisposable
 
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPensionSchemesTestDataEntry) =>
                 GetTestData<T, PensionSchemesTestDataEntry>("Paytools_EndToEnd_PensionSchemes"),
-
+            
             _ => throw new NotImplementedException()
         };
 
