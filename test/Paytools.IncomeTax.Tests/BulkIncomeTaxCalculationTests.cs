@@ -14,13 +14,12 @@
 
 using FluentAssertions;
 using Paytools.Common.Model;
-using Paytools.IncomeTax.Model;
 using Paytools.IncomeTax.ReferenceData;
-using Paytools.IncomeTax.Tests.TestData;
+using Paytools.Testing.Data;
+using Paytools.Testing.Data.IncomeTax;
 using Paytools.Testing.Utils;
 using System.Diagnostics;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace Paytools.IncomeTax.Tests;
 
@@ -39,43 +38,47 @@ public class BulkIncomeTaxCalculationTests
     [Fact]
     public async Task RunTests()
     {
-        var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
 
-        var provider = await 
+        var provider = await
             Testing.Utils.ReferenceDataHelper.CreateProviderAsync<ITaxReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
 
         var taxCalculatorFactory = new TaxCalculatorFactory(provider);
-        var tests = IncomeTaxTestDataLoader.Load();
+
+        using var db = new TestDataRepository("Income Tax", Output);
+
+        var testData = db.GetTestData<IHmrcIncomeTaxTestDataEntry>(TestSource.Hmrc, TestScope.IncomeTax);
+
+        if (!testData.Any())
+            Assert.Fail("No National Insurance tests found");
+
+        Console.WriteLine($"{testData.Count()} tests found");
 
         int testIndex = 1;
         int testCompleted = 0;
 
-        foreach (var test in tests)
+        foreach (var test in testData)
         {
-            var fullTaxCode = string.Format("{0}{1}", test.TaxCode, test.IsNonCumulative ? " X" : "");
+            var taxYear = new TaxYear(test.TaxYearEnding);
+            var taxCode = test.GetFullTaxCode(taxYear);
 
-            if (!TaxCode.TryParse(fullTaxCode, out var taxCode))
-                throw new XunitException($"Unable to parse tax code '{test.TaxCode}'");
-
-            var applicableCountries = taxCode.TaxTreatment == TaxTreatment.NT ?
-                taxYear.GetDefaultCountriesForYear() : taxCode.ApplicableCountries;
+            var applicableCountries = CountriesForTaxPurposesConverter.ToEnum(test.RelatesTo);
 
             var calculator = taxCalculatorFactory.GetCalculator(applicableCountries, taxYear, test.PayFrequency, test.Period);
 
             calculator.Calculate(test.GrossPay,
                 0.0m,
-                (TaxCode)taxCode,
+                taxCode,
                 test.TaxablePayToDate - test.GrossPay,
-                test.TaxDueToDate - test.TaxDue,
+                test.TaxDueToDate - test.TaxDueInPeriod,
                 0.0m,
                 out var result);
 
-            Debug.WriteLine("Running test {0} with tax code '{1}', period {2}", testIndex, fullTaxCode, test.Period);
+            Debug.WriteLine("Running test {0} with tax code '{1}', period {2}", testIndex, taxCode, test.Period);
 
-            if (test.TaxDue != result.FinalTaxDue)
-                Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, fullTaxCode, test.TaxDue, result.FinalTaxDue);
+            if (test.TaxDueInPeriod != result.FinalTaxDue)
+                Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, taxCode, test.TaxDueInPeriod, result.FinalTaxDue);
 
-            result.FinalTaxDue.Should().Be(test.TaxDue, $"test failed with {test.TaxDue} != {result.FinalTaxDue} (Index {testIndex}, tax code {test.TaxCode})");
+            result.FinalTaxDue.Should().Be(test.TaxDueInPeriod, $"test failed with {test.TaxDueInPeriod} != {result.FinalTaxDue} (Index {testIndex}, tax code {test.TaxCode})");
 
             //            var totalTax = result.TaxAtEachBand.Select(tb => tb.TaxDue).Sum();
 
@@ -87,4 +90,5 @@ public class BulkIncomeTaxCalculationTests
 
         Output.WriteLine($"{testCompleted} tests completed successfully");
     }
+
 }

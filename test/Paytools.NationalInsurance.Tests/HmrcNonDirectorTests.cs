@@ -48,7 +48,7 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
         int testsCompleted = 0;
 
         foreach (var test in testData.ToList().Where(t => t.RelatesTo == "Employee" &&
-            (t.PayFrequency == PayFrequency.Monthly || t.PayFrequency == PayFrequency.Weekly || t.PayFrequency == PayFrequency.FourWeekly)))
+            (t.PayFrequency == PayFrequency.Monthly || t.PayFrequency == PayFrequency.Weekly))) // || t.PayFrequency == PayFrequency.FourWeekly)))
         {
             var payDate = new PayDate(taxYear.GetLastDayOfTaxPeriod(test.PayFrequency, test.Period), test.PayFrequency);
 

@@ -23,6 +23,7 @@ namespace Paytools.Common.Model;
 /// </summary>
 public readonly struct TaxCode
 {
+    // Constants used in the following regular expressions, and in the code for extracting values
     private const string _nonCumulative = "NonCumulative";
     private const string _fixedCode = "FixedCode";
     private const string _countryPrefix = "CountryPrefix";
