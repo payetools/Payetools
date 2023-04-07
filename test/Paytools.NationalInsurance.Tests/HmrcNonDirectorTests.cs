@@ -38,17 +38,18 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
 
         using var db = new TestDataRepository("National Insurance", Output);
 
-        var testData = db.GetTestData<IHmrcNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance);
+        var testData = db.GetTestData<IHmrcNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance)
+            .Where(t => t.RelatesTo == "Employee");
 
         if (!testData.Any())
             Assert.Fail("No National Insurance tests found");
 
         Console.WriteLine($"{testData.Count()} tests found");
+        Output.WriteLine($"{testData.Count()} National Insurance tests found");
 
         int testsCompleted = 0;
 
-        foreach (var test in testData.ToList().Where(t => t.RelatesTo == "Employee" &&
-            (t.PayFrequency == PayFrequency.Monthly || t.PayFrequency == PayFrequency.Weekly))) // || t.PayFrequency == PayFrequency.FourWeekly)))
+        foreach (var test in testData.ToList())
         {
             var payDate = new PayDate(taxYear.GetLastDayOfTaxPeriod(test.PayFrequency, test.Period), test.PayFrequency);
 

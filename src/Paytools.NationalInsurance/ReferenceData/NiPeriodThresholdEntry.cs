@@ -84,9 +84,11 @@ public record NiPeriodThresholdEntry
         // up to nearest whole pound.
         ThresholdForPeriod = decimal.Round(rawThresholdForPeriod, 0, MidpointRounding.AwayFromZero);
 
+        var useStandardRoundingApproach = (payFrequency == PayFrequency.Weekly || payFrequency == PayFrequency.Monthly) && numberOfTaxPeriods == 1;
+
         // From HMRC documentation: 'p1' = number of weeks/months in pay period. If equals 1 round result of calculation
         // at this point to nearest whole pound. If more than 1 round up to whole pounds.
-        ThresholdForPeriod1 = numberOfTaxPeriods == 1 ?
+        ThresholdForPeriod1 = useStandardRoundingApproach ?
             decimal.Round(rawThresholdForPeriod, 0, MidpointRounding.AwayFromZero) :
             decimal.Round(rawThresholdForPeriod, 0, MidpointRounding.ToPositiveInfinity);
     }

@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.NationalInsurance.Model;
-
-namespace Paytools.NationalInsurance;
-
 using Paytools.Common.Model;
 using Paytools.NationalInsurance.Extensions;
 using Paytools.NationalInsurance.Model;
 using Paytools.NationalInsurance.ReferenceData;
 using System.Collections.ObjectModel;
-using static NiThresholdType;
+using static Paytools.NationalInsurance.Model.NiThresholdType;
+
+namespace Paytools.NationalInsurance;
 
 /// <summary>
 /// Represents a National Insurance calculator that implements <see cref="INiCalculator"/>.
