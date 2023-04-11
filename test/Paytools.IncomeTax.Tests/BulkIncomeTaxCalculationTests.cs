@@ -15,11 +15,8 @@
 using FluentAssertions;
 using Paytools.Common.Extensions;
 using Paytools.Common.Model;
-using Paytools.IncomeTax.ReferenceData;
-using Paytools.NationalInsurance;
 using Paytools.Testing.Data;
 using Paytools.Testing.Data.IncomeTax;
-using Paytools.Testing.Utils;
 using System.Diagnostics;
 using Xunit.Abstractions;
 
@@ -48,8 +45,8 @@ public class BulkIncomeTaxCalculationTests : IClassFixture<TaxCalculatorFactoryD
         if (!testData.Any())
             Assert.Fail("No National Insurance tests found");
 
-        Console.WriteLine($"{testData.Count()} tests found");
-        Output.WriteLine($"{testData.Count()} tests found");
+        Console.WriteLine($"{testData.Count} tests found");
+        Output.WriteLine($"{testData.Count} tests found");
 
         int testIndex = 1;
         int testCompleted = 0;
