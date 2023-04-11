@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ReferenceData\HmrcReferenceData_2022_2023.json" />
+    <None Remove="ReferenceData\HmrcReferenceData_2023_2024.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ReferenceData\HmrcReferenceData_2022_2023.json" />
+    <EmbeddedResource Include="ReferenceData\HmrcReferenceData_2023_2024.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Paytools.Common\Paytools.Common.csproj" />
     <ProjectReference Include="..\..\src\Paytools.IncomeTax\Paytools.IncomeTax.csproj" />
     <ProjectReference Include="..\..\src\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj" />

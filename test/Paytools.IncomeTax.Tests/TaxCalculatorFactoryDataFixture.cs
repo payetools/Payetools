@@ -15,11 +15,10 @@
 using Paytools.ReferenceData;
 using Paytools.Testing.Utils;
 
-namespace Paytools.Pensions.Tests;
+namespace Paytools.IncomeTax.Tests;
 
-public class PensionContributionsCalculatorFactoryDataFixture : CalculatorFactoryDataFixture<IPensionContributionCalculatorFactory>
+public class TaxCalculatorFactoryDataFixture : CalculatorFactoryDataFixture<ITaxCalculatorFactory>
 {
-
-    protected override IPensionContributionCalculatorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
-        new PensionContributionCalculatorFactory(provider);
+    protected override ITaxCalculatorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
+        new TaxCalculatorFactory(provider);
 }

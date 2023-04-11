@@ -12,25 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Paytools.ReferenceData;
 using Paytools.StudentLoans;
-using Paytools.StudentLoans.ReferenceData;
 using Paytools.Testing.Utils;
 
 namespace Paytools.NationalMinimumWage.Tests;
 
-public class StudentLoanCalculatorFactoryDataFixture
+public class StudentLoanCalculatorFactoryDataFixture : CalculatorFactoryDataFixture<IStudentLoanCalculatorFactory>
 {
-    private AsyncLazy<IStudentLoanCalculatorFactory> _factory = new AsyncLazy<IStudentLoanCalculatorFactory>(async () =>
-    {
-        var referenceDataFactory = Testing.Utils.ReferenceDataHelper.GetFactory();
-
-        var provider = await Testing.Utils.ReferenceDataHelper.CreateProviderAsync<IStudentLoanReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\StudentLoans_2022_2023.json") });
-
-        return new StudentLoanCalculatorFactory(provider);
-    });
-
-    public async Task<IStudentLoanCalculatorFactory> GetFactory()
-    {
-        return await _factory;
-    }
+    protected override IStudentLoanCalculatorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
+        new StudentLoanCalculatorFactory(provider);
 }

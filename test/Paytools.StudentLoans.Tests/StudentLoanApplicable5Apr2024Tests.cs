@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Paytools Foundation.
+ï»¿// Copyright (c) 2023 Paytools Foundation.
 //
 // Licensed under the Apache License, Version 2.0 (the "License") ~
 // you may not use this file except in compliance with the License.
@@ -15,16 +15,15 @@
 using FluentAssertions;
 using Paytools.Common.Model;
 using Paytools.NationalMinimumWage.Tests;
-using Paytools.StudentLoans.Model;
 
 namespace Paytools.StudentLoans.Tests;
 
-public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFactoryDataFixture>
+public class StudentLoanApplicable5Apr2024Tests : IClassFixture<StudentLoanCalculatorFactoryDataFixture>
 {
-    private readonly TaxYear _taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
+    private readonly TaxYear _taxYear = new TaxYear(TaxYearEnding.Apr5_2024);
     private readonly StudentLoanCalculatorFactoryDataFixture _factoryProviderFixture;
 
-    public StudentLoanApplicableTests(StudentLoanCalculatorFactoryDataFixture factoryProviderFixture)
+    public StudentLoanApplicable5Apr2024Tests(StudentLoanCalculatorFactoryDataFixture factoryProviderFixture)
     {
         _factoryProviderFixture = factoryProviderFixture;
     }
@@ -34,13 +33,13 @@ public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFac
     {
         var calculator = await GetCalculator(_taxYear, PayFrequency.Monthly, 1);
 
-        RunTest(calculator, 1500.00m, StudentLoanType.Plan1, false, 0.0m, 0.0m, 1682.91m, null);
+        RunTest(calculator, 1500.00m, StudentLoanType.Plan1, false, 0.0m, 0.0m, 1834.58m, null);
 
-        RunTest(calculator, 1694.02m, StudentLoanType.Plan1, false, 0.0m, 0.0m, 1682.91m, null);
+        RunTest(calculator, 1845.69m, StudentLoanType.Plan1, false, 0.0m, 0.0m, 1834.58m, null);
 
-        RunTest(calculator, 1694.03m, StudentLoanType.Plan1, false, 1.0m, 0.0m, 1682.91m, null);
+        RunTest(calculator, 1845.70m, StudentLoanType.Plan1, false, 1.0m, 0.0m, 1834.58m, null);
 
-        RunTest(calculator, 8027.36m, StudentLoanType.Plan1, false, 571.0m, 0.0m, 1682.91m, null);
+        RunTest(calculator, 8179.03m, StudentLoanType.Plan1, false, 571.0m, 0.0m, 1834.58m, null);
     }
 
     [Fact]
@@ -62,17 +61,19 @@ public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFac
     {
         var calculator = await GetCalculator(_taxYear, PayFrequency.TwoWeekly, 10);
 
-        RunTest(calculator, 187.06m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 975.96m, null);
+        RunTest(calculator, 187.06m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 1063.84m, null);
 
-        RunTest(calculator, 987.06m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 975.96m, null);
+        RunTest(calculator, 1074.94m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 1063.84m, null);
 
-        RunTest(calculator, 987.07m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 975.96m, null);
+        RunTest(calculator, 1074.95m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 1063.84m, null);
 
-        RunTest(calculator, 987.18m, StudentLoanType.Plan4, false, 1.0m, 0.0m, 975.96m, null);
+        RunTest(calculator, 1074.96m, StudentLoanType.Plan4, false, 1.0m, 0.0m, 1063.84m, null);
 
-        RunTest(calculator, 1087.07m, StudentLoanType.Plan4, false, 9.0m, 0.0m, 975.96m, null);
+        RunTest(calculator, 1075.06m, StudentLoanType.Plan4, false, 1.0m, 0.0m, 1063.84m, null);        
 
-        RunTest(calculator, 5164.85m, StudentLoanType.Plan4, false, 377.0m, 0.0m, 975.96m, null);
+        RunTest(calculator, 1174.96m, StudentLoanType.Plan4, false, 10.0m, 0.0m, 1063.84m, null);
+
+        RunTest(calculator, 5252.73m, StudentLoanType.Plan4, false, 377.0m, 0.0m, 1063.84m, null);
     }
 
     [Fact]
@@ -96,7 +97,7 @@ public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFac
     {
         var calculator = await GetCalculator(_taxYear, PayFrequency.Monthly, 4);
 
-        RunTest(calculator, 2350.12m, StudentLoanType.Plan1, true, 60.0m, 36.0m, 1682.91m, 1750.0m);
+        RunTest(calculator, 2334.69m, StudentLoanType.Plan1, true, 45.0m, 35.0m, 1834.58m, 1750.0m);
     }
 
     private void RunTest(IStudentLoanCalculator calculator, decimal grossSalary, StudentLoanType? studentLoanType, bool hasPostGradLoan,
@@ -106,12 +107,12 @@ public class StudentLoanApplicableTests : IClassFixture<StudentLoanCalculatorFac
         calculator.Calculate(grossSalary, studentLoanType, hasPostGradLoan, out var result);
 
         result.StudentLoanType.Should().Be(studentLoanType);
-        result.HasPostGradLoan.Should().Be(hasPostGradLoan, $"gross salary of £{grossSalary}");
-        result.StudentLoanThresholdUsed.Should().Be(expectedStudentLoanThreshold, $"gross salary of £{grossSalary}");
-        result.PostGradLoanThresholdUsed.Should().Be(expectedPostGradLoanThreshold, $"gross salary of £{grossSalary}");
-        result.StudentLoanDeduction.Should().Be(expectedStudentLoanDeduction, $"gross salary of £{grossSalary}");
-        result.PostGraduateLoanDeduction.Should().Be(expectedPostGradLoanDeduction, $"gross salary of £{grossSalary}");
-        result.TotalDeduction.Should().Be(expectedStudentLoanDeduction + expectedPostGradLoanDeduction, $"gross salary of £{grossSalary}");
+        result.HasPostGradLoan.Should().Be(hasPostGradLoan, $"gross salary of Â£{grossSalary}");
+        result.StudentLoanThresholdUsed.Should().Be(expectedStudentLoanThreshold, $"gross salary of Â£{grossSalary}");
+        result.PostGradLoanThresholdUsed.Should().Be(expectedPostGradLoanThreshold, $"gross salary of Â£{grossSalary}");
+        result.StudentLoanDeduction.Should().Be(expectedStudentLoanDeduction, $"gross salary of Â£{grossSalary}");
+        result.PostGraduateLoanDeduction.Should().Be(expectedPostGradLoanDeduction, $"gross salary of Â£{grossSalary}");
+        result.TotalDeduction.Should().Be(expectedStudentLoanDeduction + expectedPostGradLoanDeduction, $"gross salary of Â£{grossSalary}");
     }
 
     private async Task<IStudentLoanCalculator> GetCalculator(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)

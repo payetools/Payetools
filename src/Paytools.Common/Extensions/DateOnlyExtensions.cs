@@ -69,6 +69,15 @@ public static class DateOnlyExtensions
     }
 
     /// <summary>
+    /// Converts the supplied <see cref="DateOnly"/> to a <see cref="PayDate"/> based on the specified <see cref="PayFrequency"/>.
+    /// </summary>
+    /// <param name="date">Date to obtain PayDate for.</param>
+    /// <param name="payFrequency">Applicable pay frequency for this pay date.</param>
+    /// <returns>PayDate for the supplied date and pay frequency.</returns>
+    public static PayDate ToPayDate(this DateOnly date, PayFrequency payFrequency)
+        => new PayDate(date, payFrequency);
+
+    /// <summary>
     /// Returns the date as a string in UK format (dd/mm/yyyy).
     /// </summary>
     /// <param name="date">Date to get string representation for.</param>

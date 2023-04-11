@@ -12,24 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.NationalInsurance.ReferenceData;
+using Paytools.ReferenceData;
 using Paytools.Testing.Utils;
 
 namespace Paytools.NationalInsurance.Tests;
 
-public class NiCalculatorFactoryDataFixture
+public class NiCalculatorFactoryDataFixture : CalculatorFactoryDataFixture<INiCalculatorFactory>
 {
-    private readonly AsyncLazy<INiCalculatorFactory> _factory = new AsyncLazy<INiCalculatorFactory>(async () =>
-    {
-        var referenceDataFactory = ReferenceDataHelper.GetFactory();
-
-        var provider = await ReferenceDataHelper.CreateProviderAsync<INiReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalInsurance_2022_2023.json") });
-
-        return new NiCalculatorFactory(provider);
-    });
-
-    public async Task<INiCalculatorFactory> GetFactory()
-    {
-        return await _factory;
-    }
+    protected override INiCalculatorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
+        new NiCalculatorFactory(provider);
 }

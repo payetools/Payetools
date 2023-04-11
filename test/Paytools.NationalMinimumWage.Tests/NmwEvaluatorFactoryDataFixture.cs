@@ -12,24 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Paytools.NationalMinimumWage.ReferenceData;
+using Paytools.ReferenceData;
 using Paytools.Testing.Utils;
 
 namespace Paytools.NationalMinimumWage.Tests;
 
-public class NmwEvaluatorFactoryDataFixture
+public class NmwEvaluatorFactoryDataFixture : CalculatorFactoryDataFixture<INmwEvaluatorFactory>
 {
-    private AsyncLazy<INmwEvaluatorFactory> _factory = new AsyncLazy<INmwEvaluatorFactory>(async () =>
-    {
-        var referenceDataFactory = ReferenceDataHelper.GetFactory();
-
-        var provider = await ReferenceDataHelper.CreateProviderAsync<INmwReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\NationalMinimumWage_2022_2023.json") });
-
-        return new NmwEvaluatorFactory(provider);
-    });
-
-    public async Task<INmwEvaluatorFactory> GetFactory()
-    {
-        return await _factory;
-    }
+    protected override INmwEvaluatorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
+        new NmwEvaluatorFactory(provider);
 }
