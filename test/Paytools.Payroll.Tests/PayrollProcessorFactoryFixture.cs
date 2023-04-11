@@ -18,20 +18,8 @@ using Paytools.Testing.Utils;
 
 namespace Paytools.Payroll.Tests;
 
-public class PayrollProcessorFactoryFixture
+public class PayrollProcessorFactoryFixture : CalculatorFactoryDataFixture<IPayrunProcessorFactory>
 {
-    private readonly AsyncLazy<IPayrunProcessorFactory> _factory = new AsyncLazy<IPayrunProcessorFactory>(async () =>
-    {
-        var referenceDataFactory = ReferenceDataHelper.GetFactory();
-
-        var provider = await ReferenceDataHelper.CreateProviderAsync<IHmrcReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\Payroll_2022_2023.json") });
-
-        return new PayrunProcessorFactory(provider);
-    });
-
-    public async Task<IPayrunProcessorFactory> GetFactory()
-    {
-        return await _factory;
-    }
-
+    protected override IPayrunProcessorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
+        new PayrunProcessorFactory(provider);
 }

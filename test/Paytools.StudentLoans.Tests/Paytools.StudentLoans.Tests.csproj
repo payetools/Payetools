@@ -9,11 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\StudentLoans_2022_2023.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="ReferenceData\StudentLoans_2022_2023.json" />
+    <Compile Remove="ReferenceData\**" />
+    <EmbeddedResource Remove="ReferenceData\**" />
+    <None Remove="ReferenceData\**" />
   </ItemGroup>
 
   <ItemGroup>

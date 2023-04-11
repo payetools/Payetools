@@ -13,8 +13,10 @@
 // limitations under the License.
 
 using FluentAssertions;
+using Paytools.Common.Extensions;
 using Paytools.Common.Model;
 using Paytools.IncomeTax.ReferenceData;
+using Paytools.NationalInsurance;
 using Paytools.Testing.Data;
 using Paytools.Testing.Data.IncomeTax;
 using Paytools.Testing.Utils;
@@ -23,14 +25,15 @@ using Xunit.Abstractions;
 
 namespace Paytools.IncomeTax.Tests;
 
-public class BulkIncomeTaxCalculationTests
+public class BulkIncomeTaxCalculationTests : IClassFixture<TaxCalculatorFactoryDataFixture>
 {
     private readonly ITestOutputHelper Output;
+    private readonly TaxCalculatorFactoryDataFixture _calculatorDataFixture;
 
-    public BulkIncomeTaxCalculationTests(ITestOutputHelper output)
+    public BulkIncomeTaxCalculationTests(ITestOutputHelper output, TaxCalculatorFactoryDataFixture calculatorDataFixture)
     {
         Output = output;
-
+        _calculatorDataFixture = calculatorDataFixture;
         if (!Trace.Listeners.Contains(new TestOutputTraceListener(output)))
             Trace.Listeners.Add(new TestOutputTraceListener(output));
     }
@@ -38,14 +41,9 @@ public class BulkIncomeTaxCalculationTests
     [Fact]
     public async Task RunTests()
     {
-        var provider = await
-            Testing.Utils.ReferenceDataHelper.CreateProviderAsync<ITaxReferenceDataProvider>(new Stream[] { Resource.Load(@"ReferenceData\IncomeTax_2022_2023.json") });
-
-        var taxCalculatorFactory = new TaxCalculatorFactory(provider);
-
         using var db = new TestDataRepository("Income Tax", Output);
 
-        var testData = db.GetTestData<IHmrcIncomeTaxTestDataEntry>(TestSource.Hmrc, TestScope.IncomeTax);
+        var testData = db.GetTestData<IHmrcIncomeTaxTestDataEntry>(TestSource.Hmrc, TestScope.IncomeTax).ToList();
 
         if (!testData.Any())
             Assert.Fail("No National Insurance tests found");
@@ -63,7 +61,7 @@ public class BulkIncomeTaxCalculationTests
 
             var applicableCountries = CountriesForTaxPurposesConverter.ToEnum(test.RelatesTo);
 
-            var calculator = taxCalculatorFactory.GetCalculator(applicableCountries, taxYear, test.PayFrequency, test.Period);
+            var calculator = await GetCalculator(applicableCountries, taxYear, test.PayFrequency, test.Period);
 
             calculator.Calculate(test.GrossPay,
                 0.0m,
@@ -87,4 +85,10 @@ public class BulkIncomeTaxCalculationTests
         Output.WriteLine($"{testCompleted} tests completed successfully");
     }
 
+    private async Task<ITaxCalculator> GetCalculator(CountriesForTaxPurposes applicableCountries, TaxYear taxYear, PayFrequency payFrequency, int payPeriod)
+    {
+        var provider = await _calculatorDataFixture.GetFactory();
+
+        return provider.GetCalculator(applicableCountries, taxYear.GetLastDayOfTaxPeriod(payFrequency, payPeriod).ToPayDate(payFrequency));
+    }
 }
