@@ -32,14 +32,23 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
     }
 
     [Fact]
-    public async Task RunAllNonDirectorTests()
+    public async Task RunAllNonDirectorTests_2022_2023()
     {
-        var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
+        await RunAllNonDirectorTests(new TaxYear(TaxYearEnding.Apr5_2023));
+    }
 
+    [Fact]
+    public async Task RunAllNonDirectorTests_2023_2024()
+    {
+        await RunAllNonDirectorTests(new TaxYear(TaxYearEnding.Apr5_2024));
+    }
+
+    private async Task RunAllNonDirectorTests(TaxYear taxYear)
+    {
         using var db = new TestDataRepository("National Insurance", Output);
 
         var testData = db.GetTestData<IHmrcNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance)
-            .Where(t => t.RelatesTo == "Employee");
+            .Where(t => t.RelatesTo == "Employee" && t.TaxYearEnding == taxYear.TaxYearEnding);
 
         if (!testData.Any())
             Assert.Fail("No National Insurance tests found");
