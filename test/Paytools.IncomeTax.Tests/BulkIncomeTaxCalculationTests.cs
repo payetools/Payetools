@@ -36,14 +36,27 @@ public class BulkIncomeTaxCalculationTests : IClassFixture<TaxCalculatorFactoryD
     }
 
     [Fact]
-    public async Task RunTests()
+    public async Task RunTests_2022_2023()
+    {
+        await RunTests(TaxYearEnding.Apr5_2023);
+    }
+
+    [Fact]
+    public async Task RunTests_2023_2024()
+    {
+        await RunTests(TaxYearEnding.Apr5_2024);
+    }
+
+    private async Task RunTests(TaxYearEnding taxYearEnding)
     {
         using var db = new TestDataRepository("Income Tax", Output);
 
-        var testData = db.GetTestData<IHmrcIncomeTaxTestDataEntry>(TestSource.Hmrc, TestScope.IncomeTax).ToList();
+        var testData = db.GetTestData<IHmrcIncomeTaxTestDataEntry>(TestSource.Hmrc, TestScope.IncomeTax)
+            .Where(t => t.TaxYearEnding == taxYearEnding)
+            .ToList();
 
         if (!testData.Any())
-            Assert.Fail("No National Insurance tests found");
+            Assert.Fail("No income tax tests found");
 
         Console.WriteLine($"{testData.Count} tests found");
         Output.WriteLine($"{testData.Count} tests found");
@@ -53,7 +66,7 @@ public class BulkIncomeTaxCalculationTests : IClassFixture<TaxCalculatorFactoryD
 
         foreach (var test in testData)
         {
-            var taxYear = new TaxYear(test.TaxYearEnding);
+            var taxYear = new TaxYear(taxYearEnding);
             var taxCode = test.GetFullTaxCode(taxYear);
 
             var applicableCountries = CountriesForTaxPurposesConverter.ToEnum(test.RelatesTo);
