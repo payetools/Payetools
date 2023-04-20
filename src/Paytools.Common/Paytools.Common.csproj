@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net6.0</TargetFrameworks>
@@ -6,17 +6,17 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Paytools common library</Title>
-    <Authors>Paytools Team</Authors>
-    <Company>Paytools Ltd</Company>
-    <Description>Common library for Paytools components</Description>
-    <Copyright>(c) Paytools</Copyright>
-    <PackageProjectUrl>https://github.com/paytools-uk/Paytools.Common</PackageProjectUrl>
-    <PackageReadmeFile></PackageReadmeFile>
-    <PackageLicenseFile></PackageLicenseFile>
-    <RepositoryUrl>https://github.com/paytools-uk/Paytools.Common</RepositoryUrl>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<Description>Common library for Paytools components</Description>
+	<Authors>$(Authors)</Authors>
+    <Company>$(Company)</Company>
+    <Copyright>$(Copyright)</Copyright>
+    <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+    <PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
+    <PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
+    <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+	<Version>$(Version)</Version>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<DocumentationFile></DocumentationFile>
-    <Version>$(VersionPrefix)1.0.1</Version>
     <AnalysisLevel>6.0-recommended</AnalysisLevel>
   </PropertyGroup>
 

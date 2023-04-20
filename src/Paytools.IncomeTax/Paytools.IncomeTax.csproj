@@ -4,6 +4,16 @@
 		<TargetFrameworks>net6.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<Title>Paytools income tax library</Title>
+		<Description>Income tax calculation library for Paytools framework</Description>
+		<Authors>$(Authors)</Authors>
+		<Company>$(Company)</Company>
+		<Copyright>$(Copyright)</Copyright>
+		<PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+		<PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
+		<PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
+		<RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+		<Version>$(Version)</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
