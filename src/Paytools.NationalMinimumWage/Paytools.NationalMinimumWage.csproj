@@ -4,7 +4,17 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<Title>Paytools NMW/NLW compliance library</Title>
+	<Description>National Minimum/Living Wage compliance library for Paytools framework</Description>
+	<Authors>$(Authors)</Authors>
+	<Company>$(Company)</Company>
+	<Copyright>$(Copyright)</Copyright>
+	<PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+	<PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
+	<PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
+	<RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+	<Version>$(Version)</Version>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
