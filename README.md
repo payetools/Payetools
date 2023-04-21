@@ -30,4 +30,4 @@ Given the current pipeline of work, we are not quite ready to receive contributi
 **It isn't recommended to fork this repo at this time, on the basis that there are a lot of changes coming in fairly short order.**  Once again, if there is a feature or capability you require, please contact us in the first instance.
 
 ### License
-This project is licensed under the Apache 2.0 open source license (see LICENSE.md).
+This project is dual licensed; see https://paytools.dev/licensing-paytools.html for more details.
