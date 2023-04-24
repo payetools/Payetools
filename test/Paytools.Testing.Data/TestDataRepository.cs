@@ -54,7 +54,7 @@ public class TestDataRepository : IDisposable
                 GetTestData<T, HmrcNiTestDataEntry>("HMRC_NationalInsurance"),
 
             (TestSource.Hmrc, TestScope.NationalInsurance) when typeof(T) == typeof(IHmrcDirectorsNiTestDataEntry) =>
-                GetTestData<T, HmrcNiTestDataEntry>("HMRC_Directors_NationalInsurance"),
+                GetTestData<T, HmrcDirectorsNiTestDataEntry>("HMRC_Directors_NationalInsurance"),
 
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IDeductionsTestDataEntry) =>
                 GetTestData<T, DeductionsTestDataEntry>("Paytools_EndToEnd_Deductions"),
