@@ -15,12 +15,12 @@ using Xunit.Abstractions;
 
 namespace Paytools.NationalInsurance.Tests;
 
-public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture>
+public class HmrcDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture>
 {
     private readonly ITestOutputHelper Output;
     private readonly NiCalculatorFactoryDataFixture _calculatorDataFixture;
 
-    public HmrcNonDirectorTests(ITestOutputHelper output, NiCalculatorFactoryDataFixture calculatorDataFixture)
+    public HmrcDirectorTests(ITestOutputHelper output, NiCalculatorFactoryDataFixture calculatorDataFixture)
     {
         Output = output;
         _calculatorDataFixture = calculatorDataFixture;
@@ -42,8 +42,8 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
     {
         using var db = new TestDataRepository("National Insurance", Output);
 
-        var testData = db.GetTestData<IHmrcNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance)
-            .Where(t => t.RelatesTo == "Employee" && t.TaxYearEnding == taxYear.TaxYearEnding);
+        var testData = db.GetTestData<IHmrcDirectorsNiTestDataEntry>(TestSource.Hmrc, TestScope.NationalInsurance)
+            .Where(t => t.RelatesTo == "Director" && t.TaxYearEnding == taxYear.TaxYearEnding);
 
         if (!testData.Any())
             Assert.Fail("No National Insurance tests found");
