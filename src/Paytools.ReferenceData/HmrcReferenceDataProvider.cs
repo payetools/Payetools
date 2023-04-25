@@ -70,19 +70,16 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 
     /// <summary>
     /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
-    /// for a given tax year and tax period.
+    /// for the specified pay date.
     /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="payDate">Applicable pay date.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForPayDate(PayDate payDate)
     {
-        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+        var referenceDataSet = GetReferenceDataSetForTaxYear(payDate.TaxYear);
 
-        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
-            taxYear, payFrequency, taxPeriod);
+        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance, payDate);
 
         var rates = MakeNiCategoryRatesEntries(niReferenceDataEntry.EmployerRates, niReferenceDataEntry.EmployeeRates);
 
@@ -91,22 +88,18 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 
     /// <summary>
     /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
-    /// for a given tax year and tax period.
+    /// for the specified pay date, for directors.  (For most tax years, this method returns null, but if
+    /// there have been in-year changes, specific directors' rates may apply.)
     /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="payDate">Applicable pay date.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
-    /// the specified point in time.</returns>
-    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>? GetDirectorsNiRatesForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    /// the specified point in time.  If specific rates apply for directors, theses are returned, otherwise the
+    /// regular employee/employer rates are returned.</returns>
+    public ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForPayDate(PayDate payDate)
     {
-        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+        var referenceDataSet = GetReferenceDataSetForTaxYear(payDate.TaxYear);
 
-        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
-            taxYear, payFrequency, taxPeriod);
-
-        if (niReferenceDataEntry.DirectorEmployerRates == null && niReferenceDataEntry.DirectorEmployeeRates == null)
-            return null;
+        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance, payDate);
 
         var employerRates = niReferenceDataEntry.DirectorEmployerRates ?? niReferenceDataEntry.EmployerRates;
         var employeeRates = niReferenceDataEntry.DirectorEmployeeRates ?? niReferenceDataEntry.EmployeeRates;
@@ -117,20 +110,16 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     }
 
     /// <summary>
-    /// Gets the NI thresholds for the specified tax year and tax period, as denoted by the supplied pay frequency
-    /// and pay period.
+    /// Gets the NI thresholds for the specified pay date.
     /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="payDate">Applicable pay date.</param>
     /// <returns>An instance of <see cref="INiThresholdSet"/> containing the thresholds for the specified point
     /// in time.</returns>
-    public INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
+    public INiThresholdSet GetNiThresholdsForPayDate(PayDate payDate)
     {
-        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+        var referenceDataSet = GetReferenceDataSetForTaxYear(payDate.TaxYear);
 
-        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance,
-            taxYear, payFrequency, taxPeriod);
+        var niReferenceDataEntry = FindApplicableEntry<NiReferenceDataEntry>(referenceDataSet.NationalInsurance, payDate);
 
         var thresholds = niReferenceDataEntry.NiThresholds.OrderBy(nit => nit.ThresholdType).Select(nit => new NiThresholdEntry()
         {
@@ -266,17 +255,18 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         return referenceDataSet;
     }
 
+    private static T FindApplicableEntry<T>(IReadOnlyList<IApplicableFromTill> entries, PayDate payDate) =>
+        (T)(entries
+                .FirstOrDefault(ite => ite.ApplicableFrom <= payDate.Date && payDate.Date <= ite.ApplicableTill) ??
+                    throw new InvalidReferenceDataException($"Unable to find reference data entry for specified pay date {payDate} (Type: '{typeof(T)}')"));
+
     private static T FindApplicableEntry<T>(IReadOnlyList<IApplicableFromTill> entries, TaxYear taxYear, PayFrequency payFrequency, int taxPeriod)
     {
         var endDateOfPeriod = taxYear.GetLastDayOfTaxPeriod(payFrequency, taxPeriod);
 
-        var entry = entries
-            .FirstOrDefault(ite => ite.ApplicableFrom <= endDateOfPeriod && endDateOfPeriod <= ite.ApplicableTill);
-
-        if (entry == null)
-            throw new InvalidReferenceDataException($"Unable to find reference data entry for specified tax year, pay frequency and pay period (Type: '{typeof(T)}')");
-
-        return (T)entry;
+        return (T)(entries
+            .FirstOrDefault(ite => ite.ApplicableFrom <= endDateOfPeriod && endDateOfPeriod <= ite.ApplicableTill) ??
+                throw new InvalidReferenceDataException($"Unable to find reference data entry for specified tax year, pay frequency and pay period (Type: '{typeof(T)}')"));
     }
 
     private static Dictionary<NiCategory, INiCategoryRatesEntry> MakeNiCategoryRatesEntries(

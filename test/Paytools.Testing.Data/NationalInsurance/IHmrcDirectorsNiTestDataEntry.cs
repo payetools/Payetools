@@ -7,6 +7,7 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
+using System;
 using Paytools.Common.Model;
 
 namespace Paytools.Testing.Data.NationalInsurance;
@@ -30,4 +31,8 @@ public interface IHmrcDirectorsNiTestDataEntry
     decimal TotalEmployerContributions_YTD { get; }
     decimal TotalEmployeeContributions_YTD { get; }
     string StatusMethod { get; }
+    decimal GrossPayYtd { get; }
+    decimal EmployeeNiContributionYtd { get; }
+    decimal EmployerNiContributionYtd { get; }
+    decimal? ProRataFactor { get; }
 }

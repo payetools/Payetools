@@ -34,27 +34,18 @@ public class NiCalculatorFactory : INiCalculatorFactory
     /// </summary>
     /// <param name="payDate">Applicable pay date.</param>
     /// <param name="numberOfTaxPeriods">Number of tax periods applicable, usually 1.  Defaults to 1.</param>
+    /// <param name="applyWeek53Treatment">Flag that indicates whether to apply "week 53" treatment, i.e., where
+    /// there are 53 weeks in a tax year (or 27 periods in a two-weekly pay cycle, etc.).  Must be false
+    /// for monthly, quarterly and annual payrolls.  Optional, defaulting to false.</param>
     /// <returns>A new calculator instance.</returns>
-    public INiCalculator GetCalculator(PayDate payDate, int numberOfTaxPeriods = 1) =>
-        GetCalculator(payDate.TaxYear, payDate.PayFrequency, payDate.TaxPeriod, numberOfTaxPeriods);
-
-    /// <summary>
-    /// Gets a new <see cref="INiCalculator"/> based on the specified tax year, pay frequency and pay period, along with the
-    /// applicable number of tax periods.  The tax year, pay frequency and pay period are provided in order to determine which
-    /// set of thresholds and rates to use, noting that these may change in-year.
-    /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
-    /// <param name="numberOfTaxPeriods">Number of tax periods applicable, usually 1.  Defaults to 1.</param>
-    /// <returns>A new calculator instance.</returns>
-    public INiCalculator GetCalculator(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod, int numberOfTaxPeriods = 1)
+    public INiCalculator GetCalculator(PayDate payDate, int numberOfTaxPeriods = 1, bool applyWeek53Treatment = false)
     {
-        var annualThresholds = _niReferenceDataProvider.GetNiThresholdsForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
-        var periodThresholds = new NiPeriodThresholdSet(annualThresholds, payFrequency, numberOfTaxPeriods);
-        var rates = _niReferenceDataProvider.GetNiRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
-        var directorsRates = _niReferenceDataProvider.GetDirectorsNiRatesForTaxYearAndPeriod(taxYear, payFrequency, taxPeriod);
+        var annualThresholds = _niReferenceDataProvider.GetNiThresholdsForPayDate(payDate);
+        var periodThresholds = new NiPeriodThresholdSet(annualThresholds, payDate.PayFrequency, numberOfTaxPeriods);
+        var rates = _niReferenceDataProvider.GetNiRatesForPayDate(payDate);
+        var directorsRates = _niReferenceDataProvider.GetDirectorsNiRatesForPayDate(payDate);
 
-        return new NiCalculator(annualThresholds, periodThresholds, rates, directorsRates);
+        return new NiCalculator(annualThresholds, periodThresholds, rates, directorsRates,
+            payDate.PayFrequency.IsLastTaxPeriodInTaxYear(payDate.TaxPeriod, applyWeek53Treatment));
     }
 }

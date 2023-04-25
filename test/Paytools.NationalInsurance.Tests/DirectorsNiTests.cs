@@ -29,7 +29,7 @@ public class DirectorsNiTests : IClassFixture<NiCalculatorFactoryDataFixture>
 
 
     [Fact]
-    public async Task RunFullYearDirectorTests()
+    public async Task RunFullYearDirectorTests_2023_2023()
     {
         var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
 
@@ -45,7 +45,7 @@ public class DirectorsNiTests : IClassFixture<NiCalculatorFactoryDataFixture>
             var calculator = await GetCalculator(payDate);
 
             calculator.CalculateDirectors(DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod,
-                test.NiCategory, test.GrossPay, 0, 0, null, out var result);
+                test.NiCategory, test.GrossPay, 0, 0, 0, null, out var result);
 
             result.EmployeeContribution.Should().Be(test.EmployeeNiContribution, "(test #{0}) input is {1} and output is {{ {2} }}", (testsCompleted + 1).ToString(), test.ToDebugString(), result.ToString());
             result.EmployerContribution.Should().Be(test.EmployerNiContribution, "(test #{0}) input is {1} and output is {{ {2} }}", (testsCompleted + 1).ToString(), test.ToDebugString(), result.ToString());

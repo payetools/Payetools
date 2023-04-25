@@ -9,14 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\NationalMinimumWage_2022_2023.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="ReferenceData\NationalMinimumWage_2022_2023.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
