@@ -16,7 +16,7 @@ It is a work in progress.  The code passes HMRC tests for income tax, National I
 Tests are included for 2022-2023 and 2023-2024 tax year rates and thresholds.
 
 ### Documentation
-Limited API documentation is available at https://paytools.dev.  This is a work in progress.
+Limited API documentation is available at https://paytools.dev/api/Paytools.html.  This is very much a work in progress.
  
 ### Releases
 The plan is to build and release the Paytools.Core libraries on a regular basis and to publish all supported modules via Nuget.  The first such publication is planned for May 2023.
