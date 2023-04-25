@@ -85,4 +85,21 @@ public static class PayFrequencyExtensions
             _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
         };
     }
+
+    /// <summary>
+    /// Determines whether the specified tax period is the last tax period in the tax year.
+    /// </summary>
+    /// <param name="payFrequency">Relevant pay frequency.</param>
+    /// <param name="taxPeriod">Tax period to evaluate.</param>
+    /// <param name="applyWeek53Treatment">Flag that indicates whether to apply "week 53" treatment, i.e., where
+    /// there are 53 weeks in a tax year (or 27 periods in a two-weekly pay cycle, etc.).  Must be false
+    /// for monthly, quarterly and annual payrolls.  Optional, defaulting to false.</param>
+    /// <returns>true if the supplied tax period is the last period in the tax year; false otherwise.</returns>
+    public static bool IsLastTaxPeriodInTaxYear(this PayFrequency payFrequency, int taxPeriod, bool applyWeek53Treatment = false)
+    {
+        if (applyWeek53Treatment && (payFrequency == PayFrequency.Monthly || payFrequency == PayFrequency.Quarterly || payFrequency == PayFrequency.Annually))
+            throw new ArgumentException($"Parameter must be false for non-week-based payrolls", nameof(applyWeek53Treatment));
+
+        return taxPeriod == payFrequency.GetStandardTaxPeriodCount() + (applyWeek53Treatment ? 1 : 0);
+    }
 }

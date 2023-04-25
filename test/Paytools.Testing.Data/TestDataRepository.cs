@@ -41,7 +41,7 @@ public class TestDataRepository : IDisposable
         BsonMapper.Global.RegisterType<TaxCode>(tc => tc.ToString(true, true),
             tc => TaxCode.TryParse(tc, out var result) ? result : throw new InvalidCastException($"Unable to parse tax code '{tc}'"));
 
-        _database = new LiteDatabase(fi.FullName);
+        _database = new LiteDatabase(@$"Filename={fi.FullName}; Connection=Shared;");
     }
 
     public IEnumerable<T> GetTestData<T>(TestSource source, TestScope scope) where T : class =>

@@ -67,4 +67,11 @@ public readonly struct PayDate
     /// </summary>
     /// <param name="payDate"><see cref="PayDate"/> to get the DateTime for.</param>
     public static implicit operator DateTime(PayDate payDate) => payDate.Date.ToMiddayUtcDateTime();
+
+    /// <summary>
+    /// Provides a string representation of this pay date in the form 'dd/mm/yyyy (frequency, period)'.
+    /// </summary>
+    /// <returns>String representation of this <see cref="PayDate"/>.</returns>
+    public override string ToString() =>
+        $"{Date.ToShortDateString()} ({PayFrequency}, period {TaxPeriod})";
 }

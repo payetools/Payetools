@@ -65,8 +65,13 @@ public class NiThresholdSet : INiThresholdSet
     /// <param name="proRataFactor">Pro-rata factor to apply to each threshold.</param>
     public NiThresholdSet(INiThresholdSet originalAnnualNiThresholds, decimal proRataFactor)
     {
+        // NB All pro-rata thresholds should be rounded up to the next whole pound.
         _niThresholds = originalAnnualNiThresholds
-            .Select(t => new NiThresholdEntry() { ThresholdType = t.ThresholdType, ThresholdValuePerYear = t.ThresholdValuePerYear * proRataFactor })
+            .Select(t => new NiThresholdEntry()
+            {
+                ThresholdType = t.ThresholdType,
+                ThresholdValuePerYear = decimal.Round(t.ThresholdValuePerYear * proRataFactor, MidpointRounding.ToPositiveInfinity)
+            })
             .ToImmutableList<INiThresholdEntry>();
     }
 

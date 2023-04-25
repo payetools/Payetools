@@ -220,7 +220,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
             var (employeesNiPaidYtd, employersNiPaidYtd) = entry.Employment.PayrollHistoryYtd.EmployeeNiHistoryEntries.GetNiYtdTotals();
 
             _niCalculator.CalculateDirectors(entry.Employment.DirectorsNiCalculationMethod ?? DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod,
-                entry.Employment.NiCategory, nicablePay + entry.Employment.PayrollHistoryYtd.NicablePayYtd,
+                entry.Employment.NiCategory, nicablePay, nicablePay + entry.Employment.PayrollHistoryYtd.NicablePayYtd,
                 employeesNiPaidYtd, employersNiPaidYtd, null, out result);
         }
         else

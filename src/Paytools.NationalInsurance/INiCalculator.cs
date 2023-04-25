@@ -32,7 +32,8 @@ public interface INiCalculator
     /// </summary>
     /// <param name="calculationMethod">Calculation method to use.</param>
     /// <param name="niCategory">National Insurance category.</param>
-    /// <param name="nicableEarningsYearToDate">NI-able salary for the period.</param>
+    /// <param name="nicableEarningsInPeriod">Ni-able earnings in this period.</param>
+    /// <param name="nicableEarningsYearToDate">NI-able salary to date.</param>
     /// <param name="employeesNiPaidYearToDate">Total employees NI paid so far this tax year up to and including the end of the
     /// previous period.</param>
     /// <param name="employersNiPaidYearToDate">Total employers NI paid so far this tax year up to and including the end of the
@@ -43,6 +44,7 @@ public interface INiCalculator
     void CalculateDirectors(
         DirectorsNiCalculationMethod calculationMethod,
         NiCategory niCategory,
+        decimal nicableEarningsInPeriod,
         decimal nicableEarningsYearToDate,
         decimal employeesNiPaidYearToDate,
         decimal employersNiPaidYearToDate,

@@ -8,7 +8,6 @@
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
 using Paytools.Common.Model;
-using Paytools.NationalInsurance.Model;
 using System.Collections.ObjectModel;
 
 namespace Paytools.NationalInsurance.ReferenceData;
@@ -20,42 +19,30 @@ namespace Paytools.NationalInsurance.ReferenceData;
 public interface INiReferenceDataProvider
 {
     /// <summary>
-    /// Gets the NI thresholds for the specified tax year and tax period, as denoted by the supplied pay frequency
-    /// and pay period.
+    /// Gets the NI thresholds for the specified pay date.
     /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="payDate">Applicable pay date.</param>
     /// <returns>An instance of <see cref="INiThresholdSet"/> containing the thresholds for the specified point
     /// in time.</returns>
-    INiThresholdSet GetNiThresholdsForTaxYearAndPeriod(TaxYear taxYear, PayFrequency payFrequency, int taxPeriod);
+    INiThresholdSet GetNiThresholdsForPayDate(PayDate payDate);
 
     /// <summary>
     /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
-    /// for a given tax year and tax period.
+    /// for the specified pay date.
     /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="payDate">Applicable pay date.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
     /// the specified point in time.</returns>
-    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForTaxYearAndPeriod(
-        TaxYear taxYear,
-        PayFrequency payFrequency,
-        int taxPeriod);
+    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetNiRatesForPayDate(PayDate payDate);
 
     /// <summary>
     /// Gets a read-only dictionary that maps <see cref="NiCategory"/> values to the set of rates to be applied
-    /// for a given tax year and tax period, for directors.  (For most tax years, this method returns null, but if
+    /// for the specified pay date, for directors.  (For most tax years, this method returns null, but if
     /// there have been in-year changes, specific directors' rates may apply.)
     /// </summary>
-    /// <param name="taxYear">Applicable tax year.</param>
-    /// <param name="payFrequency">Applicable pay frequency.</param>
-    /// <param name="taxPeriod">Applicable tax period.</param>
+    /// <param name="payDate">Applicable pay date.</param>
     /// <returns>Read-only dictionary that maps <see cref="NiCategory"/> values to the appropriate set of rates for
-    /// the specified point in time, if specific rates apply.  Otherwise null.</returns>
-    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry>? GetDirectorsNiRatesForTaxYearAndPeriod(
-        TaxYear taxYear,
-        PayFrequency payFrequency,
-        int taxPeriod);
+    /// the specified point in time.  If specific rates apply for directors, theses are returned, otherwise the
+    /// regular employee/employer rates are returned.</returns>
+    ReadOnlyDictionary<NiCategory, INiCategoryRatesEntry> GetDirectorsNiRatesForPayDate(PayDate payDate);
 }
