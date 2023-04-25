@@ -1,7 +1,7 @@
 # Paytools.Core
 ## .NET Library for UK payroll
 
---- **Preliminary Release** (March 2023) ---
+--- **Preliminary Release** (April 2023) ---
 
 This is the first public release of Paytools.Core; it contains support for calculating the following:
 
@@ -11,15 +11,15 @@ This is the first public release of Paytools.Core; it contains support for calcu
 - Pensions using Qualifying Earnings and Pensionable Pay earnings bases (under both Relief at Source and Net Pay Arrangemnet tax treatments)
 - Compliance with National Minimum/Living Wage regulations
 
-It is a work in progress.  The code passes HMRC tests for income tax and National Insurance, with the exception of two-weekly payrolls, where there is a small mismatch.
+It is a work in progress.  The code passes HMRC tests for income tax, National Insurance, student loans and National Minimum Wage.
 
-Tests are based on 2022-2023 tax year rates and thresholds.  Tests for 2023-2024 will be added shortly.
+Tests are included for 2022-2023 and 2023-2024 tax year rates and thresholds.
 
 ### Documentation
-The source code is annotated with XML comments which will be used as the source material for API documentation.  The plan is to generate a complete set of document using DocFx but there are some issues with that software at this time.  In any event documentation will be released during Q2 2023.
-
+Limited API documentation is available at https://paytools.dev.  This is a work in progress.
+ 
 ### Releases
-The plan is to build and release the Paytools.Core libraries on a regular basis and to publish all supported modules via Nuget.  The first such publication is planned for April 2023.
+The plan is to build and release the Paytools.Core libraries on a regular basis and to publish all supported modules via Nuget.  The first such publication is planned for May 2023.
 
 ### Roadmap
 Support for running a complete set of payroll calculations is planned for release in Q2 2023.
