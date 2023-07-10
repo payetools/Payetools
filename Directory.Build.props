@@ -1,15 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
+	
 	<PropertyGroup>
 		<Authors>Paytools Foundation</Authors>
 		<Copyright>Copyright (c) 2023, Paytools Foundation</Copyright>
 		<Company>Paytools Foundation</Company>
 		<PackageProjectUrl>https://paytools.dev/</PackageProjectUrl>
-		<PackageReadmeFile>../../README.md</PackageReadmeFile>
-		<PackageLicenseFile>../../LICENSE.md</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/paytools-fdn/Paytools.Core</RepositoryUrl>
 	</PropertyGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="MinVer" Version="4.3.0" PrivateAssets="All"/>
 	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(SolutionDir)LICENSE.md" Pack="true" PackagePath="" />
+		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
 </Project>

@@ -6,17 +6,17 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Paytools common library</Title>
-	<Description>Common library for Paytools components</Description>
-	<Authors>$(Authors)</Authors>
+    <Description>Common library for Paytools components</Description>
+    <Authors>$(Authors)</Authors>
     <Company>$(Company)</Company>
     <Copyright>$(Copyright)</Copyright>
     <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
     <PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
     <PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
-	<Version>$(Version)</Version>
-	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<DocumentationFile></DocumentationFile>
+    <Version>$(Version)</Version>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile></DocumentationFile>
     <AnalysisLevel>6.0-recommended</AnalysisLevel>
   </PropertyGroup>
 
