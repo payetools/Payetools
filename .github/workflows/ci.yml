@@ -40,7 +40,7 @@ jobs:
       run: dotnet pack --configuration Debug --output ${{ env.NuGetDirectory }}
       
     - name: Publish Nuget package for internal use
-      if: ${{ github.repository_owner != 'paytools-fdn' }}
+      if: ${{ github.repository_owner == 'paytools-master' }}
       run: |
         for file in "${{ env.NuGetDirectory }}/*.nupkg"
         do
