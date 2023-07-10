@@ -5,8 +5,8 @@
 		<Copyright>Copyright (c) 2023, Paytools Foundation</Copyright>
 		<Company>Paytools Foundation</Company>
 		<PackageProjectUrl>https://paytools.dev/</PackageProjectUrl>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<PackageReadmeFile>../../README.md</PackageReadmeFile>
+		<PackageLicenseFile>../../LICENSE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/paytools-fdn/Paytools.Core</RepositoryUrl>
 	</PropertyGroup>
 	<ItemGroup>
