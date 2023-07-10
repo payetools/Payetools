@@ -18,7 +18,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:Field names should not contain underscore", Justification = "Necessary sometimes")]
 [assembly: SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "Doesn't work for nullable arrays")]
 [assembly: SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "Necessary sometimes")]
-[assembly: SuppressMessage("Design", "CA1069:Enums values should not be duplicated", Justification = "Posssibly an issue when serializing - to be reviewed")]
+[assembly: SuppressMessage("Design", "CA1069:Enums values should not be duplicated", Justification = "Possibly an issue when serializing - to be reviewed")]
 [assembly: SuppressMessage("StyleCop.CSharp.NamingRules", "SA1309:Field names should not begin with underscore", Justification = "Disagree")]
 [assembly: SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "Personal taste")]
 [assembly: SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1208:System using directives should be placed before other using directives", Justification = "Not default in VS")]
