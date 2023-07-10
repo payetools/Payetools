@@ -4,9 +4,9 @@
 		<Authors>Paytools Foundation</Authors>
 		<Copyright>Copyright (c) 2023, Paytools Foundation</Copyright>
 		<Company>Paytools Foundation</Company>
-		<PackageProjectUrl>TBA</PackageProjectUrl>
-		<PackageReadmeFile>TBA</PackageReadmeFile>
-		<PackageLicenseFile>TBA</PackageLicenseFile>
+		<PackageProjectUrl>https://paytools.dev/</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/paytools-fdn/Paytools.Core</RepositoryUrl>
 	</PropertyGroup>
 	<ItemGroup>
