@@ -14,7 +14,7 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'Paytools.Core.sln'
+      SOLUTION: 'Payetools.sln'
       NuGetDirectory: ${{ github.workspace }}/nuget
       
     runs-on: ubuntu-latest
