@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ReferenceData\HmrcReferenceData_2022_2023.json" />
+    <None Remove="ReferenceData\HmrcReferenceData_2023_2024.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ReferenceData\HmrcReferenceData_2022_2023.json" />
+    <EmbeddedResource Include="ReferenceData\HmrcReferenceData_2023_2024.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Payetools.Common\Payetools.Common.csproj" />
+    <ProjectReference Include="..\..\src\Payetools.IncomeTax\Payetools.IncomeTax.csproj" />
+    <ProjectReference Include="..\..\src\Payetools.NationalInsurance\Payetools.NationalInsurance.csproj" />
+    <ProjectReference Include="..\..\src\Payetools.Pensions\Payetools.Pensions.csproj" />
+    <ProjectReference Include="..\..\src\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
+  </ItemGroup>
+
+</Project>

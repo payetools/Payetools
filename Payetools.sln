@@ -8,11 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9316B808-4E9
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Common", "src\Paytools.Common\Paytools.Common.csproj", "{A201CA1D-5851-4EDF-8666-328B0D773189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Common", "src\Payetools.Common\Payetools.Common.csproj", "{A201CA1D-5851-4EDF-8666-328B0D773189}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{17075853-7B07-44FD-8FDB-B917A9E51140}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Common.Tests", "test\Paytools.Common.Tests\Paytools.Common.Tests.csproj", "{8DB123BD-29BD-4C79-AA00-B293D140A355}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Common.Tests", "test\Payetools.Common.Tests\Payetools.Common.Tests.csproj", "{8DB123BD-29BD-4C79-AA00-B293D140A355}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6E337BD9-2FCA-4C69-B47C-5926F44FBD2F}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,37 +20,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6E337BD9-2
 		docs\README.md = docs\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.IncomeTax", "src\Paytools.IncomeTax\Paytools.IncomeTax.csproj", "{08A4EC88-AAD4-476B-BE2D-E955D58AC5C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.IncomeTax", "src\Payetools.IncomeTax\Payetools.IncomeTax.csproj", "{08A4EC88-AAD4-476B-BE2D-E955D58AC5C5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.IncomeTax.Tests", "test\Paytools.IncomeTax.Tests\Paytools.IncomeTax.Tests.csproj", "{57D3E859-FAAB-4EE1-B036-6FA3A020DC39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.IncomeTax.Tests", "test\Payetools.IncomeTax.Tests\Payetools.IncomeTax.Tests.csproj", "{57D3E859-FAAB-4EE1-B036-6FA3A020DC39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.ReferenceData", "src\Paytools.ReferenceData\Paytools.ReferenceData.csproj", "{C19233BD-F224-486A-8790-5861DA6299CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.ReferenceData", "src\Payetools.ReferenceData\Payetools.ReferenceData.csproj", "{C19233BD-F224-486A-8790-5861DA6299CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.NationalInsurance", "src\Paytools.NationalInsurance\Paytools.NationalInsurance.csproj", "{5092B937-A5E0-4FE9-A8B4-5120A9E27967}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.NationalInsurance", "src\Payetools.NationalInsurance\Payetools.NationalInsurance.csproj", "{5092B937-A5E0-4FE9-A8B4-5120A9E27967}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.NationalInsurance.Tests", "test\Paytools.NationalInsurance.Tests\Paytools.NationalInsurance.Tests.csproj", "{0A6CD27A-4336-4533-974F-E56D308CEF8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.NationalInsurance.Tests", "test\Payetools.NationalInsurance.Tests\Payetools.NationalInsurance.Tests.csproj", "{0A6CD27A-4336-4533-974F-E56D308CEF8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Testing.Data", "test\Paytools.Testing.Data\Paytools.Testing.Data.csproj", "{99A00AD7-6132-445E-897D-34EE3B6D0F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Testing.Data", "test\Payetools.Testing.Data\Payetools.Testing.Data.csproj", "{99A00AD7-6132-445E-897D-34EE3B6D0F5E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Pensions", "src\Paytools.Pensions\Paytools.Pensions.csproj", "{0A1029F5-EF89-47C8-BF69-5CB6A4A5F4D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Pensions", "src\Payetools.Pensions\Payetools.Pensions.csproj", "{0A1029F5-EF89-47C8-BF69-5CB6A4A5F4D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Pensions.Tests", "test\Paytools.Pensions.Tests\Paytools.Pensions.Tests.csproj", "{348E78DB-0BD6-461B-A9D6-70105336A823}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Pensions.Tests", "test\Payetools.Pensions.Tests\Payetools.Pensions.Tests.csproj", "{348E78DB-0BD6-461B-A9D6-70105336A823}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Testing.Utils", "test\Paytools.Testing.Utils\Paytools.Testing.Utils.csproj", "{551B06A9-420C-4E39-A65C-4C28A26602F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Testing.Utils", "test\Payetools.Testing.Utils\Payetools.Testing.Utils.csproj", "{551B06A9-420C-4E39-A65C-4C28A26602F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.NationalMinimumWage.Tests", "test\Paytools.NationalMinimumWage.Tests\Paytools.NationalMinimumWage.Tests.csproj", "{D7E01F4D-4343-4751-97AE-15AE3B7BBC4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.NationalMinimumWage.Tests", "test\Payetools.NationalMinimumWage.Tests\Payetools.NationalMinimumWage.Tests.csproj", "{D7E01F4D-4343-4751-97AE-15AE3B7BBC4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.NationalMinimumWage", "src\Paytools.NationalMinimumWage\Paytools.NationalMinimumWage.csproj", "{864BEB91-80AE-416D-BC81-EE134DD68E0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.NationalMinimumWage", "src\Payetools.NationalMinimumWage\Payetools.NationalMinimumWage.csproj", "{864BEB91-80AE-416D-BC81-EE134DD68E0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.StudentLoans", "src\Paytools.StudentLoans\Paytools.StudentLoans.csproj", "{1AC96853-D6EA-4D27-AE0F-12538A8FF64B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.StudentLoans", "src\Payetools.StudentLoans\Payetools.StudentLoans.csproj", "{1AC96853-D6EA-4D27-AE0F-12538A8FF64B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.StudentLoans.Tests", "test\Paytools.StudentLoans.Tests\Paytools.StudentLoans.Tests.csproj", "{0A4C51BC-F6DE-4F42-A4DA-87E151B3039E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.StudentLoans.Tests", "test\Payetools.StudentLoans.Tests\Payetools.StudentLoans.Tests.csproj", "{0A4C51BC-F6DE-4F42-A4DA-87E151B3039E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Employment", "src\Paytools.Employment\Paytools.Employment.csproj", "{7534F5B2-8D11-42AC-8D90-CC025488D29B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Employment", "src\Payetools.Employment\Payetools.Employment.csproj", "{7534F5B2-8D11-42AC-8D90-CC025488D29B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Payroll", "src\Paytools.Payroll\Paytools.Payroll.csproj", "{872DF738-E8C0-439A-97D1-720B0DC08401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Payroll", "src\Payetools.Payroll\Payetools.Payroll.csproj", "{872DF738-E8C0-439A-97D1-720B0DC08401}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paytools.Payroll.Tests", "test\Paytools.Payroll.Tests\Paytools.Payroll.Tests.csproj", "{9B022998-85C4-47C9-B989-AB58F6BDE47B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Payroll.Tests", "test\Payetools.Payroll.Tests\Payetools.Payroll.Tests.csproj", "{9B022998-85C4-47C9-B989-AB58F6BDE47B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

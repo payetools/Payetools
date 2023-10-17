@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Title>Paytools National Insurance library</Title>
+	<Description>National Insurance calculation library for Paytools framework</Description>
+	<Authors>$(Authors)</Authors>
+	<Company>$(Company)</Company>
+	<Copyright>$(Copyright)</Copyright>
+	<PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+	<PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
+	<PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
+	<RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+	<Version>$(Version)</Version>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\shared\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
+  </ItemGroup>
+
+</Project>

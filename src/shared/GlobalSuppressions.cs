@@ -1,11 +1,11 @@
-﻿// Copyright (c) 2023 Paytools Foundation.
+﻿// Copyright (c) 2023 Payetools Foundation.
 //
-// Paytools Foundation licenses this file to you under one of the following licenses:
+// Payetools Foundation licenses this file to you under one of the following licenses:
 //
 //   * GNU Affero General Public License, see https://www.gnu.org/licenses/agpl-3.0.html
-//   * Paytools Commercial Use license [TBA]
+//   * Payetools Commercial Use license [TBA]
 //
-// For further information on licensing options, see https://paytools.dev/licensing-paytools.html
+// For further information on licensing options, see https://Paytools.dev/licensing-Paytools.html
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -26,13 +26,13 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1512:Single-line comments should not be followed by blank line", Justification = "Personal taste")]
 [assembly: SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Matter of preference")]
 [assembly: SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1116:Split parameters should start on line after declaration", Justification = "Sometimes necessary")]
-[assembly: SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "Not relevant here", Scope = "member", Target = "~M:Paytools.Common.Model.HmrcPayeReference.TryParse(System.String,System.Nullable{Paytools.Common.Model.HmrcPayeReference}@)~System.Boolean")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal class", Scope = "type", Target = "~T:Paytools.IncomeTax.TaxCalculator.InternalTaxCalculationResult")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal value", Scope = "member", Target = "~F:Paytools.NationalInsurance.NiCalculator.CalculationStepCount")]
+[assembly: SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "Not relevant here", Scope = "member", Target = "~M:Payetools.Common.Model.HmrcPayeReference.TryParse(System.String,System.Nullable{Payetools.Common.Model.HmrcPayeReference}@)~System.Boolean")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal class", Scope = "type", Target = "~T:Payetools.IncomeTax.TaxCalculator.InternalTaxCalculationResult")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal value", Scope = "member", Target = "~F:Payetools.NationalInsurance.NiCalculator.CalculationStepCount")]
 [assembly: SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1117:Parameters should be on same line or separate lines", Justification = "Not always appropriate")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal member", Scope = "member", Target = "~M:Paytools.IncomeTax.TaxCalculator.#ctor(Paytools.IncomeTax.ReferenceData.TaxBandwidthSet,Paytools.Common.Model.PayFrequency,System.Int32)")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal class", Scope = "type", Target = "~T:Paytools.ReferenceData.HmrcReferenceDataProvider")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal value", Scope = "member", Target = "~M:Paytools.ReferenceData.NationalInsurance.NiCategoryRateSet.Add(Paytools.NationalInsurance.NiCategory,Paytools.ReferenceData.NationalInsurance.NiCategoryRatesEntry)")]
-[assembly: SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:Opening parenthesis should be spaced correctly", Justification = "Inappropriate for switch pattern match", Scope = "member", Target = "~M:Paytools.NationalMinimumWage.NmwEvaluator.GetNmwHourlyRateForEmployee(System.Int32,System.Boolean,System.Nullable{System.Decimal})~System.Decimal")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal method", Scope = "member", Target = "~M:Paytools.IncomeTax.TaxCalculator.#ctor(Paytools.Common.Model.TaxYear,Paytools.Common.Model.CountriesForTaxPurposes,Paytools.IncomeTax.ReferenceData.TaxBandwidthSet,Paytools.Common.Model.PayFrequency,System.Int32)")]
-[assembly: SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1519:Braces should not be omitted from multi-line child statement", Justification = "Bending the rules", Scope = "member", Target = "~M:Paytools.Payroll.Payruns.PayrunEntryProcessor.Process(Paytools.Payroll.Model.IEmployeePayrunInputEntry,Paytools.Payroll.Model.IEmployeePayrunResult@)")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal member", Scope = "member", Target = "~M:Payetools.IncomeTax.TaxCalculator.#ctor(Payetools.IncomeTax.ReferenceData.TaxBandwidthSet,Payetools.Common.Model.PayFrequency,System.Int32)")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal class", Scope = "type", Target = "~T:Payetools.ReferenceData.HmrcReferenceDataProvider")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal value", Scope = "member", Target = "~M:Payetools.ReferenceData.NationalInsurance.NiCategoryRateSet.Add(Payetools.NationalInsurance.NiCategory,Payetools.ReferenceData.NationalInsurance.NiCategoryRatesEntry)")]
+[assembly: SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:Opening parenthesis should be spaced correctly", Justification = "Inappropriate for switch pattern match", Scope = "member", Target = "~M:Payetools.NationalMinimumWage.NmwEvaluator.GetNmwHourlyRateForEmployee(System.Int32,System.Boolean,System.Nullable{System.Decimal})~System.Decimal")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "Internal method", Scope = "member", Target = "~M:Payetools.IncomeTax.TaxCalculator.#ctor(Payetools.Common.Model.TaxYear,Payetools.Common.Model.CountriesForTaxPurposes,Payetools.IncomeTax.ReferenceData.TaxBandwidthSet,Payetools.Common.Model.PayFrequency,System.Int32)")]
+[assembly: SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1519:Braces should not be omitted from multi-line child statement", Justification = "Bending the rules", Scope = "member", Target = "~M:Payetools.Payroll.Payruns.PayrunEntryProcessor.Process(Payetools.Payroll.Model.IEmployeePayrunInputEntry,Payetools.Payroll.Model.IEmployeePayrunResult@)")]

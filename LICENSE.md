@@ -1,5 +1,5 @@
 NB This software is dual-licensed under either GNU Affero General Public 
-License (AGPL) and Paytools Commercial License (TBA).  The AGPL is reproduced
+License (AGPL) and Payetools Commercial License (TBA).  The AGPL is reproduced
 below.
 
 ### GNU AFFERO GENERAL PUBLIC LICENSE
