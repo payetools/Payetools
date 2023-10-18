@@ -8,7 +8,7 @@ Payetools contains support for calculating the following:
 - UK Income Tax (all jurisdictions)
 - National Insurance
 - Student Loans
-- Pensions using Qualifying Earnings and Pensionable Pay earnings bases (under both Relief at Source and Net Pay Arrangemnet tax treatments)
+- Pensions using Qualifying Earnings and Pensionable Pay earnings bases (under both Relief at Source and Net Pay Arrangement tax treatments)
 - Compliance with National Minimum/Living Wage regulations
 
 The code passes HMRC tests for income tax, National Insurance, student loans and National Minimum Wage.
