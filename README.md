@@ -1,5 +1,7 @@
 # Payetools
-## .NET Library for UK payroll
+## Cross-platform Open-Source Library for UK payroll
+
+**Payetools is the first library of its kind to bring open-source capabilities to UK payroll processing via a robust, cross-platform framework written in C#.**
 
 Payetools contains support for calculating the following:
 
