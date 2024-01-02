@@ -3,9 +3,9 @@
 	
 	<PropertyGroup>
 		<Authors>Payetools Foundation</Authors>
-		<Copyright>Copyright (c) 2023, Payetools Foundation</Copyright>
+		<Copyright>Copyright (c) 2023-2024, Payetools Foundation</Copyright>
 		<Company>Payetools Foundation</Company>
-		<PackageProjectUrl>https://paytools.dev/</PackageProjectUrl>
+		<PackageProjectUrl>https://payetools.dev/</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/payetools/payetools</RepositoryUrl>
