@@ -52,12 +52,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Payroll", "src\Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Payroll.Tests", "test\Payetools.Payroll.Tests\Payetools.Payroll.Tests.csproj", "{9B022998-85C4-47C9-B989-AB58F6BDE47B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{9918B4E2-ACAA-4A46-8658-599651D88A95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9918B4E2-ACAA-4A46-8658-599651D88A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9918B4E2-ACAA-4A46-8658-599651D88A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A201CA1D-5851-4EDF-8666-328B0D773189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A201CA1D-5851-4EDF-8666-328B0D773189}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A201CA1D-5851-4EDF-8666-328B0D773189}.Release|Any CPU.ActiveCfg = Release|Any CPU
