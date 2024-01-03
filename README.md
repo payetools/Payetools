@@ -16,7 +16,7 @@ The code passes HMRC tests for income tax, National Insurance, student loans and
 Tests are included for 2022-2023 and 2023-2024 tax year rates and thresholds.
 
 ### Documentation
-Limited API documentation is available at https://paytools.dev/api/Paytools.html.  This is very much a work in progress.
+Limited API documentation is available at https://payetools.dev/api/Payetools.html.  This is very much a work in progress.
  
 ### Roadmap
 To follow.
