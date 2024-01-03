@@ -8,8 +8,6 @@
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
 using Payetools.Common.Model;
-using Payetools.Employment.Model;
-using System.Collections.Concurrent;
 
 namespace Payetools.Payroll.Model;
 

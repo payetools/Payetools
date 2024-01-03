@@ -7,7 +7,6 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-using Payetools.Employment.Model;
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;

@@ -7,25 +7,17 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-namespace Payetools.Employment.Model;
+using System.Collections.Immutable;
+
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Enum representing different pay units, i.e., per annum, per hour, etc.
+/// Interface that represents an employee's deductions history for the tax year to date.
 /// </summary>
-public enum PayRateUnits
+public interface IDeductionHistoryYtd
 {
     /// <summary>
-    /// Per annum pay type for salaried employees.
+    /// Gets the list of deductions for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    PerAnnum,
-
-    /// <summary>
-    /// Hourly pay type for hourly-paid employees.
-    /// </summary>
-    PerHour,
-
-    /// <summary>
-    /// Daily rate, typically for salaried employees with regular working patterns.
-    /// </summary>
-    PerDay
+    ImmutableList<IDeductionEntry> Deductions { get; }
 }

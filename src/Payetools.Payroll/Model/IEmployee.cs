@@ -10,7 +10,7 @@
 using Payetools.Common.Model;
 using System.Net.Mail;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents an employee for payroll purposes.

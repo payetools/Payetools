@@ -7,7 +7,7 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents the various types of deduction that can be made from payroll.

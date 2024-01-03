@@ -7,7 +7,7 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Represents a new employee's starter declaration, if provided.  In the case of high earners, the

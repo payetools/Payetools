@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Payetools.Common\Payetools.Common.csproj" />
     <ProjectReference Include="..\..\src\Payetools.IncomeTax\Payetools.IncomeTax.csproj" />
     <ProjectReference Include="..\..\src\Payetools.NationalInsurance\Payetools.NationalInsurance.csproj" />

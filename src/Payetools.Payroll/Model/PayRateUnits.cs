@@ -7,17 +7,25 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-using System.Collections.Immutable;
-
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents an employee's earnings history for the tax year to date.
+/// Enum representing different pay units, i.e., per annum, per hour, etc.
 /// </summary>
-public interface IEarningsHistoryYtd
+public enum PayRateUnits
 {
     /// <summary>
-    /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
+    /// Per annum pay type for salaried employees.
     /// </summary>
-    ImmutableList<IEarningsEntry> Earnings { get; }
+    PerAnnum,
+
+    /// <summary>
+    /// Hourly pay type for hourly-paid employees.
+    /// </summary>
+    PerHour,
+
+    /// <summary>
+    /// Daily rate, typically for salaried employees with regular working patterns.
+    /// </summary>
+    PerDay
 }

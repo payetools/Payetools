@@ -9,7 +9,7 @@
 
 using Payetools.Common.Model;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Struct that holds student loan status information for an employee.

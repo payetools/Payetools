@@ -12,7 +12,7 @@ using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
 using System.Collections.Immutable;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents an employee's employment for payroll purposes.

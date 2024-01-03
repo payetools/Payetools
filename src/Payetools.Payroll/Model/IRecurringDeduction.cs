@@ -7,17 +7,17 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-using System.Collections.Immutable;
+using Payetools.Common.Model;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents an employee's deductions history for the tax year to date.
+/// Interface that represents a recurring deduction for an employee.
 /// </summary>
-public interface IDeductionHistoryYtd
+public interface IRecurringDeduction : IApplicableFromTill, IPayrollAmount
 {
     /// <summary>
-    /// Gets the list of deductions for this employee for a given payrun.  May be empty but usually not.
+    /// Gets the deduction type for this recurring deduction.
     /// </summary>
-    ImmutableList<IDeductionEntry> Deductions { get; }
+    IDeductionDetails DeductionType { get; }
 }

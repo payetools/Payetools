@@ -7,7 +7,7 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Enum representing different pay types, i.e., salaried, hourly paid, etc.

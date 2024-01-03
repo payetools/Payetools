@@ -7,17 +7,11 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-using Payetools.Common.Model;
-
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents a recurring earnings for an employee.
+/// Represents the information from a P45 provided from previous employment.
 /// </summary>
-public interface IRecurringEarnings : IApplicableFromTill, IPayrollAmount
+public record P45FromPreviousEmployment
 {
-    /// <summary>
-    /// Gets the pay component for this recurring earnings.
-    /// </summary>
-    IEarningsDetails PayComponent { get; }
 }

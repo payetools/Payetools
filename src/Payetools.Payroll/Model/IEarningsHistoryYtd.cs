@@ -7,11 +7,17 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
-namespace Payetools.Employment.Model;
+using System.Collections.Immutable;
+
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Represents the information from a P45 provided from previous employment.
+/// Interface that represents an employee's earnings history for the tax year to date.
 /// </summary>
-public record P45FromPreviousEmployment
+public interface IEarningsHistoryYtd
 {
+    /// <summary>
+    /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
+    /// </summary>
+    ImmutableList<IEarningsEntry> Earnings { get; }
 }

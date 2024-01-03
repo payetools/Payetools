@@ -9,7 +9,7 @@
 
 using Payetools.Common.Model;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents an employer for payroll purposes.

@@ -9,15 +9,15 @@
 
 using Payetools.Common.Model;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents a recurring deduction for an employee.
+/// Interface that represents a recurring earnings for an employee.
 /// </summary>
-public interface IRecurringDeduction : IApplicableFromTill, IPayrollAmount
+public interface IRecurringEarnings : IApplicableFromTill, IPayrollAmount
 {
     /// <summary>
-    /// Gets the deduction type for this recurring deduction.
+    /// Gets the pay component for this recurring earnings.
     /// </summary>
-    IDeductionDetails DeductionType { get; }
+    IEarningsDetails PayComponent { get; }
 }

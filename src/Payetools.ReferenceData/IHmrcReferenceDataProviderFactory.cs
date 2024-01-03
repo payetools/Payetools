@@ -27,19 +27,4 @@ public interface IHmrcReferenceDataProviderFactory
     /// <param name="referenceDataStreams">Array of data streams to load HMRC reference data from.</param>
     /// <returns>An instance of a type that implements <see cref="IHmrcReferenceDataProvider"/>.</returns>
     Task<IHmrcReferenceDataProvider> CreateProviderAsync(Stream[] referenceDataStreams);
-
-    /// <summary>
-    /// Creates a new HMRC reference data that implements <see cref="IHmrcReferenceDataProvider"/> using reference data returned from
-    /// an HTTP(S) endpoint.
-    /// </summary>
-    /// <param name="referenceDataEndpoint">The HTTP(S) endpoint to retrieve HMRC reference data from.</param>
-    /// <returns>An instance of a type that implements <see cref="IHmrcReferenceDataProvider"/>.</returns>
-    /// <exception cref="InvalidReferenceDataException">Thrown if it was not possible to retrieve
-    /// reference data from the supplied endpoint.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if this factory was created without a valid <see cref="IHttpClientFactory"/>
-    /// instance.</exception>
-    /// <remarks>If the method completes successfully, the <see cref="IHmrcReferenceDataProvider.Health"/>
-    /// property of the created <see cref="IHmrcReferenceDataProvider"/> provides human-readable information on
-    /// the status of each tax year loaded.</remarks>
-    Task<IHmrcReferenceDataProvider> CreateProviderAsync(Uri referenceDataEndpoint);
 }

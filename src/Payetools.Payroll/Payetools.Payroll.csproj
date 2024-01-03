@@ -42,7 +42,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
-    <ProjectReference Include="..\Payetools.Employment\Payetools.Employment.csproj" />
     <ProjectReference Include="..\Payetools.IncomeTax\Payetools.IncomeTax.csproj" />
     <ProjectReference Include="..\Payetools.NationalInsurance\Payetools.NationalInsurance.csproj" />
     <ProjectReference Include="..\Payetools.Pensions\Payetools.Pensions.csproj" />

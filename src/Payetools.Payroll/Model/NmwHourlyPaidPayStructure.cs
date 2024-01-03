@@ -11,7 +11,7 @@ using Payetools.Common.Extensions;
 using Payetools.Common.Model;
 using Payetools.NationalMinimumWage;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Represents an hourly paid pay structure that tracks National Minimum/Living Wage

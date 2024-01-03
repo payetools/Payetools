@@ -7,6 +7,7 @@
 //
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
+using Microsoft.Extensions.Logging;
 using Payetools.ReferenceData;
 
 namespace Payetools.Testing.Utils;
@@ -20,7 +21,7 @@ public static class ReferenceDataHelper
     };
 
     public static HmrcReferenceDataProviderFactory GetFactory() =>
-        new HmrcReferenceDataProviderFactory();
+        new HmrcReferenceDataProviderFactory(MakeLogger());
 
     public async static Task<T> CreateProviderAsync<T>() where T : class
     {
@@ -32,5 +33,14 @@ public static class ReferenceDataHelper
         referenceDataStreams.ToList().ForEach(s => s.Dispose());
 
         return factory;
+    }
+
+    private static ILogger<HmrcReferenceDataProviderFactory> MakeLogger()
+    {
+        var factory = LoggerFactory.Create(builder => {
+            builder.AddConsole();
+        });
+
+        return factory.CreateLogger<HmrcReferenceDataProviderFactory>();
     }
 }

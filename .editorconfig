@@ -90,4 +90,4 @@ csharp_space_around_binary_operators = before_and_after
 # Payetools specifics
 
 dotnet_diagnostic.IDE0073.severity = warning
-file_header_template = Copyright (c) 2023 Payetools Foundation.\n\nPayetools Foundation licenses this file to you under one of the following licenses:\n\n  * GNU Affero General Public License, see https://www.gnu.org/licenses/agpl-3.0.html\n  * Payetools Commercial Use license [TBA]\n\nFor further information on licensing options, see https://paytools.dev/licensing-paytools.html
+file_header_template = Copyright (c) 2023-2024, Payetools Foundation.\n\nPayetools Foundation licenses this file to you under one of the following licenses:\n\n  * GNU Affero General Public License, see https://www.gnu.org/licenses/agpl-3.0.html\n  * Payetools Commercial Use license [TBA]\n\nFor further information on licensing options, see https://paytools.dev/licensing-paytools.html

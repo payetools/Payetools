@@ -8,7 +8,7 @@
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
 using Payetools.Common.Model;
-using Payetools.Employment.Model;
+using Payetools.Payroll.Model;
 
 namespace Payetools.Payroll.Payruns;
 
@@ -25,5 +25,5 @@ public interface IPayrunProcessorFactory
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayrunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod);
+    IPayrunProcessor GetProcessor(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod);
 }

@@ -9,7 +9,7 @@
 
 using Payetools.NationalInsurance.Model;
 
-namespace Payetools.Employment.Model;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface for types that represent the historical set of information for an employee's payroll for the

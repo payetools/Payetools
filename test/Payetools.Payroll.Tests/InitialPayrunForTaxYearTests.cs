@@ -9,7 +9,6 @@
 
 using FluentAssertions;
 using Payetools.Common.Model;
-using Payetools.Employment.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.Extensions;
 using Payetools.Payroll.Model;
@@ -80,7 +79,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         PayDate payDate = new PayDate(payrunInfo.PayDay, payrunInfo.PayFrequency);
         PayReferencePeriod payPeriod = new PayReferencePeriod(payrunInfo.PayPeriodStart, payrunInfo.PayPeriodEnd);
 
-        var processor = await GetProcessor(employer, payDate, payPeriod);
+        var processor = await GetProcessorAsync(employer, payDate, payPeriod);
 
         List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
         entries.Add(payrunEntry);
@@ -279,11 +278,11 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             pensionContributionLevels);
     }
 
-    private async Task<IPayrunProcessor> GetProcessor(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
+    private async Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
     {
         var factory = await _payrollProcessorFactoryFixture.GetFactory();
 
-        return await factory.GetProcessorAsync(employer, payDate, payPeriod);
+        return factory.GetProcessor(employer, payDate, payPeriod);
     }
 }
 

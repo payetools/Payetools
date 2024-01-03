@@ -8,9 +8,9 @@
 // For further information on licensing options, see https://paytools.dev/licensing-paytools.html
 
 using Payetools.Common.Model;
-using Payetools.Employment.Model;
 using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
+using Payetools.Payroll.Model;
 using Payetools.Pensions;
 using Payetools.ReferenceData;
 using Payetools.StudentLoans;
@@ -69,27 +69,16 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayrunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    public async Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
+    public IPayrunProcessor GetProcessor(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
     {
-        var factories = _hmrcReferenceDataProviderFactory != null && _referenceDataEndpoint != null ?
-                            GetFactories(await _hmrcReferenceDataProviderFactory.CreateProviderAsync((Uri)_referenceDataEndpoint)) :
-                            (_hmrcReferenceDataProvider != null ?
-                                GetFactories(_hmrcReferenceDataProvider) :
-                                throw new InvalidOperationException("Either an HMRC reference data provider or a suitable factory and address must be provided"));
+        var factories = GetFactories(_hmrcReferenceDataProvider ??
+                throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));
 
         var calculator = new PayrunEntryProcessor(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
             factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
             payDate, payPeriod);
 
         return new PayrunProcessor(calculator, employer);
-    }
-
-    private static async Task<FactorySet> GetFactories(IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory,
-        Uri referenceDataEndpoint)
-    {
-        var referenceDataProvider = await hmrcReferenceDataProviderFactory.CreateProviderAsync(referenceDataEndpoint);
-
-        return GetFactories(referenceDataProvider);
     }
 
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data
