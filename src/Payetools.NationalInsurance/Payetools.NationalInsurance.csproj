@@ -26,6 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\Payetools\source\repos\payetools\payetools\LICENSE.md" />
     <None Remove="stylecop.json" />
   </ItemGroup>
 
@@ -35,6 +36,10 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\shared\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\shared\LICENSE.md" Link="LICENSE.md" />
   </ItemGroup>
 
   <ItemGroup>

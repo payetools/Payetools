@@ -27,4 +27,4 @@ Given the current pipeline of work, we are not quite ready to receive contributi
 **It isn't recommended to fork this repo at this time, on the basis that there are a number of imminent changes in the pipeline.**  Once again, if there is a feature or capability you require, please contact us in the first instance.
 
 ### License
-This project is dual licensed; see https://paytools.dev/licensing-paytools.html for more details.
+This project is licensed under the MIT License.

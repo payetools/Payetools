@@ -32,11 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\Payetools\source\repos\payetools\payetools\LICENSE.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\shared\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\shared\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\shared\LICENSE.md" Link="LICENSE.md" />
   </ItemGroup>
 
   <ItemGroup>
