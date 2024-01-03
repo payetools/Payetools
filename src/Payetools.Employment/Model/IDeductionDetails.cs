@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2023 Payetools Foundation.
+﻿// Copyright (c) 2023-2024, Payetools Foundation.
 //
 // Payetools Foundation licenses this file to you under one of the following licenses:
 //
