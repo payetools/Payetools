@@ -1,30 +1,36 @@
 // Copyright (c) 2023-2024, Payetools Foundation.
 //
-// Payetools Foundation licenses this file to you under one of the following licenses:
+// Payetools Foundation licenses this file to you under the following license(s):
 //
-//   * GNU Affero General Public License, see https://www.gnu.org/licenses/agpl-3.0.html
-//   * Payetools Commercial Use license [TBA]
-//
-// For further information on licensing options, see https://paytools.dev/licensing-paytools.html
+//   * The MIT License, see https://opensource.org/license/mit/
 
 using Nuke.Common;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
+using System.Linq;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
+[GitHubActions(
+    "continuous",
+    GitHubActionsImage.UbuntuLatest,
+    On = new[] { GitHubActionsTrigger.Push },
+    InvokedTargets = new[] { nameof(Publish) },
+    ImportSecrets = new[] { nameof(NugetApiKey) })]
 class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
-
     public static int Main() => Execute<Build>(x => x.Compile);
+
+    [Parameter]
+    readonly string NugetApiUrl = "https://api.nuget.org/v3/index.json"; //default
+
+    [Parameter]
+    [Secret]
+    readonly string NugetApiKey;
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -93,5 +99,24 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableNoRestore()
                 .EnableNoBuild());
+        });
+
+    Target Publish => _ => _
+        .Requires(() => NugetApiKey)
+        .Requires(() => NugetApiUrl)
+        .DependsOn(Pack)
+        .Executes(() =>
+        {
+            var packageFiles = ArtifactsDirectory
+                .GlobFiles("*.nupkg")
+                .Where(x => !x.ToString().EndsWith("symbols.nupkg") && !x.ToString().Contains("Payetools.Testing"))
+                .ToList();
+
+            packageFiles.ForEach(p =>
+                DotNetNuGetPush(s => s
+                    .SetTargetPath(p)
+                    .SetSource(NugetApiUrl)
+                    .SetApiKey(NugetApiKey)
+                ));
         });
 }
