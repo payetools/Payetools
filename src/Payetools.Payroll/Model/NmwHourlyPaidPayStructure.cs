@@ -35,9 +35,9 @@ public record NmwHourlyPaidPayStructure : IEmployeePayStructure
     /// <param name="nmwEvaluator">Instance of <see cref="INmwEvaluator"/> used to obtain the appropriate rate.</param>
     /// <param name="payPeriod">Pay period pertaining.</param>
     /// <param name="dateOfBirth">Employee's date of birth.</param>
-    public void UpdateNmw(INmwEvaluator nmwEvaluator, PayReferencePeriod payPeriod, DateOnly dateOfBirth)
+    public void UpdateNmw(INmwEvaluator nmwEvaluator, DateRange payPeriod, DateOnly dateOfBirth)
     {
-        var age = dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod);
+        var age = dateOfBirth.AgeAt(payPeriod.Start);
 
         PayRate = nmwEvaluator.GetNmwHourlyRateForEmployee(age);
     }

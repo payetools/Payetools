@@ -36,104 +36,104 @@ public class NonCompliantNmwTests_2022_2023 : IClassFixture<NmwEvaluatorFactoryD
     [Fact]
     public async Task Test23OrOverAsync()
     {
-        var payPeriod = new PayReferencePeriod(new DateOnly(2022, 4, 1), new DateOnly(2022, 4, 30));
+        var payPeriod = new DateRange(new DateOnly(2022, 4, 1), new DateOnly(2022, 4, 30));
         var dateOfBirth = new DateOnly(1999, 4, 1);
         var hoursWorked = 24.0m;
         var hourlyRate = 9.4999m;
         var grossPay = hoursWorked * hourlyRate;
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age23AndAboveLevel]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age23AndAboveLevel]);
 
         dateOfBirth = new DateOnly(1999, 3, 31);
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age23AndAboveLevel]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age23AndAboveLevel]);
 
         hourlyRate = 9.5m;
         grossPay = hoursWorked * hourlyRate - 0.01m;
         dateOfBirth = new DateOnly(1950, 3, 31);
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age23AndAboveLevel]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age23AndAboveLevel]);
     }
 
     [Fact]
     public async Task Test21To22Async()
     {
-        var payPeriod = new PayReferencePeriod(new DateOnly(2022, 8, 10), new DateOnly(2022, 9, 9));
+        var payPeriod = new DateRange(new DateOnly(2022, 8, 10), new DateOnly(2022, 9, 9));
         var dateOfBirth = new DateOnly(2001, 8, 10);
         var hoursWorked = 40.0m;
         var hourlyRate = 9.18m;
         var grossPay = hoursWorked * hourlyRate - 0.01m;
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age21To22Level]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age21To22Level]);
 
         grossPay -= 0.01m;
         dateOfBirth = new DateOnly(1999, 8, 11);
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age21To22Level]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age21To22Level]);
     }
 
     [Fact]
     public async Task Test18To20Async()
     {
-        var payPeriod = new PayReferencePeriod(new DateOnly(2023, 1, 1), new DateOnly(2023, 1, 31));
+        var payPeriod = new DateRange(new DateOnly(2023, 1, 1), new DateOnly(2023, 1, 31));
         var dateOfBirth = new DateOnly(2005, 1, 1);
         var hoursWorked = 35.0m;
         var hourlyRate = 6.83m;
         var grossPay = hoursWorked * hourlyRate - 0.01m;
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age18To20Level]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age18To20Level]);
 
         grossPay -= 0.01m;
         dateOfBirth = new DateOnly(2003, 1, 2);
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Age18To20Level]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Age18To20Level]);
     }
 
     [Fact]
     public async Task TestUnder18NonApprenticeAsync()
     {
-        var payPeriod = new PayReferencePeriod(new DateOnly(2023, 3, 5), new DateOnly(2023, 4, 5));
+        var payPeriod = new DateRange(new DateOnly(2023, 3, 5), new DateOnly(2023, 4, 5));
         var dateOfBirth = new DateOnly(2006, 3, 6);
         var hoursWorked = 17.5m;
         var hourlyRate = 4.81m;
         var grossPay = hoursWorked * hourlyRate - 0.01m;
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Under18LevelIndex]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Under18LevelIndex]);
 
         grossPay -= 0.01m;
         dateOfBirth = new DateOnly(2005, 3, 6);
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Under18LevelIndex]);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Under18LevelIndex]);
     }
 
     [Fact]
     public async Task TestApprenticeAsync()
     {
-        var payPeriod = new PayReferencePeriod(new DateOnly(2023, 3, 5), new DateOnly(2023, 4, 5));
+        var payPeriod = new DateRange(new DateOnly(2023, 3, 5), new DateOnly(2023, 4, 5));
         var dateOfBirth = new DateOnly(2005, 3, 6);
         var hoursWorked = 17.5m;
         var hourlyRate = 4.8099m;
         var grossPay = hoursWorked * hourlyRate;
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Under18LevelIndex], true, 1.0m);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Under18LevelIndex], true, 1.0m);
 
         dateOfBirth = new DateOnly(2004, 3, 5);
 
         await RunInvalidNmwTestAsync(payPeriod, dateOfBirth, hoursWorked, grossPay,
-            dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod), _expectedHourlyNmwRates[Under18LevelIndex], true, 0.99m);
+            dateOfBirth.AgeAt(payPeriod.Start), _expectedHourlyNmwRates[Under18LevelIndex], true, 0.99m);
     }
 
-    private async Task RunInvalidNmwTestAsync(PayReferencePeriod payPeriod, DateOnly dateOfBirth, decimal hoursWorked,
+    private async Task RunInvalidNmwTestAsync(DateRange payPeriod, DateOnly dateOfBirth, decimal hoursWorked,
         decimal grossPay, int expectedAge, decimal expectedRate, bool isApprentice = false, decimal? yearsAsApprentice = null)
     {
         var evaluator = await GetEvaluator();

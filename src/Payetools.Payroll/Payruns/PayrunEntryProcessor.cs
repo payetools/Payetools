@@ -51,7 +51,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     /// <summary>
     /// Gets the pay period for this payrun calculator.
     /// </summary>
-    public PayReferencePeriod PayPeriod { get; }
+    public DateRange PayPeriod { get; }
 
     /// <summary>
     /// Initialises a new instance of <see cref="PayrunEntryProcessor"/> with the supplied factories
@@ -69,7 +69,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
         IPensionContributionCalculatorFactory pensionCalcFactory,
         IStudentLoanCalculatorFactory studentLoanCalcFactory,
         PayDate payDate,
-        PayReferencePeriod payPeriod)
+        DateRange payPeriod)
     {
         _incomeTaxCalculators = payDate.TaxYear.GetCountriesForYear()
             .Select(regime => (regime, calculator: incomeTaxCalcFactory.GetCalculator(regime, payDate)))

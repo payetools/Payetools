@@ -44,7 +44,7 @@ public class NmwEvaluator : INmwEvaluator
     /// <remarks>As per <see href="https://www.gov.uk/hmrc-internal-manuals/national-minimum-wage-manual/nmwm03010"/>,
     /// the rate that applies to each worker depends on their age at teh start of the pay reference period.</remarks>
     public NmwEvaluationResult Evaluate(
-        PayReferencePeriod payPeriod,
+        DateRange payPeriod,
         DateOnly dateOfBirth,
         decimal grossPay,
         decimal hoursWorkedForPay,
@@ -52,7 +52,7 @@ public class NmwEvaluator : INmwEvaluator
         decimal? yearsAsApprentice = null)
     {
         StringBuilder commentary = new StringBuilder();
-        var age = dateOfBirth.AgeAt(payPeriod.StartOfPayPeriod);
+        var age = dateOfBirth.AgeAt(payPeriod.Start);
 
         commentary.Append($"Age at start of pay period = {age}. ");
 

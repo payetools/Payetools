@@ -75,4 +75,22 @@ public static class DateOnlyExtensions
     /// <param name="date">Date to get string representation for.</param>
     /// <returns>UK format date string.</returns>
     public static string ToUk(this DateOnly date) => date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+    /// <summary>
+    /// Returns the earlier of two dates.
+    /// </summary>
+    /// <param name="date">First date to compare.</param>
+    /// <param name="other">Second date to compare.</param>
+    /// <returns>The earlier of the two dates.</returns>
+    public static DateOnly OrIfEarlier(this DateOnly date, DateOnly other) =>
+    date > other ? other : date;
+
+    /// <summary>
+    /// Returns the later of two dates.
+    /// </summary>
+    /// <param name="date">First date to compare.</param>
+    /// <param name="other">Second date to compare.</param>
+    /// <returns>The later of the two dates.</returns>
+    public static DateOnly OrIfLater(this DateOnly date, DateOnly other) =>
+        other > date ? other : date;
 }

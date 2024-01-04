@@ -1,11 +1,8 @@
 ﻿// Copyright (c) 2023-2024, Payetools Foundation.
 //
-// Paytools Foundation licenses this file to you under one of the following licenses:
+// Payetools Foundation licenses this file to you under the following license(s):
 //
-//   * GNU Affero General Public License, see https://www.gnu.org/licenses/agpl-3.0.html
-//   * Paytools Commercial Use license [TBA]
-//
-// For further information on licensing options, see https://paytools.dev/licensing-paytools.html
+//   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
 using Payetools.Payroll.Model;
@@ -26,7 +23,7 @@ public interface IPayrunEntryProcessor
     /// <summary>
     /// Gets the pay period for this payrun calculator.
     /// </summary>
-    PayReferencePeriod PayPeriod { get; }
+    DateRange PayPeriod { get; }
 
     /// <summary>
     /// Processes the supplied payrun entry calculating all the earnings and deductions, income tax, national insurance and

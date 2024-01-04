@@ -66,7 +66,7 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayrunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    public IPayrunProcessor GetProcessor(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
+    public IPayrunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod)
     {
         var factories = GetFactories(_hmrcReferenceDataProvider ??
                 throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));

@@ -30,7 +30,7 @@ public interface INmwEvaluator
     /// <remarks>As per <see href="https://www.gov.uk/hmrc-internal-manuals/national-minimum-wage-manual/nmwm03010"/>,
     /// the rate that applies to each worker depends on their age at the start of the pay reference period.</remarks>
     NmwEvaluationResult Evaluate(
-        PayReferencePeriod payPeriod,
+        DateRange payPeriod,
         DateOnly dateOfBirth,
         decimal grossPay,
         decimal hoursWorkedForPay,

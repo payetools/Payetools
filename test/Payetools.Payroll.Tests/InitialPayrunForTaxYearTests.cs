@@ -73,8 +73,8 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         var payrunInfo = testData.PayrunInfo.Where(pi => pi.TestReference == "Pay1").First();
 
-        PayDate payDate = new PayDate(payrunInfo.PayDay, payrunInfo.PayFrequency);
-        PayReferencePeriod payPeriod = new PayReferencePeriod(payrunInfo.PayPeriodStart, payrunInfo.PayPeriodEnd);
+        var payDate = new PayDate(payrunInfo.PayDay, payrunInfo.PayFrequency);
+        var payPeriod = new DateRange(payrunInfo.PayPeriodStart, payrunInfo.PayPeriodEnd);
 
         var processor = await GetProcessorAsync(employer, payDate, payPeriod);
 
@@ -275,7 +275,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             pensionContributionLevels);
     }
 
-    private async Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, PayReferencePeriod payPeriod)
+    private async Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, DateRange payPeriod)
     {
         var factory = await _payrollProcessorFactoryFixture.GetFactory();
 
