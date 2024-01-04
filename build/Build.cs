@@ -11,10 +11,12 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
+using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Linq;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Nuke.Common.Tools.Slack.SlackTasks;
 
 [GitHubActions(
     "continuous",
@@ -32,6 +34,10 @@ class Build : NukeBuild
     [Parameter]
     [Secret]
     readonly string NugetApiKey;
+
+    [Parameter]
+    [Secret] 
+    readonly string SlackWebhook;
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -114,6 +120,7 @@ class Build : NukeBuild
         .Requires(() => NugetApiKey)
         .Requires(() => NugetApiUrl)
         .DependsOn(Pack)
+        .Triggers(NotifyPublished)
         .Executes(() =>
         {
             var packageFiles = ArtifactsDirectory
@@ -127,5 +134,12 @@ class Build : NukeBuild
                     .SetSource(NugetApiUrl)
                     .SetApiKey(NugetApiKey)
                 ));
+        });
+
+    Target NotifyPublished => _ => _
+        .Executes(async () => {
+            await SendSlackMessageAsync(_ => _
+                    .SetText($"Payetools version {GitRepository.Tags.First()} deployed to Nuget"),
+                SlackWebhook);
         });
 }
