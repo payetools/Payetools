@@ -2,7 +2,7 @@
   "profiles": {
     "_build": {
       "commandName": "Project",
-      "commandLineArgs": "Status"
+      "commandLineArgs": "NotifyPublished"
     }
   }
 }

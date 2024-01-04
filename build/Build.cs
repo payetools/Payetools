@@ -36,8 +36,8 @@ class Build : NukeBuild
     readonly string NugetApiKey;
 
     [Parameter]
-    [Secret] 
-    readonly string SlackWebhook;
+    [Secret]
+    readonly string SlackWebhook = "T05839DQ5PX/B06D4FEE80G/h3uuMb1RBFQa7gUBwJLQ1IYt";
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -136,6 +136,7 @@ class Build : NukeBuild
         });
 
     Target NotifyPublished => _ => _
+        .Requires(() => SlackWebhook)
         .TriggeredBy(Publish)
         .Executes(async () => 
         {
@@ -152,6 +153,6 @@ class Build : NukeBuild
 
             await SendSlackMessageAsync(_ => _
                     .SetText(message),
-                SlackWebhook);
+                "https://hooks.slack.com/services/" + SlackWebhook);
         });
 }

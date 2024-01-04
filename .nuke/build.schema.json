@@ -81,6 +81,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "NotifyPublished",
               "Pack",
               "Publish",
               "Restore",
@@ -88,6 +89,10 @@
               "Test"
             ]
           }
+        },
+        "SlackWebhook": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
         "Solution": {
           "type": "string",
@@ -101,6 +106,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "NotifyPublished",
               "Pack",
               "Publish",
               "Restore",
