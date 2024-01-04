@@ -83,7 +83,7 @@ public static class DateOnlyExtensions
     /// <param name="other">Second date to compare.</param>
     /// <returns>The earlier of the two dates.</returns>
     public static DateOnly OrIfEarlier(this DateOnly date, DateOnly other) =>
-    date > other ? other : date;
+        date > other ? other : date;
 
     /// <summary>
     /// Returns the later of two dates.

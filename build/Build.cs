@@ -12,6 +12,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Utilities.Collections;
+using System;
 using System.Linq;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
@@ -49,6 +50,13 @@ class Build : NukeBuild
     AbsolutePath TestDirectory => RootDirectory / "test";
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+
+    Target Status => _ => _
+        .Executes(() =>
+        {
+            Console.WriteLine(GitRepository.Tags.Any());
+            Console.WriteLine(GitRepository.IsOnMainOrMasterBranch());
+        });
 
     Target Clean => _ => _
         .Before(Restore)
@@ -102,6 +110,7 @@ class Build : NukeBuild
         });
 
     Target Publish => _ => _
+        .OnlyWhenDynamic(() => GitRepository.IsOnMainOrMasterBranch() && GitRepository.Tags.Any())
         .Requires(() => NugetApiKey)
         .Requires(() => NugetApiUrl)
         .DependsOn(Pack)
