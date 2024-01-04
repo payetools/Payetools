@@ -153,11 +153,11 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
 
         IStudentLoanCalculationResult studentLoanCalculationResult;
 
-        if (entry.Employment.StudentLoanStatus == null)
+        if (entry.Employment.StudentLoanInfo == null)
             studentLoanCalculationResult = StudentLoanCalculationResult.NoStudentLoanApplicable;
         else
-            _studentLoanCalculator.Calculate(workingGrossPay, entry.Employment.StudentLoanStatus?.StudentLoanType,
-                entry.Employment.StudentLoanStatus?.HasPostGradLoan == true, out studentLoanCalculationResult);
+            _studentLoanCalculator.Calculate(workingGrossPay, entry.Employment.StudentLoanInfo?.StudentLoanType,
+                entry.Employment.StudentLoanInfo?.HasPostGradLoan == true, out studentLoanCalculationResult);
 
         result = new EmployeePayrunResult(entry.Employee, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
             ref pensionContributions, earningsTotals.GrossPay, workingGrossPay, taxablePay, nicablePay, ref entry.Employment.PayrollHistoryYtd);

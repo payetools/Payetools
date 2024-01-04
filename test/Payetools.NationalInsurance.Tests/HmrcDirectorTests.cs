@@ -1,20 +1,15 @@
 ﻿// Copyright (c) 2023-2024, Payetools Foundation.
 //
-// Paytools Foundation licenses this file to you under one of the following licenses:
+// Payetools Foundation licenses this file to you under the following license(s):
 //
-//   * GNU Affero General Public License, see https://www.gnu.org/licenses/agpl-3.0.html
-//   * Paytools Commercial Use license [TBA]
-//
-// For further information on licensing options, see https://paytools.dev/licensing-paytools.html
+//   * The MIT License, see https://opensource.org/license/mit/
 
 using FluentAssertions;
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Testing.Data;
 using Payetools.Testing.Data.NationalInsurance;
-using System.Diagnostics;
 using Xunit.Abstractions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Payetools.NationalInsurance.Tests;
 
@@ -77,7 +72,7 @@ public class HmrcDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture>
                 PayFrequency.Annually => new PayDate(taxYear.GetLastDayOfTaxPeriod(PayFrequency.Annually, 1), PayFrequency.Annually),
                 _ => throw new InvalidOperationException("Currently only weekly and annual frequencies are included in HMRC test data")
             }; ;
-                
+
             var calculator = await GetCalculator(payDate);
 
             // Clean up issues caused by original Excel-based source data

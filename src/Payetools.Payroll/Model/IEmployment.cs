@@ -56,7 +56,7 @@ public interface IEmployment
     /// <summary>
     /// Gets the employee's current student loan status.
     /// </summary>
-    StudentLoanStatus? StudentLoanStatus { get; }
+    StudentLoanInfo? StudentLoanInfo { get; }
 
     /// <summary>
     /// Gets the employee's primary pay structure.

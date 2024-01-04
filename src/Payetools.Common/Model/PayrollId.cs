@@ -9,6 +9,7 @@ namespace Payetools.Common.Model;
 /// <summary>
 /// Represents a payroll ID (also known as a "worker ID", "payroll number", "works number") as reported to HMRC.
 /// </summary>
+/// <remarks>This type is meant to aid payroll ID changes.  Further work required.</remarks>
 public sealed record PayrollId
 {
     private readonly string _payrollId;

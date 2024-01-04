@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Struct that holds student loan status information for an employee.
 /// </summary>
-public readonly struct StudentLoanStatus
+public readonly struct StudentLoanInfo
 {
     /// <summary>
     /// Gets the student loan applicable for an employee.  Null if the employee does not have an

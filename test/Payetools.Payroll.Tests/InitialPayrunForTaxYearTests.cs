@@ -248,8 +248,8 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         {
             TaxCode = staticEntry.TaxCode,
             NiCategory = staticEntry.NiCategory,
-            StudentLoanStatus = (staticEntry.StudentLoanPlan != null || staticEntry.GraduateLoan) ?
-                new StudentLoanStatus() { StudentLoanType = staticEntry.StudentLoanPlan, HasPostGradLoan = staticEntry.GraduateLoan } :
+            StudentLoanInfo = (staticEntry.StudentLoanPlan != null || staticEntry.GraduateLoan) ?
+                new StudentLoanInfo() { StudentLoanType = staticEntry.StudentLoanPlan, HasPostGradLoan = staticEntry.GraduateLoan } :
                 null,
             PensionScheme = staticEntry.PensionScheme != null ? new PensionScheme()
             {

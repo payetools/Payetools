@@ -58,7 +58,7 @@ public record Employment : IEmployment
     /// <summary>
     /// Gets the employee's current student loan status.
     /// </summary>
-    public StudentLoanStatus? StudentLoanStatus { get; init; }
+    public StudentLoanInfo? StudentLoanInfo { get; init; }
 
     /// <summary>
     /// Gets the employee's primary pay structure.
