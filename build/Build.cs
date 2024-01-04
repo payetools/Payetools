@@ -120,7 +120,6 @@ class Build : NukeBuild
         .Requires(() => NugetApiKey)
         .Requires(() => NugetApiUrl)
         .DependsOn(Pack)
-        .Triggers(NotifyPublished)
         .Executes(() =>
         {
             var packageFiles = ArtifactsDirectory
@@ -137,9 +136,22 @@ class Build : NukeBuild
         });
 
     Target NotifyPublished => _ => _
-        .Executes(async () => {
+        .TriggeredBy(Publish)
+        .Executes(async () => 
+        {
+            string message;
+
+            if (GitRepository.Tags.Any())
+            {
+                message = $"Payetools version {GitRepository.Tags.First()} deployed to Nuget";
+            }
+            else 
+            {
+                message = "Payetools not published; no tag supplied";
+            }
+
             await SendSlackMessageAsync(_ => _
-                    .SetText($"Payetools version {GitRepository.Tags.First()} deployed to Nuget"),
+                    .SetText(message),
                 SlackWebhook);
         });
 }
