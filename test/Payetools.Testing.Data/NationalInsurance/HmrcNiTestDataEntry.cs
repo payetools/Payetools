@@ -1,6 +1,10 @@
-// Copyright info - to follow
+// Copyright (c) 2023-2024, Payetools Foundation.
+//
+// Payetools Foundation licenses this file to you under the following license(s):
+//
+//   * The MIT License, see https://opensource.org/license/mit/
+
 using Payetools.Common.Model;
-using Payetools.NationalInsurance.Model;
 
 namespace Payetools.Testing.Data.NationalInsurance;
 

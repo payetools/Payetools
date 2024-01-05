@@ -21,9 +21,20 @@ namespace Payetools.Common.Model;
 ///     <item><description>between 1 and 10 characters, which can be letters and numbers</description></item>
 /// </list>
 /// </summary>
-public struct HmrcPayeReference
+public partial struct HmrcPayeReference
 {
+#if NET7_0_OR_GREATER
+
+    [GeneratedRegex(@"^[0-9]{3}/[A-Z0-9]{1,10}$")]
+    private static partial Regex GetPayeRefRegex();
+
+#else
+
     private static readonly Regex _payeRefRegex = new Regex(@"^[0-9]{3}/[A-Z0-9]{1,10}$");
+
+    private static Regex GetPayeRefRegex() => _payeRefRegex;
+
+#endif
 
     /// <summary>
     /// Gets or sets the HMRC office number portion of the full PAYE Reference.  Always 3 digits.
@@ -90,11 +101,11 @@ public struct HmrcPayeReference
     /// <returns>True if the supplied value could be a valid HMRC PAYE Reference; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid HMRC PAYE Reference,
     /// it does not guarantee that the supplied value is registered with HMRC against a given company.</remarks>
-    public static bool IsValid(string? value) => value != null && _payeRefRegex.IsMatch(value);
+    public static bool IsValid(string? value) => value != null && GetPayeRefRegex().IsMatch(value);
 
     /// <summary>
     /// Gets the string representation of this HmrcPayeReference.
     /// </summary>
     /// <returns>The value of this <see cref="HmrcPayeReference"/> as a string.</returns>
-    public override string ToString() => $"{HmrcOfficeNumber:000}/{EmployerPayeReference}";
+    public override readonly string ToString() => $"{HmrcOfficeNumber:000}/{EmployerPayeReference}";
 }

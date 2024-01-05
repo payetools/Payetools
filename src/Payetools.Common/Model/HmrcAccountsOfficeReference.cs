@@ -19,9 +19,20 @@ namespace Payetools.Common.Model;
 /// </list>
 ///  (from )
 /// </summary>
-public record HmrcAccountsOfficeReference
+public partial record HmrcAccountsOfficeReference
 {
+#if NET7_0_OR_GREATER
+
+    [GeneratedRegex(@"^[0-9]{3}P[A-Z]\d{7}[0-9X]$")]
+    private static partial Regex GetValidationRegex();
+
+#else
+
     private static readonly Regex _validationRegex = new Regex(@"^[0-9]{3}P[A-Z]\d{7}[0-9X]$");
+
+    private static Regex GetValidationRegex() => _validationRegex;
+
+#endif
 
     private readonly string _accountsOfficeReference;
 
@@ -54,7 +65,7 @@ public record HmrcAccountsOfficeReference
     /// <returns>True if the supplied value could be a valid HMRC Accounts Office Reference; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid HRMC Accounts Office
     /// Reference, it does not guarantee that the supplied value is registered with HMRC against a given company.</remarks>
-    public static bool IsValid(string value) => _validationRegex.IsMatch(value);
+    public static bool IsValid(string value) => GetValidationRegex().IsMatch(value);
 
     /// <summary>
     /// Gets the string representation of this HmrcAccountsOfficeReference.

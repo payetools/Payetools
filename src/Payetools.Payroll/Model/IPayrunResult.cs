@@ -5,15 +5,19 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
-using System.Collections.Concurrent;
 
 namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents the output of a given payrun.
 /// </summary>
-public interface IPayrunResult : IEmployerInfoProvider
+public interface IPayrunResult
 {
+    /// <summary>
+    /// Gets the employer that this payrun result pertains to.
+    /// </summary>
+    IEmployer Employer { get; }
+
     /// <summary>
     /// Gets the pay date for this payrun.
     /// </summary>

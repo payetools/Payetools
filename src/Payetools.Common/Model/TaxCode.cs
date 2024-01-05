@@ -13,7 +13,7 @@ namespace Payetools.Common.Model;
 /// <summary>
 /// Represents a UK tax code, with the ability to calculate tax-free pay based the code and the relevant tax period.
 /// </summary>
-public readonly struct TaxCode
+public readonly partial struct TaxCode
 {
     // Constants used in the following regular expressions, and in the code for extracting values
     private const string _nonCumulative = "NonCumulative";
@@ -22,6 +22,19 @@ public readonly struct TaxCode
     private const string _otherPrefix = "OtherPrefix";
     private const string _digits = "Digits";
     private const string _suffix = "Suffix";
+
+#if NET7_0_OR_GREATER
+
+    [GeneratedRegex(@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<NonCumulative>W1M1|W1/M1|X|W1|M1)$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    private static partial Regex GetNonCumulativeRegex();
+
+    [GeneratedRegex(@"^(?<CountryPrefix>^[SC]?)(?<FixedCode>0T|BR|NT|D0|D1|D2)\s*(?:W1M1|W1/M1|X|W1|M1)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    private static partial Regex GetFixedCodeRegex();
+
+    [GeneratedRegex(@"(?<CountryPrefix>^[SC]?)(?<OtherPrefix>[K]?)(?<Digits>\d*)(?<Suffix>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    private static partial Regex GetStandardCodeRegex();
+
+#else
 
     private static readonly Regex _nonCumulativeRegex = new ($@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<{_nonCumulative}>W1M1|W1/M1|X|W1|M1)$",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -32,13 +45,24 @@ public readonly struct TaxCode
     private static readonly Regex _standardCodeRegex = new ($@"(?<{_countryPrefix}>^[SC]?)(?<{_otherPrefix}>[K]?)(?<{_digits}>\d*)(?<{_suffix}>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+    private static Regex GetNonCumulativeRegex() => _nonCumulativeRegex;
+
+    private static Regex GetFixedCodeRegex() => _fixedCodeRegex;
+
+    private static Regex GetStandardCodeRegex() => _standardCodeRegex;
+
+#endif
+
     private static readonly CountriesForTaxPurposes _allCountries = CountriesForTaxPurposes.England | CountriesForTaxPurposes.Wales | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Scotland;
 
     private static readonly decimal _taxCodeDivisor = 500.0m;
     private static readonly decimal _quotientWeeklyTaxFreePay = decimal.Round(_taxCodeDivisor * 10 / 52, 2, MidpointRounding.ToPositiveInfinity);
     private static readonly decimal _quotientMonthlyTaxFreePay = decimal.Round(_taxCodeDivisor * 10 / 12, 2, MidpointRounding.ToPositiveInfinity);
 
-    private readonly TaxYear _taxYear;
+    /// <summary>
+    /// Gets the tax year that this tax code pertains to.
+    /// </summary>
+    public TaxYear TaxYear { get; }
 
     /// <summary>
     /// Gets a value indicating whether the tax code is cumulative (e.g., 1257L) or non-cumulative (e.g., 1257L W1/M1).
@@ -107,7 +131,7 @@ public readonly struct TaxCode
         bool isNonCumulative,
         bool isFixedCode = false)
     {
-        _taxYear = taxYear;
+        TaxYear = taxYear;
         ApplicableCountries = applicableCountries;
         TaxTreatment = taxTreatment;
         NumericPortionOfCode = numericPortionOfCode;
@@ -168,9 +192,9 @@ public readonly struct TaxCode
     {
         var isNonCumulative = IsNonCumulativeCode(taxCode);
 
-        var fixedCodeMatch = _fixedCodeRegex.Match(taxCode);
+        var fixedCodeMatch = GetFixedCodeRegex().Match(taxCode);
 
-        Match? standardCodeMatch = fixedCodeMatch.Success ? null : _standardCodeRegex.Match(taxCode);
+        Match? standardCodeMatch = fixedCodeMatch.Success ? null : GetStandardCodeRegex().Match(taxCode);
 
         TaxCode? taxCodeResult = null;
 
@@ -331,8 +355,6 @@ public readonly struct TaxCode
         var countryCode = match.Groups[_countryPrefix] ??
             throw new InvalidOperationException($"{_countryPrefix} not found in matched output");
 
-        var applicableCountries = taxYear.GetCountriesForYear();
-
         CountriesForTaxPurposes countries = ToChar(countryCode.Value) switch
         {
             'S' => CountriesForTaxPurposes.Scotland,
@@ -346,7 +368,7 @@ public readonly struct TaxCode
 
     private static bool IsNonCumulativeCode(string taxCode)
     {
-        var match = _nonCumulativeRegex.Match(taxCode);
+        var match = GetNonCumulativeRegex().Match(taxCode);
 
         return match.Success && !string.IsNullOrEmpty(match.Groups[_nonCumulative]?.Value);
     }

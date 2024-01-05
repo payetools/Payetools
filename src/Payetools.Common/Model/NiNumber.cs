@@ -13,10 +13,20 @@ namespace Payetools.Common.Model;
 /// and a final letter which is always A, B, C or D.  (See HMRC's National Insurance Manual, section NIM39110
 /// (<see href="https://www.gov.uk/hmrc-internal-manuals/national-insurance-manual/nim39110"/>.)
 /// </summary>
-public readonly struct NiNumber
+public readonly partial struct NiNumber
 {
-    private static readonly Regex _validationRegex =
-        new Regex("^(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\\s*\\d\\s*){6}([A-D]|\\s)$");
+#if NET7_0_OR_GREATER
+
+    [GeneratedRegex("^(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\\s*\\d\\s*){6}([A-D]|\\s)$")]
+    private static partial Regex GetValidationRegex();
+
+#else
+
+    private static readonly Regex _validationRegex = new Regex("^(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\\s*\\d\\s*){6}([A-D]|\\s)$");
+
+    private static Regex GetValidationRegex() => _validationRegex;
+
+#endif
 
     private readonly string _value;
 
@@ -70,7 +80,7 @@ public readonly struct NiNumber
     /// <returns>True if the supplied value could be a valid NI number; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid Ni nummber,
     /// it does not guarantee that the supplied value is registered with HMRC against a given individual.</remarks>
-    public static bool IsValid(string value) => _validationRegex.IsMatch(value);
+    public static bool IsValid(string value) => GetValidationRegex().IsMatch(value);
 
     /// <summary>
     /// Gets the string representation of this <see cref="NiNumber"/>.
