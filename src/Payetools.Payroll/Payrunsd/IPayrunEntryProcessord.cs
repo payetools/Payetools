@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Payruns;
 
 /// <summary>
 /// Interface that represent types that can process an employee's set of input payroll data and
-/// provide the results of the calculations in the form of an <see cref="IEmployeePayrunResult"/>.
+/// provide the results of the calculations in the form of an <see cref="IEmployeePayrunResultd"/>.
 /// </summary>
 public interface IPayrunEntryProcessor
 {
@@ -31,6 +31,6 @@ public interface IPayrunEntryProcessor
     /// </summary>
     /// <param name="entry">Instance of <see cref="IEmployeePayrunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <param name="result">An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</param>
-    void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResult result);
+    /// <param name="result">An instance of <see cref="IEmployeePayrunResultd"/> containing the results of the payroll calculations.</param>
+    void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResultd result);
 }

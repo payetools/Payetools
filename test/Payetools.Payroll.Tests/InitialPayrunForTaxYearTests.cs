@@ -96,7 +96,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         Console.WriteLine();
     }
 
-    static void CheckResult(string testReference, in IEmployeePayrunResult result, in IExpectedOutputTestDataEntry expected)
+    static void CheckResult(string testReference, in IEmployeePayrunResultd result, in IExpectedOutputTestDataEntry expected)
     {
         var because = $"TestReference = '{testReference}'";
 

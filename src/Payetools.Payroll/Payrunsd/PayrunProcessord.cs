@@ -12,18 +12,18 @@ namespace Payetools.Payroll.Payruns;
 /// Represents a payrun, i.e., the running of payroll for a single pay reference period
 /// on a single pay date for a predefined set of employees within one employer's employment.
 /// </summary>
-public class PayrunProcessor : IPayrunProcessor
+public class PayrunProcessord : IPayrunProcessor
 {
     private readonly IPayrunEntryProcessor _payrunCalculator;
     private readonly IEmployer _employer;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunProcessor"/> with the supplied calculator.
+    /// Initialises a new instance of <see cref="PayrunProcessord"/> with the supplied calculator.
     /// </summary>
     /// <param name="calculator">Calculator to be used to calculate earnings, deductions
     /// and net pay.</param>
     /// <param name="employer">Employer that this payrun processor relates to.</param>
-    public PayrunProcessor(IPayrunEntryProcessor calculator, IEmployer employer)
+    public PayrunProcessord(IPayrunEntryProcessor calculator, IEmployer employer)
     {
         _payrunCalculator = calculator;
         _employer = employer;
@@ -37,7 +37,7 @@ public class PayrunProcessor : IPayrunProcessor
     /// of this payrun.</param>
     public void Process(List<IEmployeePayrunInputEntry> employeePayrunEntries, out IPayrunResult result)
     {
-        var payrunOutputs = new List<IEmployeePayrunResult>();
+        var payrunOutputs = new List<IEmployeePayrunResultd>();
 
         for (int i = 0; i < employeePayrunEntries.Count; i++)
         {
@@ -46,7 +46,7 @@ public class PayrunProcessor : IPayrunProcessor
             payrunOutputs.Add(employeeResult);
         }
 
-        result = new PayrunResult()
+        result = new PayrunResultd()
         {
             EmployeePayrunEntries = payrunOutputs,
             Employer = _employer,

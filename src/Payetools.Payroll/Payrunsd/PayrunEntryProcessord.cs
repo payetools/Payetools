@@ -18,9 +18,9 @@ namespace Payetools.Payroll.Payruns;
 
 /// <summary>
 /// Represents the calculator that can process an employee's set of input payroll data and
-/// provide the results of the calculations in the form of an <see cref="IEmployeePayrunResult"/>.
+/// provide the results of the calculations in the form of an <see cref="IEmployeePayrunResultd"/>.
 /// </summary>
-public class PayrunEntryProcessor : IPayrunEntryProcessor
+public class PayrunEntryProcessord : IPayrunEntryProcessor
 {
     internal readonly struct EarningsTotals
     {
@@ -54,7 +54,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     public DateRange PayPeriod { get; }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunEntryProcessor"/> with the supplied factories
+    /// Initialises a new instance of <see cref="PayrunEntryProcessord"/> with the supplied factories
     /// and specified pay date.
     /// </summary>
     /// <param name="incomeTaxCalcFactory">Income tax calculator factory.</param>
@@ -63,7 +63,7 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     /// <param name="studentLoanCalcFactory">Student loan calculator factory.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
     /// <param name="payPeriod">Applicable pay period for this calculator.</param>
-    public PayrunEntryProcessor(
+    public PayrunEntryProcessord(
         ITaxCalculatorFactory incomeTaxCalcFactory,
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
@@ -89,8 +89,8 @@ public class PayrunEntryProcessor : IPayrunEntryProcessor
     /// </summary>
     /// <param name="entry">Instance of <see cref="IEmployeePayrunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <param name="result">An instance of <see cref="IEmployeePayrunResult"/> containing the results of the payroll calculations.</param>
-    public void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResult result)
+    /// <param name="result">An instance of <see cref="IEmployeePayrunResultd"/> containing the results of the payroll calculations.</param>
+    public void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResultd result)
     {
         GetAllEarningsTypes(entry, out var earningsTotals);
 

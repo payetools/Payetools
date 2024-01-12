@@ -14,12 +14,12 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public interface IEmployeePayrunResult
+public interface IEmployeePayrunResultd
 {
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
-    ref IPayrunInfo PayrunInfo { get; }
+    ref IPayRunDetails PayrunInfo { get; }
 
     /// <summary>
     /// Gets the employee's details.

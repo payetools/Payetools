@@ -20,7 +20,7 @@ public static class IEmployeePayrollHistoryYtdExtensions
     /// <param name="value">Instance of <see cref="IEmployeePayrollHistoryYtd"/> to be updated.</param>
     /// <param name="payrunResult">Results of a set of payroll calculations for a given employee.</param>
     /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results applied.</returns>
-    public static IEmployeePayrollHistoryYtd Add(this IEmployeePayrollHistoryYtd value, IEmployeePayrunResult payrunResult)
+    public static IEmployeePayrollHistoryYtd Add(this IEmployeePayrollHistoryYtd value, IEmployeePayrunResultd payrunResult)
     {
         return new EmployeePayrollHistoryYtd()
         {

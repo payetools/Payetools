@@ -14,7 +14,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public record EmployeePayrunResult : IEmployeePayrunResult
+public record EmployeePayrunResult : IEmployeePayrunResultd
 {
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
@@ -25,7 +25,7 @@ public record EmployeePayrunResult : IEmployeePayrunResult
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
-    public ref IPayrunInfo PayrunInfo { get => throw new NotImplementedException(); }
+    public ref IPayRunDetails PayrunInfo { get => throw new NotImplementedException(); }
 
     /// <summary>
     /// Gets the employee's details.

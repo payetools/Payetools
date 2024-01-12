@@ -9,22 +9,18 @@ using Payetools.Common.Model;
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents the output of a given payrun.
+/// Interface that represents key details about a given payrun.
 /// </summary>
-public interface IPayrunResult
+public interface IPayRunDetails
+
 {
     /// <summary>
-    /// Gets the employer that this payrun result pertains to.
-    /// </summary>
-    IEmployer Employer { get; }
-
-    /// <summary>
-    /// Gets the pay date for this payrun.
+    /// Gets the <see cref="PayDate"/> for this payrun, which provides access to the pay date and the pay frequency.
     /// </summary>
     PayDate PayDate { get; }
 
     /// <summary>
-    /// Gets the list of employee payrun entries.
+    /// Gets the start and end dates of the pay period that pertains to this payrun, in the form of a <see cref="DateRange"/>.
     /// </summary>
-    List<IEmployeePayrunResult> EmployeePayrunEntries { get; }
+    DateRange PayPeriod { get; }
 }

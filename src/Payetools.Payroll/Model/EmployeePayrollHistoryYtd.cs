@@ -127,7 +127,7 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// payrun of the tax year.
     /// </summary>
     /// <param name="initialResult">Payrun calculation result for the given employee.</param>
-    public EmployeePayrollHistoryYtd(IEmployeePayrunResult initialResult)
+    public EmployeePayrollHistoryYtd(IEmployeePayrunResultd initialResult)
     {
         // StatutoryMaternityPayYtd +=
         // StatutoryPaternityPayYtd +=

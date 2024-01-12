@@ -17,7 +17,7 @@ namespace Payetools.Payroll.Payruns;
 /// <summary>
 /// Represents a factory object that creates payrun calculator instances that implement <see cref="IPayrunEntryProcessor"/>.
 /// </summary>
-public class PayrunProcessorFactory : IPayrunProcessorFactory
+public class PayrunProcessorFactoryd : IPayrunProcessorFactory
 {
     internal class FactorySet
     {
@@ -37,20 +37,20 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
     private readonly Uri? _referenceDataEndpoint;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunProcessorFactory"/>.
+    /// Initialises a new instance of <see cref="PayrunProcessorFactoryd"/>.
     /// </summary>
     /// <param name="hmrcReferenceDataProvider">HMRC reference data provider.</param>
-    public PayrunProcessorFactory(in IHmrcReferenceDataProvider hmrcReferenceDataProvider)
+    public PayrunProcessorFactoryd(in IHmrcReferenceDataProvider hmrcReferenceDataProvider)
     {
         _hmrcReferenceDataProvider = hmrcReferenceDataProvider;
     }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunProcessorFactory"/>.
+    /// Initialises a new instance of <see cref="PayrunProcessorFactoryd"/>.
     /// </summary>
     /// <param name="hmrcReferenceDataProviderFactory">HMRC reference data provider factory.</param>
     /// <param name="referenceDataEndpoint">HTTP(S) endpoint to retrieve reference data from.</param>
-    public PayrunProcessorFactory(
+    public PayrunProcessorFactoryd(
         in IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory,
         in Uri referenceDataEndpoint)
     {
@@ -71,11 +71,11 @@ public class PayrunProcessorFactory : IPayrunProcessorFactory
         var factories = GetFactories(_hmrcReferenceDataProvider ??
                 throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));
 
-        var calculator = new PayrunEntryProcessor(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
+        var calculator = new PayrunEntryProcessord(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
             factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
             payDate, payPeriod);
 
-        return new PayrunProcessor(calculator, employer);
+        return new PayrunProcessord(calculator, employer);
     }
 
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data

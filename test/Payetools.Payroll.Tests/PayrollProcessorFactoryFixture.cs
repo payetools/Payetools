@@ -13,5 +13,5 @@ namespace Payetools.Payroll.Tests;
 public class PayrollProcessorFactoryFixture : CalculatorFactoryDataFixture<IPayrunProcessorFactory>
 {
     protected override IPayrunProcessorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
-        new PayrunProcessorFactory(provider);
+        new PayrunProcessorFactoryd(provider);
 }
