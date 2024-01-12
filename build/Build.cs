@@ -23,7 +23,8 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
     InvokedTargets = new[] { nameof(Publish) },
-    ImportSecrets = new[] { nameof(NugetApiKey) })]
+    ImportSecrets = new[] { nameof(NugetApiKey) },
+    FetchDepth = 0)]
 class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Compile);
