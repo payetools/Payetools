@@ -117,7 +117,6 @@ class Build : NukeBuild
         });
 
     Target Publish => _ => _
-        .OnlyWhenDynamic(() => GitRepository.IsOnMainOrMasterBranch())
         .Requires(() => NugetApiKey)
         .Requires(() => NugetApiUrl)
         .DependsOn(Pack)
@@ -141,9 +140,9 @@ class Build : NukeBuild
         .TriggeredBy(Publish)
         .Executes(async () => 
         {
-            var message = GitRepository.IsOnMainOrMasterBranch() ?
-                $"Payetools version deployed to Nuget (MinVer.FileVersion = {MinVer.FileVersion})":
-                "Payetools not published; not on main branch";
+            var message = // GitRepository.IsOnMainOrMasterBranch() ?
+            $"Payetools version deployed to Nuget (MinVer.FileVersion = {MinVer.FileVersion})";
+                //"Payetools not published; not on main branch";
 
             await SendSlackMessageAsync(_ => _
                     .SetText(message),
