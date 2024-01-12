@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the output of a payrun.
 /// </summary>
-public record PayrunResultd : IPayrunResult
+public record PayRunResult : IPayRunResult
 {
     /// <summary>
     /// Gets the employer that this payrun refers to.
@@ -26,5 +26,5 @@ public record PayrunResultd : IPayrunResult
     /// <summary>
     /// Gets the list of employee payrun entries.
     /// </summary>
-    public List<IEmployeePayrunResultd> EmployeePayrunEntries { get; init; } = null!;
+    public List<IEmployeePayRunResult> EmployeePayRunEntries { get; init; } = null!;
 }

@@ -5,25 +5,26 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Payroll.Model;
+using Payetools.Payroll.PayRuns;
 
-namespace Payetools.Payroll.Payruns;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Represents a payrun, i.e., the running of payroll for a single pay reference period
 /// on a single pay date for a predefined set of employees within one employer's employment.
 /// </summary>
-public class PayrunProcessord : IPayrunProcessor
+public class PayRunProcessor : IPayRunProcessor
 {
-    private readonly IPayrunEntryProcessor _payrunCalculator;
+    private readonly IPayRunEntryProcessor _payrunCalculator;
     private readonly IEmployer _employer;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunProcessord"/> with the supplied calculator.
+    /// Initialises a new instance of <see cref="PayRunProcessor"/> with the supplied calculator.
     /// </summary>
     /// <param name="calculator">Calculator to be used to calculate earnings, deductions
     /// and net pay.</param>
     /// <param name="employer">Employer that this payrun processor relates to.</param>
-    public PayrunProcessord(IPayrunEntryProcessor calculator, IEmployer employer)
+    public PayRunProcessor(IPayRunEntryProcessor calculator, IEmployer employer)
     {
         _payrunCalculator = calculator;
         _employer = employer;
@@ -32,23 +33,23 @@ public class PayrunProcessord : IPayrunProcessor
     /// <summary>
     /// Processes this payrun.
     /// </summary>
-    /// <param name="employeePayrunEntries">List of payrun information for each employee in the payrun.</param>
-    /// <param name="result">An instance of a class that implements <see cref="IPayrunResult"/> containing the results
+    /// <param name="employeePayRunEntries">List of payrun information for each employee in the payrun.</param>
+    /// <param name="result">An instance of a class that implements <see cref="IPayRunResult"/> containing the results
     /// of this payrun.</param>
-    public void Process(List<IEmployeePayrunInputEntry> employeePayrunEntries, out IPayrunResult result)
+    public void Process(List<IEmployeePayRunInputEntry> employeePayRunEntries, out IPayRunResult result)
     {
-        var payrunOutputs = new List<IEmployeePayrunResultd>();
+        var payrunOutputs = new List<IEmployeePayRunResult>();
 
-        for (int i = 0; i < employeePayrunEntries.Count; i++)
+        for (int i = 0; i < employeePayRunEntries.Count; i++)
         {
-            _payrunCalculator.Process(employeePayrunEntries[i], out var employeeResult);
+            _payrunCalculator.Process(employeePayRunEntries[i], out var employeeResult);
 
             payrunOutputs.Add(employeeResult);
         }
 
-        result = new PayrunResultd()
+        result = new PayRunResult()
         {
-            EmployeePayrunEntries = payrunOutputs,
+            EmployeePayRunEntries = payrunOutputs,
             Employer = _employer,
             PayDate = _payrunCalculator.PayDate
         };

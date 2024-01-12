@@ -13,7 +13,7 @@ namespace Payetools.Payroll.Model;
 /// Represents an employee payrun entry, i.e., all the information needed to prepare the payroll
 /// record for the employee for the pay period in question.
 /// </summary>
-public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
+public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
 {
     /// <summary>
     /// Gets the employee details for this entry.
@@ -47,7 +47,7 @@ public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
     public IPensionContributionLevels PensionContributionLevels { get; }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="EmployeePayrunInputEntry"/>.
+    /// Initialises a new instance of <see cref="EmployeePayRunInputEntry"/>.
     /// </summary>
     /// <param name="employee">Employee details.</param>
     /// <param name="employment">Employment details.</param>
@@ -55,7 +55,7 @@ public record EmployeePayrunInputEntry : IEmployeePayrunInputEntry
     /// <param name="deductions">List of applicable deductions, if any.  Empty list if none.</param>
     /// <param name="payrolledBenefits">List of payrolled benefits, if any.  Empty list if none.</param>
     /// <param name="pensionContributionLevels">Pension contribtuion levels to be applied.</param>
-    public EmployeePayrunInputEntry(
+    public EmployeePayRunInputEntry(
         IEmployee employee,
         IEmployment employment,
         ImmutableList<IEarningsEntry> earnings,

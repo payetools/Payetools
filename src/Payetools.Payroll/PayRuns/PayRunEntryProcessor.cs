@@ -9,18 +9,19 @@ using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
 using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.Model;
+using Payetools.Payroll.PayRuns;
 using Payetools.Pensions;
 using Payetools.Pensions.Model;
 using Payetools.StudentLoans;
 using Payetools.StudentLoans.Model;
 
-namespace Payetools.Payroll.Payruns;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Represents the calculator that can process an employee's set of input payroll data and
-/// provide the results of the calculations in the form of an <see cref="IEmployeePayrunResultd"/>.
+/// provide the results of the calculations in the form of an <see cref="IEmployeePayRunResult"/>.
 /// </summary>
-public class PayrunEntryProcessord : IPayrunEntryProcessor
+public class PayRunEntryProcessor : IPayRunEntryProcessor
 {
     internal readonly struct EarningsTotals
     {
@@ -54,7 +55,7 @@ public class PayrunEntryProcessord : IPayrunEntryProcessor
     public DateRange PayPeriod { get; }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunEntryProcessord"/> with the supplied factories
+    /// Initialises a new instance of <see cref="PayRunEntryProcessor"/> with the supplied factories
     /// and specified pay date.
     /// </summary>
     /// <param name="incomeTaxCalcFactory">Income tax calculator factory.</param>
@@ -63,7 +64,7 @@ public class PayrunEntryProcessord : IPayrunEntryProcessor
     /// <param name="studentLoanCalcFactory">Student loan calculator factory.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
     /// <param name="payPeriod">Applicable pay period for this calculator.</param>
-    public PayrunEntryProcessord(
+    public PayRunEntryProcessor(
         ITaxCalculatorFactory incomeTaxCalcFactory,
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
@@ -87,10 +88,10 @@ public class PayrunEntryProcessord : IPayrunEntryProcessor
     /// Processes the supplied payrun entry calculating all the earnings and deductions, income tax, national insurance and
     /// other statutory deductions, and generating a result structure which includes the final net pay.
     /// </summary>
-    /// <param name="entry">Instance of <see cref="IEmployeePayrunInputEntry"/> containing all the necessary input data for the
+    /// <param name="entry">Instance of <see cref="IEmployeePayRunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <param name="result">An instance of <see cref="IEmployeePayrunResultd"/> containing the results of the payroll calculations.</param>
-    public void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResultd result)
+    /// <param name="result">An instance of <see cref="IEmployeePayRunResult"/> containing the results of the payroll calculations.</param>
+    public void Process(IEmployeePayRunInputEntry entry, out IEmployeePayRunResult result)
     {
         GetAllEarningsTypes(entry, out var earningsTotals);
 
@@ -159,11 +160,11 @@ public class PayrunEntryProcessord : IPayrunEntryProcessor
             _studentLoanCalculator.Calculate(workingGrossPay, entry.Employment.StudentLoanInfo?.StudentLoanType,
                 entry.Employment.StudentLoanInfo?.HasPostGradLoan == true, out studentLoanCalculationResult);
 
-        result = new EmployeePayrunResult(entry.Employee, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
+        result = new EmployeePayRunResult(entry.Employee, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
             ref pensionContributions, earningsTotals.GrossPay, workingGrossPay, taxablePay, nicablePay, ref entry.Employment.PayrollHistoryYtd);
     }
 
-    private static void GetAllEarningsTypes(in IEmployeePayrunInputEntry entry, out EarningsTotals earningsTotals)
+    private static void GetAllEarningsTypes(in IEmployeePayRunInputEntry entry, out EarningsTotals earningsTotals)
     {
         // The distinction between gross pay and working gross pay is that the former is the sum of all
         // earned income for the period, whereas the latter is that figure less any pre-tax deductions,
@@ -210,7 +211,7 @@ public class PayrunEntryProcessord : IPayrunEntryProcessor
         };
     }
 
-    private void CalculateNiContributions(in IEmployeePayrunInputEntry entry, decimal nicablePay, out INiCalculationResult result)
+    private void CalculateNiContributions(in IEmployeePayRunInputEntry entry, decimal nicablePay, out INiCalculationResult result)
     {
         if (entry.Employment.IsDirector)
         {
@@ -226,7 +227,7 @@ public class PayrunEntryProcessord : IPayrunEntryProcessor
         }
     }
 
-    private void CalculatePensionContributions(ref IEmployeePayrunInputEntry entry, decimal pensionablePay, decimal employersNiSavings,
+    private void CalculatePensionContributions(ref IEmployeePayRunInputEntry entry, decimal pensionablePay, decimal employersNiSavings,
         out IPensionContributionCalculationResult result)
     {
         if (entry.Employment.PensionScheme == null)

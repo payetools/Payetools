@@ -12,12 +12,12 @@ using Payetools.Pensions;
 using Payetools.ReferenceData;
 using Payetools.StudentLoans;
 
-namespace Payetools.Payroll.Payruns;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
-/// Represents a factory object that creates payrun calculator instances that implement <see cref="IPayrunEntryProcessor"/>.
+/// Represents a factory object that creates payrun calculator instances that implement <see cref="IPayRunEntryProcessor"/>.
 /// </summary>
-public class PayrunProcessorFactoryd : IPayrunProcessorFactory
+public class PayRunProcessorFactory : IPayRunProcessorFactory
 {
     internal class FactorySet
     {
@@ -37,20 +37,20 @@ public class PayrunProcessorFactoryd : IPayrunProcessorFactory
     private readonly Uri? _referenceDataEndpoint;
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunProcessorFactoryd"/>.
+    /// Initialises a new instance of <see cref="PayRunProcessorFactory"/>.
     /// </summary>
     /// <param name="hmrcReferenceDataProvider">HMRC reference data provider.</param>
-    public PayrunProcessorFactoryd(in IHmrcReferenceDataProvider hmrcReferenceDataProvider)
+    public PayRunProcessorFactory(in IHmrcReferenceDataProvider hmrcReferenceDataProvider)
     {
         _hmrcReferenceDataProvider = hmrcReferenceDataProvider;
     }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="PayrunProcessorFactoryd"/>.
+    /// Initialises a new instance of <see cref="PayRunProcessorFactory"/>.
     /// </summary>
     /// <param name="hmrcReferenceDataProviderFactory">HMRC reference data provider factory.</param>
     /// <param name="referenceDataEndpoint">HTTP(S) endpoint to retrieve reference data from.</param>
-    public PayrunProcessorFactoryd(
+    public PayRunProcessorFactory(
         in IHmrcReferenceDataProviderFactory hmrcReferenceDataProviderFactory,
         in Uri referenceDataEndpoint)
     {
@@ -64,18 +64,18 @@ public class PayrunProcessorFactoryd : IPayrunProcessorFactory
     /// <param name="employer">Employer for this payrun processor.</param>
     /// <param name="payDate">Applicable pay date for the required payrun processor.</param>
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
-    /// <returns>An implementation of <see cref="IPayrunProcessor"/> for the specified pay date
+    /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    public IPayrunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod)
+    public IPayRunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod)
     {
         var factories = GetFactories(_hmrcReferenceDataProvider ??
                 throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));
 
-        var calculator = new PayrunEntryProcessord(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
+        var calculator = new PayRunEntryProcessor(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
             factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
             payDate, payPeriod);
 
-        return new PayrunProcessord(calculator, employer);
+        return new PayRunProcessor(calculator, employer);
     }
 
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data

@@ -16,5 +16,5 @@ public interface IEndToEndTestDataSet
     List<IStaticInputTestDataEntry> StaticInputs { get; }
     List<INiYtdHistoryTestDataEntry> NiYtdHistory { get; }
     List<IPensionSchemesTestDataEntry> PensionSchemes { get; }
-    List<IPayrunInfoTestDataEntry> PayrunInfo { get; }
+    List<IPayRunInfoTestDataEntry> PayRunInfo { get; }
 }

@@ -14,7 +14,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public record EmployeePayrunResult : IEmployeePayrunResultd
+public record EmployeePayRunResult : IEmployeePayRunResult
 {
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
@@ -25,7 +25,7 @@ public record EmployeePayrunResult : IEmployeePayrunResultd
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
-    public ref IPayRunDetails PayrunInfo { get => throw new NotImplementedException(); }
+    public ref IPayRunDetails PayRunDetails { get => throw new NotImplementedException(); }
 
     /// <summary>
     /// Gets the employee's details.
@@ -36,7 +36,7 @@ public record EmployeePayrunResult : IEmployeePayrunResultd
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
     /// the employee's leaving date may be before the start of the pay period for this payrun.
     /// </summary>
-    public bool IsLeaverInThisPayrun { get; }
+    public bool IsLeaverInThisPayRun { get; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
@@ -93,10 +93,10 @@ public record EmployeePayrunResult : IEmployeePayrunResultd
     public decimal TaxablePay { get; }
 
     /// <summary>
-    /// Initialises a new instance of <see cref="EmployeePayrunResult"/>.
+    /// Initialises a new instance of <see cref="EmployeePayRunResult"/>.
     /// </summary>
     /// <param name="employee">Employee details.</param>
-    /// <param name="isLeaverInThisPayrun">True if the employee is being marked as left in this payrun.</param>
+    /// <param name="isLeaverInThisPayRun">True if the employee is being marked as left in this payrun.</param>
     /// <param name="taxCalculationResult">Result of income tax calculation.</param>
     /// <param name="niCalculationResult">Result of National Insurance calculation.</param>
     /// <param name="studentLoanCalculationResult">Optional result of student loan calculation.  Null if the
@@ -110,9 +110,9 @@ public record EmployeePayrunResult : IEmployeePayrunResultd
     /// <param name="nicablePay">Pay subject to National Insurance.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
-    public EmployeePayrunResult(
+    public EmployeePayRunResult(
         IEmployee employee,
-        bool isLeaverInThisPayrun,
+        bool isLeaverInThisPayRun,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult studentLoanCalculationResult,
@@ -124,7 +124,7 @@ public record EmployeePayrunResult : IEmployeePayrunResultd
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
         Employee = employee;
-        IsLeaverInThisPayrun = isLeaverInThisPayrun;
+        IsLeaverInThisPayRun = isLeaverInThisPayRun;
         _taxCalculationResult = taxCalculationResult;
         _niCalculationResult = niCalculationResult;
         _studentLoanCalculationResult = studentLoanCalculationResult;

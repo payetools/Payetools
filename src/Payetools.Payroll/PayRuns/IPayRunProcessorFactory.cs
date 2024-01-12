@@ -7,12 +7,12 @@
 using Payetools.Common.Model;
 using Payetools.Payroll.Model;
 
-namespace Payetools.Payroll.Payruns;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
-/// Interface that represents factory objects that create instances that implement <see cref="IPayrunProcessor"/>.
+/// Interface that represents factory objects that create instances that implement <see cref="IPayRunProcessor"/>.
 /// </summary>
-public interface IPayrunProcessorFactory
+public interface IPayRunProcessorFactory
 {
     /// <summary>
     /// Gets a payrun processor for specified pay date and pay period.
@@ -20,7 +20,7 @@ public interface IPayrunProcessorFactory
     /// <param name="employer">Employer for this payrun processor.</param>
     /// <param name="payDate">Applicable pay date for the required payrun processor.</param>
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
-    /// <returns>An implementation of <see cref="IPayrunProcessor"/> for the specified pay date
+    /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    IPayrunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod);
+    IPayRunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod);
 }

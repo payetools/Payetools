@@ -24,5 +24,5 @@ public record EndToEndTestDataSet : IEndToEndTestDataSet
 
     public List<IPensionSchemesTestDataEntry> PensionSchemes { get; set; } = default!;
 
-    public List<IPayrunInfoTestDataEntry> PayrunInfo { get; set; } = default!;
+    public List<IPayRunInfoTestDataEntry> PayRunInfo { get; set; } = default!;
 }

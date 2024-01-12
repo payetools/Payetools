@@ -12,7 +12,6 @@ namespace Payetools.Payroll.Model;
 /// Interface that represents key details about a given payrun.
 /// </summary>
 public interface IPayRunDetails
-
 {
     /// <summary>
     /// Gets the <see cref="PayDate"/> for this payrun, which provides access to the pay date and the pay frequency.

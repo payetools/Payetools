@@ -4,14 +4,14 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using Payetools.Payroll.Payruns;
+using Payetools.Payroll.PayRuns;
 using Payetools.ReferenceData;
 using Payetools.Testing.Utils;
 
 namespace Payetools.Payroll.Tests;
 
-public class PayrollProcessorFactoryFixture : CalculatorFactoryDataFixture<IPayrunProcessorFactory>
+public class PayrollProcessorFactoryFixture : CalculatorFactoryDataFixture<IPayRunProcessorFactory>
 {
-    protected override IPayrunProcessorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
-        new PayrunProcessorFactoryd(provider);
+    protected override IPayRunProcessorFactory MakeFactory(IHmrcReferenceDataProvider provider) =>
+        new PayRunProcessorFactory(provider);
 }

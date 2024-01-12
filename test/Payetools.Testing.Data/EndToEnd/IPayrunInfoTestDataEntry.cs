@@ -8,7 +8,7 @@ using Payetools.Common.Model;
 
 namespace Payetools.Testing.Data.EndToEnd;
 
-public interface IPayrunInfoTestDataEntry
+public interface IPayRunInfoTestDataEntry
 {
     string DefinitionVersion { get; }
     string TestIdentifier { get; }

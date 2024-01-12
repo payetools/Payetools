@@ -14,12 +14,12 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public interface IEmployeePayrunResultd
+public interface IEmployeePayRunResult
 {
     /// <summary>
     /// Gets information about this payrun.
     /// </summary>
-    ref IPayRunDetails PayrunInfo { get; }
+    ref IPayRunDetails PayRunDetails { get; }
 
     /// <summary>
     /// Gets the employee's details.
@@ -30,7 +30,7 @@ public interface IEmployeePayrunResultd
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
     /// the employee's leaving date may be before the start of the pay period for this payrun.
     /// </summary>
-    bool IsLeaverInThisPayrun { get; }
+    bool IsLeaverInThisPayRun { get; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.

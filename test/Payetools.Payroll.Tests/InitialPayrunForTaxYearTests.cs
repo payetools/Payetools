@@ -9,7 +9,7 @@ using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.Extensions;
 using Payetools.Payroll.Model;
-using Payetools.Payroll.Payruns;
+using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
 using Payetools.Testing.Data.EndToEnd;
 using System.Collections.Immutable;
@@ -17,13 +17,13 @@ using Xunit.Abstractions;
 
 namespace Payetools.Payroll.Tests;
 
-public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactoryFixture>
+public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactoryFixture>
 {
     private readonly ITestOutputHelper Output;
     private readonly PayDate _payDate = new PayDate(2022, 5, 5, PayFrequency.Monthly);
     private readonly PayrollProcessorFactoryFixture _payrollProcessorFactoryFixture;
 
-    public InitialPayrunForTaxYearTests(PayrollProcessorFactoryFixture payrollProcessorFactoryFixture, ITestOutputHelper output)
+    public InitialPayRunForTaxYearTests(PayrollProcessorFactoryFixture payrollProcessorFactoryFixture, ITestOutputHelper output)
     {
         _payrollProcessorFactoryFixture = payrollProcessorFactoryFixture;
         Output = output;
@@ -62,7 +62,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         Output.WriteLine("Making payrun input...");
 
-        MakeEmployeePayrunInput(employer,
+        MakeEmployeePayRunInput(employer,
             staticInput,
             testData.PensionSchemes.Where(ps => ps.SchemeName == staticInput.PensionScheme).FirstOrDefault(),
             employeePayrollHistory,
@@ -71,32 +71,32 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             payrolledBenefits,
             out var payrunEntry);
 
-        var payrunInfo = testData.PayrunInfo.Where(pi => pi.TestReference == "Pay1").First();
+        var payRunInfo = testData.PayRunInfo.Where(pi => pi.TestReference == "Pay1").First();
 
-        var payDate = new PayDate(payrunInfo.PayDay, payrunInfo.PayFrequency);
-        var payPeriod = new DateRange(payrunInfo.PayPeriodStart, payrunInfo.PayPeriodEnd);
+        var payDate = new PayDate(payRunInfo.PayDay, payRunInfo.PayFrequency);
+        var payPeriod = new DateRange(payRunInfo.PayPeriodStart, payRunInfo.PayPeriodEnd);
 
         var processor = await GetProcessorAsync(employer, payDate, payPeriod);
 
-        List<IEmployeePayrunInputEntry> entries = new List<IEmployeePayrunInputEntry>();
+        List<IEmployeePayRunInputEntry> entries = new List<IEmployeePayRunInputEntry>();
         entries.Add(payrunEntry);
 
         processor.Process(entries, out var result);
 
-        IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayrunEntries[0]);
+        IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayRunEntries[0]);
 
-        foreach (var employeeResult in result.EmployeePayrunEntries)
+        foreach (var employeeResult in result.EmployeePayRunEntries)
         {
             CheckResult("Pay1", employeeResult, testData.ExpectedOutputs.Where(eo => eo.TestReference == "Pay1").First());
         }
 
-        Console.WriteLine(result.EmployeePayrunEntries[0].NiCalculationResult.ToString());
+        Console.WriteLine(result.EmployeePayRunEntries[0].NiCalculationResult.ToString());
         Console.WriteLine();
 
         Console.WriteLine();
     }
 
-    static void CheckResult(string testReference, in IEmployeePayrunResultd result, in IExpectedOutputTestDataEntry expected)
+    static void CheckResult(string testReference, in IEmployeePayRunResult result, in IExpectedOutputTestDataEntry expected)
     {
         var because = $"TestReference = '{testReference}'";
 
@@ -228,7 +228,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         }
     }
 
-    static void MakeEmployeePayrunInput(
+    static void MakeEmployeePayRunInput(
         in IEmployer employer,
         in IStaticInputTestDataEntry staticEntry,
         in IPensionSchemesTestDataEntry? pensionScheme,
@@ -236,7 +236,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         in List<IEarningsEntry> earnings,
         in List<IDeductionEntry> deductions,
         in List<IPayrolledBenefitForPeriod> benefits,
-        out EmployeePayrunInputEntry entry)
+        out EmployeePayRunInputEntry entry)
     {
         var employee = new Employee()
         {
@@ -267,7 +267,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         } : new PensionContributionLevels();
 
 
-        entry = new EmployeePayrunInputEntry(employee,
+        entry = new EmployeePayRunInputEntry(employee,
             employment,
             earnings.ToImmutableList(),
             deductions.ToImmutableList(),
@@ -275,7 +275,7 @@ public class InitialPayrunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             pensionContributionLevels);
     }
 
-    private async Task<IPayrunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, DateRange payPeriod)
+    private async Task<IPayRunProcessor> GetProcessorAsync(IEmployer employer, PayDate payDate, DateRange payPeriod)
     {
         var factory = await _payrollProcessorFactoryFixture.GetFactory();
 

@@ -8,7 +8,7 @@ using Payetools.Common.Model;
 
 namespace Payetools.Testing.Data.EndToEnd;
 
-public class PayrunInfoTestDataEntry : IPayrunInfoTestDataEntry
+public class PayRunInfoTestDataEntry : IPayRunInfoTestDataEntry
 {
     public string DefinitionVersion { get; set; } = string.Empty;
     public string TestIdentifier { get; set; } = string.Empty;

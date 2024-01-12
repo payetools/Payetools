@@ -126,8 +126,8 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// given employee.  This constructor is intended for use to create the first history record from the first
     /// payrun of the tax year.
     /// </summary>
-    /// <param name="initialResult">Payrun calculation result for the given employee.</param>
-    public EmployeePayrollHistoryYtd(IEmployeePayrunResultd initialResult)
+    /// <param name="initialResult">Pay run calculation result for the given employee.</param>
+    public EmployeePayrollHistoryYtd(IEmployeePayRunResult initialResult)
     {
         // StatutoryMaternityPayYtd +=
         // StatutoryPaternityPayYtd +=

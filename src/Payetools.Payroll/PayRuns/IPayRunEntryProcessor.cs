@@ -7,13 +7,13 @@
 using Payetools.Common.Model;
 using Payetools.Payroll.Model;
 
-namespace Payetools.Payroll.Payruns;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Interface that represent types that can process an employee's set of input payroll data and
-/// provide the results of the calculations in the form of an <see cref="IEmployeePayrunResultd"/>.
+/// provide the results of the calculations in the form of an <see cref="IEmployeePayRunResult"/>.
 /// </summary>
-public interface IPayrunEntryProcessor
+public interface IPayRunEntryProcessor
 {
     /// <summary>
     /// Gets the pay date for this payrun calculator.
@@ -29,8 +29,8 @@ public interface IPayrunEntryProcessor
     /// Processes the supplied payrun entry calculating all the earnings and deductions, income tax, national insurance and
     /// other statutory deductions, and generating a result structure which includes the final net pay.
     /// </summary>
-    /// <param name="entry">Instance of <see cref="IEmployeePayrunInputEntry"/> containing all the necessary input data for the
+    /// <param name="entry">Instance of <see cref="IEmployeePayRunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <param name="result">An instance of <see cref="IEmployeePayrunResultd"/> containing the results of the payroll calculations.</param>
-    void Process(IEmployeePayrunInputEntry entry, out IEmployeePayrunResultd result);
+    /// <param name="result">An instance of <see cref="IEmployeePayRunResult"/> containing the results of the payroll calculations.</param>
+    void Process(IEmployeePayRunInputEntry entry, out IEmployeePayRunResult result);
 }

@@ -6,19 +6,19 @@
 
 using Payetools.Payroll.Model;
 
-namespace Payetools.Payroll.Payruns;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Interface that represents a payrun, i.e., the running of payroll for a single pay reference period
 /// on a single pay date for a predefined set of employees within one employer's employment.
 /// </summary>
-public interface IPayrunProcessor
+public interface IPayRunProcessor
 {
     /// <summary>
     /// Processes this payrun.
     /// </summary>
-    /// <param name="employeePayrunEntries">List of payrun information for each employee in the payrun.</param>
-    /// <param name="result">An instance of a class that implements <see cref="IPayrunResult"/> containing the results
+    /// <param name="employeePayRunEntries">List of payrun information for each employee in the payrun.</param>
+    /// <param name="result">An instance of a class that implements <see cref="IPayRunResult"/> containing the results
     /// of this payrun.</param>
-    void Process(List<IEmployeePayrunInputEntry> employeePayrunEntries, out IPayrunResult result);
+    void Process(List<IEmployeePayRunInputEntry> employeePayRunEntries, out IPayRunResult result);
 }

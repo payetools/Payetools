@@ -6,7 +6,6 @@
 
 using LiteDB;
 using Payetools.Common.Model;
-using Payetools.IncomeTax.Model;
 using Payetools.Testing.Data.EndToEnd;
 using Payetools.Testing.Data.IncomeTax;
 using Payetools.Testing.Data.NationalInsurance;
@@ -74,17 +73,17 @@ public class TestDataRepository : IDisposable
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IStaticInputTestDataEntry) =>
                 GetTestData<T, StaticInputTestDataEntry>("Paytools_EndToEnd_StaticInput"),
 
-            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPayrunInfoTestDataEntry) =>
-                GetTestData<T, PayrunInfoTestDataEntry>("Paytools_EndToEnd_PayrunInfo"),
+            (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPayRunInfoTestDataEntry) =>
+                GetTestData<T, PayRunInfoTestDataEntry>("Paytools_EndToEnd_PayrunInfo"),
 
             (TestSource.Paytools, TestScope.EndToEnd) when typeof(T) == typeof(IPensionSchemesTestDataEntry) =>
                 GetTestData<T, PensionSchemesTestDataEntry>("Paytools_EndToEnd_PensionSchemes"),
-            
+
             _ => throw new NotImplementedException()
         };
 
-    private IEnumerable<Tinterface> GetTestData<Tinterface, Tclass>(string collectionName) 
-        where Tinterface: class where Tclass  : class =>
+    private IEnumerable<Tinterface> GetTestData<Tinterface, Tclass>(string collectionName)
+        where Tinterface : class where Tclass : class =>
         _database.GetCollection<Tclass>(collectionName).Query().ToEnumerable()
             .Select(e => e as Tinterface ?? throw new InvalidOperationException($"Unable to cast entry to type {typeof(Tinterface).Name}"));
 

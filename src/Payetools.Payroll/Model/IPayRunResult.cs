@@ -9,22 +9,22 @@ using Payetools.Common.Model;
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents the output of a given payrun.
+/// Interface that represents the output of a given pay run.
 /// </summary>
-public interface IPayrunResult
+public interface IPayRunResult
 {
     /// <summary>
-    /// Gets the employer that this payrun result pertains to.
+    /// Gets the employer that this pay run result pertains to.
     /// </summary>
     IEmployer Employer { get; }
 
     /// <summary>
-    /// Gets the pay date for this payrun.
+    /// Gets the pay date for this pay run.
     /// </summary>
     PayDate PayDate { get; }
 
     /// <summary>
-    /// Gets the list of employee payrun entries.
+    /// Gets the list of employee pay run entries.
     /// </summary>
-    List<IEmployeePayrunResultd> EmployeePayrunEntries { get; }
+    List<IEmployeePayRunResult> EmployeePayRunEntries { get; }
 }

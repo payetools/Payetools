@@ -13,7 +13,7 @@ namespace Payetools.Payroll.Model;
 /// Represents an employee payrun entry, i.e., all the information needed to prepare the payroll
 /// record for the employee for the pay period in question.
 /// </summary>
-public interface IEmployeePayrunInputEntry
+public interface IEmployeePayRunInputEntry
 {
     /// <summary>
     /// Gets the employee details for this entry.

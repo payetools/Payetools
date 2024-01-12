@@ -25,7 +25,7 @@ public static class EndToEndTestDataSource
             StaticInputs = db.GetTestData<IStaticInputTestDataEntry>(TestSource.Paytools, TestScope.EndToEnd).ToList(),
             NiYtdHistory = db.GetTestData<INiYtdHistoryTestDataEntry>(TestSource.Paytools, TestScope.EndToEnd).ToList(),
             PensionSchemes = db.GetTestData<IPensionSchemesTestDataEntry>(TestSource.Paytools, TestScope.EndToEnd).ToList(),
-            PayrunInfo = db.GetTestData<IPayrunInfoTestDataEntry>(TestSource.Paytools, TestScope.EndToEnd).ToList()
+            PayRunInfo = db.GetTestData<IPayRunInfoTestDataEntry>(TestSource.Paytools, TestScope.EndToEnd).ToList()
         };
     }
 }
