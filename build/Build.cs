@@ -142,7 +142,7 @@ class Build : NukeBuild
         .Executes(async () => 
         {
             var message = GitRepository.IsOnMainOrMasterBranch() ?
-                $"Payetools version {GitRepository.Tags.Last()} deployed to Nuget (MinVer.FileVersion = {MinVer.FileVersion})":
+                $"Payetools version deployed to Nuget (MinVer.FileVersion = {MinVer.FileVersion})":
                 "Payetools not published; not on main branch";
 
             await SendSlackMessageAsync(_ => _
