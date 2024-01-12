@@ -37,3 +37,4 @@ jobs:
         run: ./build.cmd Publish
         env:
           NugetApiKey: ${{ secrets.NUGET_API_KEY }}
+          SlackWebhook: ${{ secrets.SLACK_WEBHOOK }}
