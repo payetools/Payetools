@@ -160,7 +160,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             _studentLoanCalculator.Calculate(workingGrossPay, entry.Employment.StudentLoanInfo?.StudentLoanType,
                 entry.Employment.StudentLoanInfo?.HasPostGradLoan == true, out studentLoanCalculationResult);
 
-        result = new EmployeePayRunResult(entry.Employee, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
+        result = new EmployeePayRunResult(entry.EmployeeAccessor, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
             ref pensionContributions, earningsTotals.GrossPay, workingGrossPay, taxablePay, nicablePay, ref entry.Employment.PayrollHistoryYtd);
     }
 
