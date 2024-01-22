@@ -28,9 +28,9 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     public ref IPayRunDetails PayRunDetails { get => throw new NotImplementedException(); }
 
     /// <summary>
-    /// Gets the employee's details.
+    /// Gets an employee accessor that can provide the employee details for this entry on demand.
     /// </summary>
-    public IEmployee Employee { get; }
+    public IEmployeeAccessor EmployeeAccessor { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
@@ -95,7 +95,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayRunResult"/>.
     /// </summary>
-    /// <param name="employee">Employee details.</param>
+    /// <param name="employeeAccessor">Accessor for employee details.</param>
     /// <param name="isLeaverInThisPayRun">True if the employee is being marked as left in this payrun.</param>
     /// <param name="taxCalculationResult">Result of income tax calculation.</param>
     /// <param name="niCalculationResult">Result of National Insurance calculation.</param>
@@ -111,7 +111,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayRunResult(
-        IEmployee employee,
+        IEmployeeAccessor employeeAccessor,
         bool isLeaverInThisPayRun,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
@@ -123,7 +123,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         decimal nicablePay,
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
-        Employee = employee;
+        EmployeeAccessor = employeeAccessor;
         IsLeaverInThisPayRun = isLeaverInThisPayRun;
         _taxCalculationResult = taxCalculationResult;
         _niCalculationResult = niCalculationResult;
