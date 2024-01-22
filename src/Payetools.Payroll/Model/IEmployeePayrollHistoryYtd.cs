@@ -40,6 +40,11 @@ public interface IEmployeePayrollHistoryYtd
     decimal StatutoryParentalBereavementPayYtd { get; }
 
     /// <summary>
+    /// Gets any statutory sickness pay paid to date this tax year.
+    /// </summary>
+    decimal StatutorySickPayYtd { get; }
+
+    /// <summary>
     /// Gets the National Insurance payment history for the current tax year.  Employees may
     /// transition between NI categories during the tax year and each NI category's payment
     /// record must be retained.

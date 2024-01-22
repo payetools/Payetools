@@ -41,6 +41,11 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     public decimal StatutoryParentalBereavementPayYtd { get; init; }
 
     /// <summary>
+    /// Gets any statutory sickness pay paid to date this tax year.
+    /// </summary>
+    public decimal StatutorySickPayYtd { get; init; }
+
+    /// <summary>
     /// Gets the National Insurance payment history for the current tax year.  Employees may
     /// transition between NI categories during the tax year and each NI category's payment
     /// record must be retained.
@@ -134,6 +139,7 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
         // StatutoryAdoptionPayYtd += q
         // SharedParentalPayYtd +=
         // StatutoryParentalBereavementPayYtd +=
+        // StatutorySickPayYtd +=
 
         EmployeeNiHistoryEntries = new NiYtdHistory(initialResult.NiCalculationResult);
         GrossPayYtd = initialResult.TotalGrossPay;
