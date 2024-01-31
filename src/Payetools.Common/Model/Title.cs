@@ -57,7 +57,7 @@ public readonly struct Title
     /// <param name="title">Externally supplied string value for title.</param>
     /// <returns>Null if no title provided, a standardised title (e.g., "Mr") if a standardised title
     /// is provided, or the supplied string otherwise.</returns>
-    public static Title? Parse(string title)
+    public static Title? Parse(string? title)
     {
         if (string.IsNullOrWhiteSpace(title))
             return null;
