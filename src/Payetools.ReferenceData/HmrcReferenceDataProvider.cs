@@ -47,6 +47,8 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     /// <param name="dataSets">IEnumerable of <see cref="HmrcTaxYearReferenceDataSet"/>s to initialise this
     /// provider with.</param>
+    /// <remarks>Although this constructor is public, it is recommended that instances of this class be
+    /// initialised through a <see cref="HmrcReferenceDataProviderFactory"/>.</remarks>
     public HmrcReferenceDataProvider(IEnumerable<HmrcTaxYearReferenceDataSet> dataSets)
     {
         _referenceDataSets = new Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();
@@ -55,9 +57,9 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 
         foreach (var dataSet in dataSets)
         {
-            health.Add(TryAdd(dataSet) ?
+            health.Add(TryAdd(dataSet, out var errorMessage) ?
                 $"{dataSet.ApplicableTaxYearEnding}:OK" :
-                $"{dataSet.ApplicableTaxYearEnding}:Data set failed validation");
+                $"{dataSet.ApplicableTaxYearEnding}:Data set failed validation; {errorMessage}");
         }
 
         Health = string.Join('|', health);
@@ -248,12 +250,16 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             taxYear, payFrequency, taxPeriod).DeductionRates;
     }
 
-    internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet)
+    internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet, out string? errorMessage)
     {
-        var (isValid, errorMessage) = ValidateReferenceData(referenceDataSet);
+        errorMessage = null;
+
+        var (isValid, errorText) = ValidateReferenceData(referenceDataSet);
 
         if (!isValid)
         {
+            errorMessage = errorText;
+
             return false;
         }
 

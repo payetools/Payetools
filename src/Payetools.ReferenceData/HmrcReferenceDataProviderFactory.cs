@@ -64,7 +64,6 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
             referenceDataStreams.Length);
 
         var dataSets = new List<HmrcTaxYearReferenceDataSet>();
-        var health = new List<string>();
 
         for (int i = 0; i < referenceDataStreams.Length; i++)
         {
