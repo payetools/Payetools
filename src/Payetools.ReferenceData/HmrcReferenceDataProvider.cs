@@ -39,6 +39,22 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         Health = "No tax years added";
     }
 
+    public HmrcReferenceDataProvider(IEnumerable<HmrcTaxYearReferenceDataSet> dataSets)
+    {
+        _referenceDataSets = new Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();
+
+        var health = new List<string>();
+
+        foreach (var dataSet in dataSets)
+        {
+            health.Add(TryAdd(dataSet) ?
+                $"{dataSet.ApplicableTaxYearEnding}:OK" :
+                $"{dataSet.ApplicableTaxYearEnding}:Data set failed validation");
+        }
+
+        Health = string.Join('|', health);
+    }
+
     /// <summary>
     /// Retrieves the tax bands for a given tax year in the form of a dictionary (<see cref="ReadOnlyDictionary{CountriesForTaxPurposes, TaxBandwidthSet}"/>)
     /// keyed on tax regime, i.e., <see cref="CountriesForTaxPurposes"/>.

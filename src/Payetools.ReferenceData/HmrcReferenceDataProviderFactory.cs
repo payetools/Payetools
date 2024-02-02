@@ -19,7 +19,10 @@ namespace Payetools.ReferenceData;
 /// </summary>
 public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactory
 {
-    private readonly ILogger<HmrcReferenceDataProviderFactory>? _logger;
+    /// <summary>
+    /// Gets logger for logging.  If not supplied in constructor (or null supplied), no logging is performed.
+    /// </summary>
+    protected ILogger<HmrcReferenceDataProviderFactory>? Logger { get; }
 
     private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
     {
@@ -42,7 +45,7 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
     /// <param name="logger">Implementation of <see cref="ILogger"/> for logging.</param>
     public HmrcReferenceDataProviderFactory(ILogger<HmrcReferenceDataProviderFactory>? logger)
     {
-        _logger = logger;
+        Logger = logger;
     }
 
     /// <summary>
@@ -58,7 +61,7 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
     /// reference data from the supplied set of streams.</exception>
     public async Task<IHmrcReferenceDataProvider> CreateProviderAsync(Stream[] referenceDataStreams)
     {
-        _logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider with array of Streams; {referenceDataStreams.Length} streams provided",
+        Logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider with array of Streams; {referenceDataStreams.Length} streams provided",
             referenceDataStreams.Length);
 
         var provider = new HmrcReferenceDataProvider();
@@ -66,9 +69,9 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
 
         for (int i = 0; i < referenceDataStreams.Length; i++)
         {
-            var entry = await DeserializeAsync<HmrcTaxYearReferenceDataSet>(referenceDataStreams[i], $"Stream #{i}");
+            var entry = await DeserializeAsync(referenceDataStreams[i], $"Stream #{i}");
 
-            _logger?.LogInformation("Retrieved reference data for tax year {entry.ApplicableTaxYearEnding}, version {entry.Version}",
+            Logger?.LogInformation("Retrieved reference data for tax year {entry.ApplicableTaxYearEnding}, version {entry.Version}",
                 entry.ApplicableTaxYearEnding, entry.Version);
 
             health.Add(provider.TryAdd(entry) ?
@@ -81,12 +84,19 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
         return provider;
     }
 
-    private static async Task<T> DeserializeAsync<T>(Stream data, string source)
+    /// <summary>
+    /// Deserialises the supplied JSON stream into a <see cref="HmrcTaxYearReferenceDataSet"/>.
+    /// </summary>
+    /// <param name="data">Stream to use as source.</param>
+    /// <param name="source">Source name.</param>
+    /// <returns>HmrcTaxYearReferenceDataSet containing the deserialised data.</returns>
+    /// <exception cref="InvalidReferenceDataException">Thrown if the supplied stream cannot be deserialised.</exception>
+    protected static async Task<HmrcTaxYearReferenceDataSet> DeserializeAsync(Stream data, string source)
     {
         try
         {
-            return await JsonSerializer.DeserializeAsync<T>(data, _jsonSerializerOptions) ??
-                throw new InvalidReferenceDataException($"Unable to deserialise response reference data from source '{source}' into type '{typeof(T).Name}'");
+            return await JsonSerializer.DeserializeAsync<HmrcTaxYearReferenceDataSet>(data, _jsonSerializerOptions) ??
+                throw new InvalidReferenceDataException($"Unable to deserialise response reference data from source '{source}' into type '{nameof(HmrcTaxYearReferenceDataSet)}'");
         }
         catch (JsonException ex)
         {
