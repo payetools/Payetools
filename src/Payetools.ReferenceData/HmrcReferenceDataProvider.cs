@@ -21,14 +21,17 @@ using System.Text;
 
 namespace Payetools.ReferenceData;
 
-internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
+/// <summary>
+/// Provider of HMRC reference data.  Should be instantiated via the <see cref="HmrcReferenceDataProviderFactory"/>.
+/// </summary>
+public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
 {
     private readonly Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet> _referenceDataSets;
 
     /// <summary>
-    /// Gets or sets (internal only) the health of this reference data provider as human-readable string.
+    /// Gets the health of this reference data provider as human-readable string.
     /// </summary>
-    public string Health { get; internal set; }
+    public string Health { get; }
 
     /// <summary>
     /// Initialises a new intance of <see cref="IHmrcReferenceDataProvider"/>.
@@ -39,6 +42,11 @@ internal class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         Health = "No tax years added";
     }
 
+    /// <summary>
+    /// Initialised a new instance of <see cref="HmrcReferenceDataProvider"/> using the supplied data sets.
+    /// </summary>
+    /// <param name="dataSets">IEnumerable of <see cref="HmrcTaxYearReferenceDataSet"/>s to initialise this
+    /// provider with.</param>
     public HmrcReferenceDataProvider(IEnumerable<HmrcTaxYearReferenceDataSet> dataSets)
     {
         _referenceDataSets = new Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();

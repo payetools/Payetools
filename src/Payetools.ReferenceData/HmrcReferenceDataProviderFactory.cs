@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using Payetools.Common.Diagnostics;
 using Payetools.Common.Serialization;
 using Payetools.ReferenceData.Serialization;
-using System;
 using System.Text.Json;
 
 namespace Payetools.ReferenceData;
@@ -64,38 +63,36 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
         Logger?.LogInformation("Attempting to create implementation of IHmrcReferenceDataProvider with array of Streams; {referenceDataStreams.Length} streams provided",
             referenceDataStreams.Length);
 
-        var provider = new HmrcReferenceDataProvider();
+        var dataSets = new List<HmrcTaxYearReferenceDataSet>();
         var health = new List<string>();
 
         for (int i = 0; i < referenceDataStreams.Length; i++)
         {
-            var entry = await DeserializeAsync(referenceDataStreams[i], $"Stream #{i}");
+            var entry = await DeserializeAsync<HmrcTaxYearReferenceDataSet>(referenceDataStreams[i], $"Stream #{i}");
 
             Logger?.LogInformation("Retrieved reference data for tax year {entry.ApplicableTaxYearEnding}, version {entry.Version}",
                 entry.ApplicableTaxYearEnding, entry.Version);
 
-            health.Add(provider.TryAdd(entry) ?
-                $"{entry.ApplicableTaxYearEnding}:OK" :
-                $"{entry.ApplicableTaxYearEnding}:Failed to load data using from stream #{i}");
+            dataSets.Add(entry);
         }
 
-        provider.Health = string.Join('|', health.ToArray());
-
-        return provider;
+        return new HmrcReferenceDataProvider(dataSets);
     }
 
     /// <summary>
-    /// Deserialises the supplied JSON stream into a <see cref="HmrcTaxYearReferenceDataSet"/>.
+    /// Deserialises the supplied JSON stream.  Primarily used to deserialise into <see cref="HmrcTaxYearReferenceDataSet"/>
+    /// but may be used to other types needed by derived classes of this factory.
     /// </summary>
     /// <param name="data">Stream to use as source.</param>
     /// <param name="source">Source name.</param>
-    /// <returns>HmrcTaxYearReferenceDataSet containing the deserialised data.</returns>
+    /// <typeparam name="T">Type of object to deserialise.</typeparam>
+    /// <returns>Object of type T containing the deserialised data.</returns>
     /// <exception cref="InvalidReferenceDataException">Thrown if the supplied stream cannot be deserialised.</exception>
-    protected static async Task<HmrcTaxYearReferenceDataSet> DeserializeAsync(Stream data, string source)
+    protected static async Task<T> DeserializeAsync<T>(Stream data, string source)
     {
         try
         {
-            return await JsonSerializer.DeserializeAsync<HmrcTaxYearReferenceDataSet>(data, _jsonSerializerOptions) ??
+            return await JsonSerializer.DeserializeAsync<T>(data, _jsonSerializerOptions) ??
                 throw new InvalidReferenceDataException($"Unable to deserialise response reference data from source '{source}' into type '{nameof(HmrcTaxYearReferenceDataSet)}'");
         }
         catch (JsonException ex)
