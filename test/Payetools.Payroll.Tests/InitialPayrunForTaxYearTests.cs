@@ -49,7 +49,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         Output.WriteLine("Static inputs retrieved okay");
 
-        IEmployer employer = new Employer();
+        IEmployer employer = new Employer("Test Employer Ltd", "Test Employer");
 
         Output.WriteLine("Making payroll line items...");
 
@@ -62,7 +62,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         Output.WriteLine("Making payrun input...");
 
-        MakeEmployeePayRunInput(employer,
+        MakeEmployeePayRunInput(
             staticInput,
             testData.PensionSchemes.Where(ps => ps.SchemeName == staticInput.PensionScheme).FirstOrDefault(),
             employeePayrollHistory,
@@ -78,8 +78,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         var processor = await GetProcessorAsync(employer, payDate, payPeriod);
 
-        List<IEmployeePayRunInputEntry> entries = new List<IEmployeePayRunInputEntry>();
-        entries.Add(payrunEntry);
+        var entries = new List<IEmployeePayRunInputEntry> { payrunEntry };
 
         processor.Process(entries, out var result);
 
@@ -229,7 +228,6 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
     }
 
     static void MakeEmployeePayRunInput(
-        in IEmployer employer,
         in IStaticInputTestDataEntry staticEntry,
         in IPensionSchemesTestDataEntry? pensionScheme,
         in IEmployeePayrollHistoryYtd history,
@@ -253,8 +251,8 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
                 null,
             PensionScheme = staticEntry.PensionScheme != null ? new PensionScheme()
             {
-                TaxTreatment = pensionScheme?.TaxTreatment ?? throw new ArgumentNullException("Pension scheme name doesn't match a value pension", nameof(pensionScheme)),
-                EarningsBasis = pensionScheme?.EarningsBasis ?? throw new ArgumentNullException("Pension scheme name doesn't match a value pension", nameof(pensionScheme))
+                TaxTreatment = pensionScheme?.TaxTreatment ?? throw new ArgumentNullException(nameof(pensionScheme), "Pension scheme name doesn't match a value pension"),
+                EarningsBasis = pensionScheme?.EarningsBasis ?? throw new ArgumentNullException(nameof(pensionScheme), "Pension scheme name doesn't match a value pension")
             } : null,
             DefaultPensionContributionLevels = new PensionContributionLevels()
         };
