@@ -16,7 +16,12 @@ public interface IEmployer
     /// <summary>
     /// Gets the official or legal name of the business, including any official suffix, e.g., Ltd, LLP, etc.
     /// </summary>
-    string OfficialName { get; }
+    string? OfficialName { get; }
+
+    /// <summary>
+    /// Gets the name that the business is known by, omitting any official suffix, e.g., Ltd, LLP, etc.
+    /// </summary>
+    string KnownAsName { get; }
 
     /// <summary>
     /// Gets the employer's HMRC PAYE reference, if known.
