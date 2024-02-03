@@ -14,9 +14,9 @@ namespace Payetools.Payroll.Model;
 public interface IEmployer
 {
     /// <summary>
-    /// Gets the legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.
+    /// Gets the official or legal name of the business, including any official suffix, e.g., Ltd, LLP, etc.
     /// </summary>
-    string BusinessLegalName { get; }
+    string OfficialName { get; }
 
     /// <summary>
     /// Gets the employer's HMRC PAYE reference, if known.
