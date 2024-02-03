@@ -17,10 +17,9 @@ public interface IPayRunProcessorFactory
     /// <summary>
     /// Gets a payrun processor for specified pay date and pay period.
     /// </summary>
-    /// <param name="employer">Employer for this payrun processor.</param>
     /// <param name="payDate">Applicable pay date for the required payrun processor.</param>
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    IPayRunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod);
+    IPayRunProcessor GetProcessor(PayDate payDate, DateRange payPeriod);
 }

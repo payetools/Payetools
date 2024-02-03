@@ -61,12 +61,11 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
     /// <summary>
     /// Gets a payrun processor for specified pay date and pay period.
     /// </summary>
-    /// <param name="employer">Employer for this payrun processor.</param>
     /// <param name="payDate">Applicable pay date for the required payrun processor.</param>
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    public IPayRunProcessor GetProcessor(IEmployer employer, PayDate payDate, DateRange payPeriod)
+    public IPayRunProcessor GetProcessor(PayDate payDate, DateRange payPeriod)
     {
         var factories = GetFactories(_hmrcReferenceDataProvider ??
                 throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));
@@ -75,7 +74,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
             factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
             payDate, payPeriod);
 
-        return new PayRunProcessor(calculator, employer);
+        return new PayRunProcessor(calculator);
     }
 
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data
