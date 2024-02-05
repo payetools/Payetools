@@ -16,12 +16,8 @@ namespace Payetools.Payroll.Model;
 public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
 {
     /// <summary>
-    /// Gets an employee accessor that can provide the employee details for this entry on demand.
-    /// </summary>
-    public IEmployeeAccessor EmployeeAccessor { get; }
-
-    /// <summary>
-    /// Gets the employment details for the employee for this entry.
+    /// Gets the employment details for the employee for this entry.  (Use the PayrollId of this field as a
+    /// handle to get access to the employee and related data.)
     /// </summary>
     public IEmployment Employment { get; }
 
@@ -49,21 +45,18 @@ public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayRunInputEntry"/>.
     /// </summary>
-    /// <param name="employeeAccessor">Accessor for employee details.</param>
     /// <param name="employment">Employment details.</param>
     /// <param name="earnings">List of applicable earnings, if any.  Empty list if none.</param>
     /// <param name="deductions">List of applicable deductions, if any.  Empty list if none.</param>
     /// <param name="payrolledBenefits">List of payrolled benefits, if any.  Empty list if none.</param>
     /// <param name="pensionContributionLevels">Pension contribtuion levels to be applied.</param>
     public EmployeePayRunInputEntry(
-        IEmployeeAccessor employeeAccessor,
         IEmployment employment,
         ImmutableList<IEarningsEntry> earnings,
         ImmutableList<IDeductionEntry> deductions,
         ImmutableList<IPayrolledBenefitForPeriod> payrolledBenefits,
         IPensionContributionLevels pensionContributionLevels)
     {
-        EmployeeAccessor = employeeAccessor;
         Employment = employment;
         Earnings = earnings;
         Deductions = deductions;

@@ -265,7 +265,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         } : new PensionContributionLevels();
 
 
-        entry = new EmployeePayRunInputEntry(new EmployeeAccessor(employee),
+        entry = new EmployeePayRunInputEntry(
             employment,
             earnings.ToImmutableList(),
             deductions.ToImmutableList(),
@@ -278,17 +278,5 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         var factory = await _payrollProcessorFactoryFixture.GetFactory();
 
         return factory.GetProcessor(payDate, payPeriod);
-    }
-
-    private class EmployeeAccessor : IEmployeeAccessor
-    {
-        private readonly IEmployee _employee;
-
-        public EmployeeAccessor(IEmployee employee)
-        {
-            _employee = employee;
-        }
-
-        public IEmployee GetEmployee() => _employee;
     }
 }

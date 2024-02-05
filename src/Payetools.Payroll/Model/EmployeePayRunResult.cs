@@ -28,9 +28,10 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     public ref IPayRunDetails PayRunDetails { get => throw new NotImplementedException(); }
 
     /// <summary>
-    /// Gets an employee accessor that can provide the employee details for this entry on demand.
+    /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of
+    /// this field can be used as a hand to get access to the employee.
     /// </summary>
-    public IEmployeeAccessor EmployeeAccessor { get; }
+    public IEmployment Employment { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
@@ -95,7 +96,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayRunResult"/>.
     /// </summary>
-    /// <param name="employeeAccessor">Accessor for employee details.</param>
+    /// <param name="employment">Employee employment details.  Includes PayrollId as a handle to get access to the employee.</param>
     /// <param name="isLeaverInThisPayRun">True if the employee is being marked as left in this payrun.</param>
     /// <param name="taxCalculationResult">Result of income tax calculation.</param>
     /// <param name="niCalculationResult">Result of National Insurance calculation.</param>
@@ -111,7 +112,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayRunResult(
-        IEmployeeAccessor employeeAccessor,
+        IEmployment employment,
         bool isLeaverInThisPayRun,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
@@ -123,7 +124,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         decimal nicablePay,
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
-        EmployeeAccessor = employeeAccessor;
+        Employment = employment;
         IsLeaverInThisPayRun = isLeaverInThisPayRun;
         _taxCalculationResult = taxCalculationResult;
         _niCalculationResult = niCalculationResult;

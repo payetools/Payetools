@@ -147,9 +147,13 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         if (!_incomeTaxCalculators.TryGetValue(entry.Employment.TaxCode.ApplicableCountries, out var taxCalculator))
             throw new InvalidOperationException($"Unable to perform tax calculation as calculator for tax regime '{entry.Employment.TaxCode.TaxRegimeLetter}' is not available");
 
-        taxCalculator.Calculate(taxablePay, earningsTotals.BenefitsInKind,
-            entry.Employment.TaxCode, entry.Employment.PayrollHistoryYtd.TaxablePayYtd,
-            entry.Employment.PayrollHistoryYtd.TaxPaidYtd, entry.Employment.PayrollHistoryYtd.TaxUnpaidDueToRegulatoryLimit,
+        taxCalculator.Calculate(
+            taxablePay,
+            earningsTotals.BenefitsInKind,
+            entry.Employment.TaxCode,
+            entry.Employment.PayrollHistoryYtd.TaxablePayYtd,
+            entry.Employment.PayrollHistoryYtd.TaxPaidYtd,
+            entry.Employment.PayrollHistoryYtd.TaxUnpaidDueToRegulatoryLimit,
             out var taxCalculationResult);
 
         IStudentLoanCalculationResult studentLoanCalculationResult;
@@ -160,8 +164,18 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             _studentLoanCalculator.Calculate(workingGrossPay, entry.Employment.StudentLoanInfo?.StudentLoanType,
                 entry.Employment.StudentLoanInfo?.HasPostGradLoan == true, out studentLoanCalculationResult);
 
-        result = new EmployeePayRunResult(entry.EmployeeAccessor, false, ref taxCalculationResult, ref niCalculationResult, ref studentLoanCalculationResult,
-            ref pensionContributions, earningsTotals.GrossPay, workingGrossPay, taxablePay, nicablePay, ref entry.Employment.PayrollHistoryYtd);
+        result = new EmployeePayRunResult(
+            entry.Employment,
+            false,
+            ref taxCalculationResult,
+            ref niCalculationResult,
+            ref studentLoanCalculationResult,
+            ref pensionContributions,
+            earningsTotals.GrossPay,
+            workingGrossPay,
+            taxablePay,
+            nicablePay,
+            ref entry.Employment.PayrollHistoryYtd);
     }
 
     private static void GetAllEarningsTypes(in IEmployeePayRunInputEntry entry, out EarningsTotals earningsTotals)

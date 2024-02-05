@@ -16,12 +16,8 @@ namespace Payetools.Payroll.Model;
 public interface IEmployeePayRunInputEntry
 {
     /// <summary>
-    /// Gets an employee accessor that can provide the employee details for this entry on demand.
-    /// </summary>
-    IEmployeeAccessor EmployeeAccessor { get; }
-
-    /// <summary>
-    /// Gets the employment details for the employee for this entry.
+    /// Gets the employment details for the employee for this entry.  (Use the EmployeeId of the Employment to
+    /// get access to the employee and related data.)
     /// </summary>
     IEmployment Employment { get; }
 

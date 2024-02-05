@@ -22,9 +22,10 @@ public interface IEmployeePayRunResult
     ref IPayRunDetails PayRunDetails { get; }
 
     /// <summary>
-    /// Gets an employee accessor that can provide the employee details for this entry on demand.
+    /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of
+    /// this field can be used as a hand to get access to the employee.
     /// </summary>
-    IEmployeeAccessor EmployeeAccessor { get; }
+    public IEmployment Employment { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that

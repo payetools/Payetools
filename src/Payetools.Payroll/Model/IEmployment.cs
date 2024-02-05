@@ -12,7 +12,8 @@ using System.Collections.Immutable;
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents an employee's employment for payroll purposes.
+/// Interface that represents an employee's employment for payroll purposes. The PayrollId provides a handle
+/// to the employee that this employment refers to.
 /// </summary>
 public interface IEmployment
 {
