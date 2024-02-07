@@ -259,7 +259,8 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         var pensionContributionLevels = staticEntry.PensionScheme != null ? new PensionContributionLevels()
         {
-            EmployerContributionPercentage = staticEntry.EmployerPercentage ?? 0.0m,
+            EmployerContribution = staticEntry.EmployerPercentage ?? 0.0m,
+            EmployerContributionIsFixedAmount = false,
             EmployeeContribution = staticEntry.EmployeeFixedAmount ?? staticEntry.EmployeePercentage ?? 0.0m,
             EmployeeContributionIsFixedAmount = staticEntry.EmployeeFixedAmount != null
         } : new PensionContributionLevels();

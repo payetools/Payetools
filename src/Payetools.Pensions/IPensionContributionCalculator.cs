@@ -20,11 +20,14 @@ public interface IPensionContributionCalculator
     /// alternative to an employee percentage rate.
     /// </summary>
     /// <param name="pensionableSalary">Pensionable salary to be used for calculation.</param>
-    /// <param name="employerContributionPercentage">Employer contribution level, expressed in percentage points (i.e., 3% = 3.0m).</param>
+    /// <param name="employerContribution">Employer contribution level, either expressed in percentage points (i.e., 5% = 5.0m)
+    /// or as a fixed amount (i.e. £500.00), as indicated by <c>employerContributionIsFixedAmount</c>.</param>
+    /// <param name="employerContributionIsFixedAmount">True if the <c>employerContribution</c> parameter should be treated as a
+    /// fixed amount; false if it should be treated as a percentage.</param>
     /// <param name="employeeContribution">Employee contribution level, either expressed in percentage points (i.e., 5% = 5.0m)
     /// or as a fixed amount (i.e. £500.00), as indicated by the following parameter.</param>
-    /// <param name="employeeContributionIsFixedAmount">True if the previous parameter should be treated as a fixed amount; false if
-    /// it should be treated as a percentage.</param>
+    /// <param name="employeeContributionIsFixedAmount">True if the <c>employeeContribution</c> parameter should be treated as
+    /// a fixed amount; false if it should be treated as a percentage.</param>
     /// <param name="avcForPeriod">Any Additional Voluntary Contribution (AVC) on the part of the employee.</param>
     /// <param name="salaryForMaternityPurposes">Used to override the employer contribution when an individual is on
     /// maternity leave and should be paid employer contributions based on their contracted salary rather than their
@@ -32,7 +35,8 @@ public interface IPensionContributionCalculator
     /// <param name="result">An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
     /// the results of the calculation.</param>
     void Calculate(decimal pensionableSalary,
-        decimal employerContributionPercentage,
+        decimal employerContribution,
+        bool employerContributionIsFixedAmount,
         decimal employeeContribution,
         bool employeeContributionIsFixedAmount,
         decimal? avcForPeriod,
@@ -46,7 +50,10 @@ public interface IPensionContributionCalculator
     /// alternative to an employee percentage rate.
     /// </summary>
     /// <param name="pensionableSalary">Pensionable salary to be used for calculation.</param>
-    /// <param name="employerContributionPercentage">Employer contribution level, expressed in percentage points (i.e., 3% = 3.0m).</param>
+    /// <param name="employerContribution">Employer contribution level, either expressed in percentage points (i.e., 5% = 5.0m)
+    /// or as a fixed amount (i.e. £500.00), as indicated by <c>employerContributionIsFixedAmount</c>.</param>
+    /// <param name="employerContributionIsFixedAmount">True if the <c>employerContribution</c> parameter should be treated as a
+    /// fixed amount; false if it should be treated as a percentage.</param>
     /// <param name="employerNiSavings">Savings in employer's NI due to the salary exchanged.</param>
     /// <param name="employerNiSavingsReinvestmentPercentage">Percentage of employer NI savings to be reinvested in the employee's
     /// pension, expressed in percentage points (i.e., 100% = 100.0m).</param>
@@ -54,8 +61,8 @@ public interface IPensionContributionCalculator
     /// exchange arrangements.  Expressed either as a percentage in percentage points (e.g., 5% = 5.0m), or as a fixed
     /// amount, as indicated by the following parameter.  NB If fixed amount is given, it relates to the pay period
     /// (as opposed to annually).</param>
-    /// <param name="employeeSalaryExchangedIsFixedAmount">True if the previous parameter should be treated as a fixed amount; false if
-    /// it should be treated as a percentage.</param>
+    /// <param name="employeeSalaryExchangedIsFixedAmount">True if the <c>employeeContribution</c> parameter should be treated as
+    /// a fixed amount; false if it should be treated as a percentage.</param>
     /// <param name="avcForPeriod">Any Additional Voluntary Contribution (AVC) on the part of the employee.</param>
     /// <param name="salaryForMaternityPurposes">Used to override the employer contribution when an individual is on
     /// maternity leave and should be paid employer contributions based on their contracted salary rather than their
@@ -63,7 +70,8 @@ public interface IPensionContributionCalculator
     /// <param name="result">An instance of a <see cref="IPensionContributionCalculationResult"/> implementation that contains
     /// the results of the calculation.</param>
     void CalculateUnderSalaryExchange(decimal pensionableSalary,
-        decimal employerContributionPercentage,
+        decimal employerContribution,
+        bool employerContributionIsFixedAmount,
         decimal employerNiSavings,
         decimal employerNiSavingsReinvestmentPercentage,
         decimal employeeSalaryExchanged,

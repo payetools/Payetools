@@ -130,19 +130,35 @@ public class SalaryExchangeQualifyingEarningsTests : IClassFixture<PensionContri
             318.84m, 110.07m, 25.32m);
     }
 
-    private static void TestCalculation(IPensionContributionCalculator calculator, decimal pensionableSalary,
-        decimal expectedBandedEarnings, decimal employerContributionPct, decimal? employerContributionAmount,
-        decimal? employeeContributionPct, decimal? employeeContributionAmount, decimal avc,
-        bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployerContributionBeforeSE,
+    private static void TestCalculation(
+        IPensionContributionCalculator calculator,
+        decimal pensionableSalary,
+        decimal expectedBandedEarnings,
+        decimal employerContributionPct,
+        decimal? employerContributionAmount,
+        decimal? employeeContributionPct,
+        decimal? employeeContributionAmount,
+        decimal avc,
+        bool employeeContributionIsAmount,
+        decimal expectedEmployerContribution,
+        decimal expectedEmployerContributionBeforeSE,
         decimal expectedEmployerNiSaving)
     {
         decimal employersNiSaving = 0.138m * (employeeContributionIsAmount ?
             employeeContributionAmount :
             (employeeContributionPct / 100.0m) * expectedBandedEarnings) ?? 0.0m;
 
-        calculator.CalculateUnderSalaryExchange(pensionableSalary, employerContributionPct,
-            employersNiSaving, 100.0m, (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
-            employeeContributionIsAmount, avc, null, out var result);
+        calculator.CalculateUnderSalaryExchange(
+            pensionableSalary,
+            employerContributionPct,
+            false,
+            employersNiSaving,
+            100.0m,
+            (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
+            employeeContributionIsAmount,
+            avc,
+            null,
+            out var result);
 
         result.PensionableSalaryInPeriod.Should().Be(pensionableSalary);
         result.EmployeeContributionPercentage.Should().Be(employeeContributionPct);

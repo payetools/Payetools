@@ -13,7 +13,7 @@ public interface IPensionContributionLevels
 {
     /// <summary>
     /// Gets the employee contribution level, either expressed in percentage points (i.e., 5% = 5.0m)
-    /// or as a fixed amount (i.e. £500.00), as indicated by the following parameter.
+    /// or as a fixed amount (i.e. £500.00), as indicated by <see cref="EmployeeContributionIsFixedAmount"/>.
     /// </summary>
     decimal EmployeeContribution { get; }
 
@@ -24,9 +24,16 @@ public interface IPensionContributionLevels
     bool EmployeeContributionIsFixedAmount { get; }
 
     /// <summary>
-    /// Gets the employer contribution percentage, expressed in percentage points, i.e., 3% = 3.0m.
+    /// Gets the employer contribution percentage, either expressed in percentage points (i.e., 5% = 5.0m)
+    /// or as a fixed amount (i.e. £500.00), as indicated by <see cref="EmployerContributionIsFixedAmount"/>.
     /// </summary>
-    decimal EmployerContributionPercentage { get; }
+    decimal EmployerContribution { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether <see cref="EmployerContribution"/> should be treated as a fixed amount.  True if the employer
+    /// contribution figure sshould be treated as a fixed amount; false if it should be treated as a percentage.
+    /// </summary>
+    bool EmployerContributionIsFixedAmount { get; }
 
     /// <summary>
     /// Gets a value indicating whether salary exchange should be applied.

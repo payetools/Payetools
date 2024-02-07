@@ -61,9 +61,14 @@ public class NonSalaryExchangePensionablePaySetTests : IClassFixture<PensionCont
         decimal? employeeContributionPct, decimal? employeeContributionAmount, decimal avc,
         bool employeeContributionIsAmount, decimal expectedEmployerContribution, decimal expectedEmployeeContribution)
     {
-        calculator.Calculate(pensionableSalary, employerContributionPct,
+        calculator.Calculate(pensionableSalary,
+            employerContributionPct,
+            false,
             (employeeContributionIsAmount ? employeeContributionAmount : employeeContributionPct) ?? 0.0m,
-            employeeContributionIsAmount, avc, null, out var result);
+            employeeContributionIsAmount,
+            avc,
+            null,
+            out var result);
 
         result.PensionableSalaryInPeriod.Should().Be(pensionableSalary);
         result.EmployeeContributionPercentage.Should().Be(employeeContributionPct);

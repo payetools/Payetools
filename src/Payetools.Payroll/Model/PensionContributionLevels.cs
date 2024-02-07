@@ -26,9 +26,16 @@ public record PensionContributionLevels : IPensionContributionLevels
     public bool EmployeeContributionIsFixedAmount { get; init; }
 
     /// <summary>
-    /// Gets the employer contribution percentage, expressed in percentage points, i.e., 3% = 3.0m.
+    /// Gets the employer contribution percentage, either expressed in percentage points (i.e., 5% = 5.0m)
+    /// or as a fixed amount (i.e. £500.00), as indicated by <see cref="EmployerContributionIsFixedAmount"/>.
     /// </summary>
-    public decimal EmployerContributionPercentage { get; init; }
+    public decimal EmployerContribution { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether <see cref="EmployerContribution"/> should be treated as a fixed amount.  True if the employer
+    /// contribution figure sshould be treated as a fixed amount; false if it should be treated as a percentage.
+    /// </summary>
+    public bool EmployerContributionIsFixedAmount { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether salary exchange should be applied.

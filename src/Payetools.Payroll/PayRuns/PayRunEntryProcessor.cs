@@ -255,17 +255,28 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
 
             if (entry.PensionContributionLevels.SalaryExchangeApplied)
             {
-                calculator.CalculateUnderSalaryExchange(pensionablePay, entry.PensionContributionLevels.EmployerContributionPercentage,
-                    employersNiSavings, entry.PensionContributionLevels.EmployersNiReinvestmentPercentage ?? 0.0m,
-                    entry.PensionContributionLevels.EmployeeContribution, entry.PensionContributionLevels.EmployeeContributionIsFixedAmount,
-                    entry.PensionContributionLevels.AvcForPeriod ?? 0.0m, entry.PensionContributionLevels.SalaryForMaternityPurposes,
+                calculator.CalculateUnderSalaryExchange(
+                    pensionablePay,
+                    entry.PensionContributionLevels.EmployerContribution,
+                    entry.PensionContributionLevels.EmployerContributionIsFixedAmount,
+                    employersNiSavings,
+                    entry.PensionContributionLevels.EmployersNiReinvestmentPercentage ?? 0.0m,
+                    entry.PensionContributionLevels.EmployeeContribution,
+                    entry.PensionContributionLevels.EmployeeContributionIsFixedAmount,
+                    entry.PensionContributionLevels.AvcForPeriod ?? 0.0m,
+                    entry.PensionContributionLevels.SalaryForMaternityPurposes,
                     out result);
             }
             else
             {
-                calculator.Calculate(pensionablePay, entry.PensionContributionLevels.EmployerContributionPercentage,
-                    entry.PensionContributionLevels.EmployeeContribution, entry.PensionContributionLevels.EmployeeContributionIsFixedAmount,
-                    entry.PensionContributionLevels.AvcForPeriod ?? 0.0m, entry.PensionContributionLevels.SalaryForMaternityPurposes,
+                calculator.Calculate(
+                    pensionablePay,
+                    entry.PensionContributionLevels.EmployerContribution,
+                    entry.PensionContributionLevels.EmployerContributionIsFixedAmount,
+                    entry.PensionContributionLevels.EmployeeContribution,
+                    entry.PensionContributionLevels.EmployeeContributionIsFixedAmount,
+                    entry.PensionContributionLevels.AvcForPeriod ?? 0.0m,
+                    entry.PensionContributionLevels.SalaryForMaternityPurposes,
                     out result);
             }
         }
