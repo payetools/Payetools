@@ -12,11 +12,6 @@ namespace Payetools.Payroll.Model;
 public interface IDeductionDetails
 {
     /// <summary>
-    /// Gets the short name for this type of deduction.
-    /// </summary>
-    string ShortName { get; }
-
-    /// <summary>
     /// Gets the full name of this type of deduction.
     /// </summary>
     string Name { get; }

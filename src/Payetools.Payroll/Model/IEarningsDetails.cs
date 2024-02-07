@@ -12,16 +12,6 @@ namespace Payetools.Payroll.Model;
 public interface IEarningsDetails
 {
     /// <summary>
-    /// Gets the unique ID for this pay component.
-    /// </summary>
-    Guid Id { get; }
-
-    /// <summary>
-    /// Gets the short name for this pay component.
-    /// </summary>
-    string ShortName { get; }
-
-    /// <summary>
     /// Gets the full name of this pay component.
     /// </summary>
     string Name { get; }
