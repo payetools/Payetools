@@ -24,5 +24,10 @@ public enum PayRateUnits
     /// <summary>
     /// Daily rate, typically for salaried employees with regular working patterns.
     /// </summary>
-    PerDay
+    PerDay,
+
+    /// <summary>
+    /// Per pay period, useful for fixed amounts each pay period.
+    /// </summary>
+    PerPayPeriod
 }

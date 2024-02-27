@@ -268,9 +268,9 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         entry = new EmployeePayRunInputEntry(
             employment,
-            earnings.ToImmutableList(),
-            deductions.ToImmutableList(),
-            benefits.ToImmutableList(),
+            earnings.ToImmutableArray(),
+            deductions.ToImmutableArray(),
+            benefits.ToImmutableArray(),
             pensionContributionLevels);
     }
 

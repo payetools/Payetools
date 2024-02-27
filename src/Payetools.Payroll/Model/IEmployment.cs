@@ -79,17 +79,17 @@ public interface IEmployment
     /// <summary>
     /// Gets the list of payrolled benefits that apply to this employment.
     /// </summary>
-    ImmutableList<IPayrolledBenefit> PayrolledBenefits { get; }
+    ImmutableArray<IPayrolledBenefit> PayrolledBenefits { get; }
 
     /// <summary>
     /// Gets the list of recurring earnings elements for an employee.
     /// </summary>
-    ImmutableList<IRecurringEarnings> RecurringEarnings { get; }
+    ImmutableArray<IRecurringEarnings> RecurringEarnings { get; }
 
     /// <summary>
     /// Gets the list of recurring deductions for an employee.
     /// </summary>
-    ImmutableList<IRecurringDeduction> RecurringDeductions { get; }
+    ImmutableArray<IRecurringDeduction> RecurringDeductions { get; }
 
     /// <summary>
     /// Gets the key figures from the employee's payroll history for the tax year to date.

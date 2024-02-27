@@ -24,18 +24,18 @@ public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
-    public ImmutableList<IDeductionEntry> Deductions { get; }
+    public ImmutableArray<IDeductionEntry> Deductions { get; }
 
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    public ImmutableList<IEarningsEntry> Earnings { get; }
+    public ImmutableArray<IEarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
     /// no payrolled benefits.
     /// </summary>
-    public ImmutableList<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
+    public ImmutableArray<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 
     /// <summary>
     /// Gets the pension contributions to apply for this pay period.
@@ -52,9 +52,9 @@ public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     /// <param name="pensionContributionLevels">Pension contribtuion levels to be applied.</param>
     public EmployeePayRunInputEntry(
         IEmployment employment,
-        ImmutableList<IEarningsEntry> earnings,
-        ImmutableList<IDeductionEntry> deductions,
-        ImmutableList<IPayrolledBenefitForPeriod> payrolledBenefits,
+        ImmutableArray<IEarningsEntry> earnings,
+        ImmutableArray<IDeductionEntry> deductions,
+        ImmutableArray<IPayrolledBenefitForPeriod> payrolledBenefits,
         IPensionContributionLevels pensionContributionLevels)
     {
         Employment = employment;

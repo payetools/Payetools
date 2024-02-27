@@ -24,18 +24,18 @@ public interface IEmployeePayRunInputEntry
     /// <summary>
     /// Gets the list of deductions for this employee for a given payrun.  May be empty.
     /// </summary>
-    ImmutableList<IDeductionEntry> Deductions { get; }
+    ImmutableArray<IDeductionEntry> Deductions { get; }
 
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    ImmutableList<IEarningsEntry> Earnings { get; }
+    ImmutableArray<IEarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has
     /// no payrolled benefits.
     /// </summary>
-    ImmutableList<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
+    ImmutableArray<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 
     /// <summary>
     /// Gets the pension contributions to apply for this pay period.

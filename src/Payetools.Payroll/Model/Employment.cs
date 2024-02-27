@@ -80,17 +80,17 @@ public record Employment : IEmployment
     /// <summary>
     /// Gets the list of payrolled benefits that apply to this employment.
     /// </summary>
-    public ImmutableList<IPayrolledBenefit> PayrolledBenefits { get; init; } = default!;
+    public ImmutableArray<IPayrolledBenefit> PayrolledBenefits { get; init; } = default!;
 
     /// <summary>
     /// Gets the list of recurring earnings elements for an employee.
     /// </summary>
-    public ImmutableList<IRecurringEarnings> RecurringEarnings { get; init; } = default!;
+    public ImmutableArray<IRecurringEarnings> RecurringEarnings { get; init; } = default!;
 
     /// <summary>
     /// Gets the list of recurring deductions for an employee.
     /// </summary>
-    public ImmutableList<IRecurringDeduction> RecurringDeductions { get; init; } = default!;
+    public ImmutableArray<IRecurringDeduction> RecurringDeductions { get; init; } = default!;
 
     /// <summary>
     /// Gets the key figures from the employee's payroll history for the tax year to date.
