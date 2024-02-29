@@ -27,6 +27,11 @@ public enum PayRateUnits
     PerDay,
 
     /// <summary>
+    /// Weekly rate, commonly used for some statutory payments.
+    /// </summary>
+    PerWeek,
+
+    /// <summary>
     /// Per pay period, useful for fixed amounts each pay period.
     /// </summary>
     PerPayPeriod
