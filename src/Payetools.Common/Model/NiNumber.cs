@@ -13,8 +13,11 @@ namespace Payetools.Common.Model;
 /// and a final letter which is always A, B, C or D.  (See HMRC's National Insurance Manual, section NIM39110
 /// (<see href="https://www.gov.uk/hmrc-internal-manuals/national-insurance-manual/nim39110"/>.)
 /// </summary>
+/// <remarks>Marked partial as using <see cref="GeneratedRegexAttribute"/> for .NET 7.0 or above.</remarks>
 public readonly partial struct NiNumber
 {
+    private const string UNKNOWN = "UNKNOWN";
+
 #if NET7_0_OR_GREATER
 
     [GeneratedRegex("^(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\\s*\\d\\s*){6}([A-D]|\\s)$")]
@@ -30,6 +33,12 @@ public readonly partial struct NiNumber
 
     private readonly string _value;
 
+    /// <summary>
+    /// Gets a value indicating whether this <see cref="NiNumber"/> instance represents an unknown National
+    /// Insurance number.
+    /// </summary>
+    public bool IsUnknown => _value == UNKNOWN;
+
     private static readonly NiNumber _unknown = new NiNumber(true);
 
     /// <summary>
@@ -42,7 +51,7 @@ public readonly partial struct NiNumber
         if (!isUnknown)
             throw new ArgumentException("This constructor can only be used for unknown NI numbers", nameof(isUnknown));
 
-        _value = "UNKNOWN";
+        _value = UNKNOWN;
     }
 
     /// <summary>
