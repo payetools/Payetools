@@ -13,7 +13,7 @@ namespace Payetools.Common.Model;
 /// and a final letter which is always A, B, C or D.  (See HMRC's National Insurance Manual, section NIM39110
 /// (<see href="https://www.gov.uk/hmrc-internal-manuals/national-insurance-manual/nim39110"/>.)
 /// </summary>
-/// <remarks>Marked partial as using <see cref="GeneratedRegexAttribute"/> for .NET 7.0 or above.</remarks>
+/// <remarks>Marked partial as using <em>GeneratedRegexAttribute</em> for .NET 7.0 or above.</remarks>
 public readonly partial struct NiNumber
 {
     private const string UNKNOWN = "UNKNOWN";
