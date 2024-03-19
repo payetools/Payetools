@@ -15,12 +15,28 @@ public sealed record PayrollId
     private readonly string _payrollId;
 
     /// <summary>
+    /// Gets a value indicating whether this payroll ID is an update to a previously submitted payroll ID.
+    /// </summary>
+    public bool IsUpdate { get; }
+
+    /// <summary>
+    /// Gets the previous payroll ID, where applicable.
+    /// </summary>
+    public string? PreviousPayrollId { get; }
+
+    /// <summary>
     /// Initialises a new instance of <see cref="PayrollId"/> with the supplied value.
     /// </summary>
     /// <param name="payrollId">Payroll ID value.</param>
-    public PayrollId(string payrollId)
+    /// <param name="isUpdate">True if this an update to a previously submitted payroll ID; false
+    /// otherwise. Default is false.</param>
+    /// <param name="previousPayrollId">If <paramref name="isUpdate"/> is set to true, then
+    /// this parameter should be set to the previous payroll ID used.</param>
+    public PayrollId(string payrollId, bool isUpdate = false, string? previousPayrollId = null)
     {
         _payrollId = payrollId;
+        IsUpdate = isUpdate;
+        PreviousPayrollId = previousPayrollId;
     }
 
     /// <summary>
