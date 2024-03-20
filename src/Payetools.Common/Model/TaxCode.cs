@@ -150,7 +150,7 @@ public readonly partial struct TaxCode
     /// Returns the string representation of the tax code including the tax regime letter if applicable, but without
     /// any indication of whether the code is cumulative or non-cumulative.
     /// </summary>
-    /// <returns>String representation of tax code without tax regime prefix.</returns>
+    /// <returns>String representation of tax code with the tax regime prefix.</returns>
     public override string ToString() => $"{TaxRegimeLetter}{BaseCode}";
 
     /// <summary>
