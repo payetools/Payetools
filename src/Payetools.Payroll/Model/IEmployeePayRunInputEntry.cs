@@ -41,4 +41,10 @@ public interface IEmployeePayRunInputEntry
     /// Gets the pension contributions to apply for this pay period.
     /// </summary>
     IPensionContributionLevels PensionContributionLevels { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
+    /// HMRC in a previous submission.
+    /// </summary>
+    bool IsPaymentAfterLeaving { get; }
 }

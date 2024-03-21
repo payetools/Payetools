@@ -34,6 +34,11 @@ public interface IEmployment
     TaxCode TaxCode { get; }
 
     /// <summary>
+    /// Gets the normal hours worked by the employee in one of several bands established by HMRC.
+    /// </summary>
+    NormalHoursWorkedBand NormalHoursWorkedBand { get; }
+
+    /// <summary>
     /// Gets the employee's NI category.
     /// </summary>
     NiCategory NiCategory { get; }

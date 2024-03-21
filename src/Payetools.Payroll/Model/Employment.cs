@@ -35,6 +35,11 @@ public record Employment : IEmployment
     public TaxCode TaxCode { get; init; }
 
     /// <summary>
+    /// Gets the normal hours worked by the employee in one of several bands established by HMRC.
+    /// </summary>
+    public NormalHoursWorkedBand NormalHoursWorkedBand { get; }
+
+    /// <summary>
     /// Gets the employee's NI category.
     /// </summary>
     public NiCategory NiCategory { get; init; }

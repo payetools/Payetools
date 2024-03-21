@@ -43,6 +43,12 @@ public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     public IPensionContributionLevels PensionContributionLevels { get; }
 
     /// <summary>
+    /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
+    /// HMRC in a previous submission.
+    /// </summary>
+    public bool IsPaymentAfterLeaving { get; }
+
+    /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayRunInputEntry"/>.
     /// </summary>
     /// <param name="employment">Employment details.</param>
@@ -50,17 +56,21 @@ public record EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     /// <param name="deductions">List of applicable deductions, if any.  Empty list if none.</param>
     /// <param name="payrolledBenefits">List of payrolled benefits, if any.  Empty list if none.</param>
     /// <param name="pensionContributionLevels">Pension contribtuion levels to be applied.</param>
+    /// <param name="isPaymentAfterLeaving">Should be set to true if the employee has already been
+    /// reported as left but a further payment is being made to them.</param>
     public EmployeePayRunInputEntry(
         IEmployment employment,
         ImmutableArray<IEarningsEntry> earnings,
         ImmutableArray<IDeductionEntry> deductions,
         ImmutableArray<IPayrolledBenefitForPeriod> payrolledBenefits,
-        IPensionContributionLevels pensionContributionLevels)
+        IPensionContributionLevels pensionContributionLevels,
+        bool isPaymentAfterLeaving = false)
     {
         Employment = employment;
         Earnings = earnings;
         Deductions = deductions;
         PayrolledBenefits = payrolledBenefits;
         PensionContributionLevels = pensionContributionLevels;
+        IsPaymentAfterLeaving = isPaymentAfterLeaving;
     }
 }
