@@ -132,7 +132,6 @@ public record TaxYear
                 return ((GetMonthNumber(payDate) - 1) / 6) + 1;
 
             default:
-                var dayNumber = payDate.DayNumber - StartOfTaxYear.DayNumber + 1;
                 var dayCountPerPeriod = payFrequency switch
                 {
                     PayFrequency.Weekly => 7,
@@ -140,7 +139,7 @@ public record TaxYear
                     PayFrequency.FourWeekly => 28,
                     _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
                 };
-                return (int)Math.Ceiling((float)dayNumber / dayCountPerPeriod);
+                return (int)Math.Ceiling((float)GetDayNumber(payDate) / dayCountPerPeriod);
         }
     }
 
@@ -180,12 +179,56 @@ public record TaxYear
             _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
         };
 
-    private int GetMonthNumber(DateOnly payDate)
+    /// <summary>
+    /// Gets the tax week number from the supplied pay date. Where the pay frequency is other than weekly,
+    /// the pay period duration is taken into account, meaning, for example, that a 4-weekly payment made
+    /// on 3rd March will have a week number of 4, but so would a similar payment roughly one week earlier,
+    /// on say 25th February.
+    /// </summary>
+    /// <param name="payDate">Pay date.</param>
+    /// <param name="payFrequency">Applicable pay frequency. Defaults to weekly.</param>
+    /// <returns>Tax week number for the supplied pay date and (optional) pay frequency.</returns>
+    public int GetWeekNumber(DateOnly payDate, PayFrequency payFrequency = PayFrequency.Weekly)
+    {
+        var multiplier = payFrequency switch
+        {
+            PayFrequency.FourWeekly => 4,
+            PayFrequency.TwoWeekly => 2,
+            PayFrequency.Weekly => 1,
+            _ => 0
+        };
+
+        return multiplier > 0 ?
+            GetTaxPeriod(payDate, payFrequency) * multiplier :
+            (int)Math.Ceiling((float)GetDayNumber(payDate) / 7);
+    }
+
+    /// <summary>
+    /// Gets the tax month number from the supplied pay date. Where the pay frequency is other than monthly,
+    /// the pay period duration is taken into account, meaning, for example, that a quarterly payment made
+    /// on 5th July will have a month number of 3, but so would a similar payment roughly one month earlier,
+    /// on say 5th June.
+    /// </summary>
+    /// <param name="payDate">Pay date.</param>
+    /// <param name="payFrequency">Applicable pay frequency. Defaults to monthly.</param>
+    /// <returns>Tax month number.</returns>
+    public int GetMonthNumber(DateOnly payDate, PayFrequency payFrequency = PayFrequency.Monthly)
     {
         var startOfCalendarYear = new DateOnly((int)TaxYearEnding, 1, 1);
         var monthNumber = payDate.Month + (payDate >= startOfCalendarYear && payDate <= EndOfTaxYear ? 12 : 0) - 3;
         var dayOfMonth = payDate.Day;
 
-        return monthNumber - (dayOfMonth >= 1 && dayOfMonth <= 5 ? 1 : 0);
+        var taxMonthNumber = monthNumber - (dayOfMonth >= 1 && dayOfMonth <= 5 ? 1 : 0);
+
+        return payFrequency switch
+        {
+            PayFrequency.Annually => 12,
+            PayFrequency.BiAnnually => 6 + ((taxMonthNumber - 1) / 6 * 6),
+            PayFrequency.Quarterly => 3 + ((taxMonthNumber - 1) / 3 * 3),
+            _ => taxMonthNumber
+        };
     }
+
+    private int GetDayNumber(DateOnly payDate) =>
+        payDate.DayNumber - StartOfTaxYear.DayNumber + 1;
 }

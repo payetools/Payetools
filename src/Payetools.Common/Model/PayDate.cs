@@ -71,4 +71,21 @@ public readonly struct PayDate
     /// <returns>String representation of this <see cref="PayDate"/>.</returns>
     public override string ToString() =>
         $"{Date.ToShortDateString()} ({PayFrequency}, period {TaxPeriod})";
+
+    /// <summary>
+    /// Gets either the week number or the month number for this pay date, with
+    /// the second out parameter indicating which.
+    /// </summary>
+    /// <param name="periodNumber">Week number or month number for this pay date.</param>
+    /// <param name="isWeekly">True if the first out parameter is a week number,
+    /// false indicates it is a month number.</param>
+    public void GetWeekOrMonthNumber(out int periodNumber, out bool isWeekly)
+    {
+        isWeekly = PayFrequency == PayFrequency.Weekly |
+            PayFrequency == PayFrequency.TwoWeekly |
+            PayFrequency == PayFrequency.FourWeekly;
+
+        periodNumber = isWeekly ? TaxYear.GetWeekNumber(Date, PayFrequency) :
+            TaxYear.GetMonthNumber(Date, PayFrequency);
+    }
 }

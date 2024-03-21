@@ -54,6 +54,44 @@ public class PayDateTests
 
         action.Should().Throw<ArgumentOutOfRangeException>()
             .WithMessage("Unsupported tax year; date must fall within range tax year ending 6 April 2019 to 6 April 2024 (Parameter 'date')");
+    }
 
+    [Fact]
+    public void TestWeekOrMonthNumber()
+    {
+        var payDate = new PayDate(new DateOnly(2022, 5, 5), PayFrequency.Monthly);
+        payDate.GetWeekOrMonthNumber(out var periodNumber, out var isWeekly);
+        isWeekly.Should().BeFalse();
+        periodNumber.Should().Be(1);
+
+        payDate = new PayDate(new DateOnly(2022, 5, 6), PayFrequency.Monthly);
+        payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
+        isWeekly.Should().BeFalse();
+        periodNumber.Should().Be(2);
+
+        payDate = new PayDate(new DateOnly(2022, 5, 6), PayFrequency.Quarterly);
+        payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
+        isWeekly.Should().BeFalse();
+        periodNumber.Should().Be(3);
+
+        payDate = new PayDate(new DateOnly(2023, 4, 13), PayFrequency.Weekly);
+        payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
+        isWeekly.Should().BeTrue();
+        periodNumber.Should().Be(2);
+
+        payDate = new PayDate(new DateOnly(2024, 4, 5), PayFrequency.Weekly);
+        payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
+        isWeekly.Should().BeTrue();
+        periodNumber.Should().Be(53);
+
+        payDate = new PayDate(new DateOnly(2023, 5, 18), PayFrequency.TwoWeekly);
+        payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
+        isWeekly.Should().BeTrue();
+        periodNumber.Should().Be(8);
+
+        payDate = new PayDate(new DateOnly(2023, 11, 16), PayFrequency.FourWeekly);
+        payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
+        isWeekly.Should().BeTrue();
+        periodNumber.Should().Be(36);
     }
 }
