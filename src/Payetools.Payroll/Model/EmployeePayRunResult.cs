@@ -145,6 +145,12 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         _employeePayrollHistoryYtd = employeePayrollHistoryYtd;
     }
 
+    /// <summary>
+    /// Gets the total amount of statutory deductions made as part of the pay run.
+    /// </summary>
+    /// <returns>Total amount of statutory deductions made as part of the pay run.  May be zero.</returns>
+    public decimal GetStatutoryDeductions() => throw new NotImplementedException();
+
     private static decimal CalculateNetPay(decimal totalGrossPay, decimal incomeTax, decimal nationalInsurance, decimal employeePension, decimal? studentLoan) =>
         totalGrossPay - incomeTax - nationalInsurance - employeePension - (studentLoan ?? 0.0m);
 

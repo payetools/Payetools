@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Payroll.Model;
+using System.Collections.Immutable;
 
 namespace Payetools.Payroll.PayRuns;
 
@@ -42,7 +43,7 @@ public class PayRunProcessor : IPayRunProcessor
 
                     return employeeResult;
                 })
-                .ToList(),
+                .ToImmutableArray(),
             Employer = employer,
             PayDate = _payrunCalculator.PayDate
         };

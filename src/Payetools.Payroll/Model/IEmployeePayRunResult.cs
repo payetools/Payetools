@@ -86,4 +86,10 @@ public interface IEmployeePayRunResult
     /// not including the effect of this payrun.
     /// </summary>
     ref IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
+
+    /// <summary>
+    /// Gets the total amount of statutory deductions made as part of the pay run.
+    /// </summary>
+    /// <returns>Total amount of statutory deductions made as part of the pay run.  May be zero.</returns>
+    decimal GetStatutoryDeductions();
 }

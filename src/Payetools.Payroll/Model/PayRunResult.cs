@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
 
@@ -26,5 +27,5 @@ public record PayRunResult : IPayRunResult
     /// <summary>
     /// Gets the list of employee payrun entries.
     /// </summary>
-    public List<IEmployeePayRunResult> EmployeePayRunEntries { get; init; } = null!;
+    public ImmutableArray<IEmployeePayRunResult> EmployeePayRunEntries { get; init; }
 }
