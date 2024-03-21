@@ -64,4 +64,8 @@
     <ProjectReference Include="..\Payetools.StudentLoans\Payetools.StudentLoans.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="MinVer" Version="5.0.0" />
+  </ItemGroup>
+
 </Project>

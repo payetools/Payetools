@@ -16,7 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="6.0.1">
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -28,6 +28,10 @@
     <ProjectReference Include="..\..\src\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
     <ProjectReference Include="..\Payetools.Testing.Data\Payetools.Testing.Data.csproj" />
     <ProjectReference Include="..\Payetools.Testing.Utils\Payetools.Testing.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="MinVer" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

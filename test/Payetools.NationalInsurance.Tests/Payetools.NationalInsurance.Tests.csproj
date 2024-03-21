@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="FluentAssertions.Analyzers" Version="0.30.0">
+    <PackageReference Include="FluentAssertions.Analyzers" Version="0.31.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -29,7 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="LiteDB" Version="5.0.19" />
-    <PackageReference Include="coverlet.collector" Version="6.0.1">
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -41,6 +41,10 @@
     <ProjectReference Include="..\..\src\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
     <ProjectReference Include="..\Payetools.Testing.Data\Payetools.Testing.Data.csproj" />
     <ProjectReference Include="..\Payetools.Testing.Utils\Payetools.Testing.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="MinVer" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
