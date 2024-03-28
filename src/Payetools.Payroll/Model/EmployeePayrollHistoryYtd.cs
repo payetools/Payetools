@@ -4,8 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
+using Payetools.Payroll.Extensions;
 
 namespace Payetools.Payroll.Model;
 
@@ -132,34 +132,9 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// payrun of the tax year.
     /// </summary>
     /// <param name="initialResult">Pay run calculation result for the given employee.</param>
-    public EmployeePayrollHistoryYtd(IEmployeePayRunResult initialResult)
+    public EmployeePayrollHistoryYtd(in IEmployeePayRunResult initialResult)
+        : this()
     {
-        // StatutoryMaternityPayYtd +=
-        // StatutoryPaternityPayYtd +=
-        // StatutoryAdoptionPayYtd += q
-        // SharedParentalPayYtd +=
-        // StatutoryParentalBereavementPayYtd +=
-        // StatutorySickPayYtd +=
-
-        EmployeeNiHistoryEntries = new NiYtdHistory(initialResult.NiCalculationResult);
-        GrossPayYtd = initialResult.TotalGrossPay;
-        TaxablePayYtd = initialResult.TaxablePay;
-        NicablePayYtd = initialResult.NicablePay;
-        TaxPaidYtd = initialResult.TaxCalculationResult.FinalTaxDue;
-        StudentLoanRepaymentsYtd = initialResult.StudentLoanCalculationResult.StudentLoanDeduction;
-        GraduateLoanRepaymentsYtd = initialResult.StudentLoanCalculationResult.PostGraduateLoanDeduction;
-
-        // PayrolledBenefitsYtd = value.PayrolledBenefitsYtd + initialResult.PayrolledBenefits,
-
-        EmployeePensionContributionsUnderNpaYtd = initialResult.PensionContributionCalculationResult.TaxTreatment == PensionTaxTreatment.NetPayArrangement ?
-            initialResult.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount : 0.0m;
-        EmployeePensionContributionsUnderRasYtd = initialResult.PensionContributionCalculationResult.TaxTreatment == PensionTaxTreatment.ReliefAtSource ?
-                initialResult.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount : 0.0m;
-        EmployerPensionContributionsYtd = initialResult.PensionContributionCalculationResult.CalculatedEmployerContributionAmount;
-
-        TaxUnpaidDueToRegulatoryLimit = initialResult.TaxCalculationResult.TaxUnpaidDueToRegulatoryLimit;
-
-        // EarningsHistoryYtd +=
-        // IDeductionHistoryYtd DeductionHistoryYtd +=
+        this.Add(initialResult);
     }
 }

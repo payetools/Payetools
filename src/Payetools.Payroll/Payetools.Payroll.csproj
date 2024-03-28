@@ -54,6 +54,7 @@
     <ProjectReference Include="..\Payetools.NationalInsurance\Payetools.NationalInsurance.csproj" />
     <ProjectReference Include="..\Payetools.Pensions\Payetools.Pensions.csproj" />
     <ProjectReference Include="..\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
+    <ProjectReference Include="..\Payetools.Statutory\Payetools.Statutory.csproj" />
     <ProjectReference Include="..\Payetools.StudentLoans\Payetools.StudentLoans.csproj" />
   </ItemGroup>
 

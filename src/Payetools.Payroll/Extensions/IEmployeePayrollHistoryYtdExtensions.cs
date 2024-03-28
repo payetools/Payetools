@@ -6,6 +6,8 @@
 
 using Payetools.Common.Model;
 using Payetools.Payroll.Model;
+using Payetools.Pensions.Model;
+using System.Runtime.CompilerServices;
 
 namespace Payetools.Payroll.Extensions;
 
@@ -22,6 +24,8 @@ public static class IEmployeePayrollHistoryYtdExtensions
     /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results applied.</returns>
     public static IEmployeePayrollHistoryYtd Add(this IEmployeePayrollHistoryYtd value, IEmployeePayRunResult payrunResult)
     {
+        var hasPension = payrunResult.PensionContributionCalculationResult != null;
+
         return new EmployeePayrollHistoryYtd()
         {
             // StatutoryMaternityPayYtd +=
@@ -35,19 +39,21 @@ public static class IEmployeePayrollHistoryYtdExtensions
             TaxablePayYtd = value.TaxablePayYtd + payrunResult.TaxablePay,
             NicablePayYtd = value.NicablePayYtd + payrunResult.NicablePay,
             TaxPaidYtd = value.TaxPaidYtd + payrunResult.TaxCalculationResult.FinalTaxDue,
-            StudentLoanRepaymentsYtd = value.StudentLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult.StudentLoanDeduction,
-            GraduateLoanRepaymentsYtd = value.GraduateLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult.PostGraduateLoanDeduction,
+            StudentLoanRepaymentsYtd = value.StudentLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.StudentLoanDeduction ?? 0.0m,
+            GraduateLoanRepaymentsYtd = value.GraduateLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.PostGraduateLoanDeduction ?? 0.0m,
 
             // PayrolledBenefitsYtd = value.PayrolledBenefitsYtd + payrunResult.PayrolledBenefits,
 
             EmployeePensionContributionsUnderNpaYtd = value.EmployeePensionContributionsUnderNpaYtd +
-                (payrunResult.PensionContributionCalculationResult.TaxTreatment == PensionTaxTreatment.NetPayArrangement ?
-                payrunResult.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount : 0.0m),
-            EmployeePensionContributionsUnderRasYtd = value.EmployeePensionContributionsUnderRasYtd +
-                (payrunResult.PensionContributionCalculationResult.TaxTreatment == PensionTaxTreatment.ReliefAtSource ?
-                payrunResult.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount : 0.0m),
+                (hasPension && PensionIsUnderNpa(payrunResult.PensionContributionCalculationResult) ?
+                    payrunResult.PensionContributionCalculationResult!.CalculatedEmployeeContributionAmount : 0.0m),
 
-            EmployerPensionContributionsYtd = value.EmployerPensionContributionsYtd + payrunResult.PensionContributionCalculationResult.CalculatedEmployerContributionAmount,
+            EmployeePensionContributionsUnderRasYtd = value.EmployeePensionContributionsUnderRasYtd +
+                (hasPension && !PensionIsUnderNpa(payrunResult.PensionContributionCalculationResult) ?
+                    payrunResult.PensionContributionCalculationResult!.CalculatedEmployeeContributionAmount : 0.0m),
+
+            EmployerPensionContributionsYtd = value.EmployerPensionContributionsYtd +
+            payrunResult.PensionContributionCalculationResult?.CalculatedEmployerContributionAmount ?? 0.0m,
 
             TaxUnpaidDueToRegulatoryLimit = value.TaxUnpaidDueToRegulatoryLimit + payrunResult.TaxCalculationResult.TaxUnpaidDueToRegulatoryLimit,
 
@@ -55,4 +61,7 @@ public static class IEmployeePayrollHistoryYtdExtensions
             // IDeductionHistoryYtd DeductionHistoryYtd +=
         };
     }
+
+    private static bool PensionIsUnderNpa(IPensionContributionCalculationResult? pensionCalculationResult) =>
+        pensionCalculationResult?.TaxTreatment == PensionTaxTreatment.NetPayArrangement;
 }

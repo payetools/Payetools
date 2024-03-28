@@ -105,10 +105,12 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         result.TaxCalculationResult.FinalTaxDue.Should().Be(expected.TaxPaid, because);
         result.NiCalculationResult.EmployeeContribution.Should().Be(expected.EmployeeNiContribution, because);
         result.NiCalculationResult.EmployerContribution.Should().Be(expected.EmployerNiContribution, because);
-        result.StudentLoanCalculationResult.StudentLoanDeduction.Should().Be(expected.StudentLoanRepayments, because);
-        result.StudentLoanCalculationResult.PostGraduateLoanDeduction.Should().Be(expected.GraduateLoanRepayments, because);
-        result.PensionContributionCalculationResult.CalculatedEmployeeContributionAmount.Should().Be(expected.EmployeePensionContribution, because);
-        result.PensionContributionCalculationResult.CalculatedEmployerContributionAmount.Should().Be(expected.EmployerPensionContribution, because);
+        result.StudentLoanCalculationResult?.Should().NotBeNull();
+        result.StudentLoanCalculationResult?.StudentLoanDeduction.Should().Be(expected.StudentLoanRepayments, because);
+        result.StudentLoanCalculationResult?.PostGraduateLoanDeduction.Should().Be(expected.GraduateLoanRepayments, because);
+        result.PensionContributionCalculationResult.Should().NotBeNull();
+        result.PensionContributionCalculationResult?.CalculatedEmployeeContributionAmount.Should().Be(expected.EmployeePensionContribution, because);
+        result.PensionContributionCalculationResult?.CalculatedEmployerContributionAmount.Should().Be(expected.EmployerPensionContribution, because);
 
     }
 

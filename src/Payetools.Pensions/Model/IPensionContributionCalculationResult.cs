@@ -95,4 +95,18 @@ public interface IPensionContributionCalculationResult
     /// applied (based on the value of <see cref="EmployersNiReinvestmentPercentage"/>).
     /// </summary>
     decimal CalculatedEmployerContributionAmount { get; }
+
+    /// <summary>
+    /// Gets any employee contributions made under Net Pay Arrangements.
+    /// </summary>
+    /// <returns>Employee contributions made under Net Pay Arrangements.</returns>
+    decimal GetEmployeeContributionsUnderNpa() =>
+        TaxTreatment == PensionTaxTreatment.NetPayArrangement ? CalculatedEmployeeContributionAmount : 0.00m;
+
+    /// <summary>
+    /// Gets any employee contributions made outside of Net Pay Arrangements.
+    /// </summary>
+    /// <returns>Employee contributions made outside of Net Pay Arrangements.</returns>
+    decimal GetEmployeeContributionsOutsideNpa() =>
+        TaxTreatment != PensionTaxTreatment.NetPayArrangement ? CalculatedEmployeeContributionAmount : 0.00m;
 }

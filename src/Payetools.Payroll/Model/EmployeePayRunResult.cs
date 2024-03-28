@@ -7,6 +7,7 @@
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
+using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
 
 namespace Payetools.Payroll.Model;
@@ -18,8 +19,9 @@ public record EmployeePayRunResult : IEmployeePayRunResult
 {
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
-    private IStudentLoanCalculationResult _studentLoanCalculationResult;
-    private IPensionContributionCalculationResult _pensionContributionCalculationResult;
+    private IStudentLoanCalculationResult? _studentLoanCalculationResult;
+    private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
+    private IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult;
     private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
 
     /// <summary>
@@ -59,13 +61,19 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// Gets the results of this employee's student loan calculation for this payrun, if applicable;
     /// null otherwise.
     /// </summary>
-    public ref IStudentLoanCalculationResult StudentLoanCalculationResult => ref _studentLoanCalculationResult;
+    public ref IStudentLoanCalculationResult? StudentLoanCalculationResult => ref _studentLoanCalculationResult;
 
     /// <summary>
-    /// Gets the results of this employee's pension calculation for this payrun, if applicable.;
+    /// Gets the results of this employee's pension calculation for this payrun, if applicable;
     /// null otherwise.
     /// </summary>
-    public ref IPensionContributionCalculationResult PensionContributionCalculationResult => ref _pensionContributionCalculationResult;
+    public ref IPensionContributionCalculationResult? PensionContributionCalculationResult => ref _pensionContributionCalculationResult;
+
+    /// <summary>
+    /// Gets the results of any attachment of earnings order calculation for this employee for this
+    /// payrun, if applicable.
+    /// </summary>
+    public ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult => ref attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,
@@ -149,7 +157,15 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// Gets the total amount of statutory deductions made as part of the pay run.
     /// </summary>
     /// <returns>Total amount of statutory deductions made as part of the pay run.  May be zero.</returns>
-    public decimal GetStatutoryDeductions() => throw new NotImplementedException();
+    /// <remarks>Statutory deductions consist of income tax due, employee's NI contribution, any
+    /// student loan repayments, any pension contribution made under Net Pay Arrangement plus
+    /// any attachment of earnings order payments.</remarks>
+    public decimal GetStatutoryDeductions() =>
+        TaxCalculationResult.FinalTaxDue +
+        NiCalculationResult.EmployeeContribution +
+        StudentLoanCalculationResult?.TotalDeduction ?? 0.0m +
+        PensionContributionCalculationResult?.GetEmployeeContributionsUnderNpa() ?? 0.0m +
+        AttachmentOfEarningsCalculationResult?.TotalDeduction ?? 0.0m;
 
     private static decimal CalculateNetPay(decimal totalGrossPay, decimal incomeTax, decimal nationalInsurance, decimal employeePension, decimal? studentLoan) =>
         totalGrossPay - incomeTax - nationalInsurance - employeePension - (studentLoan ?? 0.0m);

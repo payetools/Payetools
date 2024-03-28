@@ -7,6 +7,7 @@
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
+using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
 
 namespace Payetools.Payroll.Model;
@@ -53,13 +54,19 @@ public interface IEmployeePayRunResult
     /// Gets the results of this employee's student loan calculation for this payrun, if applicable;
     /// null otherwise.
     /// </summary>
-    ref IStudentLoanCalculationResult StudentLoanCalculationResult { get; }
+    ref IStudentLoanCalculationResult? StudentLoanCalculationResult { get; }
 
     /// <summary>
-    /// Gets the results of this employee's pension calculation for this payrun, if applicable.;
+    /// Gets the results of this employee's pension calculation for this payrun, if applicable;
     /// null otherwise.
     /// </summary>
-    ref IPensionContributionCalculationResult PensionContributionCalculationResult { get; }
+    ref IPensionContributionCalculationResult? PensionContributionCalculationResult { get; }
+
+    /// <summary>
+    /// Gets the results of any attachment of earnings order calculation for this employee for this
+    /// payrun, if applicable.
+    /// </summary>
+    ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult { get; }
 
     /// <summary>
     /// Gets the employee's total gross pay.
@@ -83,7 +90,7 @@ public interface IEmployeePayRunResult
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,
-    /// not including the effect of this payrun.
+    /// including the effect of this payrun.
     /// </summary>
     ref IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
 
