@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
 
@@ -32,4 +33,9 @@ public interface IEmployer
     /// Gets the employer's HMRC Accounts Office reference, if known.
     /// </summary>
     HmrcAccountsOfficeReference? AccountsOfficeReference { get; }
+
+    /// <summary>
+    /// Gets an array of entries, one entry for each tax year of record.
+    /// </summary>
+    ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; }
 }

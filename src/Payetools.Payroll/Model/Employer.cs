@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
 
@@ -34,23 +35,33 @@ public record Employer : IEmployer
     public HmrcAccountsOfficeReference? AccountsOfficeReference { get; init; }
 
     /// <summary>
+    /// Gets an array of entries, one entry for each tax year of record, that indicates whether the employer
+    /// is eligible to claim Employment Allowance.
+    /// </summary>
+    public ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; init; }
+
+    /// <summary>
     /// Initialises a new <see cref="Employer"/> with the supplied parameters.
     /// </summary>
     /// <param name="officialName">Legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.</param>
     /// <param name="knownAsName">Name that the business is known by, omitting any official suffix, e.g., Ltd, LLP, etc.</param>
     /// <param name="hmrcPayeReference">Employer's HMRC PAYE reference, if known.
     /// Optional.</param>
-    /// <param name="accountsOfficeReference">Employer's HMRC Accounts Office reference, if known.
-    /// Optional.</param>
+    /// <param name="accountsOfficeReference">Employer's HMRC Accounts Office reference, if known.  Optional.</param>
+    /// <param name="employmentAllowanceEligibilities">Array of entries, one entry for each tax year of record, that indicates whether
+    /// the employer is eligible to claim Employment Allowance.  May be null if not known.</param>
     public Employer(
         string? officialName,
         string knownAsName,
         HmrcPayeReference? hmrcPayeReference = null,
-        HmrcAccountsOfficeReference? accountsOfficeReference = null)
+        HmrcAccountsOfficeReference? accountsOfficeReference = null,
+        ImmutableArray<EmploymentAllowanceHistoryEntry>? employmentAllowanceEligibilities = null)
     {
         OfficialName = officialName;
         KnownAsName = knownAsName;
         HmrcPayeReference = hmrcPayeReference;
         AccountsOfficeReference = accountsOfficeReference;
+        EmploymentAllowanceEligibilities = employmentAllowanceEligibilities ??
+            ImmutableArray.Create<EmploymentAllowanceHistoryEntry>();
     }
 }
