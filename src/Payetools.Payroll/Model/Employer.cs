@@ -17,7 +17,7 @@ public record Employer : IEmployer
     /// <summary>
     /// Gets the legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.
     /// </summary>
-    public string? OfficialName { get; init; } = default!;
+    public string? OfficialName { get; init; }
 
     /// <summary>
     /// Gets the name that the business is known by, omitting any official suffix, e.g., Ltd, LLP, etc.
