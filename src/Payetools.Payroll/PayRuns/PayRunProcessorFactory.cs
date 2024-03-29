@@ -7,9 +7,9 @@
 using Payetools.Common.Model;
 using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
-using Payetools.Payroll.Model;
 using Payetools.Pensions;
 using Payetools.ReferenceData;
+using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans;
 
 namespace Payetools.Payroll.PayRuns;
@@ -21,15 +21,33 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
 {
     internal class FactorySet
     {
-        public IHmrcReferenceDataProvider HmrcReferenceDataProvider { get; init; } = default!;
+        public IHmrcReferenceDataProvider HmrcReferenceDataProvider { get; }
 
-        public ITaxCalculatorFactory TaxCalculatorFactory { get; init; } = default!;
+        public ITaxCalculatorFactory TaxCalculatorFactory { get; }
 
-        public INiCalculatorFactory NiCalculatorFactory { get; init; } = default!;
+        public INiCalculatorFactory NiCalculatorFactory { get; }
 
-        public IStudentLoanCalculatorFactory StudentLoanCalculatorFactory { get; init; } = default!;
+        public IStudentLoanCalculatorFactory StudentLoanCalculatorFactory { get; }
 
-        public IPensionContributionCalculatorFactory PensionContributionCalculatorFactory { get; init; } = default!;
+        public IPensionContributionCalculatorFactory PensionContributionCalculatorFactory { get; }
+
+        public IAttachmentOfEarningsCalculatorFactory AttachmentOfEarningsCalculatorFactory { get; }
+
+        public FactorySet(
+            IHmrcReferenceDataProvider hmrcReferenceDataProvider,
+            ITaxCalculatorFactory taxCalculatorFactory,
+            INiCalculatorFactory niCalculatorFactory,
+            IStudentLoanCalculatorFactory studentLoanCalculatorFactory,
+            IPensionContributionCalculatorFactory pensionContributionCalculatorFactory,
+            IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory)
+        {
+            HmrcReferenceDataProvider = hmrcReferenceDataProvider;
+            TaxCalculatorFactory = taxCalculatorFactory;
+            NiCalculatorFactory = niCalculatorFactory;
+            StudentLoanCalculatorFactory = studentLoanCalculatorFactory;
+            PensionContributionCalculatorFactory = pensionContributionCalculatorFactory;
+            AttachmentOfEarningsCalculatorFactory = attachmentOfEarningsCalculatorFactory;
+        }
     }
 
     private readonly IHmrcReferenceDataProviderFactory? _hmrcReferenceDataProviderFactory;
@@ -70,9 +88,14 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
         var factories = GetFactories(_hmrcReferenceDataProvider ??
                 throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));
 
-        var calculator = new PayRunEntryProcessor(factories.TaxCalculatorFactory, factories.NiCalculatorFactory,
-            factories.PensionContributionCalculatorFactory, factories.StudentLoanCalculatorFactory,
-            payDate, payPeriod);
+        var calculator = new PayRunEntryProcessor(
+            factories.TaxCalculatorFactory,
+            factories.NiCalculatorFactory,
+            factories.PensionContributionCalculatorFactory,
+            factories.StudentLoanCalculatorFactory,
+            factories.AttachmentOfEarningsCalculatorFactory,
+            payDate,
+            payPeriod);
 
         return new PayRunProcessor(calculator);
     }
@@ -83,12 +106,11 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
     // data is refreshed every time a payrun calculator is created; a mechanism to declare the data stale and
     // refresh it is probably needed in the long run.
     private static FactorySet GetFactories(in IHmrcReferenceDataProvider referenceDataProvider) =>
-        new FactorySet()
-        {
-            HmrcReferenceDataProvider = referenceDataProvider,
-            TaxCalculatorFactory = new TaxCalculatorFactory(referenceDataProvider),
-            NiCalculatorFactory = new NiCalculatorFactory(referenceDataProvider),
-            PensionContributionCalculatorFactory = new PensionContributionCalculatorFactory(referenceDataProvider),
-            StudentLoanCalculatorFactory = new StudentLoanCalculatorFactory(referenceDataProvider)
-        };
+        new FactorySet(
+            referenceDataProvider,
+            new TaxCalculatorFactory(referenceDataProvider),
+            new NiCalculatorFactory(referenceDataProvider),
+            new StudentLoanCalculatorFactory(referenceDataProvider),
+            new PensionContributionCalculatorFactory(referenceDataProvider),
+            new AttachmentOfEarningsCalculatorFactory());
 }

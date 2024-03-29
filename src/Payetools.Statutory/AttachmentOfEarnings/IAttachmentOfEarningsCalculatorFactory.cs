@@ -5,11 +5,6 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Payetools.Statutory.AttachmentOfEarnings;
 
@@ -24,7 +19,7 @@ public interface IAttachmentOfEarningsCalculatorFactory
     /// in-year.
     /// </summary>
     /// <param name="payDate">Applicable pay date.</param>
+    /// <param name="attachmentOfEarningsType">Attachment of earnings order type.</param>
     /// <returns>A new calculator instance.</returns>
-    public IAttachmentOfEarningsCalculator GetCalculator(
-        PayDate payDate);
+    IAttachmentOfEarningsCalculator GetCalculator(PayDate payDate, AttachmentOfEarningsType attachmentOfEarningsType);
 }

@@ -19,8 +19,9 @@ public class AttachmentOfEarningsCalculatorFactory : IAttachmentOfEarningsCalcul
     /// in-year.
     /// </summary>
     /// <param name="payDate">Applicable pay date.</param>
+    /// <param name="attachmentOfEarningsType">Attachment of earnings order type.</param>
     /// <returns>A new calculator instance.</returns>
-    public IAttachmentOfEarningsCalculator GetCalculator(PayDate payDate)
+    public IAttachmentOfEarningsCalculator GetCalculator(PayDate payDate, AttachmentOfEarningsType attachmentOfEarningsType)
     {
         throw new NotImplementedException();
     }
