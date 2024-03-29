@@ -148,7 +148,7 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         {
             ThresholdType = nit.ThresholdType,
             ThresholdValuePerYear = nit.ThresholdValuePerYear
-        }).ToImmutableList<INiThresholdEntry>();
+        }).ToImmutableArray<INiThresholdEntry>();
 
         return new NiThresholdSet(thresholds);
     }

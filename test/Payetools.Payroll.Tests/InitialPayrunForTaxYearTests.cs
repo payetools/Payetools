@@ -133,7 +133,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             nih.EmployeeContribution,
             nih.EmployerContribution,
             nih.TotalContribution) as IEmployeeNiHistoryEntry)
-            .ToImmutableList();
+            .ToImmutableArray();
 
         history = new EmployeePayrollHistoryYtd()
         {
