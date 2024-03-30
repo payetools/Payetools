@@ -82,4 +82,14 @@ public record Employee : IEmployee
     /// Gets or sets the employee's postal address.
     /// </summary>
     public PostalAddress PostalAddress { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the employee's passport number, if known.
+    /// </summary>
+    public string? PassportNumber { get; set; }
+
+    /// <summary>
+    /// Gets or sets the employee's partner information, where appropriate.
+    /// </summary>
+    public IEmployeePartnerDetails? PartnerDetails { get; set; }
 }

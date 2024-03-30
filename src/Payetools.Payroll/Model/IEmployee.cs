@@ -38,4 +38,14 @@ public interface IEmployee : INamedPerson
     /// Gets or sets the employee's postal address.
     /// </summary>
     PostalAddress PostalAddress { get; set; }
+
+    /// <summary>
+    /// Gets or sets the employee's passport number, if known.
+    /// </summary>
+    string? PassportNumber { get; set; }
+
+    /// <summary>
+    /// Gets or sets the employee's partner information, where appropriate.
+    /// </summary>
+    IEmployeePartnerDetails? PartnerDetails { get; set; }
 }
