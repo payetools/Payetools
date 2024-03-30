@@ -69,7 +69,7 @@ public interface IEmployeePayRunResult
     ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult { get; }
 
     /// <summary>
-    /// Gets the employee's total gross pay.
+    /// Gets the employee's total gross pay, excluding payrolled taxable benefits.
     /// </summary>
     decimal TotalGrossPay { get; }
 
@@ -87,6 +87,12 @@ public interface IEmployeePayRunResult
     /// Gets the employee's final net pay.
     /// </summary>
     decimal NetPay { get; }
+
+    /// <summary>
+    /// Gets the total amount of payrolled benefits in the period, where applicable.  Null if no
+    /// payrolled benefits have been applied.
+    /// </summary>
+    decimal? PayrollBenefitsInPeriod { get; }
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,

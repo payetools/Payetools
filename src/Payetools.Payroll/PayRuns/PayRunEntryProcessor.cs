@@ -36,10 +36,8 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
 
         public decimal PensionablePay { get; init; }
 
-        public decimal BenefitsInKind { get; init; }
+        public decimal? BenefitsInKind { get; init; }
     }
-
-    private const int LOCK_TIMEOUT = 1000;
 
     private readonly Dictionary<CountriesForTaxPurposes, ITaxCalculator> _incomeTaxCalculators;
     private readonly INiCalculator _niCalculator;
@@ -163,7 +161,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
 
         taxCalculator.Calculate(
             taxablePay,
-            earningsTotals.BenefitsInKind,
+            earningsTotals.BenefitsInKind ?? 0.0m,
             entry.Employment.TaxCode,
             entry.Employment.PayrollHistoryYtd.TaxablePayYtd,
             entry.Employment.PayrollHistoryYtd.TaxPaidYtd,
@@ -189,6 +187,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             workingGrossPay,
             taxablePay,
             nicablePay,
+            earningsTotals.BenefitsInKind,
             ref entry.Employment.PayrollHistoryYtd);
     }
 
@@ -235,7 +234,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             TaxablePay = decimal.Round(taxablePay, 2, MidpointRounding.AwayFromZero),
             NicablePay = decimal.Round(nicablePay, 2, MidpointRounding.AwayFromZero),
             PensionablePay = decimal.Round(pensionablePay, 2, MidpointRounding.AwayFromZero),
-            BenefitsInKind = decimal.Round(benefitsInKind, 2, MidpointRounding.AwayFromZero)
+            BenefitsInKind = benefitsInKind != 0 ? decimal.Round(benefitsInKind, 2, MidpointRounding.AwayFromZero) : null
         };
     }
 

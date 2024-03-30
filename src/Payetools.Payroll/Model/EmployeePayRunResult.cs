@@ -98,6 +98,12 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     public decimal NetPay { get; }
 
     /// <summary>
+    /// Gets the total amount of payrolled benefits in the period, where applicable.  Null if no
+    /// payrolled benefits have been applied.
+    /// </summary>
+    public decimal? PayrollBenefitsInPeriod { get; }
+
+    /// <summary>
     /// Gets the employee's total pay that is subject to National Insurance.
     /// </summary>
     public decimal NicablePay { get; }
@@ -123,6 +129,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// and should be deducted before calculating net pay.</param>
     /// <param name="taxablePay">Pay subject to income tax.</param>
     /// <param name="nicablePay">Pay subject to National Insurance.</param>
+    /// <param name="payrollBenefitsInPeriod">Payrolled benefits in period.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this payrun.</param>
     public EmployeePayRunResult(
@@ -136,6 +143,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         decimal workingGrossPay,
         decimal taxablePay,
         decimal nicablePay,
+        decimal? payrollBenefitsInPeriod,
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
     {
         Employment = employment;
@@ -150,6 +158,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         NicablePay = nicablePay;
         NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.FinalTaxDue, niCalculationResult.EmployeeContribution,
             GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult.TotalDeduction);
+        PayrollBenefitsInPeriod = payrollBenefitsInPeriod;
         _employeePayrollHistoryYtd = employeePayrollHistoryYtd;
     }
 
