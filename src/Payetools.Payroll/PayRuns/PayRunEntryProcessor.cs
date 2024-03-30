@@ -9,11 +9,12 @@ using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
 using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.Model;
-using Payetools.Payroll.PayRuns;
 using Payetools.Pensions;
 using Payetools.Pensions.Model;
+using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans;
 using Payetools.StudentLoans.Model;
+using System.Collections.Concurrent;
 
 namespace Payetools.Payroll.PayRuns;
 
@@ -38,11 +39,15 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         public decimal BenefitsInKind { get; init; }
     }
 
+    private const int LOCK_TIMEOUT = 1000;
+
     private readonly Dictionary<CountriesForTaxPurposes, ITaxCalculator> _incomeTaxCalculators;
     private readonly INiCalculator _niCalculator;
     private readonly IPensionContributionCalculatorFactory _pensionCalculatorFactory;
     private readonly IStudentLoanCalculator _studentLoanCalculator;
-    private readonly Dictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator> _pensionCalculators;
+    private readonly IAttachmentOfEarningsCalculatorFactory _attachmentOfEarningsCalculatorFactory;
+    private readonly ConcurrentDictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator> _pensionCalculators;
+    private readonly ConcurrentDictionary<AttachmentOfEarningsType, IAttachmentOfEarningsCalculator> _attachmentOfEarningsCalculators;
 
     /// <summary>
     /// Gets the pay date for this payrun calculator.
@@ -62,6 +67,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
     /// <param name="niCalcFactory">calculator factory.</param>
     /// <param name="pensionCalcFactory">Pension contributions calculator factory.</param>
     /// <param name="studentLoanCalcFactory">Student loan calculator factory.</param>
+    /// <param name="attachmentOfEarningsCalculatorFactory">Attachment of earnings order calculators.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
     /// <param name="payPeriod">Applicable pay period for this calculator.</param>
     public PayRunEntryProcessor(
@@ -69,6 +75,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
         IStudentLoanCalculatorFactory studentLoanCalcFactory,
+        IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory,
         PayDate payDate,
         DateRange payPeriod)
     {
@@ -78,10 +85,12 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         _niCalculator = niCalcFactory.GetCalculator(payDate);
         _pensionCalculatorFactory = pensionCalcFactory;
         _studentLoanCalculator = studentLoanCalcFactory.GetCalculator(payDate);
+        _attachmentOfEarningsCalculatorFactory = attachmentOfEarningsCalculatorFactory;
         PayDate = payDate;
         PayPeriod = payPeriod;
 
-        _pensionCalculators = new Dictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator>();
+        _pensionCalculators = new ConcurrentDictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator>();
+        _attachmentOfEarningsCalculators = new ConcurrentDictionary<AttachmentOfEarningsType, IAttachmentOfEarningsCalculator>();
     }
 
     /// <summary>
@@ -102,6 +111,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         INiCalculationResult niCalculationResult;
         IPensionContributionCalculationResult pensionContributions;
 
+        // Calculate National Insurance first in case it is needed for salary sacrifice
         CalculateNiContributions(entry, nicablePay, out niCalculationResult);
 
         if (entry.Employment.PensionScheme == null)
@@ -110,8 +120,12 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         }
         else
         {
-            IPensionContributionCalculator calculator = GetPensionCalculator(entry.Employment.PensionScheme.EarningsBasis,
-                    entry.Employment.PensionScheme.TaxTreatment);
+            var key = (entry.Employment.PensionScheme.EarningsBasis, entry.Employment.PensionScheme.TaxTreatment);
+
+            var calculator = GetCalculator(
+                _pensionCalculators,
+                key,
+                () => _pensionCalculatorFactory.GetCalculator(key.EarningsBasis, key.TaxTreatment, PayDate));
 
             if (entry.PensionContributionLevels.SalaryExchangeApplied)
             {
@@ -250,8 +264,12 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         }
         else
         {
-            IPensionContributionCalculator calculator = GetPensionCalculator(entry.Employment.PensionScheme.EarningsBasis,
-                entry.Employment.PensionScheme.TaxTreatment);
+            var key = (entry.Employment.PensionScheme.EarningsBasis, entry.Employment.PensionScheme.TaxTreatment);
+
+            var calculator = GetCalculator(
+                _pensionCalculators,
+                key,
+                () => _pensionCalculatorFactory.GetCalculator(key.EarningsBasis, key.TaxTreatment, PayDate));
 
             if (entry.PensionContributionLevels.SalaryExchangeApplied)
             {
@@ -282,19 +300,17 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         }
     }
 
-    private IPensionContributionCalculator GetPensionCalculator(PensionsEarningsBasis earningsBasis, PensionTaxTreatment taxTreatment)
+    private static TCalculator GetCalculator<TKey, TCalculator>(
+        ConcurrentDictionary<TKey, TCalculator> dictionary,
+        TKey key,
+        Func<TCalculator> calculatorFactoryFunction)
+        where TKey : notnull
+        where TCalculator : class
     {
-        IPensionContributionCalculator? calculator;
+        TCalculator? calculator;
 
-        lock (_pensionCalculators)
-        {
-            if (!_pensionCalculators.TryGetValue((earningsBasis, taxTreatment), out calculator))
-            {
-                calculator = _pensionCalculatorFactory.GetCalculator(earningsBasis, taxTreatment, PayDate);
-
-                _pensionCalculators.Add((earningsBasis, taxTreatment), calculator);
-            }
-        }
+        if (!dictionary.TryGetValue(key, out calculator))
+            dictionary.TryAdd(key, calculator = calculatorFactoryFunction());
 
         return calculator;
     }

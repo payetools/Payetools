@@ -15,12 +15,12 @@ namespace Payetools.NationalInsurance.ReferenceData;
 /// </summary>
 public class NiThresholdSet : INiThresholdSet
 {
-    private readonly ImmutableList<INiThresholdEntry> _niThresholds;
+    private readonly ImmutableArray<INiThresholdEntry> _niThresholds;
 
     /// <summary>
     /// Gets the number of threshold value this threshold set contains.
     /// </summary>
-    public int Count => _niThresholds.Count;
+    public int Count => _niThresholds.Length;
 
     /// <summary>
     /// Gets the <see cref="INiThresholdEntry"/> at the specified index.
@@ -31,7 +31,7 @@ public class NiThresholdSet : INiThresholdSet
     {
         get
         {
-            if (index < 0 || index > _niThresholds.Count - 1)
+            if (index < 0 || index > _niThresholds.Length - 1)
                 throw new ArgumentOutOfRangeException(nameof(index), "Invalid index value for retrieving NI threshold");
 
             return _niThresholds[index];
@@ -44,12 +44,12 @@ public class NiThresholdSet : INiThresholdSet
     /// <param name="niThresholds">Immutable input list of thresholds.</param>
     /// <exception cref="ArgumentException">Thrown if the number of thresholds supplied does not match the expected
     /// number of possible thresholds.</exception>
-    public NiThresholdSet(ImmutableList<INiThresholdEntry> niThresholds)
+    public NiThresholdSet(ImmutableArray<INiThresholdEntry> niThresholds)
     {
         int entryCount = (int)NiThresholdType.Count;
 
-        if (niThresholds.Count != entryCount)
-            throw new ArgumentException($"Expected {entryCount} threshold entries but only {niThresholds.Count} supplied in input list", nameof(niThresholds));
+        if (niThresholds.Length != entryCount)
+            throw new ArgumentException($"Expected {entryCount} threshold entries but only {niThresholds.Length} supplied in input list", nameof(niThresholds));
 
         _niThresholds = niThresholds;
     }
@@ -69,7 +69,7 @@ public class NiThresholdSet : INiThresholdSet
                 ThresholdType = t.ThresholdType,
                 ThresholdValuePerYear = decimal.Round(t.ThresholdValuePerYear * proRataFactor, MidpointRounding.ToPositiveInfinity)
             })
-            .ToImmutableList<INiThresholdEntry>();
+            .ToImmutableArray<INiThresholdEntry>();
     }
 
     /// <summary>

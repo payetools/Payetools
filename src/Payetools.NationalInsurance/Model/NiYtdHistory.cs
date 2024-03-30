@@ -14,7 +14,7 @@ namespace Payetools.NationalInsurance.Model;
 /// </summary>
 public record NiYtdHistory
 {
-    private readonly ImmutableList<IEmployeeNiHistoryEntry> _entries;
+    private readonly ImmutableArray<IEmployeeNiHistoryEntry> _entries;
 
     /// <summary>
     /// Returns a new instance of <see cref="NiYtdHistory"/> with the previous history updated by the latest
@@ -41,7 +41,7 @@ public record NiYtdHistory
     /// for a given employee.</param>
     public NiYtdHistory(in INiCalculationResult initialNiCalculationResult)
     {
-        _entries = ImmutableList<IEmployeeNiHistoryEntry>.Empty
+        _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty
             .Add(new EmployeeNiHistoryEntry(initialNiCalculationResult));
     }
 
@@ -49,7 +49,7 @@ public record NiYtdHistory
     /// Initialises a new instance of <see cref="NiYtdHistory"/>.
     /// </summary>
     /// <param name="entries">NI history entries for the tax year to date.</param>
-    public NiYtdHistory(in ImmutableList<IEmployeeNiHistoryEntry> entries)
+    public NiYtdHistory(in ImmutableArray<IEmployeeNiHistoryEntry> entries)
     {
         _entries = entries;
     }

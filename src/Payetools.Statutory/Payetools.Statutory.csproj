@@ -60,4 +60,8 @@
     <Folder Include="PaternityPay\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="MinVer" Version="5.0.0" />
+  </ItemGroup>
+
 </Project>
