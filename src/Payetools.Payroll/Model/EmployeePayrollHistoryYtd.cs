@@ -78,9 +78,9 @@ public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     public decimal StudentLoanRepaymentsYtd { get; init; }
 
     /// <summary>
-    /// Gets the graduate loan deductions made to date this tax year.
+    /// Gets the postgraduate loan deductions made to date this tax year.
     /// </summary>
-    public decimal GraduateLoanRepaymentsYtd { get; init; }
+    public decimal PostgraduateLoanRepaymentsYtd { get; init; }
 
     /// <summary>
     /// Gets the amount accrued against payrolled benefits to date this tax year.

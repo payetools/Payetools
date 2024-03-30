@@ -145,7 +145,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             TaxUnpaidDueToRegulatoryLimit = previousYtd.TaxUnpaidDueToRegulatoryLimit,
             PayrolledBenefitsYtd = previousYtd.PayrolledBenefitsYtd,
             StudentLoanRepaymentsYtd = previousYtd.StudentLoanRepaymentsYtd,
-            GraduateLoanRepaymentsYtd = previousYtd.GraduateLoanRepaymentsYtd,
+            PostgraduateLoanRepaymentsYtd = previousYtd.GraduateLoanRepaymentsYtd,
             SharedParentalPayYtd = previousYtd.SharedParentalPayYtd,
             StatutoryMaternityPayYtd = previousYtd.StatutoryMaternityPayYtd,
             StatutoryAdoptionPayYtd = previousYtd.StatutoryAdoptionPayYtd,
