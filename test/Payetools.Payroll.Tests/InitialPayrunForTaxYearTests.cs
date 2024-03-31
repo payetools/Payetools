@@ -137,7 +137,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         history = new EmployeePayrollHistoryYtd()
         {
-            EmployeeNiHistoryEntries = new NiYtdHistory(niHistoryEntries),
+            EmployeeNiHistoryEntries = new NiYtdHistory(niHistoryEntries, null),
             GrossPayYtd = previousYtd.GrossPayYtd,
             NicablePayYtd = previousYtd.NicablePayYtd,
             TaxablePayYtd = previousYtd.TaxablePayYtd,

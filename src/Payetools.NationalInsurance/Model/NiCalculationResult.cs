@@ -64,6 +64,11 @@ public readonly struct NiCalculationResult : INiCalculationResult
     public bool NoRecordingRequiredIndicator { get; init; }
 
     /// <summary>
+    /// Gets the value of any Class 1A National Insurance contributions payable. Null if none.
+    /// </summary>
+    public decimal? Class1ANicsPayable { get; init; }
+
+    /// <summary>
     /// Gets a static value representing an empty result with the NoRecordingRequiredIndicator set to true.
     /// </summary>
     public static NiCalculationResult NoRecordingRequired => _noRecordingRequiredResult;
@@ -79,6 +84,7 @@ public readonly struct NiCalculationResult : INiCalculationResult
     /// <param name="employeeContribution">Total employee contribution due as a result of this calculation.</param>
     /// <param name="employerContribution">Total employer contribution due as a result of this calculation.</param>
     /// <param name="totalContribution">Total contribution due (employee + employer) as a result of this calculation.</param>
+    /// <param name="class1ANicsPayable">Value of any Class 1A contributions due.</param>
     public NiCalculationResult(
         NiCategory category,
         decimal nicablePay,
@@ -87,7 +93,8 @@ public readonly struct NiCalculationResult : INiCalculationResult
         NiEarningsBreakdown earningsBreakdown,
         decimal employeeContribution,
         decimal employerContribution,
-        decimal? totalContribution = null)
+        decimal? totalContribution = null,
+        decimal? class1ANicsPayable = null)
     {
         NiCategory = category;
         NicablePay = nicablePay;
@@ -97,12 +104,13 @@ public readonly struct NiCalculationResult : INiCalculationResult
         EmployeeContribution = employeeContribution;
         EmployerContribution = employerContribution;
         TotalContribution = totalContribution.HasValue ? (decimal)totalContribution : employeeContribution + employerContribution;
+        Class1ANicsPayable = class1ANicsPayable;
 
         NoRecordingRequiredIndicator = false;
     }
 
     /// <summary>
-    /// Gets the string representation of this calculation result.
+    /// Gets the string representation of this calculation result. Intended for debugging/logging purposes.
     /// </summary>
     /// <returns>String representation of this calculation result.</returns>
     public override string ToString()

@@ -12,9 +12,14 @@ namespace Payetools.NationalInsurance.Model;
 /// <summary>
 /// Represents an employee's year to date National Insurance history.
 /// </summary>
-public record NiYtdHistory
+public class NiYtdHistory
 {
     private readonly ImmutableArray<IEmployeeNiHistoryEntry> _entries;
+
+    /// <summary>
+    /// Gets the value of any Class 1A National Insurance contributions payable year to date.
+    /// </summary>
+    public decimal? Class1ANicsYtd { get; private set; }
 
     /// <summary>
     /// Returns a new instance of <see cref="NiYtdHistory"/> with the previous history updated by the latest
@@ -27,10 +32,15 @@ public record NiYtdHistory
     public NiYtdHistory Add(in INiCalculationResult latestNiCalculationResult)
     {
         var lastEntry = _entries.Any() ? _entries.Last() : null;
+        var hasClass1ANics = latestNiCalculationResult.Class1ANicsPayable == null && Class1ANicsYtd == null;
+
+        var class1ANicsYtd = hasClass1ANics ?
+            null :
+            latestNiCalculationResult.Class1ANicsPayable ?? 0.0m + Class1ANicsYtd;
 
         return lastEntry?.NiCategoryPertaining == latestNiCalculationResult.NiCategory ?
-            new NiYtdHistory(_entries.ReplaceLast(lastEntry.Add(latestNiCalculationResult))) :
-            new NiYtdHistory(_entries.Add(new EmployeeNiHistoryEntry(latestNiCalculationResult)));
+            new NiYtdHistory(_entries.ReplaceLast(lastEntry.Add(latestNiCalculationResult)), class1ANicsYtd) :
+            new NiYtdHistory(_entries.Add(new EmployeeNiHistoryEntry(latestNiCalculationResult)), class1ANicsYtd);
     }
 
     /// <summary>
@@ -43,15 +53,19 @@ public record NiYtdHistory
     {
         _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty
             .Add(new EmployeeNiHistoryEntry(initialNiCalculationResult));
+
+        Class1ANicsYtd = initialNiCalculationResult.Class1ANicsPayable;
     }
 
     /// <summary>
     /// Initialises a new instance of <see cref="NiYtdHistory"/>.
     /// </summary>
     /// <param name="entries">NI history entries for the tax year to date.</param>
-    public NiYtdHistory(in ImmutableArray<IEmployeeNiHistoryEntry> entries)
+    /// <param name="class1ANicsYtd">Class 1A NICs for the tax year to date.</param>
+    public NiYtdHistory(in ImmutableArray<IEmployeeNiHistoryEntry> entries, decimal? class1ANicsYtd)
     {
         _entries = entries;
+        Class1ANicsYtd = class1ANicsYtd;
     }
 
     /// <summary>
