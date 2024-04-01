@@ -101,7 +101,7 @@ public class StudentLoanApplicable5Apr2023Tests : IClassFixture<StudentLoanCalcu
         result.StudentLoanThresholdUsed.Should().Be(expectedStudentLoanThreshold, $"gross salary of �{grossSalary}");
         result.PostGradLoanThresholdUsed.Should().Be(expectedPostGradLoanThreshold, $"gross salary of �{grossSalary}");
         result.StudentLoanDeduction.Should().Be(expectedStudentLoanDeduction, $"gross salary of �{grossSalary}");
-        result.PostGraduateLoanDeduction.Should().Be(expectedPostGradLoanDeduction, $"gross salary of �{grossSalary}");
+        result.PostgraduateLoanDeduction.Should().Be(expectedPostGradLoanDeduction, $"gross salary of �{grossSalary}");
         result.TotalDeduction.Should().Be(expectedStudentLoanDeduction + expectedPostGradLoanDeduction, $"gross salary of �{grossSalary}");
     }
 

@@ -46,7 +46,7 @@ public interface IStudentLoanCalculationResult
     /// Gets the post-graduate loan deduction applied.
     /// amounts.
     /// </summary>
-    decimal PostGraduateLoanDeduction { get; }
+    decimal PostgraduateLoanDeduction { get; }
 
     /// <summary>
     /// Gets the total deduction to be made, the sum of any student and post-graduate loan deduction

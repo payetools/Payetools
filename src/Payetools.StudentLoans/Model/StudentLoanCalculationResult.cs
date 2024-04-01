@@ -51,7 +51,7 @@ public readonly struct StudentLoanCalculationResult : IStudentLoanCalculationRes
     /// Gets the post-graduate loan deduction applied.
     /// amounts.
     /// </summary>
-    public decimal PostGraduateLoanDeduction { get; init; }
+    public decimal PostgraduateLoanDeduction { get; init; }
 
     /// <summary>
     /// Gets the total deduction to be made, the sum of any student and post-graduate loan deduction

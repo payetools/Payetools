@@ -71,7 +71,7 @@ public class StudentLoanCalculator : IStudentLoanCalculator
             StudentLoanThresholdUsed = studentLoanThreshold,
             PostGradLoanThresholdUsed = hasPostGradLoan ? _thresholds.PostGradPerPeriodThreshold : null,
             StudentLoanDeduction = studentLoanDeduction,
-            PostGraduateLoanDeduction = postGradLoanDeduction,
+            PostgraduateLoanDeduction = postGradLoanDeduction,
             TotalDeduction = studentLoanDeduction + postGradLoanDeduction
         };
     }

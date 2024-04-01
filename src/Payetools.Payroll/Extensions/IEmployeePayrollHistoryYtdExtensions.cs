@@ -40,7 +40,7 @@ public static class IEmployeePayrollHistoryYtdExtensions
             NicablePayYtd = value.NicablePayYtd + payrunResult.NicablePay,
             TaxPaidYtd = value.TaxPaidYtd + payrunResult.TaxCalculationResult.FinalTaxDue,
             StudentLoanRepaymentsYtd = value.StudentLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.StudentLoanDeduction ?? 0.0m,
-            PostgraduateLoanRepaymentsYtd = value.PostgraduateLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.PostGraduateLoanDeduction ?? 0.0m,
+            PostgraduateLoanRepaymentsYtd = value.PostgraduateLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.PostgraduateLoanDeduction ?? 0.0m,
 
             // PayrolledBenefitsYtd = value.PayrolledBenefitsYtd + payrunResult.PayrolledBenefits,
 
