@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Extensions;
+using System.Collections;
 using System.Collections.Immutable;
 
 namespace Payetools.NationalInsurance.Model;
@@ -12,7 +13,7 @@ namespace Payetools.NationalInsurance.Model;
 /// <summary>
 /// Represents an employee's year to date National Insurance history.
 /// </summary>
-public class NiYtdHistory
+public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>
 {
     private readonly ImmutableArray<IEmployeeNiHistoryEntry> _entries;
 
@@ -74,4 +75,17 @@ public class NiYtdHistory
     /// <returns>Totals of employee and employer NI contributions paid tear to date.</returns>
     public (decimal employeeTotal, decimal employerTotal) GetNiYtdTotals() =>
         (_entries.Sum(e => e.EmployeeContribution), _entries.Sum(e => e.EmployerContribution));
+
+    /// <summary>
+    /// Gets an enumerator to enumerate over the employee's NI history entries by NI category.
+    /// </summary>
+    /// <returns>Enumerator for enumerating over the employee's NI history entries.</returns>
+    public IEnumerator<IEmployeeNiHistoryEntry> GetEnumerator() =>
+        _entries.AsEnumerable().GetEnumerator();
+
+    /// <summary>
+    /// Gets an untyped enumerator to enumerate over the employee's NI history entries by NI category.
+    /// </summary>
+    /// <returns>Untyped Enumerator for enumerating over the employee's NI history entries.</returns>
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
