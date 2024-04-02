@@ -16,13 +16,13 @@ public record EarningsHistoryYtd : IEarningsHistoryYtd
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    public ImmutableList<IEarningsEntry> Earnings { get; }
+    public ImmutableArray<IEarningsEntry> Earnings { get; }
 
     /// <summary>
     /// Initialises a new empoty <see cref="EarningsHistoryYtd"/>.
     /// </summary>
     public EarningsHistoryYtd()
     {
-        Earnings = ImmutableList<IEarningsEntry>.Empty;
+        Earnings = ImmutableArray<IEarningsEntry>.Empty;
     }
 }

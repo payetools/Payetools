@@ -17,7 +17,7 @@ public record NiEmployeeRatesEntry
     /// <summary>
     /// Gets the list of applicable NI categories for this rates entry.
     /// </summary>
-    public ImmutableList<NiCategory> NiCategories { get; init; } = default!;
+    public ImmutableArray<NiCategory> NiCategories { get; init; } = default!;
 
     /// <summary>
     /// Gets the employee rate applicable for earnings between the Lower Earnings

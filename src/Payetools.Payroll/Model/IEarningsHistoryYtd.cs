@@ -16,5 +16,5 @@ public interface IEarningsHistoryYtd
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
-    ImmutableList<IEarningsEntry> Earnings { get; }
+    ImmutableArray<IEarningsEntry> Earnings { get; }
 }

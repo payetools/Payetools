@@ -297,14 +297,14 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     }
 
     private static Dictionary<NiCategory, INiCategoryRatesEntry> MakeNiCategoryRatesEntries(
-        ImmutableList<NiEmployerRatesEntry> employerRateEntries,
-        ImmutableList<NiEmployeeRatesEntry> employeeRateEntries)
+        ImmutableArray<NiEmployerRatesEntry> employerRateEntries,
+        ImmutableArray<NiEmployeeRatesEntry> employeeRateEntries)
     {
         var rateEntries = new Dictionary<NiCategory, NiCategoryRatesEntry>();
 
-        employerRateEntries.ForEach(erEntry =>
+        foreach (var erEntry in employerRateEntries)
         {
-            erEntry.NiCategories.ForEach(erCategory =>
+            foreach (var erCategory in erEntry.NiCategories)
             {
                 if (!rateEntries.TryGetValue(erCategory, out NiCategoryRatesEntry? rateEntry))
                 {
@@ -316,12 +316,12 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
                 rateEntry.EmployerRateSTtoFUST = erEntry.ForEarningsAboveSTUpToAndIncludingFUST;
                 rateEntry.EmployerRateFUSTtoUEL = erEntry.ForEarningsAboveFUSTUpToAndIncludingUELOrUST;
                 rateEntry.EmployerRateAboveUEL = erEntry.ForEarningsAboveUELOrUST;
-            });
-        });
+            }
+        }
 
-        employeeRateEntries.ForEach(eeEntry =>
+        foreach (var eeEntry in employeeRateEntries)
         {
-            eeEntry.NiCategories.ForEach(erCategory =>
+            foreach (var erCategory in eeEntry.NiCategories)
             {
                 if (!rateEntries.TryGetValue(erCategory, out NiCategoryRatesEntry? rateEntry))
                 {
@@ -332,8 +332,8 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
                 rateEntry.EmployeeRateToPT = eeEntry.ForEarningsAtOrAboveLELUpTAndIncludingPT;
                 rateEntry.EmployeeRatePTToUEL = eeEntry.ForEarningsAbovePTUpToAndIncludingUEL;
                 rateEntry.EmployeeRateAboveUEL = eeEntry.ForEarningsAboveUEL;
-            });
-        });
+            }
+        }
 
         return rateEntries
             .Select(kv => new KeyValuePair<NiCategory, INiCategoryRatesEntry>(kv.Key, kv.Value))

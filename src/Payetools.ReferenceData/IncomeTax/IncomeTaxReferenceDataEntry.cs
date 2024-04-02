@@ -27,5 +27,5 @@ public record IncomeTaxReferenceDataEntry : IApplicableFromTill
     /// <summary>
     /// Gets a read-only list of applicable tax bands.
     /// </summary>
-    public ImmutableList<IncomeTaxBandEntry> TaxEntries { get; init; } = default!;
+    public ImmutableArray<IncomeTaxBandEntry> TaxEntries { get; init; } = default!;
 }

@@ -34,27 +34,27 @@ public class NiReferenceDataEntry : IApplicableFromTill
     /// <summary>
     /// Gets a read-only list of applicable NI thresholds.
     /// </summary>
-    public ImmutableList<NiReferenceDataThresholdEntry> NiThresholds { get; init; } = default!;
+    public ImmutableArray<NiReferenceDataThresholdEntry> NiThresholds { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable NI rates for employees.
     /// </summary>
-    public ImmutableList<NiEmployerRatesEntry> EmployerRates { get; init; } = default!;
+    public ImmutableArray<NiEmployerRatesEntry> EmployerRates { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable NI rates for employees.
     /// </summary>
-    public ImmutableList<NiEmployeeRatesEntry> EmployeeRates { get; init; } = default!;
+    public ImmutableArray<NiEmployeeRatesEntry> EmployeeRates { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable employer NI rates for directors.  Only applicable when there has been an in-year
     /// change to National Insurance rates.
     /// </summary>
-    public ImmutableList<NiEmployerRatesEntry>? DirectorEmployerRates { get; init; } = default!;
+    public ImmutableArray<NiEmployerRatesEntry>? DirectorEmployerRates { get; init; } = default!;
 
     /// <summary>
     /// Gets applicable employee NI rates for directors.  Only applicable when there has been an in-year
     /// change to National Insurance rates.
     /// </summary>
-    public ImmutableList<NiEmployeeRatesEntry>? DirectorEmployeeRates { get; init; } = default!;
+    public ImmutableArray<NiEmployeeRatesEntry>? DirectorEmployeeRates { get; init; } = default!;
 }
