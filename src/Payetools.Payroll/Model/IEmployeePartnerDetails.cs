@@ -15,12 +15,12 @@ namespace Payetools.Payroll.Model;
 public interface IEmployeePartnerDetails
 {
     /// <summary>
-    /// Gets or sets the name information (first name, last name, etc.) of the employee's partner.
+    /// Gets the name information (first name, last name, etc.) of the employee's partner.
     /// </summary>
-    INamedPerson NameInfo { get; set; }
+    INamedPerson NameInfo { get; }
 
     /// <summary>
-    /// Gets or sets the National Insurance number of the employee.
+    /// Gets the National Insurance number of the employee.
     /// </summary>
-    NiNumber NiNumber { get; set; }
+    NiNumber NiNumber { get; }
 }
