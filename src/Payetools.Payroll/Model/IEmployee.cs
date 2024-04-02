@@ -17,17 +17,17 @@ public interface IEmployee : INamedPerson
     /// <summary>
     /// Gets the individual's National Insurance number.
     /// </summary>
-    NiNumber NiNumber { get; init; }
+    NiNumber NiNumber { get; }
 
     /// <summary>
     /// Gets the individual's date of birth.
     /// </summary>
-    DateOnly DateOfBirth { get; init; }
+    DateOnly DateOfBirth { get; }
 
     /// <summary>
     /// Gets the individual's "official" gender as recognised by HMRC for payroll purposes.
     /// </summary>
-    Gender Gender { get; init; }
+    Gender Gender { get; }
 
     /// <summary>
     /// Gets or sets the employee's email address, if known.
