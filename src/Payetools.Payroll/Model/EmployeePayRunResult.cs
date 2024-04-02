@@ -114,10 +114,14 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     public decimal TaxablePay { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the employee has shared parental pay in this pay run.
+    /// </summary>
+    public bool HasSharedParentalPayInPeriod { get; }
+
+    /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayRunResult"/>.
     /// </summary>
     /// <param name="employment">Employee employment details.  Includes PayrollId as a handle to get access to the employee.</param>
-    /// <param name="isLeaverInThisPayRun">True if the employee is being marked as left in this payrun.</param>
     /// <param name="taxCalculationResult">Result of income tax calculation.</param>
     /// <param name="niCalculationResult">Result of National Insurance calculation.</param>
     /// <param name="studentLoanCalculationResult">Optional result of student loan calculation.  Null if the
@@ -131,10 +135,12 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// <param name="nicablePay">Pay subject to National Insurance.</param>
     /// <param name="payrollBenefitsInPeriod">Payrolled benefits in period.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
-    /// current tax year, not including the effect of this payrun.</param>
+    /// current tax year, not including the effect of this pay run.</param>
+    /// <param name="isLeaverInThisPayRun">True if the employee is being marked as left in this pay run. Defaults to false.</param>
+    /// <param name="hasSharedParentalPayInPeriod">True if the employee has shared parental pay in this pay run.
+    /// Defaults to false.</param>
     public EmployeePayRunResult(
         IEmployment employment,
-        bool isLeaverInThisPayRun,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult studentLoanCalculationResult,
@@ -144,10 +150,11 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         decimal taxablePay,
         decimal nicablePay,
         decimal? payrollBenefitsInPeriod,
-        ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd)
+        ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd,
+        bool isLeaverInThisPayRun = false,
+        bool hasSharedParentalPayInPeriod = false)
     {
         Employment = employment;
-        IsLeaverInThisPayRun = isLeaverInThisPayRun;
         _taxCalculationResult = taxCalculationResult;
         _niCalculationResult = niCalculationResult;
         _studentLoanCalculationResult = studentLoanCalculationResult;
@@ -160,6 +167,8 @@ public record EmployeePayRunResult : IEmployeePayRunResult
             GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult.TotalDeduction);
         PayrollBenefitsInPeriod = payrollBenefitsInPeriod;
         _employeePayrollHistoryYtd = employeePayrollHistoryYtd;
+        IsLeaverInThisPayRun = isLeaverInThisPayRun;
+        HasSharedParentalPayInPeriod = hasSharedParentalPayInPeriod;
     }
 
     /// <summary>

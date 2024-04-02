@@ -178,7 +178,6 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
 
         result = new EmployeePayRunResult(
             entry.Employment,
-            false,
             ref taxCalculationResult,
             ref niCalculationResult,
             ref studentLoanCalculationResult,
@@ -188,7 +187,9 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             taxablePay,
             nicablePay,
             earningsTotals.BenefitsInKind,
-            ref entry.Employment.PayrollHistoryYtd);
+            ref entry.Employment.PayrollHistoryYtd,
+            entry.IsLeaverInThisPayRun,
+            entry.IsPaymentAfterLeaving);
     }
 
     private static void GetAllEarningsTypes(in IEmployeePayRunInputEntry entry, out EarningsTotals earningsTotals)

@@ -29,18 +29,6 @@ public interface IEmployeePayRunResult
     public IEmployment Employment { get; }
 
     /// <summary>
-    /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
-    /// the employee's leaving date may be before the start of the pay period for this payrun.
-    /// </summary>
-    bool IsLeaverInThisPayRun { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
-    /// HMRC in a previous submission.
-    /// </summary>
-    bool IsPaymentAfterLeaving { get; }
-
-    /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
     /// </summary>
     ref ITaxCalculationResult TaxCalculationResult { get; }
@@ -99,6 +87,23 @@ public interface IEmployeePayRunResult
     /// including the effect of this payrun.
     /// </summary>
     ref IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether this employee is being recorded as left employment in this pay run.
+    /// Note that the employee's leaving date may be before the start of the pay period for this pay run.
+    /// </summary>
+    bool IsLeaverInThisPayRun { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
+    /// HMRC in a previous submission.
+    /// </summary>
+    bool IsPaymentAfterLeaving { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the employee has shared parental pay in this pay run.
+    /// </summary>
+    bool HasSharedParentalPayInPeriod { get; }
 
     /// <summary>
     /// Gets the total amount of statutory deductions made as part of the pay run.

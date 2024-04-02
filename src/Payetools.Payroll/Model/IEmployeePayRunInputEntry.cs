@@ -43,6 +43,12 @@ public interface IEmployeePayRunInputEntry
     IPensionContributionLevels PensionContributionLevels { get; }
 
     /// <summary>
+    /// Gets a value indicating whether this employee is being recorded as left employment in this pay run.
+    /// Note that the employee's leaving date may be before the start of the pay period for this pay run.
+    /// </summary>
+    bool IsLeaverInThisPayRun { get; }
+
+    /// <summary>
     /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
     /// HMRC in a previous submission.
     /// </summary>
