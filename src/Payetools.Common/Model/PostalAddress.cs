@@ -43,12 +43,12 @@ public class PostalAddress
     /// <param name="foreignCountry">Foreign country for overseas addresses.  Should be null for UK
     /// addresses.</param>
     public PostalAddress(
-        string addressLine1,
-        string addressLine2,
-        string? addressLine3,
-        string? addressLine4,
-        UkPostcode? postcode,
-        string? foreignCountry)
+        in string addressLine1,
+        in string addressLine2,
+        in string? addressLine3,
+        in string? addressLine4,
+        in UkPostcode? postcode,
+        in string? foreignCountry)
     {
         AddressLine1 = addressLine1;
         AddressLine2 = addressLine2;

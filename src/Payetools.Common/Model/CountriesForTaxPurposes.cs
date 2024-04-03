@@ -45,7 +45,7 @@ public static class CountriesForTaxPurposesConverter
     /// </summary>
     /// <param name="countries">Instance of <see cref="CountriesForTaxPurposes"/> specifying one or more countries with the UK.</param>
     /// <returns>Space separated ISO-3166 countries list, e.g., "GB-ENG GB-NIR".</returns>
-    public static string ToString(CountriesForTaxPurposes countries)
+    public static string ToString(in CountriesForTaxPurposes countries)
     {
         var sb = new StringBuilder();
 
@@ -71,7 +71,7 @@ public static class CountriesForTaxPurposesConverter
     /// <param name="iso3166Countries">Space separated list of ISO-3166 countries.</param>
     /// <returns>Equivalent CountriesForTaxPurposes enum value.</returns>
     /// <exception cref="ArgumentException">Thrown if an invalid country value is supplied.</exception>
-    public static CountriesForTaxPurposes ToEnum(string? iso3166Countries)
+    public static CountriesForTaxPurposes ToEnum(in string? iso3166Countries)
     {
         CountriesForTaxPurposes countries = 0;
 

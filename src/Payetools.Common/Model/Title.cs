@@ -38,7 +38,7 @@ public readonly struct Title
 
     private readonly string _title;
 
-    private Title(string title)
+    private Title(in string title)
     {
         _title = title;
     }
@@ -47,7 +47,7 @@ public readonly struct Title
     /// Implicit cast from Title to string.
     /// </summary>
     /// <param name="title">Title to obtain the string representation of.</param>
-    public static implicit operator string(Title title) => title.ToString();
+    public static implicit operator string(in Title title) => title.ToString();
 
     /// <summary>
     /// Inspects the supplied title and returns a new <see cref="Title"/> instance holding either the
@@ -57,7 +57,7 @@ public readonly struct Title
     /// <param name="title">Externally supplied string value for title.</param>
     /// <returns>Null if no title provided, a standardised title (e.g., "Mr") if a standardised title
     /// is provided, or the supplied string otherwise.</returns>
-    public static Title? Parse(string? title)
+    public static Title? Parse(in string? title)
     {
         if (string.IsNullOrWhiteSpace(title))
             return null;

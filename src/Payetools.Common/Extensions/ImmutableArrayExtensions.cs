@@ -20,7 +20,7 @@ public static class ImmutableArrayExtensions
     /// <param name="newValue">New value to inserted in place of the current last value.</param>
     /// <typeparam name="T">Type of object that the list contains.</typeparam>
     /// <returns>A new <see cref="ImmutableArray{T}"/> with the last item in the array updated.</returns>
-    public static ImmutableArray<T> ReplaceLast<T>(this ImmutableArray<T> array, T newValue) =>
+    public static ImmutableArray<T> ReplaceLast<T>(in this ImmutableArray<T> array, in T newValue) =>
         array
         .RemoveAt(array.Length - 1)
         .Add(newValue);

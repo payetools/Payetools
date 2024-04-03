@@ -46,7 +46,7 @@ public readonly partial struct NiNumber
     /// </summary>
     public static NiNumber Unknown => _unknown;
 
-    private NiNumber(bool isUnknown)
+    private NiNumber(in bool isUnknown)
     {
         if (!isUnknown)
             throw new ArgumentException("This constructor can only be used for unknown NI numbers", nameof(isUnknown));
@@ -59,7 +59,7 @@ public readonly partial struct NiNumber
     /// </summary>
     /// <param name="niNumber">National insurance number as string.</param>
     /// <exception cref="ArgumentException">Thrown if the supplied string is not a valid NI number.</exception>
-    public NiNumber(string niNumber)
+    public NiNumber(in string niNumber)
     {
         var tidiedNiNumber = niNumber.ToUpperInvariant().Replace(" ", string.Empty);
 
@@ -73,14 +73,14 @@ public readonly partial struct NiNumber
     /// Operator for casting implicitly from a <see cref="NiNumber"/> instance to its string representation.
     /// </summary>
     /// <param name="niNumber">NI number.</param>
-    public static implicit operator string(NiNumber niNumber) => niNumber._value;
+    public static implicit operator string(in NiNumber niNumber) => niNumber._value;
 
     /// <summary>
     /// Operator for casting implicitly from a string to an instance of a <see cref="NiNumber"/>.
     /// </summary>
     /// <param name="niNumber">NI number as string.</param>
     /// <exception cref="ArgumentException">Thrown if the supplied string is not a valid NI number.</exception>
-    public static implicit operator NiNumber(string niNumber) => new NiNumber(niNumber);
+    public static implicit operator NiNumber(in string niNumber) => new NiNumber(niNumber);
 
     /// <summary>
     /// Verifies whether the supplied string could be a valid NI number.
@@ -89,7 +89,7 @@ public readonly partial struct NiNumber
     /// <returns>True if the supplied value could be a valid NI number; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid Ni nummber,
     /// it does not guarantee that the supplied value is registered with HMRC against a given individual.</remarks>
-    public static bool IsValid(string value) => GetValidationRegex().IsMatch(value);
+    public static bool IsValid(in string value) => GetValidationRegex().IsMatch(value);
 
     /// <summary>
     /// Gets the string representation of this <see cref="NiNumber"/>.
@@ -103,10 +103,10 @@ public readonly partial struct NiNumber
     /// <param name="asSpacedFormat">True if spaced format is to be returned (e.g., "NA 12 34 67 C";
     /// false otherwise.</param>
     /// <returns>String representation of this NI number in either spaced or non-spaced format.</returns>
-    public string ToString(bool asSpacedFormat) =>
+    public string ToString(in bool asSpacedFormat) =>
         asSpacedFormat ? ToSpacedFormat(_value) : _value;
 
-    private static string ToSpacedFormat(string value) =>
+    private static string ToSpacedFormat(in string value) =>
         value.Length == 9 ? $"{value[..2]} {value[2..4]} {value[4..6]} {value[6..8]} {value[^1]}" :
             throw new InvalidOperationException("NI numbers must be 9 characters in length");
 }

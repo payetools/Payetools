@@ -52,7 +52,7 @@ public partial struct HmrcPayeReference
     /// </summary>
     /// <param name="hmrcOfficeNumber">HMRC Office Number (always 3 digits).</param>
     /// <param name="employerPayeReference">Employer PAYE reference (the part after the '/').</param>
-    public HmrcPayeReference(int hmrcOfficeNumber, string employerPayeReference)
+    public HmrcPayeReference(in int hmrcOfficeNumber, in string employerPayeReference)
     {
         HmrcOfficeNumber = hmrcOfficeNumber;
         EmployerPayeReference = employerPayeReference;
@@ -62,7 +62,7 @@ public partial struct HmrcPayeReference
     /// Operator for casting implicitly from a <see cref="HmrcPayeReference"/> instance to its string representation.
     /// </summary>
     /// <param name="value">An instance of HmrcPayeReference.</param>
-    public static implicit operator string(HmrcPayeReference value) => value.ToString();
+    public static implicit operator string(in HmrcPayeReference value) => value.ToString();
 
     /// <summary>
     /// Attempts to parse the supplied string into an <see cref="HmrcPayeReference"/> object.
@@ -72,7 +72,7 @@ public partial struct HmrcPayeReference
     /// <param name="payeReference">Set to a new instance of HmrcPayeReference if parse succeeds; set to object default
     /// otherwise.</param>
     /// <returns>True if the string could be parsed into a valid HMRC PAYE Reference; false otherwise.</returns>
-    public static bool TryParse(string? input, [NotNullWhen(true)] out HmrcPayeReference? payeReference)
+    public static bool TryParse(in string? input, [NotNullWhen(true)] out HmrcPayeReference? payeReference)
     {
         payeReference = null;
 
@@ -101,7 +101,7 @@ public partial struct HmrcPayeReference
     /// <returns>True if the supplied value could be a valid HMRC PAYE Reference; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid HMRC PAYE Reference,
     /// it does not guarantee that the supplied value is registered with HMRC against a given company.</remarks>
-    public static bool IsValid(string? value) => value != null && GetPayeRefRegex().IsMatch(value);
+    public static bool IsValid(in string? value) => value != null && GetPayeRefRegex().IsMatch(value);
 
     /// <summary>
     /// Gets the string representation of this HmrcPayeReference.

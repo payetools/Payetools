@@ -18,6 +18,6 @@ public static class IEnumerableExtensions
     /// <typeparam name="T">Type of item in original IEnumerable.</typeparam>
     /// <param name="source">Source IEnumerable.</param>
     /// <returns>New IEnumerable of tuples as described above.</returns>
-    public static IEnumerable<(T Value, int Index)> WithIndex<T>(this IEnumerable<T> source)
+    public static IEnumerable<(T Value, int Index)> WithIndex<T>(/* in */ this IEnumerable<T> source)
         => source.Select((item, index) => (Item: item, Index: index));
 }

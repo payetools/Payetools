@@ -106,7 +106,7 @@ public readonly partial struct TaxCode
     /// </summary>
     /// <param name="countries">Country or countries to be mapped.</param>
     /// <returns>Prefix letter for single country regimes (currently Scotland, Wales); Empty string otherwise.</returns>
-    public static string MapCountryToTaxRegime(CountriesForTaxPurposes countries) =>
+    public static string MapCountryToTaxRegime(in CountriesForTaxPurposes countries) =>
         countries switch
         {
             CountriesForTaxPurposes.Scotland => "S",
@@ -124,12 +124,12 @@ public readonly partial struct TaxCode
         };
 
     private TaxCode(
-        TaxYear taxYear,
-        CountriesForTaxPurposes applicableCountries,
-        TaxTreatment taxTreatment,
-        int numericPortionOfCode,
-        bool isNonCumulative,
-        bool isFixedCode = false)
+        in TaxYear taxYear,
+        in CountriesForTaxPurposes applicableCountries,
+        in TaxTreatment taxTreatment,
+        in int numericPortionOfCode,
+        in bool isNonCumulative,
+        in bool isFixedCode = false)
     {
         TaxYear = taxYear;
         ApplicableCountries = applicableCountries;
@@ -160,7 +160,9 @@ public readonly partial struct TaxCode
     /// <param name="includeNonCumulativeFlag">True to include the non-cumulative flag; false otherwise.</param>
     /// <param name="includeTaxRegime">True to include the tax regime prefix; false otherwise.</param>
     /// <returns>String representation of tax code with or without tax regime prefix and with or without non-cumulative indicator.</returns>
-    public string ToString(bool includeNonCumulativeFlag, bool includeTaxRegime) =>
+    public string ToString(
+        in bool includeNonCumulativeFlag,
+        in bool includeTaxRegime) =>
         (includeNonCumulativeFlag, includeTaxRegime) switch
         {
             (false, true) => ToString(),
@@ -177,7 +179,7 @@ public readonly partial struct TaxCode
     /// <param name="taxCode">Tax code as a string.</param>
     /// <param name="result">Instance of <see cref="TaxCode"/> if valid; default(TaxCode) otherwise.</param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
-    public static bool TryParse(string taxCode, out TaxCode result) =>
+    public static bool TryParse(in string taxCode, out TaxCode result) =>
         TryParse(taxCode, new TaxYear(TaxYear.Current), out result);
 
     /// <summary>
@@ -188,7 +190,7 @@ public readonly partial struct TaxCode
     /// <param name="taxYear">Tax year for the supplied tax code.</param>
     /// <param name="result">Instance of <see cref="TaxCode"/> if valid; default(TaxCode) otherwise.</param>
     /// <returns>True if the tax code could be parsed; false otherwise.</returns>
-    public static bool TryParse(string taxCode, TaxYear taxYear, out TaxCode result)
+    public static bool TryParse(in string taxCode, in TaxYear taxYear, out TaxCode result)
     {
         var isNonCumulative = IsNonCumulativeCode(taxCode);
 
@@ -216,7 +218,7 @@ public readonly partial struct TaxCode
     /// <param name="taxPeriod">Tax period.</param>
     /// <param name="periodCount">Number of tax periods in the year (e.g., 12 for monthly pay).</param>
     /// <returns>Tax-free pay applicable up to and including the end of the specified tax period.  May be negative.</returns>
-    public decimal GetTaxFreePayForPeriod(int taxPeriod, int periodCount)
+    public decimal GetTaxFreePayForPeriod(in int taxPeriod, in int periodCount)
     {
         // Calculating the tax free pay for a period involves deriving the tax free pay for the year and then multiplying by
         // the applicable fraction of the year.  The first of these steps is somewhat counter-intuitive however, for historical
@@ -265,7 +267,7 @@ public readonly partial struct TaxCode
         return taxFreePayForPeriod;
     }
 
-    private static decimal GetQuotientTaxFreePay(int periodCount) =>
+    private static decimal GetQuotientTaxFreePay(in int periodCount) =>
         periodCount switch
         {
             52 => _quotientWeeklyTaxFreePay,
@@ -276,7 +278,11 @@ public readonly partial struct TaxCode
             _ => throw new ArgumentOutOfRangeException(nameof(periodCount), $"Unsupported value for periodCount: {periodCount}")
         };
 
-    private static bool ProcessFixedCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative, out TaxCode? taxCode)
+    private static bool ProcessFixedCodeMatch(
+        in Match match,
+        in TaxYear taxYear,
+        in bool isNonCumulative,
+        out TaxCode? taxCode)
     {
         taxCode = null;
 
@@ -309,7 +315,11 @@ public readonly partial struct TaxCode
         return true;
     }
 
-    private static bool ProcessStandardCodeMatch(Match match, TaxYear taxYear, bool isNonCumulative, out TaxCode? taxCode)
+    private static bool ProcessStandardCodeMatch(
+        in Match match,
+        in TaxYear taxYear,
+        in bool isNonCumulative,
+        out TaxCode? taxCode)
     {
         taxCode = null;
 
@@ -342,7 +352,7 @@ public readonly partial struct TaxCode
         return true;
     }
 
-    private static int GetNumericPortionOfCode(int numericPortionOfCode, TaxTreatment treatment) =>
+    private static int GetNumericPortionOfCode(in int numericPortionOfCode, in TaxTreatment treatment) =>
         treatment switch
         {
             TaxTreatment.K or TaxTreatment.L or TaxTreatment.M or TaxTreatment.N => numericPortionOfCode,
@@ -350,7 +360,7 @@ public readonly partial struct TaxCode
             _ => 0
         };
 
-    private static CountriesForTaxPurposes GetApplicableCountries(Match match, TaxYear taxYear)
+    private static CountriesForTaxPurposes GetApplicableCountries(in Match match, in TaxYear taxYear)
     {
         var countryCode = match.Groups[_countryPrefix] ??
             throw new InvalidOperationException($"{_countryPrefix} not found in matched output");
@@ -366,12 +376,12 @@ public readonly partial struct TaxCode
             throw new InconsistentDataException("Country-specific tax code supplied but country not valid for tax year");
     }
 
-    private static bool IsNonCumulativeCode(string taxCode)
+    private static bool IsNonCumulativeCode(in string taxCode)
     {
         var match = GetNonCumulativeRegex().Match(taxCode);
 
         return match.Success && !string.IsNullOrEmpty(match.Groups[_nonCumulative]?.Value);
     }
 
-    private static char? ToChar(string s) => s.Length == 1 ? s.ToUpperInvariant()[0] : null;
+    private static char? ToChar(in string s) => s.Length == 1 ? s.ToUpperInvariant()[0] : null;
 }

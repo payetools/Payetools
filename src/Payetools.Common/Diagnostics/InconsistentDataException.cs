@@ -16,7 +16,7 @@ public class InconsistentDataException : Exception
     /// Initialises a new instance of the <see cref="InconsistentDataException"/> class.
     /// </summary>
     /// <param name="message">Human-readable text providing further details on the exception.</param>
-    public InconsistentDataException(string message)
+    public InconsistentDataException(in string message)
         : base(message)
     {
     }

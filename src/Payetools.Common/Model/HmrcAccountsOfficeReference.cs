@@ -40,7 +40,7 @@ public partial record HmrcAccountsOfficeReference
     /// Operator for casting implicitly from a <see cref="HmrcAccountsOfficeReference"/> instance to its string equivalent.
     /// </summary>
     /// <param name="value">An instance of HmrcAccountsOfficeReference.</param>
-    public static implicit operator string(HmrcAccountsOfficeReference value) => value.ToString();
+    public static implicit operator string(in HmrcAccountsOfficeReference value) => value.ToString();
 
     /// <summary>
     /// Initialises a new instance of <see cref="HmrcAccountsOfficeReference"/>.
@@ -48,7 +48,7 @@ public partial record HmrcAccountsOfficeReference
     /// <param name="accountsOfficeReference">String value containing the HMRC Accounts Office Reference.</param>
     /// <exception cref="ArgumentException">Thrown if the supplied string value does not match the required pattern
     /// for valid HMRC Accounts Office Reference values.</exception>
-    public HmrcAccountsOfficeReference(string accountsOfficeReference)
+    public HmrcAccountsOfficeReference(in string accountsOfficeReference)
     {
         var aor = accountsOfficeReference.ToUpperInvariant();
 
@@ -65,7 +65,7 @@ public partial record HmrcAccountsOfficeReference
     /// <returns>True if the supplied value could be a valid HMRC Accounts Office Reference; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid HRMC Accounts Office
     /// Reference, it does not guarantee that the supplied value is registered with HMRC against a given company.</remarks>
-    public static bool IsValid(string value) => GetValidationRegex().IsMatch(value);
+    public static bool IsValid(in string value) => GetValidationRegex().IsMatch(value);
 
     /// <summary>
     /// Gets the string representation of this HmrcAccountsOfficeReference.

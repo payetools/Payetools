@@ -32,7 +32,7 @@ public sealed record PayrollId
     /// otherwise. Default is false.</param>
     /// <param name="previousPayrollId">If <paramref name="isUpdate"/> is set to true, then
     /// this parameter should be set to the previous payroll ID used.</param>
-    public PayrollId(string payrollId, bool isUpdate = false, string? previousPayrollId = null)
+    public PayrollId(in string payrollId, in bool isUpdate = false, in string? previousPayrollId = null)
     {
         _payrollId = payrollId;
         IsUpdate = isUpdate;
@@ -43,20 +43,20 @@ public sealed record PayrollId
     /// Operator for casting implicitly from a <see cref="PayrollId"/> instance to its string representation.
     /// </summary>
     /// <param name="payrollId">An instance of PayrollId.</param>
-    public static implicit operator string(PayrollId payrollId) => payrollId._payrollId;
+    public static implicit operator string(in PayrollId payrollId) => payrollId._payrollId;
 
     /// <summary>
     /// Operator for casting implicitly from a payroll ID string value to a <see cref="PayrollId"/> instance.
     /// </summary>
     /// <param name="payrollId">String representation of payroll ID.</param>
-    public static implicit operator PayrollId(string payrollId) => new PayrollId(payrollId);
+    public static implicit operator PayrollId(in string payrollId) => new PayrollId(payrollId);
 
     /// <summary>
     /// Parses the supplied payroll ID.  TBA.
     /// </summary>
     /// <param name="value">Value to parse.</param>
     /// <returns>Parsed value.  TBA.</returns>
-    public static PayrollId Parse(string value)
+    public static PayrollId Parse(in string value)
     {
         return new PayrollId(value);
     }

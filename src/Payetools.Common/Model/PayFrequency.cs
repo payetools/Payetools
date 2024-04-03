@@ -92,7 +92,7 @@ public static class PayFrequencyExtensions
     /// there are 53 weeks in a tax year (or 27 periods in a two-weekly pay cycle, etc.).  Must be false
     /// for monthly, quarterly and annual payrolls.  Optional, defaulting to false.</param>
     /// <returns>true if the supplied tax period is the last period in the tax year; false otherwise.</returns>
-    public static bool IsLastTaxPeriodInTaxYear(this PayFrequency payFrequency, int taxPeriod, bool applyWeek53Treatment = false)
+    public static bool IsLastTaxPeriodInTaxYear(this PayFrequency payFrequency, in int taxPeriod, in bool applyWeek53Treatment = false)
     {
         if (applyWeek53Treatment && (payFrequency == PayFrequency.Monthly || payFrequency == PayFrequency.Quarterly || payFrequency == PayFrequency.Annually))
             throw new ArgumentException($"Parameter must be false for non-week-based payrolls", nameof(applyWeek53Treatment));

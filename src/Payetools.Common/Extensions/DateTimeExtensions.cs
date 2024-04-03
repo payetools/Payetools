@@ -16,6 +16,6 @@ public static class DateTimeExtensions
     /// </summary>
     /// <param name="dateTime">Source DateTime instance.</param>
     /// <returns>DateTime with the same date but time portion set to 12:00:00 UTC.</returns>
-    public static DateTime MiddayUtc(this DateTime dateTime) =>
+    public static DateTime MiddayUtc(in this DateTime dateTime) =>
         new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 12, 0, 0, DateTimeKind.Utc);
 }

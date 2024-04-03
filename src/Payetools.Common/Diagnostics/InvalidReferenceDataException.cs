@@ -15,7 +15,7 @@ public class InvalidReferenceDataException : Exception
     /// Initialises a new instance of the <see cref="InvalidReferenceDataException"/> class.
     /// </summary>
     /// <param name="message">Human-readable text providing further details on the exception.</param>
-    public InvalidReferenceDataException(string message)
+    public InvalidReferenceDataException(in string message)
         : base(message)
     {
     }
@@ -26,7 +26,7 @@ public class InvalidReferenceDataException : Exception
     /// </summary>
     /// <param name="message">Human-readable text providing further details on the exception.</param>
     /// <param name="innerException">Inner exception.</param>
-    public InvalidReferenceDataException(string message, Exception innerException)
+    public InvalidReferenceDataException(in string message, in Exception innerException)
         : base(message, innerException)
     {
     }

@@ -57,7 +57,7 @@ public static class TaxTreatmentExtensions
     /// <param name="applicableCountries">Applicable countries for the input tax treatment.</param>
     /// <returns>Band index for supplied tax treatment.</returns>
     /// <exception cref="ArgumentException">Thrown if it is not possible to retrieve a band index for ththe supplied tax treatment.</exception>
-    public static int GetBandIndex(this TaxTreatment taxTreatment, CountriesForTaxPurposes applicableCountries) =>
+    public static int GetBandIndex(this TaxTreatment taxTreatment, in CountriesForTaxPurposes applicableCountries) =>
         taxTreatment switch
         {
             TaxTreatment.BR => applicableCountries == CountriesForTaxPurposes.Scotland ? 1 : 0,

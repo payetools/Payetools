@@ -39,7 +39,7 @@ public readonly struct PayDate
     /// </summary>
     /// <param name="date">Pay date.</param>
     /// <param name="payFrequency">Pay frequency.</param>
-    public PayDate(DateOnly date, PayFrequency payFrequency)
+    public PayDate(in DateOnly date, in PayFrequency payFrequency)
     {
         Date = date;
         TaxYear = new TaxYear(date);
@@ -54,16 +54,17 @@ public readonly struct PayDate
     /// <param name="month">Month (1-12).</param>
     /// <param name="day">Day.</param>
     /// <param name="payFrequency">Pay frequency.</param>
-    public PayDate(int year, int month, int day, PayFrequency payFrequency)
+    public PayDate(in int year, in int month, in int day, in PayFrequency payFrequency)
         : this(new DateOnly(year, month, day), payFrequency)
     {
     }
 
     /// <summary>
-    /// Gets the equivalent <see cref="DateTime"/> for this paydate, with the time portion set to midday (12:00:00) UTC.
+    /// Gets the equivalent <see cref="DateTime"/> for this paydate, with the time portion set
+    /// to midnight (00:00:00) and the DateTimeKind set to Unspecified.
     /// </summary>
     /// <param name="payDate"><see cref="PayDate"/> to get the DateTime for.</param>
-    public static implicit operator DateTime(PayDate payDate) => payDate.Date.ToMiddayUtcDateTime();
+    public static implicit operator DateTime(in PayDate payDate) => payDate.Date.ToDateTimeUnspecified();
 
     /// <summary>
     /// Provides a string representation of this pay date in the form 'dd/mm/yyyy (frequency, period)'.

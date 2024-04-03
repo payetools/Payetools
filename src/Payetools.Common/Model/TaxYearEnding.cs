@@ -33,11 +33,14 @@ public enum TaxYearEnding
     /// <summary>2023-2024</summary>
     Apr5_2024 = 2024,
 
+    /// <summary>2024-2025</summary>
+    Apr5_2025 = 2025,
+
     /// <summary>Minimum value supported for TaxYearEnding</summary>
     MinValue = 2019,
 
     /// <summary>Maximum value supported for TaxYearEnding</summary>
-    MaxValue = 2024
+    MaxValue = 2025
 }
 
 /// <summary>
@@ -50,6 +53,6 @@ public static class TaxYearEndingExtensions
     /// </summary>
     /// <param name="value">An instance of TaxYearEnding.</param>
     /// <returns>Year as string, e.g., "2020", indicating the year that the tax year ends in.</returns>
-    public static string YearAsString(this TaxYearEnding value) =>
+    public static string YearAsString(/* in */ this TaxYearEnding value) =>
         $"{(int)value:0000}";
 }

@@ -60,7 +60,7 @@ public readonly struct TaxYear
     /// Initialises a new instance of <see cref="TaxYear"/> based on the supplied <see cref="TaxYearEnding"/> value.
     /// </summary>
     /// <param name="taxYearEnding">TaxYearEnding enum value for this tax year.</param>
-    public TaxYear(TaxYearEnding taxYearEnding)
+    public TaxYear(in TaxYearEnding taxYearEnding)
     {
         TaxYearEnding = taxYearEnding;
         StartOfTaxYear = new DateOnly((int)TaxYearEnding - 1, 4, 6);
@@ -71,7 +71,7 @@ public readonly struct TaxYear
     /// Initialises a new instance of <see cref="TaxYear"/> based on the supplied date.
     /// </summary>
     /// <param name="taxDate">Date to create <see cref="TaxYear"/> for.</param>
-    public TaxYear(DateOnly taxDate)
+    public TaxYear(in DateOnly taxDate)
         : this(taxDate.ToTaxYearEnding())
     {
     }
@@ -97,7 +97,7 @@ public readonly struct TaxYear
     /// </summary>
     /// <param name="countries">One or more <see cref="CountriesForTaxPurposes"/> values.</param>
     /// <returns>True if the supplied countries parameter is valid for this tax year; false otherwise.</returns>
-    public bool IsValidForYear(CountriesForTaxPurposes countries)
+    public bool IsValidForYear(/* in */ CountriesForTaxPurposes countries)
     {
         var countriesForYear = GetCountriesForYear();
 
@@ -112,7 +112,7 @@ public readonly struct TaxYear
     /// <param name="payFrequency">Payment frequency applicable.</param>
     /// <returns>Relevant tax period.</returns>
     /// <exception cref="ArgumentException">Thrown if the pay date falls outside this tax year.</exception>
-    public int GetTaxPeriod(DateOnly payDate, PayFrequency payFrequency)
+    public int GetTaxPeriod(in DateOnly payDate, in PayFrequency payFrequency)
     {
         if (payDate < StartOfTaxYear || payDate > EndOfTaxYear)
             throw new ArgumentException($"Pay date of {payDate.ToUk()} is outside this tax year {StartOfTaxYear.ToUk()} - {EndOfTaxYear.ToUk()}", nameof(payDate));
@@ -166,7 +166,7 @@ public readonly struct TaxYear
     /// <param name="taxPeriod">Applicable tax period.</param>
     /// <returns>Last day of the tax period.</returns>
     /// <exception cref="ArgumentException">Thrown if the supplied pay frequency is not supported.</exception>
-    public DateOnly GetLastDayOfTaxPeriod(PayFrequency payFrequency, int taxPeriod) =>
+    public DateOnly GetLastDayOfTaxPeriod(in PayFrequency payFrequency, in int taxPeriod) =>
         payFrequency switch
         {
             PayFrequency.Weekly => StartOfTaxYear.AddDays((7 * taxPeriod) - 1),
@@ -188,7 +188,7 @@ public readonly struct TaxYear
     /// <param name="payDate">Pay date.</param>
     /// <param name="payFrequency">Applicable pay frequency. Defaults to weekly.</param>
     /// <returns>Tax week number for the supplied pay date and (optional) pay frequency.</returns>
-    public int GetWeekNumber(DateOnly payDate, PayFrequency payFrequency = PayFrequency.Weekly)
+    public int GetWeekNumber(in DateOnly payDate, in PayFrequency payFrequency = PayFrequency.Weekly)
     {
         var multiplier = payFrequency switch
         {
@@ -212,7 +212,7 @@ public readonly struct TaxYear
     /// <param name="payDate">Pay date.</param>
     /// <param name="payFrequency">Applicable pay frequency. Defaults to monthly.</param>
     /// <returns>Tax month number.</returns>
-    public int GetMonthNumber(DateOnly payDate, PayFrequency payFrequency = PayFrequency.Monthly)
+    public int GetMonthNumber(in DateOnly payDate, in PayFrequency payFrequency = PayFrequency.Monthly)
     {
         var startOfCalendarYear = new DateOnly((int)TaxYearEnding, 1, 1);
         var monthNumber = payDate.Month + (payDate >= startOfCalendarYear && payDate <= EndOfTaxYear ? 12 : 0) - 3;
@@ -229,6 +229,6 @@ public readonly struct TaxYear
         };
     }
 
-    private int GetDayNumber(DateOnly payDate) =>
+    private int GetDayNumber(in DateOnly payDate) =>
         payDate.DayNumber - StartOfTaxYear.DayNumber + 1;
 }

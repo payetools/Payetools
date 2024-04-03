@@ -30,7 +30,7 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     /// <param name="startDate">Start of date range.</param>
     /// <param name="endDate">End of date range.</param>
     /// <exception cref="ArgumentException">Thrown if endDate is before startDate.</exception>
-    public DateRange(DateOnly startDate, DateOnly endDate)
+    public DateRange(in DateOnly startDate, in DateOnly endDate)
     {
         if (endDate < startDate)
             throw new ArgumentException("End date must be on or after start date", nameof(endDate));
@@ -47,7 +47,7 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     /// <param name="duration">Duration of the DateRange, in days.</param>
     /// <param name="latestAllowableDate">Latest allowable end date for the DateRange.</param>
     /// <exception cref="ArgumentException">Thrown if duration is less than a day.</exception>
-    public DateRange(DateOnly startDate, int duration, DateOnly? latestAllowableDate = null)
+    public DateRange(in DateOnly startDate, in int duration, in DateOnly? latestAllowableDate = null)
     {
         if (duration < 1)
             throw new ArgumentException("Duration must be at least one day", nameof(duration));
@@ -63,7 +63,7 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     /// </summary>
     /// <param name="other">DateRange to compare for equality.</param>
     /// <returns>True if the two DateRanges are equivalent; false otherwise.</returns>
-    public readonly bool Equals(DateRange other) => Start.Equals(other.Start) && End.Equals(other.End);
+    public readonly bool Equals(/* in */ DateRange other) => Start.Equals(other.Start) && End.Equals(other.End);
 
     /// <summary>
     /// Gets an enumerator across this DateRange.  Enables use of foreach.
@@ -92,7 +92,7 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     /// </summary>
     /// <param name="obj">Object to compare for equality.</param>
     /// <returns>True if the two DateRanges are equivalent; false otherwise.</returns>
-    public override readonly bool Equals(object? obj) => obj is DateRange d && Equals(d);
+    public override readonly bool Equals(/* in */ object? obj) => obj is DateRange d && Equals(d);
 
     /// <summary>
     /// Returns the hash code for this object.
@@ -106,7 +106,7 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     /// <param name="left">First DateRange to compare.</param>
     /// <param name="right">Second DateRange to compare.</param>
     /// <returns>True if the two DateRanges are equivalent; false otherwise.</returns>
-    public static bool operator ==(DateRange left, DateRange right) => left.Equals(right);
+    public static bool operator ==(in DateRange left, in DateRange right) => left.Equals(right);
 
     /// <summary>
     /// Evaluates whether two range ranges are not equivalent.
@@ -114,7 +114,7 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     /// <param name="left">First DateRange to compare.</param>
     /// <param name="right">Second DateRange to compare.</param>
     /// <returns>True if the two DateRanges are not equivalent; false otherwise.</returns>
-    public static bool operator !=(DateRange left, DateRange right) => !(left == right);
+    public static bool operator !=(in DateRange left, in DateRange right) => !(left == right);
 
     /// <summary>
     /// Returns a string that represents the current object.  Intended mainly for debug purposes.
