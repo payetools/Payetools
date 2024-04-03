@@ -35,6 +35,11 @@ public interface IEmployer
     HmrcAccountsOfficeReference? AccountsOfficeReference { get; }
 
     /// <summary>
+    /// Gets the employer's Corporation Tax reference, if known.
+    /// </summary>
+    string? HmrcCorporationTaxReference { get; }
+
+    /// <summary>
     /// Gets an array of entries, one entry for each tax year of record.
     /// </summary>
     ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; }

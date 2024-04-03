@@ -35,6 +35,11 @@ public class Employer : IEmployer
     public HmrcAccountsOfficeReference? AccountsOfficeReference { get; init; }
 
     /// <summary>
+    /// Gets the employer's Corporation Tax reference, if known.
+    /// </summary>
+    public string? HmrcCorporationTaxReference { get; }
+
+    /// <summary>
     /// Gets an array of entries, one entry for each tax year of record, that indicates whether the employer
     /// is eligible to claim Employment Allowance.
     /// </summary>
@@ -47,7 +52,8 @@ public class Employer : IEmployer
     /// <param name="knownAsName">Name that the business is known by, omitting any official suffix, e.g., Ltd, LLP, etc.</param>
     /// <param name="hmrcPayeReference">Employer's HMRC PAYE reference, if known.
     /// Optional.</param>
-    /// <param name="accountsOfficeReference">Employer's HMRC Accounts Office reference, if known.  Optional.</param>
+    /// <param name="accountsOfficeReference">Employer's HMRC Accounts Office reference, if known. Optional.</param>
+    /// <param name="corporationTaxReference">Employer's HMRC Corporation Tax reference, if known. Optional. </param>
     /// <param name="employmentAllowanceEligibilities">Array of entries, one entry for each tax year of record, that indicates whether
     /// the employer is eligible to claim Employment Allowance.  May be null if not known.</param>
     public Employer(
@@ -55,12 +61,14 @@ public class Employer : IEmployer
         string knownAsName,
         HmrcPayeReference? hmrcPayeReference = null,
         HmrcAccountsOfficeReference? accountsOfficeReference = null,
+        string? corporationTaxReference = null,
         ImmutableArray<EmploymentAllowanceHistoryEntry>? employmentAllowanceEligibilities = null)
     {
         OfficialName = officialName;
         KnownAsName = knownAsName;
         HmrcPayeReference = hmrcPayeReference;
         AccountsOfficeReference = accountsOfficeReference;
+        HmrcCorporationTaxReference = corporationTaxReference;
         EmploymentAllowanceEligibilities = employmentAllowanceEligibilities ??
             ImmutableArray.Create<EmploymentAllowanceHistoryEntry>();
     }
