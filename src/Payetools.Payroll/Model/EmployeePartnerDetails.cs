@@ -38,7 +38,7 @@ public class EmployeePartnerDetails : IEmployeePartnerDetails
             char[]? initials,
             string? middleNames,
             string lastName,
-            string? knownAsName)
+            string? knownAsName = null)
         {
             Title = title;
             FirstName = firstName;
@@ -62,28 +62,26 @@ public class EmployeePartnerDetails : IEmployeePartnerDetails
     /// <summary>
     /// Initializes a new instance of the <see cref="EmployeePartnerDetails"/> class.
     /// </summary>
-    /// <param name="title">Partner title.</param>
-    /// <param name="forenames">Partner forename(s). At least one name must be supplied.</param>
+    /// <param name="title">Partner title. Optional; supply null if not known.</param>
+    /// <param name="firstName">Partner first name.</param>
+    /// <param name="middleNames">Partner middle name(s), space separated. Optional.</param>
     /// <param name="lastName">Partner last name.</param>
     /// <param name="niNumber">Partner National Insurance number.</param>
     /// <remarks>Initialising this type with partner initials rather than forenames is not currently supported.</remarks>
     /// <exception cref="ArgumentException">Thrown if less than one forename is supplied.</exception>
     public EmployeePartnerDetails(
-        Title title,
-        string[] forenames,
+        Title? title,
+        string firstName,
+        string? middleNames,
         string lastName,
         NiNumber niNumber)
     {
-        if (forenames.Length < 1)
-            throw new ArgumentException("EmployeePartnerDetails constructor requires at least one forename", nameof(forenames));
-
         NameInfo = new NamedPerson(
             title,
-            forenames[0],
+            firstName,
             null,
-            forenames.Length > 1 ? string.Join(' ', forenames[..1]) : null,
-            lastName,
-            niNumber);
+            middleNames,
+            lastName);
         NiNumber = niNumber;
     }
 }
