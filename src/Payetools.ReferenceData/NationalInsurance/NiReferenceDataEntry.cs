@@ -13,7 +13,7 @@ namespace Payetools.ReferenceData.NationalInsurance;
 /// Represents a set of Ni thresholds and rates for a period; where there have been in-year changes,
 /// then there may be several such entries for a given tax year.
 /// </summary>
-public class NiReferenceDataEntry : IApplicableFromTill
+public record NiReferenceDataEntry : IApplicableFromTill
 {
     /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability.

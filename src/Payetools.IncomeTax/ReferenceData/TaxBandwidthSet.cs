@@ -9,7 +9,7 @@ namespace Payetools.IncomeTax.ReferenceData;
 /// <summary>
 /// Represents a set of tax bandwidths for a given tax regime for a given tax year.
 /// </summary>
-public record TaxBandwidthSet
+public class TaxBandwidthSet
 {
     /// <summary>
     /// Gets the set of <see cref="TaxBandwidthEntry"/>'s for this TaxBandwidthSet as an array.

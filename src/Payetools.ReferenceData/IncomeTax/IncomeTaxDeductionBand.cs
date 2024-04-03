@@ -9,7 +9,7 @@ namespace Payetools.ReferenceData.IncomeTax;
 /// <summary>
 /// Record that details a single tax band for a given tax regime.
 /// </summary>
-public record IncomeTaxDeductionBand
+public class IncomeTaxDeductionBand
 {
     /// <summary>
     /// Gets the description of this tax band.

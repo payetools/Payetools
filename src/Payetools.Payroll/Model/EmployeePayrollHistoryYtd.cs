@@ -13,7 +13,7 @@ namespace Payetools.Payroll.Model;
 /// Represents the historical set of information for an employee's payroll for the
 /// current tax year.
 /// </summary>
-public record EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
+public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
 {
     /// <summary>
     /// Gets any statutory maternity pay paid to date this tax year.

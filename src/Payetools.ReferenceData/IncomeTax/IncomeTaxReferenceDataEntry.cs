@@ -12,7 +12,7 @@ namespace Payetools.ReferenceData.IncomeTax;
 /// <summary>
 /// Represents a set of tax bands for a given tax regime for a period, typically a full tax year.
 /// </summary>
-public record IncomeTaxReferenceDataEntry : IApplicableFromTill
+public class IncomeTaxReferenceDataEntry : IApplicableFromTill
 {
     /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability.

@@ -13,7 +13,7 @@ namespace Payetools.ReferenceData.NationalInsurance;
 /// Represents a set of National Insurance rates across all NI categories.  Each NI
 /// category specifies its own set rate of rates across the various NI thresholds.
 /// </summary>
-public record NiCategoryRateSet
+public class NiCategoryRateSet
 {
     private readonly Dictionary<NiCategory, INiCategoryRatesEntry> _categories;
 

@@ -15,7 +15,7 @@ namespace Payetools.ReferenceData.NationalInsurance;
 /// that HMRC guidance is that only the annual threshold should be used for calculations; weekly and
 /// monthly thresholds are given for information only.
 /// </summary>
-public record NiReferenceDataThresholdEntry : INiThresholdEntry
+public class NiReferenceDataThresholdEntry : INiThresholdEntry
 {
     /// <summary>
     /// Gets the applicable threshold's name.  This name is mapped to the relevant <see cref="NiThresholdType"/> as

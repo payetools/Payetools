@@ -13,7 +13,7 @@ namespace Payetools.NationalInsurance.ReferenceData;
 /// Represents a specific National Insurance threshold (e.g., LEL, UEL) adjusted for a specific pay frequency and
 /// number of periods, as NI is calculated based on the appropriate fraction of the applicable annual threshold.
 /// </summary>
-public record NiPeriodThresholdEntry
+public class NiPeriodThresholdEntry
 {
     /// <summary>
     /// Gets the type of this threshold entry (e.g., LEL, PT, ST, etc.).

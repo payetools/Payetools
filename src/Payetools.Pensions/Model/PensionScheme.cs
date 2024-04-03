@@ -11,7 +11,7 @@ namespace Payetools.Pensions.Model;
 /// <summary>
 /// Represents a workplace pension scheme.
 /// </summary>
-public record PensionScheme : IPensionScheme
+public readonly struct PensionScheme : IPensionScheme
 {
     /// <summary>
     /// Gets the earnings basis for this pension scheme.

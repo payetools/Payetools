@@ -14,7 +14,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents an employee's employment for payroll purposes.
 /// </summary>
-public record Employment : IEmployment
+public class Employment : IEmployment
 {
     private IEmployeePayrollHistoryYtd _payrollHistoryYtd;
 

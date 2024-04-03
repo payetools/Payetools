@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents an employee's earnings history for the tax year to date.
 /// </summary>
-public record EarningsHistoryYtd : IEarningsHistoryYtd
+public class EarningsHistoryYtd : IEarningsHistoryYtd
 {
     /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.

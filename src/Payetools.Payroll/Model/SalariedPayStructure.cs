@@ -9,7 +9,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the pay structure for salaried (i.e., annually paid) employees.
 /// </summary>
-public record SalariedPayStructure : IEmployeePayStructure
+public class SalariedPayStructure : IEmployeePayStructure
 {
     /// <inheritdoc/>>
     public Guid Id { get; init; }

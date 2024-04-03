@@ -15,7 +15,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public record EmployeePayRunResult : IEmployeePayRunResult
+public class EmployeePayRunResult : IEmployeePayRunResult
 {
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
@@ -23,11 +23,6 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
     private IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult;
     private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
-
-    /// <summary>
-    /// Gets information about this payrun.
-    /// </summary>
-    public ref IPayRunDetails PayRunDetails { get => throw new NotImplementedException(); }
 
     /// <summary>
     /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of

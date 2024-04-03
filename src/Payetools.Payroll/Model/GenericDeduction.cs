@@ -9,7 +9,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the various types of deduction that can be made from payroll.
 /// </summary>
-public record GenericDeduction : IDeductionDetails
+public class GenericDeduction : IDeductionDetails
 {
     /// <summary>
     /// Gets or sets the short name for this type of deduction.

@@ -11,7 +11,7 @@ namespace Payetools.ReferenceData.Calendar;
 /// <summary>
 /// Used to deserialise the public holiday dataset from gov.uk available at <see href="https://www.gov.uk/bank-holidays.json"/>.
 /// </summary>
-public record PublicHolidaysCatalog
+public class PublicHolidaysCatalog
 {
     /// <summary>
     /// Gets the public holiday information for England and Wales.

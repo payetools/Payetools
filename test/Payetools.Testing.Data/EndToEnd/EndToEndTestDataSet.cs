@@ -6,7 +6,7 @@
 
 namespace Payetools.Testing.Data.EndToEnd;
 
-public record EndToEndTestDataSet : IEndToEndTestDataSet
+public class EndToEndTestDataSet : IEndToEndTestDataSet
 {
     public List<IDeductionsTestDataEntry> DeductionDefinitions { get; set; } = default!;
 

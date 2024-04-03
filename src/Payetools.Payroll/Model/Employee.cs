@@ -12,7 +12,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents an employee for payroll purposes.
 /// </summary>
-public record Employee : IEmployee
+public class Employee : IEmployee
 {
     /// <summary>
     /// Gets the individual's title, e.g., Mr, Mrs, Miss, Dr., etc.

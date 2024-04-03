@@ -9,7 +9,7 @@ namespace Payetools.Common.Model;
 /// <summary>
 /// Represents a UK Postcode.
 /// </summary>
-public record UkPostcode
+public readonly struct UkPostcode
 {
     // ^(([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ -]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX)$
 

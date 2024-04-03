@@ -9,6 +9,6 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the information from a P45 provided from previous employment.
 /// </summary>
-public record P45FromPreviousEmployment
+public class P45FromPreviousEmployment
 {
 }

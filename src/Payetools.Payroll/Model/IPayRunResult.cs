@@ -20,9 +20,9 @@ public interface IPayRunResult
     IEmployer Employer { get; }
 
     /// <summary>
-    /// Gets the pay date for this pay run.
+    /// Gets the pay date and pay period for this pay run.
     /// </summary>
-    PayDate PayDate { get; }
+    IPayRunDetails PayRunDetails { get; }
 
     /// <summary>
     /// Gets the list of employee pay run entries.

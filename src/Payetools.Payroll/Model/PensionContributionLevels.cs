@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Defines the levels to be applied for contributions into an employee's pension.
 /// </summary>
-public record PensionContributionLevels : IPensionContributionLevels
+public class PensionContributionLevels : IPensionContributionLevels
 {
     /// <summary>
     /// Gets the employee contribution level, either expressed in percentage points (i.e., 5% = 5.0m)

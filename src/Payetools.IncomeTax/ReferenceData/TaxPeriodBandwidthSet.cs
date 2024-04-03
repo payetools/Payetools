@@ -14,7 +14,7 @@ namespace Payetools.IncomeTax.ReferenceData;
 /// Example, for weekly payrolls and relating to tax period one, the cumulative thresholds and tax values are calculated as
 /// 1/52th of the annual amount.
 /// </summary>
-public record TaxPeriodBandwidthSet
+public class TaxPeriodBandwidthSet
 {
     /// <summary>
     /// Gets the set of tax bandwidth entries for the given tax regime, tax year and tax period/pay frequency

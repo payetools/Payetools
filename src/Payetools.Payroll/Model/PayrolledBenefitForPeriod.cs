@@ -9,7 +9,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents a payrolled benefit as applicable to one payroll period.
 /// </summary>
-public record PayrolledBenefitForPeriod : IPayrolledBenefitForPeriod
+public class PayrolledBenefitForPeriod : IPayrolledBenefitForPeriod
 {
     /// <summary>
     /// Gets the amount of benefit to apply for the period.

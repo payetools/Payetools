@@ -13,7 +13,7 @@ namespace Payetools.ReferenceData.IncomeTax;
 /// <summary>
 /// Record that represents a set of tax bands for a given tax regime (as specified by the <see cref="ApplicableCountries"/> property).
 /// </summary>
-public record IncomeTaxBandEntry
+public class IncomeTaxBandEntry
 {
     /// <summary>
     /// Gets the set of countries within the UK that this set of tax bands refer to.

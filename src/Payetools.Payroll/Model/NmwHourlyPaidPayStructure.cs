@@ -14,7 +14,7 @@ namespace Payetools.Payroll.Model;
 /// Represents an hourly paid pay structure that tracks National Minimum/Living Wage
 /// levels.
 /// </summary>
-public record NmwHourlyPaidPayStructure : IEmployeePayStructure
+public class NmwHourlyPaidPayStructure : IEmployeePayStructure
 {
     /// <inheritdoc/>>
     public Guid Id { get; init; }

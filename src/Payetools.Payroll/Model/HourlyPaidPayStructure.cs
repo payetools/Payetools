@@ -9,7 +9,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the pay structure for hourly paid employees.
 /// </summary>
-public record HourlyPaidPayStructure : IEmployeePayStructure
+public class HourlyPaidPayStructure : IEmployeePayStructure
 {
     /// <inheritdoc/>>
     public Guid Id { get; init; }

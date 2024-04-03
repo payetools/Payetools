@@ -12,7 +12,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents an employer for payroll purposes.
 /// </summary>
-public record Employer : IEmployer
+public class Employer : IEmployer
 {
     /// <summary>
     /// Gets the legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.

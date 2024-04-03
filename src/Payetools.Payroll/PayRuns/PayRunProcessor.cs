@@ -27,7 +27,7 @@ public class PayRunProcessor : IPayRunProcessor
     }
 
     /// <summary>
-    /// Processes this payrun.
+    /// Processes this pay run.
     /// </summary>
     /// <param name="employer">Employer that this processing relates to.</param>
     /// <param name="employeePayRunEntries">List of payrun information for each employee in the payrun.</param>
@@ -35,17 +35,14 @@ public class PayRunProcessor : IPayRunProcessor
     /// of this payrun.</param>
     public void Process(IEmployer employer, List<IEmployeePayRunInputEntry> employeePayRunEntries, out IPayRunResult result)
     {
-        result = new PayRunResult()
-        {
-            EmployeePayRunEntries = employeePayRunEntries.Select(entry =>
+        result = new PayRunResult(
+            employer,
+            new PayRunDetails(_payrunCalculator.PayDate, _payrunCalculator.PayPeriod),
+            employeePayRunEntries.Select(entry =>
                 {
                     _payrunCalculator.Process(entry, out var employeeResult);
-
                     return employeeResult;
                 })
-                .ToImmutableArray(),
-            Employer = employer,
-            PayDate = _payrunCalculator.PayDate
-        };
+                .ToImmutableArray());
     }
 }

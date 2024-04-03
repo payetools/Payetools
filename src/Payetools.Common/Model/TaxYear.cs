@@ -15,7 +15,7 @@ namespace Payetools.Common.Model;
 /// <remarks><see cref="TaxYear"/> provides utility methods to access the relevant tax regimes (i.e., sub-countries
 /// within the UK) which have changed over the period 2018 to date.  TaxYear also provides conversions from dates
 /// to tax periods, based on payment frequency.</remarks>
-public record TaxYear
+public readonly struct TaxYear
 {
     private static readonly CountriesForTaxPurposes DefaultCountriesBefore6Apr2020 =
         CountriesForTaxPurposes.England | CountriesForTaxPurposes.Wales | CountriesForTaxPurposes.NorthernIreland;

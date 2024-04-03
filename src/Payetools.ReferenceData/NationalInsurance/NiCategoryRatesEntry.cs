@@ -12,7 +12,7 @@ namespace Payetools.ReferenceData.NationalInsurance;
 /// <summary>
 /// Represents a set of National Insurance rates applicable to a specific NI category.
 /// </summary>
-public record NiCategoryRatesEntry : INiCategoryRatesEntry
+public class NiCategoryRatesEntry : INiCategoryRatesEntry
 {
     /// <summary>Gets the applicable National Insurance Category.</summary>
     public NiCategory Category { get; }

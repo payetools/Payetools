@@ -12,7 +12,7 @@ namespace Payetools.ReferenceData.NationalInsurance;
 /// <summary>
 /// Record that represents the employee NI rates to be applied at various earnings thresholds.
 /// </summary>
-public record NiEmployeeRatesEntry
+public class NiEmployeeRatesEntry
 {
     /// <summary>
     /// Gets the list of applicable NI categories for this rates entry.
