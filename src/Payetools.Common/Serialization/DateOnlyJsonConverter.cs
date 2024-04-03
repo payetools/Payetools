@@ -24,7 +24,10 @@ public class DateOnlyJsonConverter : JsonConverter<DateOnly>
     /// <param name="typeToConvert">Type to convert (unused).</param>
     /// <param name="options">JSON serializer options (unused).</param>
     /// <returns><see cref="DateOnly"/> value.</returns>
-    public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+    public override DateOnly Read(
+        ref Utf8JsonReader reader,
+        /* in */ Type typeToConvert,
+        /* in */ JsonSerializerOptions options) =>
         DateOnly.ParseExact(reader.GetString() ?? string.Empty, DateOnlyJsonFormat, CultureInfo.InvariantCulture);
 
     /// <summary>
@@ -33,6 +36,9 @@ public class DateOnlyJsonConverter : JsonConverter<DateOnly>
     /// <param name="writer">JSON writer (UTF-8 format).</param>
     /// <param name="value">DateOnly value to convert.</param>
     /// <param name="options">JSON serializer options (unused).</param>
-    public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options) =>
+    public override void Write(
+        /* in */ Utf8JsonWriter writer,
+        /* in */ DateOnly value,
+        /* in */ JsonSerializerOptions options) =>
         writer.WriteStringValue(value.ToString(DateOnlyJsonFormat, CultureInfo.InvariantCulture));
 }

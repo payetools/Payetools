@@ -50,14 +50,4 @@ public sealed record PayrollId
     /// </summary>
     /// <param name="payrollId">String representation of payroll ID.</param>
     public static implicit operator PayrollId(in string payrollId) => new PayrollId(payrollId);
-
-    /// <summary>
-    /// Parses the supplied payroll ID.  TBA.
-    /// </summary>
-    /// <param name="value">Value to parse.</param>
-    /// <returns>Parsed value.  TBA.</returns>
-    public static PayrollId Parse(in string value)
-    {
-        return new PayrollId(value);
-    }
 }

@@ -24,7 +24,10 @@ public class CountriesForTaxPurposesJsonConverter : JsonConverter<CountriesForTa
     /// <param name="typeToConvert">Type to convert (unused).</param>
     /// <param name="options">JSON serializer options (unused).</param>
     /// <returns><see cref="CountriesForTaxPurposes"/> value.</returns>
-    public override CountriesForTaxPurposes Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+    public override CountriesForTaxPurposes Read(
+        ref Utf8JsonReader reader,
+        /* in */ Type typeToConvert,
+        /* in */ JsonSerializerOptions options) =>
         CountriesForTaxPurposesConverter.ToEnum(reader.GetString());
 
     /// <summary>
@@ -34,6 +37,9 @@ public class CountriesForTaxPurposesJsonConverter : JsonConverter<CountriesForTa
     /// <param name="writer">JSON writer (UTF-8 format).</param>
     /// <param name="value">Enum value(s) to convert.</param>
     /// <param name="options">JSON serializer options (unused).</param>
-    public override void Write(Utf8JsonWriter writer, CountriesForTaxPurposes value, JsonSerializerOptions options) =>
+    public override void Write(
+        /* in */ Utf8JsonWriter writer,
+        /* in */ CountriesForTaxPurposes value,
+        /* in */ JsonSerializerOptions options) =>
         writer.WriteStringValue(CountriesForTaxPurposesConverter.ToString(value));
 }
