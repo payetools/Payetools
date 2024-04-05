@@ -81,6 +81,11 @@ public interface IEmployment
     bool IsIrregularlyPaid { get;  }
 
     /// <summary>
+    /// Gets a value indicating whether the employee is an off-payroll worker.
+    /// </summary>
+    bool IsOffPayrollWorker { get; init; }
+
+    /// <summary>
     /// Gets the default pension contributions to apply in each pay period, unless overridden by employee
     /// or employer instruction for that pay period.
     /// </summary>

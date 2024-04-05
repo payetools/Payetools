@@ -88,6 +88,11 @@ public class Employment : IEmployment
     public bool IsIrregularlyPaid { get; init;  }
 
     /// <summary>
+    /// Gets a value indicating whether the employee is an off-payroll worker.
+    /// </summary>
+    public bool IsOffPayrollWorker { get; init; }
+
+    /// <summary>
     /// Gets the list of payrolled benefits that apply to this employment.
     /// </summary>
     public ImmutableArray<IPayrolledBenefit> PayrolledBenefits { get; init; } = default!;
