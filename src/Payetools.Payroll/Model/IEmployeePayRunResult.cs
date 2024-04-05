@@ -17,11 +17,6 @@ namespace Payetools.Payroll.Model;
 /// </summary>
 public interface IEmployeePayRunResult
 {
-    // /// <summary>
-    // /// Gets information about this payrun.
-    // /// </summary>
-    // ref IPayRunDetails PayRunDetails { get; }
-
     /// <summary>
     /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of
     /// this field can be used as a hand to get access to the employee.

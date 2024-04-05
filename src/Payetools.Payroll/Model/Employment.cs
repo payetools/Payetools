@@ -83,6 +83,11 @@ public class Employment : IEmployment
     public IPensionContributionLevels DefaultPensionContributionLevels { get; init; } = default!;
 
     /// <summary>
+    /// Gets a value indicating whether the employee is paid on an irregular basis.
+    /// </summary>
+    public bool IsIrregularlyPaid { get; init;  }
+
+    /// <summary>
     /// Gets the list of payrolled benefits that apply to this employment.
     /// </summary>
     public ImmutableArray<IPayrolledBenefit> PayrolledBenefits { get; init; } = default!;

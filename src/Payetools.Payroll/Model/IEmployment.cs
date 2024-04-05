@@ -76,6 +76,11 @@ public interface IEmployment
     IPensionScheme? PensionScheme { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the employee is paid on an irregular basis.
+    /// </summary>
+    bool IsIrregularlyPaid { get;  }
+
+    /// <summary>
     /// Gets the default pension contributions to apply in each pay period, unless overridden by employee
     /// or employer instruction for that pay period.
     /// </summary>
