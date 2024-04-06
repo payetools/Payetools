@@ -99,10 +99,4 @@ public interface IEmployeePayRunResult
     /// Gets a value indicating whether the employee has shared parental pay in this pay run.
     /// </summary>
     bool HasSharedParentalPayInPeriod { get; }
-
-    /// <summary>
-    /// Gets the total amount of statutory deductions made as part of the pay run.
-    /// </summary>
-    /// <returns>Total amount of statutory deductions made as part of the pay run.  May be zero.</returns>
-    decimal GetStatutoryDeductions();
 }

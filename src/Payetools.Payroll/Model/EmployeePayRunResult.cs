@@ -15,14 +15,19 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents a payrun entry for one employee for a specific payrun.
 /// </summary>
-public class EmployeePayRunResult : IEmployeePayRunResult
+public record EmployeePayRunResult : IEmployeePayRunResult
 {
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
     private IStudentLoanCalculationResult? _studentLoanCalculationResult;
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
-    private IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult;
+    private IAttachmentOfEarningsCalculationResult? _attachmentOfEarningsCalculationResult;
     private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
+
+    /// <summary>
+    /// Gets information about this payrun.
+    /// </summary>
+    public ref IPayRunDetails PayRunDetails { get => throw new NotImplementedException(); }
 
     /// <summary>
     /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of
@@ -68,7 +73,7 @@ public class EmployeePayRunResult : IEmployeePayRunResult
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    public ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult => ref attachmentOfEarningsCalculationResult;
+    public ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,
@@ -123,12 +128,16 @@ public class EmployeePayRunResult : IEmployeePayRunResult
     /// employee does not have any outstanding student or post-graduate loans.</param>
     /// <param name="pensionContributionCalculation">Optional result of pension calculation.  Null if the
     /// employee is not a member of one of the company's schemes.</param>
+    /// <param name="attachmentOfEarningsCalculationResult">Optional result of any attachment of earnings calculations. Null
+    /// if no attachment of earnings apply.</param>
     /// <param name="totalGrossPay">Total gross pay.</param>
     /// <param name="workingGrossPay">Total gross pay less any deductions that reduce taxable/Nicable pay
     /// and should be deducted before calculating net pay.</param>
     /// <param name="taxablePay">Pay subject to income tax.</param>
     /// <param name="nicablePay">Pay subject to National Insurance.</param>
     /// <param name="payrollBenefitsInPeriod">Payrolled benefits in period.</param>
+    /// <param name="otherDeductions">Any deductions outside of income tax, National Insurance, student loans and
+    /// attachment of earnings orders.</param>
     /// <param name="employeePayrollHistoryYtd">Historical set of information for an employee's payroll for the
     /// current tax year, not including the effect of this pay run.</param>
     /// <param name="isLeaverInThisPayRun">True if the employee is being marked as left in this pay run. Defaults to false.</param>
@@ -138,13 +147,15 @@ public class EmployeePayRunResult : IEmployeePayRunResult
         IEmployment employment,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
-        ref IStudentLoanCalculationResult studentLoanCalculationResult,
-        ref IPensionContributionCalculationResult pensionContributionCalculation,
+        ref IStudentLoanCalculationResult? studentLoanCalculationResult,
+        ref IPensionContributionCalculationResult? pensionContributionCalculation,
+        ref IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult,
         decimal totalGrossPay,
         decimal workingGrossPay,
         decimal taxablePay,
         decimal nicablePay,
         decimal? payrollBenefitsInPeriod,
+        decimal? otherDeductions,
         ref IEmployeePayrollHistoryYtd employeePayrollHistoryYtd,
         bool isLeaverInThisPayRun = false,
         bool hasSharedParentalPayInPeriod = false)
@@ -154,39 +165,45 @@ public class EmployeePayRunResult : IEmployeePayRunResult
         _niCalculationResult = niCalculationResult;
         _studentLoanCalculationResult = studentLoanCalculationResult;
         _pensionContributionCalculationResult = pensionContributionCalculation;
+        _attachmentOfEarningsCalculationResult = attachmentOfEarningsCalculationResult;
         TotalGrossPay = totalGrossPay;
         WorkingGrossPay = workingGrossPay;
         TaxablePay = taxablePay;
         NicablePay = nicablePay;
-        NetPay = CalculateNetPay(totalGrossPay, taxCalculationResult.FinalTaxDue, niCalculationResult.EmployeeContribution,
-            GetEmployeePensionDeduction(pensionContributionCalculation), studentLoanCalculationResult.TotalDeduction);
+        NetPay = CalculateNetPay(
+            totalGrossPay,
+            taxCalculationResult.FinalTaxDue,
+            niCalculationResult.EmployeeContribution,
+            GetEmployeePensionDeduction(pensionContributionCalculation),
+            studentLoanCalculationResult?.TotalDeduction,
+            attachmentOfEarningsCalculationResult?.TotalDeduction,
+            otherDeductions);
         PayrollBenefitsInPeriod = payrollBenefitsInPeriod;
         _employeePayrollHistoryYtd = employeePayrollHistoryYtd;
         IsLeaverInThisPayRun = isLeaverInThisPayRun;
         HasSharedParentalPayInPeriod = hasSharedParentalPayInPeriod;
     }
 
-    /// <summary>
-    /// Gets the total amount of statutory deductions made as part of the pay run.
-    /// </summary>
-    /// <returns>Total amount of statutory deductions made as part of the pay run.  May be zero.</returns>
-    /// <remarks>Statutory deductions consist of income tax due, employee's NI contribution, any
-    /// student loan repayments, any pension contribution made under Net Pay Arrangement plus
-    /// any attachment of earnings order payments.</remarks>
-    public decimal GetStatutoryDeductions() =>
-        TaxCalculationResult.FinalTaxDue +
-        NiCalculationResult.EmployeeContribution +
-        StudentLoanCalculationResult?.TotalDeduction ?? 0.0m +
-        PensionContributionCalculationResult?.GetEmployeeContributionsUnderNpa() ?? 0.0m +
-        AttachmentOfEarningsCalculationResult?.TotalDeduction ?? 0.0m;
+    private static decimal CalculateNetPay(
+        decimal totalGrossPay,
+        decimal incomeTax,
+        decimal nationalInsurance,
+        decimal employeePension,
+        decimal? studentLoan,
+        decimal? attachmentOfEarningsDeductions,
+        decimal? otherDeductions) =>
+        totalGrossPay -
+            incomeTax -
+            nationalInsurance -
+            employeePension -
+            (studentLoan ?? 0.0m) -
+            (attachmentOfEarningsDeductions ?? 0.0m) -
+            (otherDeductions ?? 0.0m);
 
-    private static decimal CalculateNetPay(decimal totalGrossPay, decimal incomeTax, decimal nationalInsurance, decimal employeePension, decimal? studentLoan) =>
-        totalGrossPay - incomeTax - nationalInsurance - employeePension - (studentLoan ?? 0.0m);
-
-    private static decimal GetEmployeePensionDeduction(IPensionContributionCalculationResult pensionContributionCalculation)
-    {
-        return pensionContributionCalculation.SalaryExchangeApplied ?
-            pensionContributionCalculation.SalaryExchangedAmount ?? 0.0m :
-            pensionContributionCalculation.CalculatedEmployeeContributionAmount;
-    }
+    private static decimal GetEmployeePensionDeduction(IPensionContributionCalculationResult? pensionContributionCalculation) =>
+        pensionContributionCalculation != null ?
+                (pensionContributionCalculation.SalaryExchangeApplied ?
+                pensionContributionCalculation.SalaryExchangedAmount ?? 0.0m :
+                pensionContributionCalculation.CalculatedEmployeeContributionAmount) :
+            0.0m;
 }

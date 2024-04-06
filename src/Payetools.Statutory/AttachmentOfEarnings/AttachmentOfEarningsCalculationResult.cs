@@ -7,12 +7,12 @@
 namespace Payetools.Statutory.AttachmentOfEarnings;
 
 /// <summary>
-/// Interface that represents the results of an attachment of earnings calculation.
+/// Entity that represents the results of an attachment of earnings calculation.
 /// </summary>
-public interface IAttachmentOfEarningsCalculationResult
+public readonly struct AttachmentOfEarningsCalculationResult : IAttachmentOfEarningsCalculationResult
 {
     /// <summary>
     /// Gets the total deduction applicable as a result of any attachment of earnings orders.
     /// </summary>
-    public decimal TotalDeduction { get; }
+    public decimal TotalDeduction => throw new NotImplementedException();
 }

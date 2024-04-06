@@ -106,17 +106,12 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         var workingGrossPay = earningsTotals.WorkingGrossPay;
         var taxablePay = earningsTotals.TaxablePay;
         var nicablePay = earningsTotals.NicablePay;
-        INiCalculationResult niCalculationResult;
-        IPensionContributionCalculationResult pensionContributions;
+        IPensionContributionCalculationResult? pensionContributions = null;
 
         // Calculate National Insurance first in case it is needed for salary sacrifice
-        CalculateNiContributions(entry, nicablePay, out niCalculationResult);
+        CalculateNiContributions(entry, nicablePay, out INiCalculationResult niCalculationResult);
 
-        if (entry.Employment.PensionScheme == null)
-        {
-            pensionContributions = PensionContributionCalculationResult.NoPensionApplicable;
-        }
-        else
+        if (entry.Employment.PensionScheme != null)
         {
             var key = (entry.Employment.PensionScheme.EarningsBasis, entry.Employment.PensionScheme.TaxTreatment);
 
@@ -168,13 +163,13 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             entry.Employment.PayrollHistoryYtd.TaxUnpaidDueToRegulatoryLimit,
             out var taxCalculationResult);
 
-        IStudentLoanCalculationResult studentLoanCalculationResult;
+        IStudentLoanCalculationResult? studentLoanCalculationResult = null;
 
-        if (entry.Employment.StudentLoanInfo == null)
-            studentLoanCalculationResult = StudentLoanCalculationResult.NoStudentLoanApplicable;
-        else
+        if (entry.Employment.StudentLoanInfo != null)
             _studentLoanCalculator.Calculate(workingGrossPay, entry.Employment.StudentLoanInfo?.StudentLoanType,
                 entry.Employment.StudentLoanInfo?.HasPostGradLoan == true, out studentLoanCalculationResult);
+
+        IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult = null;
 
         result = new EmployeePayRunResult(
             entry.Employment,
@@ -182,11 +177,13 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             ref niCalculationResult,
             ref studentLoanCalculationResult,
             ref pensionContributions,
+            ref attachmentOfEarningsCalculationResult,
             earningsTotals.GrossPay,
             workingGrossPay,
             taxablePay,
             nicablePay,
             earningsTotals.BenefitsInKind,
+            0.0m, // otherDeductions,
             ref entry.Employment.PayrollHistoryYtd,
             entry.IsLeaverInThisPayRun,
             entry.IsPaymentAfterLeaving);
