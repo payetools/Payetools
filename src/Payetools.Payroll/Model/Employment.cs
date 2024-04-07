@@ -37,7 +37,7 @@ public class Employment : IEmployment
     /// <summary>
     /// Gets the normal hours worked by the employee in one of several bands established by HMRC.
     /// </summary>
-    public NormalHoursWorkedBand NormalHoursWorkedBand { get; }
+    public NormalHoursWorkedBand NormalHoursWorkedBand { get; init; }
 
     /// <summary>
     /// Gets the employee's NI category.
