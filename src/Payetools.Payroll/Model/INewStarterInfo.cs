@@ -32,7 +32,7 @@ public interface INewStarterInfo
     public StudentLoanType? StudentLoanType { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether post-graduate loan deductions should continue.
+    /// Gets or sets a value indicating whether postgraduate loan deductions should continue.
     /// </summary>
-    public bool GraduateLoanDeductionNeeded { get; set; }
+    public bool PostgraduateLoanDeductionNeeded { get; set; }
 }
