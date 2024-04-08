@@ -14,25 +14,25 @@ namespace Payetools.Payroll.Model;
 public interface INewStarterInfo
 {
     /// <summary>
-    /// Gets or sets the employee's starter declaration; null if it was not possible to
+    /// Gets the employee's starter declaration; null if it was not possible to
     /// obtain a starter declaration from the employee.
     /// </summary>
-    public StarterDeclaration? StarterDeclaration { get; set; }
+    public StarterDeclaration? StarterDeclaration { get; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether student loan deductions should continue.
+    /// Gets a value indicating whether student loan deductions should continue.
     /// </summary>
     /// <remarks>As a P45 from a previous employer does not indicate the student loan type,
     /// it may be necessary to request the employee's student loan plan type separately.</remarks>
-    public bool StudentLoanDeductionNeeded { get; set; }
+    public bool StudentLoanDeductionNeeded { get; }
 
     /// <summary>
-    /// Gets or sets any applicable student loan type, if known.  (See <see cref="StudentLoanDeductionNeeded"/>).
+    /// Gets any applicable student loan type, if known.  (See <see cref="StudentLoanDeductionNeeded"/>).
     /// </summary>
-    public StudentLoanType? StudentLoanType { get; set; }
+    public StudentLoanType? StudentLoanType { get; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether postgraduate loan deductions should continue.
+    /// Gets a value indicating whether postgraduate loan deductions should continue.
     /// </summary>
-    public bool PostgraduateLoanDeductionNeeded { get; set; }
+    public bool PostgraduateLoanDeductionNeeded { get; }
 }
