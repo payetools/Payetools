@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents a new starter for employment purposes.
 /// </summary>
-public interface INewStarter : IEmployee
+public interface INewStarterInfo
 {
     /// <summary>
     /// Gets or sets the employee's starter declaration; null if it was not possible to
