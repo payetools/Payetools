@@ -60,6 +60,16 @@ public interface IEmployment
     DirectorsNiCalculationMethod? DirectorsNiCalculationMethod { get; }
 
     /// <summary>
+    /// Gets the date the employee was appointed as a director, where appropriate; null otherwise.
+    /// </summary>
+    DateOnly? DirectorsAppointmentDate { get; }
+
+    /// <summary>
+    /// Gets the date the employee ceased to be a director, where appropriate; null otherwise.
+    /// </summary>
+    DateOnly? CeasedToBeDirectorDate { get; }
+
+    /// <summary>
     /// Gets the employee's current student loan status.
     /// </summary>
     StudentLoanInfo? StudentLoanInfo { get; }

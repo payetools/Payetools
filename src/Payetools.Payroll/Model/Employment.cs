@@ -61,6 +61,16 @@ public class Employment : IEmployment
     public DirectorsNiCalculationMethod? DirectorsNiCalculationMethod { get; init; }
 
     /// <summary>
+    /// Gets the date the employee was appointed as a director, where appropriate; null otherwise.
+    /// </summary>
+    public DateOnly? DirectorsAppointmentDate { get; init; }
+
+    /// <summary>
+    /// Gets the date the employee ceased to be a director, where appropriate; null otherwise.
+    /// </summary>
+    public DateOnly? CeasedToBeDirectorDate { get; init; }
+
+    /// <summary>
     /// Gets the employee's current student loan status.
     /// </summary>
     public StudentLoanInfo? StudentLoanInfo { get; init; }
