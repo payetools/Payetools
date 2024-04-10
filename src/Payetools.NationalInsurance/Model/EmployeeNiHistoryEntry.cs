@@ -16,8 +16,6 @@ namespace Payetools.NationalInsurance.Model;
 /// </summary>
 public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
 {
-    private readonly NiEarningsBreakdown _niEarningsBreakdown;
-
     /// <summary>
     /// Gets the National Insurance category letter pertaining to this record.
     /// </summary>
@@ -46,62 +44,72 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
     /// <summary>
     /// Gets the earnings up to and including the Lower Earnings Limit for this record.
     /// </summary>
-    public decimal EarningsUpToAndIncludingLEL => _niEarningsBreakdown.EarningsUpToAndIncludingLEL;
+    public decimal EarningsAtLEL { get; init; } = default;
 
     /// <summary>
     /// Gets the earnings up above the Lower Earnings Limit and up to and including the Secondary Threshold
     /// for this record.
     /// </summary>
-    public decimal EarningsAboveLELUpToAndIncludingST => _niEarningsBreakdown.EarningsAboveLELUpToAndIncludingST;
+    public decimal EarningsAboveLELUpToAndIncludingST { get; init; } = default;
 
     /// <summary>
     /// Gets the earnings up above the Secondary Threshold and up to and including the Primary Threshold
     /// for this record.
     /// </summary>
-    public decimal EarningsAboveSTUpToAndIncludingPT => _niEarningsBreakdown.EarningsAboveSTUpToAndIncludingPT;
+    public decimal EarningsAboveSTUpToAndIncludingPT { get; init; } = default;
 
     /// <summary>
     /// Gets the earnings up above the Primary Threshold and up to and including the Freeport Upper Secondary
     /// Threshold for this record.
     /// </summary>
-    public decimal EarningsAbovePTUpToAndIncludingFUST => _niEarningsBreakdown.EarningsAbovePTUpToAndIncludingFUST;
+    public decimal EarningsAbovePTUpToAndIncludingFUST { get; init; } = default;
 
     /// <summary>
     /// Gets the earnings up above the Freeport Upper Secondary Threshold and up to and including the Upper
     /// Earnings Limit for this record.
     /// </summary>
-    public decimal EarningsAboveFUSTUpToAndIncludingUEL => _niEarningsBreakdown.EarningsAboveFUSTUpToAndIncludingUEL;
+    public decimal EarningsAboveFUSTUpToAndIncludingUEL { get; init; } = default;
 
     /// <summary>
     /// Gets the earnings up above the Upper Earnings Limit for this record.
     /// </summary>
-    public decimal EarningsAboveUEL => _niEarningsBreakdown.EarningsAboveUEL;
+    public decimal EarningsAboveUEL { get; init; } = default;
 
     /// <summary>
     /// Gets the earnings up above the Secondary Threshold and up to and including the Upper Earnings Limit
     /// for this record.
     /// </summary>
-    public decimal EarningsAboveSTUpToAndIncludingUEL => _niEarningsBreakdown.EarningsAboveSTUpToAndIncludingUEL;
+    public decimal EarningsAboveSTUpToAndIncludingUEL { get; init; } = default;
 
-    /// <summary>
-    /// Initialises a new instance of <see cref="EmployeeNiHistoryEntry"/>.
-    /// </summary>
-    /// <param name="niCategoryPertaining">NI category for this record.</param>
-    /// <param name="niEarningsBreakdown">NI earnings breakdown for this record.</param>
-    /// <param name="grossNicableEarnings">Gross Nicable earnings for this record.</param>
-    /// <param name="employeeContribution">Employee contribution for this record.</param>
-    /// <param name="employerContribution">Employer contribution for this record.</param>
-    /// <param name="totalContribution">Total (i.e., employee + employer) contribution for this record.</param>
-    public EmployeeNiHistoryEntry(
+    // This constructor is used to create a fresh history entry for the specified
+    // NI category. The Add(in INiCalculationResult) method is used to build a new history entry
+    // from an existing history and a new pay run result.
+    private EmployeeNiHistoryEntry(
         NiCategory niCategoryPertaining,
-        NiEarningsBreakdown niEarningsBreakdown,
+        decimal grossNicableEarnings,
+        decimal employeeContribution,
+        decimal employerContribution,
+        decimal totalContribution,
+        NiEarningsBreakdown niEarningsBreakdown)
+        : this(niCategoryPertaining, grossNicableEarnings, employeeContribution, employerContribution, totalContribution)
+    {
+        EarningsAtLEL = niEarningsBreakdown.EarningsUpToAndIncludingLEL;
+        EarningsAboveLELUpToAndIncludingST = niEarningsBreakdown.EarningsAboveLELUpToAndIncludingST;
+        EarningsAboveSTUpToAndIncludingPT = niEarningsBreakdown.EarningsAboveSTUpToAndIncludingPT;
+        EarningsAbovePTUpToAndIncludingFUST = niEarningsBreakdown.EarningsAbovePTUpToAndIncludingFUST;
+        EarningsAboveFUSTUpToAndIncludingUEL = niEarningsBreakdown.EarningsAboveFUSTUpToAndIncludingUEL;
+        EarningsAboveUEL = niEarningsBreakdown.EarningsAboveUEL;
+        EarningsAboveSTUpToAndIncludingUEL = niEarningsBreakdown.EarningsAboveSTUpToAndIncludingUEL;
+    }
+
+    private EmployeeNiHistoryEntry(
+        NiCategory niCategoryPertaining,
         decimal grossNicableEarnings,
         decimal employeeContribution,
         decimal employerContribution,
         decimal totalContribution)
     {
         NiCategoryPertaining = niCategoryPertaining;
-        _niEarningsBreakdown = niEarningsBreakdown;
         GrossNicableEarnings = grossNicableEarnings;
         EmployeeContribution = employeeContribution;
         EmployerContribution = employerContribution;
@@ -113,8 +121,8 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
     /// </summary>
     /// <param name="result">NI calculation result.</param>
     public EmployeeNiHistoryEntry(in INiCalculationResult result)
-        : this(result.NiCategory, result.EarningsBreakdown, result.NicablePay, result.EmployeeContribution,
-              result.EmployerContribution, result.TotalContribution)
+        : this(result.NiCategory, result.NicablePay, result.EmployeeContribution,
+              result.EmployerContribution, result.TotalContribution, result.EarningsBreakdown)
     {
     }
 
@@ -129,11 +137,23 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
         if (NiCategoryPertaining != result.NiCategory)
             throw new ArgumentException($"NI calculation result applies to category {result.NiCategory} which is different to previous entry {NiCategoryPertaining}", nameof(result));
 
-        return new EmployeeNiHistoryEntry(this.NiCategoryPertaining,
-            this._niEarningsBreakdown.Add(result.EarningsBreakdown),
+        var breakdown = result.EarningsBreakdown;
+
+        var entry = new EmployeeNiHistoryEntry(this.NiCategoryPertaining,
             GrossNicableEarnings + result.NicablePay,
             EmployeeContribution + result.EmployeeContribution,
             EmployerContribution + result.EmployerContribution,
-            TotalContribution + result.TotalContribution);
+            TotalContribution + result.TotalContribution)
+        {
+            EarningsAtLEL = EarningsAtLEL + (!breakdown.AreEarningsBelowLEL ? breakdown.EarningsUpToAndIncludingLEL : 0.0m),
+            EarningsAboveLELUpToAndIncludingST = EarningsAboveLELUpToAndIncludingST + breakdown.EarningsAboveLELUpToAndIncludingST,
+            EarningsAboveSTUpToAndIncludingPT = EarningsAboveSTUpToAndIncludingPT + breakdown.EarningsAboveSTUpToAndIncludingPT,
+            EarningsAbovePTUpToAndIncludingFUST = EarningsAbovePTUpToAndIncludingFUST + breakdown.EarningsAbovePTUpToAndIncludingFUST,
+            EarningsAboveFUSTUpToAndIncludingUEL = EarningsAboveFUSTUpToAndIncludingUEL + breakdown.EarningsAboveFUSTUpToAndIncludingUEL,
+            EarningsAboveUEL = EarningsAboveUEL + breakdown.EarningsAboveUEL,
+            EarningsAboveSTUpToAndIncludingUEL = EarningsAboveSTUpToAndIncludingUEL + breakdown.EarningsAboveSTUpToAndIncludingUEL
+        };
+
+        return entry;
     }
 }

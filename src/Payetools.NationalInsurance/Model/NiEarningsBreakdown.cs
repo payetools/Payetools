@@ -52,20 +52,7 @@ public struct NiEarningsBreakdown
     public decimal EarningsAboveSTUpToAndIncludingUEL { get; init; }
 
     /// <summary>
-    /// Adds the supplied breakdown to the current state and returns a new instance of <see cref="NiEarningsBreakdown"/>
-    /// with the updated values.
+    /// Gets a value indicating whether the earnings were below the Lower Earnings Limit.
     /// </summary>
-    /// <param name="addedBreakdown">NI breakdown to be added.</param>
-    /// <returns>Combined breakdown as a new <see cref="NiEarningsBreakdown"/> instance.</returns>
-    public NiEarningsBreakdown Add(in NiEarningsBreakdown addedBreakdown) =>
-        new NiEarningsBreakdown()
-        {
-            EarningsUpToAndIncludingLEL = this.EarningsUpToAndIncludingLEL + addedBreakdown.EarningsUpToAndIncludingLEL,
-            EarningsAboveLELUpToAndIncludingST = this.EarningsAboveLELUpToAndIncludingST + addedBreakdown.EarningsAboveLELUpToAndIncludingST,
-            EarningsAboveSTUpToAndIncludingPT = this.EarningsAboveSTUpToAndIncludingPT + addedBreakdown.EarningsAboveSTUpToAndIncludingPT,
-            EarningsAbovePTUpToAndIncludingFUST = this.EarningsAbovePTUpToAndIncludingFUST + addedBreakdown.EarningsAbovePTUpToAndIncludingFUST,
-            EarningsAboveFUSTUpToAndIncludingUEL = this.EarningsAboveFUSTUpToAndIncludingUEL + addedBreakdown.EarningsAboveFUSTUpToAndIncludingUEL,
-            EarningsAboveUEL = this.EarningsAboveUEL + addedBreakdown.EarningsAboveUEL,
-            EarningsAboveSTUpToAndIncludingUEL = this.EarningsAboveSTUpToAndIncludingUEL + addedBreakdown.EarningsAboveSTUpToAndIncludingUEL
-        };
+    public bool AreEarningsBelowLEL { get; init; }
 }

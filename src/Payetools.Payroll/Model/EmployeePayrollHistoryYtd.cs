@@ -4,8 +4,9 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
-using Payetools.Payroll.Extensions;
+using Payetools.Pensions.Model;
 
 namespace Payetools.Payroll.Model;
 
@@ -128,13 +129,60 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
 
     /// <summary>
     /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/> with the supplied payrun result for a
-    /// given employee.  This constructor is intended for use to create the first history record from the first
-    /// payrun of the tax year.
+    /// given employee.  This constructor is intended for use to create the <em>first</em> history record from the
+    /// first pay run of the tax year.
     /// </summary>
     /// <param name="initialResult">Pay run calculation result for the given employee.</param>
-    public EmployeePayrollHistoryYtd(in IEmployeePayRunResult initialResult)
-        : this()
+    /// <returns>New instance that implements <see cref="IEmployeePayrollHistoryYtd"/> populated with the
+    /// values supplied in the pay run result.</returns>
+    public IEmployeePayrollHistoryYtd Initialise(in IEmployeePayRunResult initialResult) =>
+        Add(initialResult);
+
+    /// <summary>
+    /// Adds the results of the payrun provided to the current instance and returns a new instance of
+    /// <see cref="IEmployeePayrollHistoryYtd"/>.</summary>
+    /// <param name="payrunResult">Results of a set of payroll calculations for a given employee.</param>
+    /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results applied.</returns>
+    public IEmployeePayrollHistoryYtd Add(IEmployeePayRunResult payrunResult)
     {
-        this.Add(initialResult);
+        var hasPension = payrunResult.PensionContributionCalculationResult != null;
+
+        return new EmployeePayrollHistoryYtd
+        {
+            // StatutoryMaternityPayYtd +=
+            // StatutoryPaternityPayYtd +=
+            // StatutoryAdoptionPayYtd += q
+            // SharedParentalPayYtd +=
+            // StatutoryParentalBereavementPayYtd +=
+
+            EmployeeNiHistoryEntries = EmployeeNiHistoryEntries.Add(payrunResult.NiCalculationResult),
+            GrossPayYtd = GrossPayYtd + payrunResult.TotalGrossPay,
+            TaxablePayYtd = TaxablePayYtd + payrunResult.TaxablePay,
+            NicablePayYtd = NicablePayYtd + payrunResult.NicablePay,
+            TaxPaidYtd = TaxPaidYtd + payrunResult.TaxCalculationResult.FinalTaxDue,
+            StudentLoanRepaymentsYtd = StudentLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.StudentLoanDeduction ?? 0.0m,
+            PostgraduateLoanRepaymentsYtd = PostgraduateLoanRepaymentsYtd + payrunResult.StudentLoanCalculationResult?.PostgraduateLoanDeduction ?? 0.0m,
+
+            // PayrolledBenefitsYtd = value.PayrolledBenefitsYtd + payrunResult.PayrolledBenefits,
+
+            EmployeePensionContributionsUnderNpaYtd = EmployeePensionContributionsUnderNpaYtd +
+                (hasPension && PensionIsUnderNpa(payrunResult.PensionContributionCalculationResult) ?
+                    payrunResult.PensionContributionCalculationResult!.CalculatedEmployeeContributionAmount : 0.0m),
+
+            EmployeePensionContributionsUnderRasYtd = EmployeePensionContributionsUnderRasYtd +
+                (hasPension && !PensionIsUnderNpa(payrunResult.PensionContributionCalculationResult) ?
+                    payrunResult.PensionContributionCalculationResult!.CalculatedEmployeeContributionAmount : 0.0m),
+
+            EmployerPensionContributionsYtd = EmployerPensionContributionsYtd +
+            payrunResult.PensionContributionCalculationResult?.CalculatedEmployerContributionAmount ?? 0.0m,
+
+            TaxUnpaidDueToRegulatoryLimit = TaxUnpaidDueToRegulatoryLimit + payrunResult.TaxCalculationResult.TaxUnpaidDueToRegulatoryLimit,
+
+            // EarningsHistoryYtd +=
+            // IDeductionHistoryYtd DeductionHistoryYtd +=
+        };
     }
+
+    private static bool PensionIsUnderNpa(IPensionContributionCalculationResult? pensionCalculationResult) =>
+        pensionCalculationResult?.TaxTreatment == PensionTaxTreatment.NetPayArrangement;
 }

@@ -116,4 +116,12 @@ public interface IEmployeePayrollHistoryYtd
     /// Gets the employee's deduction history for the tax year to date.
     /// </summary>
     IDeductionHistoryYtd DeductionHistoryYtd { get; }
+
+    /// <summary>
+    /// Adds the results of the pay run provided to the current instance and returns a new instance of
+    /// <see cref="IEmployeePayrollHistoryYtd"/>.</summary>
+    /// <param name="payrunResult">Results of a set of payroll calculations for a given employee.</param>
+    /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results
+    /// applied.</returns>
+    IEmployeePayrollHistoryYtd Add(IEmployeePayRunResult payrunResult);
 }

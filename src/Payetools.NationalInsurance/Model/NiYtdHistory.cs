@@ -24,7 +24,7 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>
 
     /// <summary>
     /// Returns a new instance of <see cref="NiYtdHistory"/> with the previous history updated by the latest
-    /// payrun result.  Where the most recent entry in the history matches the current NI category, that entry
+    /// payrun result.  Where an entry in the history matches the current NI category, that entry
     /// is updated, but otherwise a new history entry is created and appended.
     /// </summary>
     /// <param name="latestNiCalculationResult">Result of this payrun's NI calculation.</param>
@@ -32,15 +32,19 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>
     /// payrun result.</returns>
     public NiYtdHistory Add(in INiCalculationResult latestNiCalculationResult)
     {
-        var lastEntry = _entries.Any() ? _entries.Last() : null;
-        var hasClass1ANics = latestNiCalculationResult.Class1ANicsPayable == null && Class1ANicsYtd == null;
+        int index;
+        var entryAlreadyPresent = false;
 
-        var class1ANicsYtd = hasClass1ANics ?
+        for (index = 0; index < _entries.Length; index++)
+            if (entryAlreadyPresent = _entries[index].NiCategoryPertaining == latestNiCalculationResult.NiCategory)
+                break;
+
+        var class1ANicsYtd = latestNiCalculationResult.Class1ANicsPayable == null && Class1ANicsYtd == null ?
             null :
             latestNiCalculationResult.Class1ANicsPayable ?? 0.0m + Class1ANicsYtd;
 
-        return lastEntry?.NiCategoryPertaining == latestNiCalculationResult.NiCategory ?
-            new NiYtdHistory(_entries.ReplaceLast(lastEntry.Add(latestNiCalculationResult)), class1ANicsYtd) :
+        return entryAlreadyPresent ?
+            new NiYtdHistory(_entries.ReplaceAt(index, _entries[index].Add(latestNiCalculationResult)), class1ANicsYtd) :
             new NiYtdHistory(_entries.Add(new EmployeeNiHistoryEntry(latestNiCalculationResult)), class1ANicsYtd);
     }
 

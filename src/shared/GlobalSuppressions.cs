@@ -36,3 +36,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = ".NET 8.0 or above")]
 [assembly: SuppressMessage("Style", "IDE0300:Simplify collection initialization", Justification = ".NET 8.0 or above")]
 [assembly: SuppressMessage("Style", "IDE0090:Use 'new(...)'", Justification = "Preference")]
+[assembly: SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1519:Braces should not be omitted from multi-line child statement", Justification = "Matter of preference", Scope = "member", Target = "~M:Payetools.NationalInsurance.Model.NiYtdHistory.Add(Payetools.NationalInsurance.Model.INiCalculationResult@)~Payetools.NationalInsurance.Model.NiYtdHistory")]

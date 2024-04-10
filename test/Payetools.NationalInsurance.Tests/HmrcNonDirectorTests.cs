@@ -6,9 +6,11 @@
 
 using FluentAssertions;
 using Payetools.Common.Model;
+using Payetools.NationalInsurance.Model;
 using Payetools.Testing.Data;
 using Payetools.Testing.Data.NationalInsurance;
 using Xunit.Abstractions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Payetools.NationalInsurance.Tests;
 
@@ -26,7 +28,10 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
     [Fact]
     public async Task RunAllNonDirectorTests_2022_2023()
     {
-        await RunAllNonDirectorTests(new TaxYear(TaxYearEnding.Apr5_2023));
+        var taxYear = new TaxYear(TaxYearEnding.Apr5_2023);
+
+        await RunAllNonDirectorTests(taxYear);
+        await RunLowIncomeTestAsync(taxYear);
     }
 
     [Fact]
@@ -74,6 +79,20 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
         }
 
         Output.WriteLine($"{testsCompleted} tests completed");
+    }
+
+    private async Task RunLowIncomeTestAsync(TaxYear taxYear)
+    {
+        var earnings = 15.50m;
+
+        var payDate = new PayDate(taxYear.GetLastDayOfTaxPeriod(PayFrequency.Weekly, 32), PayFrequency.Weekly);
+        var calculator = await GetCalculator(payDate);
+        calculator.Calculate(NiCategory.A, earnings, out var result);
+
+        result.EmployeeContribution.Should().Be(0.0m, "Low income NI test #1");
+        result.EmployerContribution.Should().Be(0.0m, "Low income NI test #2");
+        result.EarningsBreakdown.EarningsUpToAndIncludingLEL.Should().Be(0);
+        result.EarningsBreakdown.AreEarningsBelowLEL.Should().BeFalse("Low income NI test #3");
     }
 
     private async Task<INiCalculator> GetCalculator(PayDate payDate)

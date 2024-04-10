@@ -42,9 +42,10 @@ public interface IEmployeeNiHistoryEntry
     decimal TotalContribution { get; }
 
     /// <summary>
-    /// Gets the earnings up to and including the Lower Earnings Limit for this record.
+    /// Gets the earnings at the Lower Earnings Limit for this record. (Earnings below the LEL are
+    /// ignored for historical purposes).
     /// </summary>
-    decimal EarningsUpToAndIncludingLEL { get; }
+    decimal EarningsAtLEL { get; }
 
     /// <summary>
     /// Gets the earnings up above the Lower Earnings Limit and up to and including the Secondary Threshold

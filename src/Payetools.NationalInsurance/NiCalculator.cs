@@ -164,7 +164,10 @@ public class NiCalculator : INiCalculator
         if (!_niRateEntriesForDirectors.TryGetValue(niCategory, out var rates))
             throw new InvalidOperationException($"Unable to obtain director's National Insurance rates for category {niCategory}");
 
-        GetNiEarningsBreakdownFromCalculationResults(results, out var earningsBreakdown);
+        GetNiEarningsBreakdownFromCalculationResults(
+            results,
+            _niPeriodThresholds.GetThreshold(LEL),
+            out var earningsBreakdown);
 
         var totalEmployeesNiDue = CalculateEmployeesNi(rates, results);
         var totalEmployersNiDue = CalculateEmployersNi(rates, results);
@@ -239,7 +242,10 @@ public class NiCalculator : INiCalculator
         if (!ratesRetrievedOkay || rates == null)
             throw new InvalidOperationException($"Unable to obtain National Insurance rates for category {niCategory}");
 
-        GetNiEarningsBreakdownFromCalculationResults(results, out var earningsBreakdown);
+        GetNiEarningsBreakdownFromCalculationResults(
+            results,
+            _niPeriodThresholds.GetThreshold(LEL),
+            out var earningsBreakdown);
 
         result = new NiCalculationResult(
             niCategory,
@@ -285,7 +291,10 @@ public class NiCalculator : INiCalculator
             .NiRound();
     }
 
-    private static void GetNiEarningsBreakdownFromCalculationResults(decimal[] calculationStepResults, out NiEarningsBreakdown breakdown)
+    private static void GetNiEarningsBreakdownFromCalculationResults(
+        decimal[] calculationStepResults,
+        decimal lelThreshold,
+        out NiEarningsBreakdown breakdown)
     {
         if (calculationStepResults.Length != NiCalculator.CalculationStepCount)
             throw new InvalidOperationException($"Unexpected number of calculation step results; should be {NiCalculator.CalculationStepCount}, was {calculationStepResults.Length}");
@@ -298,7 +307,8 @@ public class NiCalculator : INiCalculator
             EarningsAbovePTUpToAndIncludingFUST = calculationStepResults[Step4],
             EarningsAboveFUSTUpToAndIncludingUEL = calculationStepResults[Step5],
             EarningsAboveUEL = calculationStepResults[Step6],
-            EarningsAboveSTUpToAndIncludingUEL = calculationStepResults[Step3] + calculationStepResults[Step4] + calculationStepResults[Step5]
+            EarningsAboveSTUpToAndIncludingUEL = calculationStepResults[Step3] + calculationStepResults[Step4] + calculationStepResults[Step5],
+            AreEarningsBelowLEL = calculationStepResults[Step1] < lelThreshold
         };
     }
 }

@@ -7,11 +7,13 @@
 using FluentAssertions;
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
+using Payetools.NationalInsurance.ReferenceData;
 using Payetools.Payroll.Extensions;
 using Payetools.Payroll.Model;
 using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
 using Payetools.Testing.Data.EndToEnd;
+using System.Collections;
 using System.Collections.Immutable;
 using Xunit.Abstractions;
 
@@ -118,22 +120,27 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         in List<INiYtdHistoryTestDataEntry> niYtdHistory, out IEmployeePayrollHistoryYtd history)
     {
         var niHistoryEntries = niYtdHistory.Select(nih => new EmployeeNiHistoryEntry(
-            nih.NiCategoryPertaining,
-            new NiEarningsBreakdown()
-            {
-                EarningsUpToAndIncludingLEL = nih.EarningsUpToAndIncludingLEL,
-                EarningsAboveLELUpToAndIncludingST = nih.EarningsAboveLELUpToAndIncludingST,
-                EarningsAboveSTUpToAndIncludingPT = nih.EarningsAboveSTUpToAndIncludingPT,
-                EarningsAbovePTUpToAndIncludingFUST = nih.EarningsAbovePTUpToAndIncludingFUST,
-                EarningsAboveFUSTUpToAndIncludingUEL = nih.EarningsAboveFUSTUpToAndIncludingUEL,
-                EarningsAboveSTUpToAndIncludingUEL = nih.EarningsAboveSTUpToAndIncludingUEL,
-                EarningsAboveUEL = nih.EarningsAboveUEL
-            },
-            nih.GrossNicableEarnings,
-            nih.EmployeeContribution,
-            nih.EmployerContribution,
-            nih.TotalContribution) as IEmployeeNiHistoryEntry)
-            .ToImmutableArray();
+            new NiCalculationResult(
+                nih.NiCategoryPertaining,
+                nih.GrossNicableEarnings,
+                new TestNiCategoryRatesEntry(),
+                new TestNiThresholdSet(),
+                new NiEarningsBreakdown()
+                {
+                    EarningsUpToAndIncludingLEL = nih.EarningsUpToAndIncludingLEL,
+                    EarningsAboveLELUpToAndIncludingST = nih.EarningsAboveLELUpToAndIncludingST,
+                    EarningsAboveSTUpToAndIncludingPT = nih.EarningsAboveSTUpToAndIncludingPT,
+                    EarningsAbovePTUpToAndIncludingFUST = nih.EarningsAbovePTUpToAndIncludingFUST,
+                    EarningsAboveFUSTUpToAndIncludingUEL = nih.EarningsAboveFUSTUpToAndIncludingUEL,
+                    EarningsAboveSTUpToAndIncludingUEL = nih.EarningsAboveSTUpToAndIncludingUEL,
+                    EarningsAboveUEL = nih.EarningsAboveUEL,
+                    AreEarningsBelowLEL = true
+                },
+                nih.EmployeeContribution,
+                nih.EmployerContribution,
+                nih.TotalContribution))
+            as IEmployeeNiHistoryEntry)
+                .ToImmutableArray();
 
         history = new EmployeePayrollHistoryYtd()
         {
@@ -281,5 +288,26 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
         var factory = await _payrollProcessorFactoryFixture.GetFactory();
 
         return factory.GetProcessor(payDate, payPeriod);
+    }
+
+    private class TestNiCategoryRatesEntry : INiCategoryRatesEntry
+    {
+        public NiCategory Category => throw new NotImplementedException();
+        public decimal EmployeeRateToPT => throw new NotImplementedException();
+        public decimal EmployeeRatePTToUEL => throw new NotImplementedException();
+        public decimal EmployeeRateAboveUEL => throw new NotImplementedException();
+        public decimal EmployerRateLELtoST => throw new NotImplementedException();
+        public decimal EmployerRateSTtoFUST => throw new NotImplementedException();
+        public decimal EmployerRateFUSTtoUEL => throw new NotImplementedException();
+        public decimal EmployerRateAboveUEL => throw new NotImplementedException();
+    }
+
+    private class TestNiThresholdSet : INiThresholdSet
+    {
+        public INiThresholdEntry this[int index] => throw new NotImplementedException();
+        public int Count => throw new NotImplementedException();
+        public IEnumerator<INiThresholdEntry> GetEnumerator() => throw new NotImplementedException();
+        public decimal GetThreshold(NiThresholdType thresholdType) => throw new NotImplementedException();
+        IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
     }
 }
