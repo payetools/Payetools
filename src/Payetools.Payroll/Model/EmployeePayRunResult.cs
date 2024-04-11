@@ -39,13 +39,13 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// Gets a value indicating whether this employee is being recorded as left employment in this payrun.  Note that
     /// the employee's leaving date may be before the start of the pay period for this payrun.
     /// </summary>
-    public bool IsLeaverInThisPayRun { get; }
+    public bool IsLeaverInThisPayRun { get; init; }
 
     /// <summary>
     /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
     /// HMRC in a previous submission.
     /// </summary>
-    public bool IsPaymentAfterLeaving { get; }
+    public bool IsPaymentAfterLeaving { get; init;  }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
