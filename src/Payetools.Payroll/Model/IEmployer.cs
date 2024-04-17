@@ -43,4 +43,9 @@ public interface IEmployer
     /// Gets an array of entries, one entry for each tax year of record.
     /// </summary>
     ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the employer is eligible for Small Employers Relief.
+    /// </summary>
+    bool IsEligibleForSmallEmployersRelief { get; }
 }

@@ -46,6 +46,11 @@ public class Employer : IEmployer
     public ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; init; }
 
     /// <summary>
+    /// Gets a value indicating whether the employer is eligible for Small Employers Relief.
+    /// </summary>
+    public bool IsEligibleForSmallEmployersRelief { get; init; }
+
+    /// <summary>
     /// Initialises a new <see cref="Employer"/> with the supplied parameters.
     /// </summary>
     /// <param name="officialName">Legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.</param>
