@@ -17,7 +17,7 @@ public interface IBankAccount
     string AccountName { get; }
 
     /// <summary>
-    /// Gets the account number. Should be 8 characters, all numeric, with leading zeroes where appropriate. 
+    /// Gets the account number. Should be 8 characters, all numeric, with leading zeroes where appropriate.
     /// </summary>
     string AccountNumber { get; }
 
