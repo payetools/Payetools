@@ -65,6 +65,26 @@ public partial struct HmrcPayeReference
     public static implicit operator string(in HmrcPayeReference value) => value.ToString();
 
     /// <summary>
+    /// Parses the supplied string into a <see cref="HmrcPayeReference"/>. If the supplied string cannot be parsed, then
+    /// an <see cref="ArgumentException"/> is thrown, except when the supplied string is null, then an <see
+    /// cref="ArgumentNullException"/> is thrown.
+    /// </summary>
+    /// <param name="input">String value containing candidate full HMRC PAYE Reference.  Lower case characters are converted to
+    /// upper case.</param>
+    /// <returns>A new <see cref="HmrcPayeReference"/> if a valid HMRC PAYE Reference was supplied.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if null was supplied.</exception>
+    /// <exception cref="ArgumentException">Thrown if an invalid PAYE reference was supplied.</exception>
+    public static HmrcPayeReference Parse(in string? input)
+    {
+        if (input == null) throw new ArgumentNullException(nameof(input), "PAYE reference may not be null");
+
+        if (TryParse(input, out var payeReference))
+            return (HmrcPayeReference)payeReference;
+
+        throw new ArgumentException("PAYE reference is invalid");
+    }
+
+    /// <summary>
     /// Attempts to parse the supplied string into an <see cref="HmrcPayeReference"/> object.
     /// </summary>
     /// <param name="input">String value containing candidate full HMRC PAYE Reference.  Lower case characters are converted to
