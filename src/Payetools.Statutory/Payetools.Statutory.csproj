@@ -53,7 +53,6 @@
   <ItemGroup>
     <Folder Include="MaternityPay\" />
     <Folder Include="AdoptionPay\" />
-    <Folder Include="Common\" />
     <Folder Include="ParentalBereavementPay\" />
     <Folder Include="SickPay\" />
     <Folder Include="SharedParentalPay\" />

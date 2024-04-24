@@ -19,7 +19,7 @@ public interface IEmployeePayRunResult
 {
     /// <summary>
     /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of
-    /// this field can be used as a hand to get access to the employee.
+    /// this field can be used as a handle to get access to the employee.
     /// </summary>
     public IEmployment Employment { get; }
 
