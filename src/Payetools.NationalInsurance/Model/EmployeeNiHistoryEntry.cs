@@ -92,7 +92,7 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
     /// <param name="totalContribution">Total NI contributions (employee+employer) year-to-date for this NI category.</param>
     /// <param name="niEarningsBreakdown">National Insurance earnings breakdown by threshold.</param>
     /// <remarks>When working with the output of a pay run, use the single-parameter constructor that
-    /// takes a <see cref="INiCalculationResult"/> rather that this constructor.  This constructor is
+    /// takes a <see cref="INiCalculationResult"/> instead of this constructor.  This constructor is
     /// intended to allow external code to generate an <see cref="EmployeeNiHistoryEntry"/> from
     /// scratch outside of a payroll pay run, for example, when hydrating an instance of this type
     /// from a database.</remarks>
