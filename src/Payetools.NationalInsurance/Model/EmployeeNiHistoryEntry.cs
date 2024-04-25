@@ -81,10 +81,22 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
     /// </summary>
     public decimal EarningsAboveSTUpToAndIncludingUEL { get; init; } = default;
 
-    // This constructor is used to create a fresh history entry for the specified
-    // NI category. The Add(in INiCalculationResult) method is used to build a new history entry
-    // from an existing history and a new pay run result.
-    private EmployeeNiHistoryEntry(
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmployeeNiHistoryEntry"/> struct with the supplied
+    /// data.
+    /// </summary>
+    /// <param name="niCategoryPertaining">National Insurance category that this history entry relates to.</param>
+    /// <param name="grossNicableEarnings">Gross NICable earnings year-to-date for this NI category.</param>
+    /// <param name="employeeContribution">Total employee NI contribution year-to-date for this NI category.</param>
+    /// <param name="employerContribution">Total employer NI contribution year-to-date for this NI category.</param>
+    /// <param name="totalContribution">Total NI contributions (employee+employer) year-to-date for this NI category.</param>
+    /// <param name="niEarningsBreakdown">National Insurance earnings breakdown by threshold.</param>
+    /// <remarks>When working with the output of a pay run, use the single-parameter constructor that
+    /// takes a <see cref="INiCalculationResult"/> rather that this constructor.  This constructor is
+    /// intended to allow external code to generate an <see cref="EmployeeNiHistoryEntry"/> from
+    /// scratch outside of a payroll pay run, for example, when hydrating an instance of this type
+    /// from a database.</remarks>
+    public EmployeeNiHistoryEntry(
         NiCategory niCategoryPertaining,
         decimal grossNicableEarnings,
         decimal employeeContribution,
@@ -93,7 +105,7 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
         NiEarningsBreakdown niEarningsBreakdown)
         : this(niCategoryPertaining, grossNicableEarnings, employeeContribution, employerContribution, totalContribution)
     {
-        EarningsAtLEL = niEarningsBreakdown.EarningsUpToAndIncludingLEL;
+        EarningsAtLEL = niEarningsBreakdown.EarningsAtLEL;
         EarningsAboveLELUpToAndIncludingST = niEarningsBreakdown.EarningsAboveLELUpToAndIncludingST;
         EarningsAboveSTUpToAndIncludingPT = niEarningsBreakdown.EarningsAboveSTUpToAndIncludingPT;
         EarningsAbovePTUpToAndIncludingFUST = niEarningsBreakdown.EarningsAbovePTUpToAndIncludingFUST;
@@ -145,7 +157,7 @@ public readonly struct EmployeeNiHistoryEntry : IEmployeeNiHistoryEntry
             EmployerContribution + result.EmployerContribution,
             TotalContribution + result.TotalContribution)
         {
-            EarningsAtLEL = EarningsAtLEL + (!breakdown.AreEarningsBelowLEL ? breakdown.EarningsUpToAndIncludingLEL : 0.0m),
+            EarningsAtLEL = EarningsAtLEL + breakdown.EarningsAtLEL,
             EarningsAboveLELUpToAndIncludingST = EarningsAboveLELUpToAndIncludingST + breakdown.EarningsAboveLELUpToAndIncludingST,
             EarningsAboveSTUpToAndIncludingPT = EarningsAboveSTUpToAndIncludingPT + breakdown.EarningsAboveSTUpToAndIncludingPT,
             EarningsAbovePTUpToAndIncludingFUST = EarningsAbovePTUpToAndIncludingFUST + breakdown.EarningsAbovePTUpToAndIncludingFUST,

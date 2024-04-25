@@ -9,12 +9,13 @@ namespace Payetools.NationalInsurance.Model;
 /// <summary>
 /// Represents the breakdown of earnings against each of the relevant National Insurance thresholds.
 /// </summary>
-public struct NiEarningsBreakdown
+public readonly struct NiEarningsBreakdown
 {
     /// <summary>
-    /// Gets the earnings up to and including the Lower Earnings Limit for this record.
+    /// Gets the earnings at the Lower Earnings Limit for this record. All earnings below the LEL are
+    /// disregarded.
     /// </summary>
-    public decimal EarningsUpToAndIncludingLEL { get; init; }
+    public decimal EarningsAtLEL { get; init; }
 
     /// <summary>
     /// Gets the earnings up above the Lower Earnings Limit and up to and including the Secondary Threshold
@@ -50,9 +51,4 @@ public struct NiEarningsBreakdown
     /// for this record.
     /// </summary>
     public decimal EarningsAboveSTUpToAndIncludingUEL { get; init; }
-
-    /// <summary>
-    /// Gets a value indicating whether the earnings were below the Lower Earnings Limit.
-    /// </summary>
-    public bool AreEarningsBelowLEL { get; init; }
 }

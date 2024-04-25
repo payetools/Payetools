@@ -46,7 +46,7 @@ public class DirectorsNiTests : IClassFixture<NiCalculatorFactoryDataFixture>
 
             result.EmployeeContribution.Should().Be(test.EmployeeNiContribution, "(test #{0}) input is {1} and output is {{ {2} }}", (testsCompleted + 1).ToString(), test.ToDebugString(), result.ToString());
             result.EmployerContribution.Should().Be(test.EmployerNiContribution, "(test #{0}) input is {1} and output is {{ {2} }}", (testsCompleted + 1).ToString(), test.ToDebugString(), result.ToString());
-            result.EarningsBreakdown.EarningsUpToAndIncludingLEL.Should().Be(test.EarningsAtLEL_YTD);
+            result.EarningsBreakdown.EarningsAtLEL.Should().Be(test.EarningsAtLEL_YTD);
 
             var lelToPt = result.EarningsBreakdown.EarningsAboveLELUpToAndIncludingST + result.EarningsBreakdown.EarningsAboveSTUpToAndIncludingPT;
             lelToPt.Should().Be(test.EarningsLELtoPT_YTD);

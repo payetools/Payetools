@@ -127,14 +127,13 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
                 new TestNiThresholdSet(),
                 new NiEarningsBreakdown()
                 {
-                    EarningsUpToAndIncludingLEL = nih.EarningsUpToAndIncludingLEL,
+                    EarningsAtLEL = nih.EarningsUpToAndIncludingLEL,
                     EarningsAboveLELUpToAndIncludingST = nih.EarningsAboveLELUpToAndIncludingST,
                     EarningsAboveSTUpToAndIncludingPT = nih.EarningsAboveSTUpToAndIncludingPT,
                     EarningsAbovePTUpToAndIncludingFUST = nih.EarningsAbovePTUpToAndIncludingFUST,
                     EarningsAboveFUSTUpToAndIncludingUEL = nih.EarningsAboveFUSTUpToAndIncludingUEL,
                     EarningsAboveSTUpToAndIncludingUEL = nih.EarningsAboveSTUpToAndIncludingUEL,
-                    EarningsAboveUEL = nih.EarningsAboveUEL,
-                    AreEarningsBelowLEL = true
+                    EarningsAboveUEL = nih.EarningsAboveUEL
                 },
                 nih.EmployeeContribution,
                 nih.EmployerContribution,

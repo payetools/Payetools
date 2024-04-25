@@ -65,7 +65,7 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
 
             result.EmployeeContribution.Should().Be(test.EmployeeNiContribution, "input is {0} and output is {{ {1} }} (test #{2})", test.ToDebugString(), result.ToString(), (testsCompleted + 1).ToString());
             result.EmployerContribution.Should().Be(test.EmployerNiContribution, "input is {0} and output is {{ {1} }} (test #{2})", test.ToDebugString(), result.ToString(), (testsCompleted + 1).ToString());
-            result.EarningsBreakdown.EarningsUpToAndIncludingLEL.Should().Be(test.EarningsAtLEL_YTD);
+            result.EarningsBreakdown.EarningsAtLEL.Should().Be(test.EarningsAtLEL_YTD);
 
             var lelToPt = result.EarningsBreakdown.EarningsAboveLELUpToAndIncludingST + result.EarningsBreakdown.EarningsAboveSTUpToAndIncludingPT;
             lelToPt.Should().Be(test.EarningsLELtoPT_YTD);
@@ -91,8 +91,8 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
 
         result.EmployeeContribution.Should().Be(0.0m, "Low income NI test #1");
         result.EmployerContribution.Should().Be(0.0m, "Low income NI test #2");
-        result.EarningsBreakdown.EarningsUpToAndIncludingLEL.Should().Be(0);
-        result.EarningsBreakdown.AreEarningsBelowLEL.Should().BeFalse("Low income NI test #3");
+        result.EarningsBreakdown.EarningsAtLEL.Should().Be(0, "Low income NI test #3");
+        result.Should().BeEquivalentTo(NiCalculationResult.NoRecordingRequired);
     }
 
     private async Task<INiCalculator> GetCalculator(PayDate payDate)

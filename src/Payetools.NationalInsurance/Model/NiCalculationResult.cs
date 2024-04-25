@@ -123,7 +123,7 @@ public readonly struct NiCalculationResult : INiCalculationResult
         sb.Append("{{ ");
         sb.Append($"Rates: {RatesUsed.ToString()}, ");
         sb.Append($"Thresholds: {ThresholdsUsed.ToString()}, ");
-        sb.Append($"Up And including to LEL: {EarningsBreakdown.EarningsUpToAndIncludingLEL}, ");
+        sb.Append($"Up And including to LEL: {EarningsBreakdown.EarningsAtLEL}, ");
         sb.Append($"LEL to PT: {EarningsBreakdown.EarningsAboveLELUpToAndIncludingST + EarningsBreakdown.EarningsAboveSTUpToAndIncludingPT}, ");
         sb.Append($"PT to UEL: {EarningsBreakdown.EarningsAbovePTUpToAndIncludingFUST + EarningsBreakdown.EarningsAboveFUSTUpToAndIncludingUEL}, ");
         sb.Append($"ST to UEL: {EarningsBreakdown.EarningsAboveSTUpToAndIncludingUEL}, ");

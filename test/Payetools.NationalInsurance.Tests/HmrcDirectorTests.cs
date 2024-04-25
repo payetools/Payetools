@@ -111,7 +111,7 @@ public class HmrcDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture>
             // Currently can only test this on the last payrun of the year
             if (test.Period == 52)
             {
-                result.EarningsBreakdown.EarningsUpToAndIncludingLEL.Should().Be(test.EarningsAtLEL_YTD, testInfo);
+                result.EarningsBreakdown.EarningsAtLEL.Should().Be(test.EarningsAtLEL_YTD, testInfo);
 
                 var lelToPt = result.EarningsBreakdown.EarningsAboveLELUpToAndIncludingST + result.EarningsBreakdown.EarningsAboveSTUpToAndIncludingPT;
                 lelToPt.Should().Be(test.EarningsLELtoPT_YTD, testInfo);
