@@ -5,7 +5,6 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
-using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
 
@@ -40,15 +39,24 @@ public class Employer : IEmployer
     public string? HmrcCorporationTaxReference { get; }
 
     /// <summary>
-    /// Gets an array of entries, one entry for each tax year of record, that indicates whether the employer
-    /// is eligible to claim Employment Allowance.
+    /// Gets a value indicating whether the employer is currently eligible for Employment Allowance.
     /// </summary>
-    public ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; init; }
+    public bool IsEligibleForEmploymentAllowance { get; }
 
     /// <summary>
     /// Gets a value indicating whether the employer is eligible for Small Employers Relief.
     /// </summary>
     public bool IsEligibleForSmallEmployersRelief { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether the employer must pay the Apprentice Levy.
+    /// </summary>
+    public bool IsApprenticeLevyDue { get; init; }
+
+    /// <summary>
+    /// Gets the annual allowance available to the employer if the Apprentice Levy is payable.
+    /// </summary>
+    public decimal? ApprenticeLevyAllowance { get; init; }
 
     /// <summary>
     /// Initialises a new <see cref="Employer"/> with the supplied parameters.
@@ -59,22 +67,25 @@ public class Employer : IEmployer
     /// Optional.</param>
     /// <param name="accountsOfficeReference">Employer's HMRC Accounts Office reference, if known. Optional.</param>
     /// <param name="corporationTaxReference">Employer's HMRC Corporation Tax reference, if known. Optional. </param>
-    /// <param name="employmentAllowanceEligibilities">Array of entries, one entry for each tax year of record, that indicates whether
-    /// the employer is eligible to claim Employment Allowance.  May be null if not known.</param>
+    /// <param name="isEligibleForEmploymentAllowance">Indicates whether the employer is currently eligible to claim
+    /// Employment Allowance.  Defaults to false.</param>
+    /// <param name="isEligibleForSmallEmployersRelief">Indicates whether the employer is currently eligible to claim
+    /// Small Employers Relief.  Defaults to false.</param>
     public Employer(
         string? officialName,
         string knownAsName,
         HmrcPayeReference? hmrcPayeReference = null,
         HmrcAccountsOfficeReference? accountsOfficeReference = null,
         string? corporationTaxReference = null,
-        ImmutableArray<EmploymentAllowanceHistoryEntry>? employmentAllowanceEligibilities = null)
+        bool isEligibleForEmploymentAllowance = false,
+        bool isEligibleForSmallEmployersRelief = false)
     {
         OfficialName = officialName;
         KnownAsName = knownAsName;
         HmrcPayeReference = hmrcPayeReference;
         AccountsOfficeReference = accountsOfficeReference;
         HmrcCorporationTaxReference = corporationTaxReference;
-        EmploymentAllowanceEligibilities = employmentAllowanceEligibilities ??
-            ImmutableArray.Create<EmploymentAllowanceHistoryEntry>();
+        IsEligibleForEmploymentAllowance = isEligibleForEmploymentAllowance;
+        IsEligibleForSmallEmployersRelief = isEligibleForSmallEmployersRelief;
     }
 }

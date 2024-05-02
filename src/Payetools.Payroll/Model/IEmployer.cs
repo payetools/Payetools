@@ -40,12 +40,22 @@ public interface IEmployer
     string? HmrcCorporationTaxReference { get; }
 
     /// <summary>
-    /// Gets an array of entries, one entry for each tax year of record.
+    /// Gets a value indicating whether the employer is currently eligible for Employment Allowance.
     /// </summary>
-    ImmutableArray<EmploymentAllowanceHistoryEntry> EmploymentAllowanceEligibilities { get; }
+    bool IsEligibleForEmploymentAllowance { get; }
 
     /// <summary>
     /// Gets a value indicating whether the employer is eligible for Small Employers Relief.
     /// </summary>
     bool IsEligibleForSmallEmployersRelief { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the employer must pay the Apprentice Levy.
+    /// </summary>
+    bool IsApprenticeLevyDue { get; }
+
+    /// <summary>
+    /// Gets the annual allowance available to the employer if the Apprentice Levy is payable.
+    /// </summary>
+    decimal? ApprenticeLevyAllowance { get; }
 }
