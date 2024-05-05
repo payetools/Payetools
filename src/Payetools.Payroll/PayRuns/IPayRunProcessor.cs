@@ -18,8 +18,11 @@ public interface IPayRunProcessor
     /// Processes this payrun.
     /// </summary>
     /// <param name="employer">Employer that this processing relates to.</param>
-    /// <param name="employeePayRunEntries">List of payrun information for each employee in the payrun.</param>
+    /// <param name="employeePayRunEntries">Payrun information for each employee in the payrun.</param>
     /// <param name="result">An instance of a class that implements <see cref="IPayRunResult"/> containing the results
     /// of this payrun.</param>
-    void Process(IEmployer employer, List<IEmployeePayRunInputEntry> employeePayRunEntries, out IPayRunResult result);
+    void Process(
+        in IEmployer employer,
+        in IEnumerable<IEmployeePayRunInputEntry> employeePayRunEntries,
+        out IPayRunResult result);
 }

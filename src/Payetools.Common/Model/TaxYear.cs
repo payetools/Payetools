@@ -123,13 +123,13 @@ public readonly struct TaxYear
                 return 1;
 
             case PayFrequency.Monthly:
-                return GetMonthNumber(payDate);
+                return GetMonthNumber(payDate, PayFrequency.Monthly);
 
             case PayFrequency.Quarterly:
-                return ((GetMonthNumber(payDate) - 1) / 3) + 1;
+                return ((GetMonthNumber(payDate, PayFrequency.Monthly) - 1) / 3) + 1;
 
             case PayFrequency.BiAnnually:
-                return ((GetMonthNumber(payDate) - 1) / 6) + 1;
+                return ((GetMonthNumber(payDate, PayFrequency.Monthly) - 1) / 6) + 1;
 
             default:
                 var dayCountPerPeriod = payFrequency switch
@@ -210,9 +210,9 @@ public readonly struct TaxYear
     /// on say 5th June.
     /// </summary>
     /// <param name="payDate">Pay date.</param>
-    /// <param name="payFrequency">Applicable pay frequency. Defaults to monthly.</param>
+    /// <param name="payFrequency">Applicable pay frequency.</param>
     /// <returns>Tax month number.</returns>
-    public int GetMonthNumber(in DateOnly payDate, in PayFrequency payFrequency = PayFrequency.Monthly)
+    public int GetMonthNumber(in DateOnly payDate, in PayFrequency payFrequency)
     {
         var startOfCalendarYear = new DateOnly((int)TaxYearEnding, 1, 1);
         var monthNumber = payDate.Month + (payDate >= startOfCalendarYear && payDate <= EndOfTaxYear ? 12 : 0) - 3;
@@ -237,7 +237,17 @@ public readonly struct TaxYear
     /// <param name="payDate">Pay date.</param>
     /// <returns>Tax month number.</returns>
     public static int GetMonthNumber(in TaxYear taxYear, in DateOnly payDate) =>
-        taxYear.GetMonthNumber(payDate);
+        taxYear.GetMonthNumber(payDate, PayFrequency.Monthly);
+
+    /// <summary>
+    /// Gets the tax month number from the supplied tax year and pay date. Ignores pay frequency as this static overload is
+    /// primarily intended for establishing the tax month of a particular pay date for reporting purposes.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payDate">Pay date.</param>
+    /// <returns>Tax month number.</returns>
+    public static int GetMonthNumber(in TaxYear taxYear, in PayDate payDate) =>
+        taxYear.GetMonthNumber(payDate.Date, PayFrequency.Monthly);
 
     private int GetDayNumber(in DateOnly payDate) =>
         payDate.DayNumber - StartOfTaxYear.DayNumber + 1;

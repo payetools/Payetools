@@ -12,5 +12,11 @@ namespace Payetools.Payroll.Model;
 public enum DeductionType
 {
     /// <summary>Not defined.</summary>
-    Undefined
+    Undefined,
+
+    /// <summary>Adjustment to pay, for example, repayment of previous earnings in error.</summary>
+    Adjustment,
+
+    /// <summary>Attachment of earnings payment.</summary>
+    AttachmentOfEarnings
 }

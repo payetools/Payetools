@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Payetools.Payroll.Model;
 
@@ -13,6 +14,8 @@ namespace Payetools.Payroll.Model;
 /// </summary>
 public class PayRunResult : IPayRunResult
 {
+    private readonly IEnumerable<IEmployeePayRunInputEntry> _payRunInputs;
+
     /// <summary>
     /// Gets the employer that this payrun refers to.
     /// </summary>
@@ -33,14 +36,50 @@ public class PayRunResult : IPayRunResult
     /// </summary>
     /// <param name="employer">Employer this pay run refers to.</param>
     /// <param name="payRunDetails">Pay date and pay period.</param>
+    /// <param name="payRunInputs">Pay run inputs per employee.</param>
     /// <param name="employeePayRunEntries">Employee pay run results.</param>
     public PayRunResult(
         IEmployer employer,
         IPayRunDetails payRunDetails,
+        IEnumerable<IEmployeePayRunInputEntry> payRunInputs,
         ImmutableArray<IEmployeePayRunResult> employeePayRunEntries)
     {
         Employer = employer;
         PayRunDetails = payRunDetails;
+        _payRunInputs = payRunInputs;
         EmployeePayRunEntries = employeePayRunEntries;
+    }
+
+    /// <summary>
+    /// Gets a summary of this pay run, providing totals for all statutory payments.
+    /// </summary>
+    /// <param name="payRunSummary"><see cref="IPayRunSummary"/> instance that provides summary figures.</param>
+    public void GetPayRunSummary(out IPayRunSummary payRunSummary)
+    {
+        var allEarnings = _payRunInputs.SelectMany(pri => pri.Earnings);
+
+        payRunSummary = new PayRunSummary
+        {
+            StatutoryMaternityPayTotal = allEarnings
+                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryMaternityPay)
+                .Select(e => e.TotalEarnings)
+                .Sum(),
+            StatutoryPaternityPayTotal = allEarnings
+                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryPaternityPay)
+                .Select(e => e.TotalEarnings)
+                .Sum(),
+            StatutoryAdoptionPayTotal = allEarnings
+                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryAdoptionPay)
+                .Select(e => e.TotalEarnings)
+                .Sum(),
+            StatutorySharedParentalPayTotal = allEarnings
+                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutorySharedParentalPay)
+                .Select(e => e.TotalEarnings)
+                .Sum(),
+            StatutoryParentalBereavementPayTotal = allEarnings
+                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryParentalBereavementPay)
+                .Select(e => e.TotalEarnings)
+                .Sum()
+        };
     }
 }

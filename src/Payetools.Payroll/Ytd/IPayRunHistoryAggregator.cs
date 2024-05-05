@@ -14,9 +14,9 @@ namespace Payetools.Payroll.Ytd;
 public interface IPayRunHistoryAggregator
 {
     /// <summary>
-    /// Summarises the supplied employee histories into a single <see cref="IEmployerYtdSummaryEntry"/>.
+    /// Summarises the supplied employee histories into a single <see cref="IEmployerYtdHistoryEntry"/>.
     /// </summary>
     /// <param name="employeeHistories">Employee year-to-date histories.</param>
     /// <param name="summary">Summary.</param>
-    void Summarise(in IEnumerable<IEmployeePayrollHistoryYtd> employeeHistories, out IEmployerYtdSummaryEntry summary);
+    void Summarise(in IEnumerable<IEmployeePayrollHistoryYtd> employeeHistories, out IEmployerYtdHistoryEntry summary);
 }

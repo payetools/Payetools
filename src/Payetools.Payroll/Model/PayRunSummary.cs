@@ -9,37 +9,37 @@ using Payetools.Common.Model;
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents the summary of a pay run.
+/// Represents the summary of a pay run.
 /// </summary>
-public interface IPayRunSummary
+public class PayRunSummary : IPayRunSummary
 {
     /// <summary>
     /// Gets the pay date that this summary was paid on.
     /// </summary>
-    PayDate PayDate { get; }
+    public PayDate PayDate { get; }
 
     /// <summary>
     /// Gets the total Statutory Maternity Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
-    decimal StatutoryMaternityPayTotal { get; }
+    public decimal StatutoryMaternityPayTotal { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Paternity Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
-    decimal StatutoryPaternityPayTotal { get; }
+    public decimal StatutoryPaternityPayTotal { get; init; }
 
     /// <summary>
     /// Gets the totalStatutory Adoption Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
-    decimal StatutoryAdoptionPayTotal { get; }
+    public decimal StatutoryAdoptionPayTotal { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Shared Parental Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
-    decimal StatutorySharedParentalPayTotal { get; }
+    public decimal StatutorySharedParentalPayTotal { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Parental Bereavement Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
-    decimal StatutoryParentalBereavementPayTotal { get; }
+    public decimal StatutoryParentalBereavementPayTotal { get; init; }
 }

@@ -14,11 +14,11 @@ namespace Payetools.Payroll.Ytd;
 public class PayRunHistoryAggregator : IPayRunHistoryAggregator
 {
     /// <summary>
-    /// Summarises the supplied employee histories into a s single <see cref="IEmployerYtdSummaryEntry"/>.
+    /// Summarises the supplied employee histories into a s single <see cref="IEmployerYtdHistoryEntry"/>.
     /// </summary>
     /// <param name="employeeHistories">Employee year-to-date histories.</param>
-    /// <param name="summary">Summarised information as an instance of <see cref="IEmployerYtdSummaryEntry"/>.</param>
-    public void Summarise(in IEnumerable<IEmployeePayrollHistoryYtd> employeeHistories, out IEmployerYtdSummaryEntry summary)
+    /// <param name="summary">Summarised information as an instance of <see cref="IEmployerYtdHistoryEntry"/>.</param>
+    public void Summarise(in IEnumerable<IEmployeePayrollHistoryYtd> employeeHistories, out IEmployerYtdHistoryEntry summary)
     {
         throw new NotImplementedException();
     }

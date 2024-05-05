@@ -21,7 +21,7 @@ public class PayRunProcessor : IPayRunProcessor
     /// </summary>
     /// <param name="calculator">Calculator to be used to calculate earnings, deductions
     /// and net pay.</param>
-    public PayRunProcessor(IPayRunEntryProcessor calculator)
+    public PayRunProcessor(in IPayRunEntryProcessor calculator)
     {
         _payrunCalculator = calculator;
     }
@@ -30,14 +30,18 @@ public class PayRunProcessor : IPayRunProcessor
     /// Processes this pay run.
     /// </summary>
     /// <param name="employer">Employer that this processing relates to.</param>
-    /// <param name="employeePayRunEntries">List of payrun information for each employee in the payrun.</param>
+    /// <param name="employeePayRunEntries">Pay run information for each employee in the payrun.</param>
     /// <param name="result">An instance of a class that implements <see cref="IPayRunResult"/> containing the results
     /// of this payrun.</param>
-    public void Process(IEmployer employer, List<IEmployeePayRunInputEntry> employeePayRunEntries, out IPayRunResult result)
+    public void Process(
+        in IEmployer employer,
+        in IEnumerable<IEmployeePayRunInputEntry> employeePayRunEntries,
+        out IPayRunResult result)
     {
         result = new PayRunResult(
             employer,
             new PayRunDetails(_payrunCalculator.PayDate, _payrunCalculator.PayPeriod),
+            employeePayRunEntries,
             employeePayRunEntries.Select(entry =>
                 {
                     _payrunCalculator.Process(entry, out var employeeResult);

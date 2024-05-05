@@ -11,7 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents summarised pay run information across all pay runs year-to-date.
 /// </summary>`
-public class EmployerYtdSummaryEntry : IEmployerYtdSummaryEntry
+public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
 {
     /// <summary>
     /// Gets the applicable month number for this year-to-date entry.

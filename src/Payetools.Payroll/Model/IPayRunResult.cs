@@ -27,4 +27,10 @@ public interface IPayRunResult
     /// Gets the list of employee pay run entries.
     /// </summary>
     ImmutableArray<IEmployeePayRunResult> EmployeePayRunEntries { get; }
+
+    /// <summary>
+    /// Gets a summary of this pay run, providing totals for all statutory payments.
+    /// </summary>
+    /// <param name="payRunSummary"><see cref="IPayRunSummary"/> instance that provides summary figures.</param>
+    void GetPayRunSummary(out IPayRunSummary payRunSummary);
 }

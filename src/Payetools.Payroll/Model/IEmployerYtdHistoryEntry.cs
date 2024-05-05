@@ -9,7 +9,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents summarised pay run information across all pay runs year-to-date.
 /// </summary>`
-public interface IEmployerYtdSummaryEntry
+public interface IEmployerYtdHistoryEntry
 {
     /// <summary>
     /// Gets the applicable month number for this year-to-date entry.
