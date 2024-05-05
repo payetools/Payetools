@@ -4,7 +4,9 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+using Payetools.Payroll.Model;
+
+namespace Payetools.Payroll.Tests;
 
 /// <summary>
 /// Represents a generic pay component (e.g., salary, bonus, sick pay, etc.).
@@ -25,6 +27,11 @@ public class GenericEarnings : IEarningsDetails
     /// Gets or sets the full name of this pay component.
     /// </summary>
     public string Name { get; set; } = default!;
+
+    /// <summary>
+    /// Gets the type of this payment.
+    /// </summary>
+    public PaymentType PaymentType { get; }
 
     /// <summary>
     /// Gets or sets the units for this pay component, if applicable.  Null if not applicable.

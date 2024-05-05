@@ -13,7 +13,7 @@ using Payetools.StudentLoans.Model;
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents a payrun entry for one employee for a specific payrun.
+/// Interface that represents a payrun result for an employee for a specific payrun.
 /// </summary>
 public interface IEmployeePayRunResult
 {

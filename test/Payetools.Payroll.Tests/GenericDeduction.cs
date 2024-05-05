@@ -4,7 +4,9 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+using Payetools.Payroll.Model;
+
+namespace Payetools.Payroll.Tests;
 
 /// <summary>
 /// Represents the various types of deduction that can be made from payroll.
@@ -20,6 +22,11 @@ public class GenericDeduction : IDeductionDetails
     /// Gets or sets the full name of this type of deduction.
     /// </summary>
     public string Name { get; set; } = default!;
+
+    /// <summary>
+    /// Gets the type of this deduction.
+    /// </summary>
+    public DeductionType DeductionType { get; }
 
     /// <summary>
     /// Gets or sets the units for this deduction type, if applicable.  Null if not applicable.

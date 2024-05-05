@@ -229,6 +229,16 @@ public readonly struct TaxYear
         };
     }
 
+    /// <summary>
+    /// Gets the tax month number from the supplied tax year and pay date. Ignores pay frequency as this static overload is
+    /// primarily intended for establishing the tax month of a particular pay date for reporting purposes.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="payDate">Pay date.</param>
+    /// <returns>Tax month number.</returns>
+    public static int GetMonthNumber(in TaxYear taxYear, in DateOnly payDate) =>
+        taxYear.GetMonthNumber(payDate);
+
     private int GetDayNumber(in DateOnly payDate) =>
         payDate.DayNumber - StartOfTaxYear.DayNumber + 1;
 }

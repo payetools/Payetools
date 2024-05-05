@@ -17,6 +17,11 @@ public interface IDeductionDetails
     string Name { get; }
 
     /// <summary>
+    /// Gets the type of this deduction.
+    /// </summary>
+    DeductionType DeductionType { get; }
+
+    /// <summary>
     /// Gets the units for this deduction type, if applicable.  Null if not applicable.
     /// </summary>
     PayRateUnits? Units { get; }

@@ -17,6 +17,11 @@ public interface IEarningsDetails
     string Name { get; }
 
     /// <summary>
+    /// Gets the type of this payment.
+    /// </summary>
+    PaymentType PaymentType { get; }
+
+    /// <summary>
     /// Gets the units for this pay component, if applicable.  Null if not applicable.
     /// </summary>
     PayRateUnits? Units { get; }

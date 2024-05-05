@@ -4,12 +4,13 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Statutory.Common;
+namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Enumeration that represents the different types of statutory payments that an employee
-/// can receive.
+/// Enumeration that represents the different types of deductions that can be made from an employee's pay.
 /// </summary>
-public enum StatutoryPaymentType
+public enum DeductionType
 {
+    /// <summary>Not defined.</summary>
+    Undefined
 }
