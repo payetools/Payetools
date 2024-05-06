@@ -19,6 +19,31 @@ public interface IPayRunSummary
     PayDate PayDate { get; }
 
     /// <summary>
+    /// Gets the total amount of income tax for the pay run, if any. Zero otherwise.
+    /// </summary>
+    decimal IncomeTaxTotal { get; }
+
+    /// <summary>
+    /// Gets the total amount of student loan repayment for the pay run, if any. Zero otherwise.
+    /// </summary>
+    decimal StudentLoansTotal { get; }
+
+    /// <summary>
+    /// Gets the total amount of postgraduate loan repayment for the pay run, if any. Zero otherwise.
+    /// </summary>
+    decimal PostgraduateLoansTotal { get; }
+
+    /// <summary>
+    /// Gets the total amount of employer's National Insurance for the pay run, if any. Zero otherwise.
+    /// </summary>
+    decimal EmployerNiTotal { get; }
+
+    /// <summary>
+    /// Gets the total amount employee's National Insurance for the pay run, if any. Zero otherwise.
+    /// </summary>
+    decimal EmployeeNiTotal { get; }
+
+    /// <summary>
     /// Gets the total Statutory Maternity Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
     decimal StatutoryMaternityPayTotal { get; }

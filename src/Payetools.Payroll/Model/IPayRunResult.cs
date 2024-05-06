@@ -26,7 +26,7 @@ public interface IPayRunResult
     /// <summary>
     /// Gets the list of employee pay run entries.
     /// </summary>
-    ImmutableArray<IEmployeePayRunResult> EmployeePayRunEntries { get; }
+    ImmutableArray<IEmployeePayRunResult> EmployeePayRunResults { get; }
 
     /// <summary>
     /// Gets a summary of this pay run, providing totals for all statutory payments.

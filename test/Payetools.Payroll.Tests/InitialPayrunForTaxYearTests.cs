@@ -84,14 +84,14 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         processor.Process(employer, entries, out var result);
 
-        IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayRunEntries[0]);
+        IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayRunResults[0]);
 
-        foreach (var employeeResult in result.EmployeePayRunEntries)
+        foreach (var employeeResult in result.EmployeePayRunResults)
         {
             CheckResult("Pay1", employeeResult, testData.ExpectedOutputs.Where(eo => eo.TestReference == "Pay1").First());
         }
 
-        Console.WriteLine(result.EmployeePayRunEntries[0].NiCalculationResult.ToString());
+        Console.WriteLine(result.EmployeePayRunResults[0].NiCalculationResult.ToString());
         Console.WriteLine();
 
         Console.WriteLine();

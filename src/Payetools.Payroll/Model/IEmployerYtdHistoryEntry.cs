@@ -12,32 +12,57 @@ namespace Payetools.Payroll.Model;
 public interface IEmployerYtdHistoryEntry
 {
     /// <summary>
+    /// Gets the total amount of income tax for the tax month. May be zero.
+    /// </summary>
+    decimal TotalIncomeTax { get; }
+
+    /// <summary>
+    /// Gets the total amount of student loan repayment for the tax month. May be zero.
+    /// </summary>
+    decimal TotalStudentLoans { get; }
+
+    /// <summary>
+    /// Gets the total amount of postgraduate loan repayment for the tax month. May be zero.
+    /// </summary>
+    decimal TotalPostgraduateLoans { get; }
+
+    /// <summary>
+    /// Gets the total amount of employer's National Insurance for the tax month. May be zero.
+    /// </summary>
+    decimal EmployerNiTotal { get; }
+
+    /// <summary>
+    /// Gets the total amount employee's National Insurance for the tax month. May be zero.
+    /// </summary>
+    decimal EmployeeNiTotal { get; }
+
+    /// <summary>
     /// Gets the applicable month number for this year-to-date entry.
     /// </summary>
     int MonthNumber { get; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Maternity Pay amount. May be zero.
+    /// Gets the total Statutory Maternity Pay amount for the tax month.  May be zero.
     /// </summary>
     decimal TotalYtdSMP { get; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Paternity Pay amount. May be zero.
+    /// Gets the total Statutory Paternity Pay amount for the tax month.  May be zero.
     /// </summary>
     decimal TotalYtdSPP { get; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Adoption Pay amount. May be zero.
+    /// Gets the total Statutory Adoption Pay amount for the tax month.  May be zero.
     /// </summary>
     decimal TotalYtdSAP { get; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Shared Parental Pay amount. May be zero.
+    /// Gets the total Statutory Shared Parental Pay amount for the tax month.  May be zero.
     /// </summary>
     decimal TotalYtdShPP { get; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Parental Bereavement Pay amount. May be zero.
+    /// Gets the total Statutory Parental Bereavement Pay amount for the tax month.  May be zero.
     /// </summary>
     decimal TotalYtdSPBP { get; }
 

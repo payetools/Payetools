@@ -17,27 +17,52 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
     public int MonthNumber { get; init; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Maternity Pay amount. May be zero.
+    /// Gets the total amount of income tax for the tax month. May be zero.
+    /// </summary>
+    public decimal TotalIncomeTax { get; init; }
+
+    /// <summary>
+    /// Gets the total amount of student loan repayment for the tax month. May be zero.
+    /// </summary>
+    public decimal TotalStudentLoans { get; init; }
+
+    /// <summary>
+    /// Gets the total amount of postgraduate loan repayment for the tax month. May be zero.
+    /// </summary>
+    public decimal TotalPostgraduateLoans { get; init; }
+
+    /// <summary>
+    /// Gets the total amount of employer's National Insurance for the tax month. May be zero.
+    /// </summary>
+    public decimal EmployerNiTotal { get; init; }
+
+    /// <summary>
+    /// Gets the total amount employee's National Insurance for the tax month. May be zero.
+    /// </summary>
+    public decimal EmployeeNiTotal { get; init; }
+
+    /// <summary>
+    /// Gets the total Statutory Maternity Pay amount for the month. May be zero.
     /// </summary>
     public decimal TotalYtdSMP { get; init; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Paternity Pay amount. May be zero.
+    /// Gets the total Statutory Paternity Pay amount for the tax month. May be zero.
     /// </summary>
     public decimal TotalYtdSPP { get; init; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Adoption Pay amount. May be zero.
+    /// Gets the total Statutory Adoption Pay amount for the tax month. May be zero.
     /// </summary>
     public decimal TotalYtdSAP { get; init; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Shared Parental Pay amount. May be zero.
+    /// Gets the total Statutory Shared Parental Pay amount for the tax month. May be zero.
     /// </summary>
     public decimal TotalYtdShPP { get; init; }
 
     /// <summary>
-    /// Gets the total year-to-date Statutory Parental Bereavement Pay amount. May be zero.
+    /// Gets the total Statutory Parental Bereavement Pay amount for the tax month. May be zero.
     /// </summary>
     public decimal TotalYtdSPBP { get; init; }
 
@@ -50,6 +75,11 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
         new EmployerYtdHistoryEntry
         {
             MonthNumber = MonthNumber,
+            TotalIncomeTax = TotalIncomeTax + summary.IncomeTaxTotal,
+            TotalStudentLoans = TotalStudentLoans + summary.StudentLoansTotal,
+            TotalPostgraduateLoans = TotalPostgraduateLoans + summary.PostgraduateLoansTotal,
+            EmployerNiTotal = EmployerNiTotal + summary.EmployerNiTotal,
+            EmployeeNiTotal = EmployeeNiTotal + summary.EmployeeNiTotal,
             TotalYtdSMP = TotalYtdSMP + summary.StatutoryMaternityPayTotal,
             TotalYtdSPP = TotalYtdSPP + summary.StatutoryPaternityPayTotal,
             TotalYtdSAP = TotalYtdSAP + summary.StatutoryAdoptionPayTotal,
@@ -66,6 +96,11 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
         new EmployerYtdHistoryEntry
         {
             MonthNumber = MonthNumber,
+            TotalIncomeTax = TotalIncomeTax - summary.IncomeTaxTotal,
+            TotalStudentLoans = TotalStudentLoans - summary.StudentLoansTotal,
+            TotalPostgraduateLoans = TotalPostgraduateLoans - summary.PostgraduateLoansTotal,
+            EmployerNiTotal = EmployerNiTotal - summary.EmployerNiTotal,
+            EmployeeNiTotal = EmployeeNiTotal - summary.EmployeeNiTotal,
             TotalYtdSMP = TotalYtdSMP - summary.StatutoryMaternityPayTotal,
             TotalYtdSPP = TotalYtdSPP - summary.StatutoryPaternityPayTotal,
             TotalYtdSAP = TotalYtdSAP - summary.StatutoryAdoptionPayTotal,
@@ -84,6 +119,11 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
         new EmployerYtdHistoryEntry
         {
             MonthNumber = monthNumber,
+            TotalIncomeTax = summary.IncomeTaxTotal,
+            TotalStudentLoans = summary.StudentLoansTotal,
+            TotalPostgraduateLoans = summary.PostgraduateLoansTotal,
+            EmployerNiTotal = summary.EmployerNiTotal,
+            EmployeeNiTotal = summary.EmployeeNiTotal,
             TotalYtdSMP = summary.StatutoryMaternityPayTotal,
             TotalYtdSPP = summary.StatutoryPaternityPayTotal,
             TotalYtdSAP = summary.StatutoryAdoptionPayTotal,

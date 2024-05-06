@@ -70,6 +70,11 @@ public class EmployerYtdHistory : IEmployerYtdHistory
         ytdHistory = new EmployerYtdHistoryEntry
         {
             MonthNumber = monthNumber,
+            TotalIncomeTax = entries.Sum(e => e.TotalIncomeTax),
+            TotalStudentLoans = entries.Sum(e => e.TotalStudentLoans),
+            TotalPostgraduateLoans = entries.Sum(e => e.TotalPostgraduateLoans),
+            EmployerNiTotal = entries.Sum(e => e.EmployerNiTotal),
+            EmployeeNiTotal = entries.Sum(e => e.EmployeeNiTotal),
             TotalYtdSMP = entries.Sum(e => e.TotalYtdSMP),
             TotalYtdSPP = entries.Sum(e => e.TotalYtdSPP),
             TotalYtdSAP = entries.Sum(e => e.TotalYtdSAP),
