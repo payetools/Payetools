@@ -27,15 +27,13 @@ public class EmployerYtdHistory : IEmployerYtdHistory
     public void Apply(in IPayRunSummary payRunSummary)
     {
         var monthNumber = TaxYear.GetMonthNumber(TaxYear, payRunSummary.PayDate);
+        var index = monthNumber - 1;
 
-        if (_historyEntries[monthNumber - 1] == null)
-        {
-            _historyEntries[monthNumber - 1] = FromPayRun(payRunSummary);
-        }
-        else
-        {
-            _historyEntries[monthNumber - 1] = null!;
-        }
+        var hasExistingEntry = _historyEntries[index] != null;
+
+        _historyEntries[index] = hasExistingEntry ?
+            _historyEntries[index].Apply(payRunSummary) :
+            EmployerYtdHistoryEntry.FromPayRun(monthNumber, payRunSummary);
     }
 
     /// <summary>
@@ -45,6 +43,13 @@ public class EmployerYtdHistory : IEmployerYtdHistory
     /// <param name="payRunSummary">Pay run summary to un-apply.</param>
     public void UndoApply(in IPayRunSummary payRunSummary)
     {
+        var monthNumber = TaxYear.GetMonthNumber(TaxYear, payRunSummary.PayDate);
+        var index = monthNumber - 1;
+
+        if (_historyEntries[index] == null)
+            throw new ArgumentException($"No history for month number {monthNumber} available to undo", nameof(payRunSummary));
+
+        _historyEntries[index] = _historyEntries[index].UndoApply(payRunSummary);
     }
 
     /// <summary>
@@ -52,14 +57,24 @@ public class EmployerYtdHistory : IEmployerYtdHistory
     /// the specified month number.
     /// </summary>
     /// <param name="monthNumber">Month number to sum up to.</param>
-    /// <param name="ytdHistory"><see cref="IEmployerYtdHistoryEntry"/> containing the summarised data.</param>
+    /// <param name="ytdHistory">A new <see cref="IEmployerYtdHistoryEntry"/> containing the summarised data.</param>
     public void GetYearToDateFigures(in int monthNumber, out IEmployerYtdHistoryEntry ytdHistory)
     {
-        ytdHistory = new EmployerYtdHistoryEntry();
-    }
+        if (monthNumber < 1 || monthNumber > 12)
+            throw new ArgumentException($"Invalid month number {monthNumber}; value must be between 1 and 12", nameof(monthNumber));
 
-    private static IEmployerYtdHistoryEntry FromPayRun(IPayRunSummary payRunSummary) =>
-        new EmployerYtdHistoryEntry
+        var month = monthNumber;
+
+        var entries = _historyEntries.Where(e => e.MonthNumber <= month);
+
+        ytdHistory = new EmployerYtdHistoryEntry
         {
+            MonthNumber = monthNumber,
+            TotalYtdSMP = entries.Sum(e => e.TotalYtdSMP),
+            TotalYtdSPP = entries.Sum(e => e.TotalYtdSPP),
+            TotalYtdSAP = entries.Sum(e => e.TotalYtdSAP),
+            TotalYtdShPP = entries.Sum(e => e.TotalYtdShPP),
+            TotalYtdSPBP = entries.Sum(e => e.TotalYtdSPBP)
         };
+    }
 }

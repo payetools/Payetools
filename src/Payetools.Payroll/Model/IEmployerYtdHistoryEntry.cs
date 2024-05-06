@@ -40,4 +40,18 @@ public interface IEmployerYtdHistoryEntry
     /// Gets the total year-to-date Statutory Parental Bereavement Pay amount. May be zero.
     /// </summary>
     decimal TotalYtdSPBP { get; }
+
+    /// <summary>
+    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerYtdHistoryEntry"/>.
+    /// </summary>
+    /// <param name="summary">Pay run summary to apply.</param>
+    /// <returns>New <see cref="EmployerYtdHistoryEntry"/> with the supplied pay run summary applied.</returns>
+    EmployerYtdHistoryEntry Apply(IPayRunSummary summary);
+
+    /// <summary>
+    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerYtdHistoryEntry"/>.
+    /// </summary>
+    /// <param name="summary">Pay run summary to un-apply.</param>
+    /// <returns>New <see cref="EmployerYtdHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
+    EmployerYtdHistoryEntry UndoApply(IPayRunSummary summary);
 }
