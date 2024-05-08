@@ -13,7 +13,7 @@ namespace Payetools.Payroll.Model;
 /// </summary>
 public class EmployerYtdHistory : IEmployerYtdHistory
 {
-    private readonly IEmployerYtdHistoryEntry[] _historyEntries = new IEmployerYtdHistoryEntry[12];
+    private readonly IEmployerHistoryEntry[] _historyEntries = new IEmployerHistoryEntry[12];
 
     /// <summary>
     /// Gets the tax year that this year-to-date history is for.
@@ -33,7 +33,7 @@ public class EmployerYtdHistory : IEmployerYtdHistory
 
         _historyEntries[index] = hasExistingEntry ?
             _historyEntries[index].Apply(payRunSummary) :
-            EmployerYtdHistoryEntry.FromPayRun(monthNumber, payRunSummary);
+            EmployerHistoryEntry.FromPayRun(monthNumber, payRunSummary);
     }
 
     /// <summary>
@@ -57,8 +57,8 @@ public class EmployerYtdHistory : IEmployerYtdHistory
     /// the specified month number.
     /// </summary>
     /// <param name="monthNumber">Month number to sum up to.</param>
-    /// <param name="ytdHistory">A new <see cref="IEmployerYtdHistoryEntry"/> containing the summarised data.</param>
-    public void GetYearToDateFigures(in int monthNumber, out IEmployerYtdHistoryEntry ytdHistory)
+    /// <param name="ytdHistory">A new <see cref="IEmployerHistoryEntry"/> containing the summarised data.</param>
+    public void GetYearToDateFigures(in int monthNumber, out IEmployerHistoryEntry ytdHistory)
     {
         if (monthNumber < 1 || monthNumber > 12)
             throw new ArgumentException($"Invalid month number {monthNumber}; value must be between 1 and 12", nameof(monthNumber));
@@ -67,7 +67,7 @@ public class EmployerYtdHistory : IEmployerYtdHistory
 
         var entries = _historyEntries.Where(e => e.MonthNumber <= month);
 
-        ytdHistory = new EmployerYtdHistoryEntry
+        ytdHistory = new EmployerHistoryEntry
         {
             MonthNumber = monthNumber,
             TotalIncomeTax = entries.Sum(e => e.TotalIncomeTax),
@@ -75,11 +75,11 @@ public class EmployerYtdHistory : IEmployerYtdHistory
             TotalPostgraduateLoans = entries.Sum(e => e.TotalPostgraduateLoans),
             EmployerNiTotal = entries.Sum(e => e.EmployerNiTotal),
             EmployeeNiTotal = entries.Sum(e => e.EmployeeNiTotal),
-            TotalYtdSMP = entries.Sum(e => e.TotalYtdSMP),
-            TotalYtdSPP = entries.Sum(e => e.TotalYtdSPP),
-            TotalYtdSAP = entries.Sum(e => e.TotalYtdSAP),
-            TotalYtdShPP = entries.Sum(e => e.TotalYtdShPP),
-            TotalYtdSPBP = entries.Sum(e => e.TotalYtdSPBP)
+            TotalStatutoryMaternityPay = entries.Sum(e => e.TotalStatutoryMaternityPay),
+            TotalStatutoryPaternityPay = entries.Sum(e => e.TotalStatutoryPaternityPay),
+            TotalStatutoryAdoptionPay = entries.Sum(e => e.TotalStatutoryAdoptionPay),
+            TotalStatutorySharedParentalPay = entries.Sum(e => e.TotalStatutorySharedParentalPay),
+            TotalStatutoryParentalBereavementPay = entries.Sum(e => e.TotalStatutoryParentalBereavementPay)
         };
     }
 }

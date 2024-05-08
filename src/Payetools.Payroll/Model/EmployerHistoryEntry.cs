@@ -7,9 +7,9 @@
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Represents summarised pay run information across all pay runs year-to-date.
+/// Represents summarised pay run information across all pay runs for a given tax month.
 /// </summary>`
-public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
+public class EmployerHistoryEntry : IEmployerHistoryEntry
 {
     /// <summary>
     /// Gets the applicable month number for this year-to-date entry.
@@ -44,35 +44,35 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
     /// <summary>
     /// Gets the total Statutory Maternity Pay amount for the month. May be zero.
     /// </summary>
-    public decimal TotalYtdSMP { get; init; }
+    public decimal TotalStatutoryMaternityPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Paternity Pay amount for the tax month. May be zero.
     /// </summary>
-    public decimal TotalYtdSPP { get; init; }
+    public decimal TotalStatutoryPaternityPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Adoption Pay amount for the tax month. May be zero.
     /// </summary>
-    public decimal TotalYtdSAP { get; init; }
+    public decimal TotalStatutoryAdoptionPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Shared Parental Pay amount for the tax month. May be zero.
     /// </summary>
-    public decimal TotalYtdShPP { get; init; }
+    public decimal TotalStatutorySharedParentalPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Parental Bereavement Pay amount for the tax month. May be zero.
     /// </summary>
-    public decimal TotalYtdSPBP { get; init; }
+    public decimal TotalStatutoryParentalBereavementPay { get; init; }
 
     /// <summary>
-    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerYtdHistoryEntry"/>.
+    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
     /// </summary>
     /// <param name="summary">Pay run summary to apply.</param>
-    /// <returns>New <see cref="EmployerYtdHistoryEntry"/> with the supplied pay run summary applied.</returns>
-    public EmployerYtdHistoryEntry Apply(IPayRunSummary summary) =>
-        new EmployerYtdHistoryEntry
+    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary applied.</returns>
+    public EmployerHistoryEntry Apply(IPayRunSummary summary) =>
+        new EmployerHistoryEntry
         {
             MonthNumber = MonthNumber,
             TotalIncomeTax = TotalIncomeTax + summary.IncomeTaxTotal,
@@ -80,20 +80,20 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
             TotalPostgraduateLoans = TotalPostgraduateLoans + summary.PostgraduateLoansTotal,
             EmployerNiTotal = EmployerNiTotal + summary.EmployerNiTotal,
             EmployeeNiTotal = EmployeeNiTotal + summary.EmployeeNiTotal,
-            TotalYtdSMP = TotalYtdSMP + summary.StatutoryMaternityPayTotal,
-            TotalYtdSPP = TotalYtdSPP + summary.StatutoryPaternityPayTotal,
-            TotalYtdSAP = TotalYtdSAP + summary.StatutoryAdoptionPayTotal,
-            TotalYtdShPP = TotalYtdShPP + summary.StatutorySharedParentalPayTotal,
-            TotalYtdSPBP = TotalYtdSPBP + summary.StatutoryParentalBereavementPayTotal
+            TotalStatutoryMaternityPay = TotalStatutoryMaternityPay + summary.StatutoryMaternityPayTotal,
+            TotalStatutoryPaternityPay = TotalStatutoryPaternityPay + summary.StatutoryPaternityPayTotal,
+            TotalStatutoryAdoptionPay = TotalStatutoryAdoptionPay + summary.StatutoryAdoptionPayTotal,
+            TotalStatutorySharedParentalPay = TotalStatutorySharedParentalPay + summary.StatutorySharedParentalPayTotal,
+            TotalStatutoryParentalBereavementPay = TotalStatutoryParentalBereavementPay + summary.StatutoryParentalBereavementPayTotal
         };
 
     /// <summary>
-    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerYtdHistoryEntry"/>.
+    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
     /// </summary>
     /// <param name="summary">Pay run summary to un-apply.</param>
-    /// <returns>New <see cref="EmployerYtdHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
-    public EmployerYtdHistoryEntry UndoApply(IPayRunSummary summary) =>
-        new EmployerYtdHistoryEntry
+    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
+    public EmployerHistoryEntry UndoApply(IPayRunSummary summary) =>
+        new EmployerHistoryEntry
         {
             MonthNumber = MonthNumber,
             TotalIncomeTax = TotalIncomeTax - summary.IncomeTaxTotal,
@@ -101,22 +101,22 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
             TotalPostgraduateLoans = TotalPostgraduateLoans - summary.PostgraduateLoansTotal,
             EmployerNiTotal = EmployerNiTotal - summary.EmployerNiTotal,
             EmployeeNiTotal = EmployeeNiTotal - summary.EmployeeNiTotal,
-            TotalYtdSMP = TotalYtdSMP - summary.StatutoryMaternityPayTotal,
-            TotalYtdSPP = TotalYtdSPP - summary.StatutoryPaternityPayTotal,
-            TotalYtdSAP = TotalYtdSAP - summary.StatutoryAdoptionPayTotal,
-            TotalYtdShPP = TotalYtdShPP - summary.StatutorySharedParentalPayTotal,
-            TotalYtdSPBP = TotalYtdSPBP - summary.StatutoryParentalBereavementPayTotal
+            TotalStatutoryMaternityPay = TotalStatutoryMaternityPay - summary.StatutoryMaternityPayTotal,
+            TotalStatutoryPaternityPay = TotalStatutoryPaternityPay - summary.StatutoryPaternityPayTotal,
+            TotalStatutoryAdoptionPay = TotalStatutoryAdoptionPay - summary.StatutoryAdoptionPayTotal,
+            TotalStatutorySharedParentalPay = TotalStatutorySharedParentalPay - summary.StatutorySharedParentalPayTotal,
+            TotalStatutoryParentalBereavementPay = TotalStatutoryParentalBereavementPay - summary.StatutoryParentalBereavementPayTotal
         };
 
     /// <summary>
-    /// Creates a new <see cref="EmployerYtdHistoryEntry"/> from the supplied pay run summary. This method is used when
+    /// Creates a new <see cref="EmployerHistoryEntry"/> from the supplied pay run summary. This method is used when
     /// the supplied pay run is the first pay run to be applied for the month number.
     /// </summary>
     /// <param name="monthNumber">Applicable month number.</param>
     /// <param name="summary">Pay run summary to use as basis for the result.</param>
-    /// <returns>A new <see cref="EmployerYtdHistoryEntry"/> with the pay run summary results applied.</returns>
-    public static EmployerYtdHistoryEntry FromPayRun(int monthNumber, IPayRunSummary summary) =>
-        new EmployerYtdHistoryEntry
+    /// <returns>A new <see cref="EmployerHistoryEntry"/> with the pay run summary results applied.</returns>
+    public static EmployerHistoryEntry FromPayRun(int monthNumber, IPayRunSummary summary) =>
+        new EmployerHistoryEntry
         {
             MonthNumber = monthNumber,
             TotalIncomeTax = summary.IncomeTaxTotal,
@@ -124,10 +124,10 @@ public class EmployerYtdHistoryEntry : IEmployerYtdHistoryEntry
             TotalPostgraduateLoans = summary.PostgraduateLoansTotal,
             EmployerNiTotal = summary.EmployerNiTotal,
             EmployeeNiTotal = summary.EmployeeNiTotal,
-            TotalYtdSMP = summary.StatutoryMaternityPayTotal,
-            TotalYtdSPP = summary.StatutoryPaternityPayTotal,
-            TotalYtdSAP = summary.StatutoryAdoptionPayTotal,
-            TotalYtdShPP = summary.StatutorySharedParentalPayTotal,
-            TotalYtdSPBP = summary.StatutoryParentalBereavementPayTotal
+            TotalStatutoryMaternityPay = summary.StatutoryMaternityPayTotal,
+            TotalStatutoryPaternityPay = summary.StatutoryPaternityPayTotal,
+            TotalStatutoryAdoptionPay = summary.StatutoryAdoptionPayTotal,
+            TotalStatutorySharedParentalPay = summary.StatutorySharedParentalPayTotal,
+            TotalStatutoryParentalBereavementPay = summary.StatutoryParentalBereavementPayTotal
         };
 }

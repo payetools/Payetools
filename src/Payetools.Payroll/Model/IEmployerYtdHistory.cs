@@ -36,6 +36,6 @@ public interface IEmployerYtdHistory
     /// the specified month number.
     /// </summary>
     /// <param name="monthNumber">Month number to sum up to.</param>
-    /// <param name="ytdHistory"><see cref="IEmployerYtdHistoryEntry"/> containing the summarised data.</param>
-    void GetYearToDateFigures(in int monthNumber, out IEmployerYtdHistoryEntry ytdHistory);
+    /// <param name="ytdHistory"><see cref="IEmployerHistoryEntry"/> containing the summarised data.</param>
+    void GetYearToDateFigures(in int monthNumber, out IEmployerHistoryEntry ytdHistory);
 }

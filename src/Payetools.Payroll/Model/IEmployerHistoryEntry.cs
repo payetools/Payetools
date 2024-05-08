@@ -7,10 +7,15 @@
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents summarised pay run information across all pay runs year-to-date.
+/// Interface that represents summarised pay run information for a given tax month.
 /// </summary>`
-public interface IEmployerYtdHistoryEntry
+public interface IEmployerHistoryEntry
 {
+    /// <summary>
+    /// Gets the applicable month number for this year-to-date entry.
+    /// </summary>
+    int MonthNumber { get; }
+
     /// <summary>
     /// Gets the total amount of income tax for the tax month. May be zero.
     /// </summary>
@@ -37,46 +42,41 @@ public interface IEmployerYtdHistoryEntry
     decimal EmployeeNiTotal { get; }
 
     /// <summary>
-    /// Gets the applicable month number for this year-to-date entry.
-    /// </summary>
-    int MonthNumber { get; }
-
-    /// <summary>
     /// Gets the total Statutory Maternity Pay amount for the tax month.  May be zero.
     /// </summary>
-    decimal TotalYtdSMP { get; }
+    decimal TotalStatutoryMaternityPay { get; }
 
     /// <summary>
     /// Gets the total Statutory Paternity Pay amount for the tax month.  May be zero.
     /// </summary>
-    decimal TotalYtdSPP { get; }
+    decimal TotalStatutoryPaternityPay { get; }
 
     /// <summary>
     /// Gets the total Statutory Adoption Pay amount for the tax month.  May be zero.
     /// </summary>
-    decimal TotalYtdSAP { get; }
+    decimal TotalStatutoryAdoptionPay { get; }
 
     /// <summary>
     /// Gets the total Statutory Shared Parental Pay amount for the tax month.  May be zero.
     /// </summary>
-    decimal TotalYtdShPP { get; }
+    decimal TotalStatutorySharedParentalPay { get; }
 
     /// <summary>
     /// Gets the total Statutory Parental Bereavement Pay amount for the tax month.  May be zero.
     /// </summary>
-    decimal TotalYtdSPBP { get; }
+    decimal TotalStatutoryParentalBereavementPay { get; }
 
     /// <summary>
-    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerYtdHistoryEntry"/>.
+    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
     /// </summary>
     /// <param name="summary">Pay run summary to apply.</param>
-    /// <returns>New <see cref="EmployerYtdHistoryEntry"/> with the supplied pay run summary applied.</returns>
-    EmployerYtdHistoryEntry Apply(IPayRunSummary summary);
+    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary applied.</returns>
+    EmployerHistoryEntry Apply(IPayRunSummary summary);
 
     /// <summary>
-    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerYtdHistoryEntry"/>.
+    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
     /// </summary>
     /// <param name="summary">Pay run summary to un-apply.</param>
-    /// <returns>New <see cref="EmployerYtdHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
-    EmployerYtdHistoryEntry UndoApply(IPayRunSummary summary);
+    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
+    EmployerHistoryEntry UndoApply(IPayRunSummary summary);
 }
