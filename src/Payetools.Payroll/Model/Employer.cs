@@ -44,6 +44,11 @@ public class Employer : IEmployer
     public bool IsEligibleForEmploymentAllowance { get; }
 
     /// <summary>
+    /// Gets the applicable state aid qualifier for employment allowance.
+    /// </summary>
+    public StateAidForEmploymentAllowance? EmploymentAllowanceStateAidClassification { get; }
+
+    /// <summary>
     /// Gets a value indicating whether the employer is eligible for Small Employers Relief.
     /// </summary>
     public bool IsEligibleForSmallEmployersRelief { get; init; }
@@ -59,6 +64,11 @@ public class Employer : IEmployer
     public decimal? ApprenticeLevyAllowance { get; init; }
 
     /// <summary>
+    /// Gets the employer's bank account used for HMRC refunds. May be null if unspecified.
+    /// </summary>
+    public IBankAccount? BankAccount { get; init; }
+
+    /// <summary>
     /// Initialises a new <see cref="Employer"/> with the supplied parameters.
     /// </summary>
     /// <param name="officialName">Legal name of the business, including any legally required suffix, e.g., Ltd, LLP, etc.</param>
@@ -69,8 +79,12 @@ public class Employer : IEmployer
     /// <param name="corporationTaxReference">Employer's HMRC Corporation Tax reference, if known. Optional. </param>
     /// <param name="isEligibleForEmploymentAllowance">Indicates whether the employer is currently eligible to claim
     /// Employment Allowance.  Defaults to false.</param>
+    /// <param name="employmentAllowanceStateAidClassification">Where applicable, the employer's classification in terms of
+    /// state aid. Defaults to none (null).</param>
     /// <param name="isEligibleForSmallEmployersRelief">Indicates whether the employer is currently eligible to claim
     /// Small Employers Relief.  Defaults to false.</param>
+    /// <param name="bankAccount">Employer's bank account details to be used in the case of HMRC refunds/repayments.
+    /// Defaults to none (null).</param>
     public Employer(
         string? officialName,
         string knownAsName,
@@ -78,7 +92,9 @@ public class Employer : IEmployer
         HmrcAccountsOfficeReference? accountsOfficeReference = null,
         string? corporationTaxReference = null,
         bool isEligibleForEmploymentAllowance = false,
-        bool isEligibleForSmallEmployersRelief = false)
+        StateAidForEmploymentAllowance? employmentAllowanceStateAidClassification = null,
+        bool isEligibleForSmallEmployersRelief = false,
+        IBankAccount? bankAccount = null)
     {
         OfficialName = officialName;
         KnownAsName = knownAsName;
@@ -86,6 +102,8 @@ public class Employer : IEmployer
         AccountsOfficeReference = accountsOfficeReference;
         HmrcCorporationTaxReference = corporationTaxReference;
         IsEligibleForEmploymentAllowance = isEligibleForEmploymentAllowance;
+        EmploymentAllowanceStateAidClassification = employmentAllowanceStateAidClassification;
         IsEligibleForSmallEmployersRelief = isEligibleForSmallEmployersRelief;
+        BankAccount = bankAccount;
     }
 }

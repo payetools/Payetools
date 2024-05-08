@@ -45,6 +45,11 @@ public interface IEmployer
     bool IsEligibleForEmploymentAllowance { get; }
 
     /// <summary>
+    /// Gets the applicable state aid qualifier for employment allowance.
+    /// </summary>
+    StateAidForEmploymentAllowance? EmploymentAllowanceStateAidClassification { get; }
+
+    /// <summary>
     /// Gets a value indicating whether the employer is eligible for Small Employers Relief.
     /// </summary>
     bool IsEligibleForSmallEmployersRelief { get; }
@@ -58,4 +63,9 @@ public interface IEmployer
     /// Gets the annual allowance available to the employer if the Apprentice Levy is payable.
     /// </summary>
     decimal? ApprenticeLevyAllowance { get; }
+
+    /// <summary>
+    /// Gets the employer's bank account used for HMRC refunds. May be null if unspecified.
+    /// </summary>
+    IBankAccount? BankAccount { get; }
 }
