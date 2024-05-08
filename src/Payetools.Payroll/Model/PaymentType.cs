@@ -11,8 +11,8 @@ namespace Payetools.Payroll.Model;
 /// </summary>
 public enum PaymentType
 {
-    /// <summary>Not defined.</summary>
-    Undefined,
+    /// <summary>Not specified.</summary>
+    Unspecified,
 
     /// <summary>General earnings (wages/salary, bonus, commission, etc.).</summary>
     GeneralEarnings,
@@ -37,6 +37,30 @@ public enum PaymentType
 
     /// <summary>Statutory Parental Bereavement Pay.</summary>
     StatutoryParentalBereavementPay,
+
+    /// <summary>Occupational (i.e., employer voluntary) sick pay; allows single-line reporting of SSP and occupational
+    /// sick pay.</summary>
+    OccupationalSickPay,
+
+    /// <summary>Occupational (i.e., employer voluntary) maternity pay; allows single-line reporting of SMP and
+    /// occupational maternity pay.</summary>
+    OccupationalMaternityPay,
+
+    /// <summary>Occupational (i.e., employer voluntary) paternity pay; allows single-line reporting of SPP and
+    /// occupational paternity pay.</summary>
+    OccupationalPaternityPay,
+
+    /// <summary>Occupational (i.e., employer voluntary) shared parental pay; allows single-line reporting of ShPP and
+    /// occupational shared parental pay.</summary>
+    OccupationalSharedParentalPay,
+
+    /// <summary>Occupational (i.e., employer voluntary) adoption pay; allows single-line reporting of SAP and occupational
+    /// adoption pay.</summary>
+    OccupationalAdoptionPay,
+
+    /// <summary>Occupational (i.e., employer voluntary) parental bereavement pay; allows single-line reporting of SPBP and
+    /// occupational shared parental bereavement pay.</summary>
+    OccupationalParentalBereavementPay,
 
     /// <summary>Adjustment to pay, for example, refund of previous deduction.</summary>
     Adjustment
