@@ -21,6 +21,15 @@ public class EmployerYtdHistory : IEmployerYtdHistory
     public TaxYear TaxYear { get; }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="EmployerYtdHistory"/> class.
+    /// </summary>
+    /// <param name="taxYear">Tax year pertaining.</param>
+    public EmployerYtdHistory(in TaxYear taxYear)
+    {
+        TaxYear = taxYear;
+    }
+
+    /// <summary>
     /// Applies the supplied pay run summary to the relevant month's history entry, based on pay date.
     /// </summary>
     /// <param name="payRunSummary">Pay run summary to apply.</param>
@@ -33,7 +42,7 @@ public class EmployerYtdHistory : IEmployerYtdHistory
 
         _historyEntries[index] = hasExistingEntry ?
             _historyEntries[index].Apply(payRunSummary) :
-            EmployerHistoryEntry.FromPayRun(monthNumber, payRunSummary);
+            CreateEntryFromPayRun(monthNumber, payRunSummary);
     }
 
     /// <summary>
@@ -60,16 +69,19 @@ public class EmployerYtdHistory : IEmployerYtdHistory
     /// <param name="ytdHistory">A new <see cref="IEmployerHistoryEntry"/> containing the summarised data.</param>
     public void GetYearToDateFigures(in int monthNumber, out IEmployerHistoryEntry ytdHistory)
     {
-        if (monthNumber < 1 || monthNumber > 12)
-            throw new ArgumentException($"Invalid month number {monthNumber}; value must be between 1 and 12", nameof(monthNumber));
-
         var month = monthNumber;
+
+        if (month < 1 || month > 12)
+            throw new ArgumentException($"Invalid month number {month}; value must be between 1 and 12", nameof(monthNumber));
 
         var entries = _historyEntries.Where(e => e.MonthNumber <= month);
 
+        if (!entries.Any())
+            throw new ArgumentException($"No employer history found for month {month}", nameof(monthNumber));
+
         ytdHistory = new EmployerHistoryEntry
         {
-            MonthNumber = monthNumber,
+            MonthNumber = month,
             TotalIncomeTax = entries.Sum(e => e.TotalIncomeTax),
             TotalStudentLoans = entries.Sum(e => e.TotalStudentLoans),
             TotalPostgraduateLoans = entries.Sum(e => e.TotalPostgraduateLoans),
@@ -82,4 +94,20 @@ public class EmployerYtdHistory : IEmployerYtdHistory
             TotalStatutoryParentalBereavementPay = entries.Sum(e => e.TotalStatutoryParentalBereavementPay)
         };
     }
+
+    private static EmployerHistoryEntry CreateEntryFromPayRun(in int monthNumber, in IPayRunSummary summary) =>
+        new EmployerHistoryEntry
+        {
+            MonthNumber = monthNumber,
+            TotalIncomeTax = summary.IncomeTaxTotal,
+            TotalStudentLoans = summary.StudentLoansTotal,
+            TotalPostgraduateLoans = summary.PostgraduateLoansTotal,
+            EmployerNiTotal = summary.EmployerNiTotal,
+            EmployeeNiTotal = summary.EmployeeNiTotal,
+            TotalStatutoryMaternityPay = summary.StatutoryMaternityPayTotal,
+            TotalStatutoryPaternityPay = summary.StatutoryPaternityPayTotal,
+            TotalStatutoryAdoptionPay = summary.StatutoryAdoptionPayTotal,
+            TotalStatutorySharedParentalPay = summary.StatutorySharedParentalPayTotal,
+            TotalStatutoryParentalBereavementPay = summary.StatutoryParentalBereavementPayTotal
+        };
 }

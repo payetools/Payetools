@@ -107,27 +107,4 @@ public class EmployerHistoryEntry : IEmployerHistoryEntry
             TotalStatutorySharedParentalPay = TotalStatutorySharedParentalPay - summary.StatutorySharedParentalPayTotal,
             TotalStatutoryParentalBereavementPay = TotalStatutoryParentalBereavementPay - summary.StatutoryParentalBereavementPayTotal
         };
-
-    /// <summary>
-    /// Creates a new <see cref="EmployerHistoryEntry"/> from the supplied pay run summary. This method is used when
-    /// the supplied pay run is the first pay run to be applied for the month number.
-    /// </summary>
-    /// <param name="monthNumber">Applicable month number.</param>
-    /// <param name="summary">Pay run summary to use as basis for the result.</param>
-    /// <returns>A new <see cref="EmployerHistoryEntry"/> with the pay run summary results applied.</returns>
-    public static EmployerHistoryEntry FromPayRun(int monthNumber, IPayRunSummary summary) =>
-        new EmployerHistoryEntry
-        {
-            MonthNumber = monthNumber,
-            TotalIncomeTax = summary.IncomeTaxTotal,
-            TotalStudentLoans = summary.StudentLoansTotal,
-            TotalPostgraduateLoans = summary.PostgraduateLoansTotal,
-            EmployerNiTotal = summary.EmployerNiTotal,
-            EmployeeNiTotal = summary.EmployeeNiTotal,
-            TotalStatutoryMaternityPay = summary.StatutoryMaternityPayTotal,
-            TotalStatutoryPaternityPay = summary.StatutoryPaternityPayTotal,
-            TotalStatutoryAdoptionPay = summary.StatutoryAdoptionPayTotal,
-            TotalStatutorySharedParentalPay = summary.StatutorySharedParentalPayTotal,
-            TotalStatutoryParentalBereavementPay = summary.StatutoryParentalBereavementPayTotal
-        };
 }
