@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using Payetools.ReferenceData.Employer;
 using Payetools.ReferenceData.IncomeTax;
 using Payetools.ReferenceData.NationalInsurance;
 using Payetools.ReferenceData.NationalMinimumWage;
@@ -62,4 +63,10 @@ public class HmrcTaxYearReferenceDataSet
     /// the same regime applies across the entire tax year, this set contains only one entry.
     /// </summary>
     public List<StudentLoanReferenceDataEntry> StudentLoans { get; init; } = default!;
+
+    /// <summary>
+    /// Gets a set of <see cref="EmployerReferenceDataEntry"/>s, each entry applicable to a portion of the tax year.  Where
+    /// the same regime applies across the entire tax year, this set contains only one entry.
+    /// </summary>
+    public List<EmployerReferenceDataEntry> Employer { get; init; } = default!;
 }

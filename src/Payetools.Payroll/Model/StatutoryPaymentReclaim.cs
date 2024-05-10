@@ -7,18 +7,18 @@
 namespace Payetools.Payroll.Model;
 
 /// <summary>
-/// Interface that represents the amounts that can be reclaimed from HMRC against eligible statutory payments.
+/// Represents the amounts that can be reclaimed from HMRC against eligible statutory payments.
 /// </summary>
-public interface IStatutoryPaymentReclaim
+public readonly struct StatutoryPaymentReclaim : IStatutoryPaymentReclaim
 {
     /// <summary>
-    /// Gets the total Statutory Maternity Pay amount for the tax month. May be zero.
-    /// </summary>
-    /// <remarks>This is the statutory amount repayable by HMRC, which is either the reduced amount using the current
-    /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
-    /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
-    /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSMP"/> property.</remarks>
-    decimal ReclaimableStatutoryMaternityPay { get; }
+     /// Gets the total Statutory Maternity Pay amount for the tax month. May be zero.
+     /// </summary>
+     /// <remarks>This is the statutory amount repayable by HMRC, which is either the reduced amount using the current
+     /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
+     /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
+     /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSMP"/> property.</remarks>
+    public decimal ReclaimableStatutoryMaternityPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Paternity Pay amount for the tax month. May be zero.
@@ -27,7 +27,7 @@ public interface IStatutoryPaymentReclaim
     /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
     /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
     /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSPP"/> property.</remarks>
-    decimal ReclaimableStatutoryPaternityPay { get; }
+    public decimal ReclaimableStatutoryPaternityPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Adoption Pay amount for the tax month. May be zero.
@@ -36,7 +36,7 @@ public interface IStatutoryPaymentReclaim
     /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
     /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
     /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSAP"/> property.</remarks>
-    decimal ReclaimableStatutoryAdoptionPay { get; }
+    public decimal ReclaimableStatutoryAdoptionPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Shared Parental Pay amount for the tax month. May be zero.
@@ -45,7 +45,7 @@ public interface IStatutoryPaymentReclaim
     /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
     /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
     /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSShPP"/> property.</remarks>
-    decimal ReclaimableStatutorySharedParentalPay { get; }
+    public decimal ReclaimableStatutorySharedParentalPay { get; init; }
 
     /// <summary>
     /// Gets the total Statutory Parental Bereavement Pay amount for the tax month. May be zero.
@@ -54,40 +54,40 @@ public interface IStatutoryPaymentReclaim
     /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
     /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
     /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSPBP"/> property.</remarks>
-    decimal ReclaimableStatutoryParentalBereavementPay { get; }
+    public decimal ReclaimableStatutoryParentalBereavementPay { get; init; }
 
     /// <summary>
     /// Gets any additional National Insurance compensation available for Statutory Maternity Pay
     /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
     /// <see cref="ReclaimableStatutoryMaternityPay"/> already includes this amount (if applicable).
     /// </summary>
-    decimal AdditionalNiCompensationOnSMP { get; }
+    public decimal AdditionalNiCompensationOnSMP { get; init; }
 
     /// <summary>
     /// Gets any additional National Insurance compensation available for Statutory Paternity Pay
     /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
     /// <see cref="ReclaimableStatutoryPaternityPay"/> already includes this amount (if applicable).
     /// </summary>
-    decimal AdditionalNiCompensationOnSPP { get; }
+    public decimal AdditionalNiCompensationOnSPP { get; init; }
 
     /// <summary>
     /// Gets any additional National Insurance compensation available for Statutory Adoption Pay
     /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
     /// <see cref="ReclaimableStatutoryAdoptionPay"/> already includes this amount (if applicable).
     /// </summary>
-    decimal AdditionalNiCompensationOnSAP { get; }
+    public decimal AdditionalNiCompensationOnSAP { get; init; }
 
     /// <summary>
     /// Gets any additional National Insurance compensation available for Statutory Shared Parental Pay
     /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
     /// <see cref="ReclaimableStatutorySharedParentalPay"/> already includes this amount (if applicable).
     /// </summary>
-    decimal AdditionalNiCompensationOnSShPP { get; }
+    public decimal AdditionalNiCompensationOnSShPP { get; init; }
 
     /// <summary>
     /// Gets any additional National Insurance compensation available for Statutory Parental Bereavement Pay
     /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
     /// <see cref="ReclaimableStatutoryParentalBereavementPay"/> already includes this amount (if applicable).
     /// </summary>
-    decimal AdditionalNiCompensationOnSPBP { get; }
+    public decimal AdditionalNiCompensationOnSPBP { get; init; }
 }

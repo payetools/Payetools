@@ -9,6 +9,7 @@ using Payetools.Common.Model;
 using Payetools.IncomeTax.ReferenceData;
 using Payetools.NationalInsurance.ReferenceData;
 using Payetools.NationalMinimumWage.ReferenceData;
+using Payetools.ReferenceData.Employer;
 using Payetools.ReferenceData.IncomeTax;
 using Payetools.ReferenceData.NationalInsurance;
 using Payetools.ReferenceData.NationalMinimumWage;
@@ -249,6 +250,30 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         return FindApplicableEntry<StudentLoanReferenceDataEntry>(referenceDataSet.StudentLoans,
             taxYear, payFrequency, taxPeriod).DeductionRates;
     }
+
+    /// <summary>
+    /// Gets reference information about Employment Allowance.
+    /// </summary>
+    /// <param name="date">Applicable date for this reference information request.</param>
+    /// <returns>Reference data information on Employment Allowance for the specified date.</returns>
+    public EmploymentAllowanceInfo GetEmploymentAllowanceInfoForDate(DateOnly date) =>
+        throw new NotImplementedException();
+
+    /// <summary>
+    /// Gets reference information about reclaiming some or all of statutory payments (e.g., SMP, SPP).
+    /// </summary>
+    /// <param name="date">Applicable date for this reference information request.</param>
+    /// <returns>Reference data information on reclaiming statutory payments for the specified date.</returns>
+    public StatutoryPaymentReclaimInfo GetStatutoryPaymentReclaimInfoForDate(DateOnly date) =>
+        throw new NotImplementedException();
+
+    /// <summary>
+    /// Gets reference information about the Apprentice Levy.
+    /// </summary>
+    /// <param name="date">Applicable date for this reference information request.</param>
+    /// <returns>Reference data information on the Apprentice Levy for the specified date.</returns>
+    public ApprenticeLevyInfo GetApprenticeLevyInfoForDate(DateOnly date) =>
+        throw new NotImplementedException();
 
     internal bool TryAdd(HmrcTaxYearReferenceDataSet referenceDataSet, out string? errorMessage)
     {
