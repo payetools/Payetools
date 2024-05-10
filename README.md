@@ -22,7 +22,7 @@ Limited API documentation is available at https://payetools.dev/api/Payetools.ht
 To follow.
 
 ### Contributing
-Given the current pipeline of work, we are not quite ready to receive contributions at this stage but if you are interested in joining the project, please contact payetools via Github.
+Given the current pipeline of work, we are not quite ready to receive contributions at this stage but if you are interested in joining the project, please contact payetools via dev [at] payetools.com.  Thanks in advance for your interest.
 
 **It isn't recommended to fork this repo at this time, on the basis that there are a number of imminent changes in the pipeline.**  Once again, if there is a feature or capability you require, please contact us in the first instance.
 
