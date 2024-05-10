@@ -13,7 +13,12 @@ Payetools contains support for calculating the following:
 
 The code passes HMRC tests for income tax, National Insurance, student loans and National Minimum Wage.
 
-Tests are included for 2022-2023 and 2023-2024 tax year rates and thresholds.
+Tests are included for 2022-2023 and 2023-2024 tax year rates and thresholds.  2024-2025 support is due shortly.
+
+Separately, Payetools is currently working on libraries for HMRC RTI and DPS services that sit on top of the core Payetools open-source libraries
+published here. The **Payetools.Hmrc** libraries enable the publishing of FPS and EPS submissions to HMRC and the retrieval of notifications
+(e.g., tax code changes, student loan starts/stops, etc.) from HMRC's Data Provisioning Service (DPS).  Payetools.Hmrc will be available as a
+commercial offering - please contact info [at] payetools.com for further information.
 
 ### Releases
 Releases are made via nuget - search for payetools to see all libraries for this repo or follow [this link](https://www.nuget.org/packages?q=payetools).  Packages are built with compatibility with .NET 6.0, 7.0 and 8.0.
