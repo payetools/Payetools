@@ -90,4 +90,9 @@ public readonly struct StatutoryPaymentReclaim : IStatutoryPaymentReclaim
     /// <see cref="ReclaimableStatutoryParentalBereavementPay"/> already includes this amount (if applicable).
     /// </summary>
     public decimal AdditionalNiCompensationOnSPBP { get; init; }
+
+    /// <summary>
+    /// Gets any CIS deductions suffered.
+    /// </summary>
+    public decimal CisDeductionsSuffered { get; init; }
 }

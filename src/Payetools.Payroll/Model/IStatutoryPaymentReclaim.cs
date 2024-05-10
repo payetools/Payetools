@@ -90,4 +90,9 @@ public interface IStatutoryPaymentReclaim
     /// <see cref="ReclaimableStatutoryParentalBereavementPay"/> already includes this amount (if applicable).
     /// </summary>
     decimal AdditionalNiCompensationOnSPBP { get; }
+
+    /// <summary>
+    /// Gets any CIS deductions suffered.
+    /// </summary>
+    decimal CisDeductionsSuffered { get; }
 }
