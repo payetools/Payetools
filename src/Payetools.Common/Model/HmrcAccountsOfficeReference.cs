@@ -43,6 +43,14 @@ public partial record HmrcAccountsOfficeReference
     public static implicit operator string(in HmrcAccountsOfficeReference value) => value.ToString();
 
     /// <summary>
+    /// Operator for casting implicitly from a string to a <see cref="HmrcAccountsOfficeReference"/>.
+    /// </summary>
+    /// <param name="value">A string that can be converted to a HmrcAccountsOfficeReference.</param>
+    /// <exception cref="ArgumentException">Thrown if the supplied string is not a valid HMRC accounts
+    /// office reference.</exception>
+    public static implicit operator HmrcAccountsOfficeReference(in string value) => new HmrcAccountsOfficeReference(value);
+
+    /// <summary>
     /// Initialises a new instance of <see cref="HmrcAccountsOfficeReference"/>.
     /// </summary>
     /// <param name="accountsOfficeReference">String value containing the HMRC Accounts Office Reference.</param>

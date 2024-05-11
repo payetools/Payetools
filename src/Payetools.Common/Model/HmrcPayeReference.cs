@@ -65,6 +65,13 @@ public partial struct HmrcPayeReference
     public static implicit operator string(in HmrcPayeReference value) => value.ToString();
 
     /// <summary>
+    /// Operator for casting implicitly from a string to a <see cref="HmrcPayeReference"/>.
+    /// </summary>
+    /// <param name="value">String representation of Hmrc PAYE reference.</param>
+    /// <exception cref="ArgumentException">Thrown if the supplied string is not a valid PAYE reference.</exception>
+    public static implicit operator HmrcPayeReference(in string value) => HmrcPayeReference.Parse(value);
+
+    /// <summary>
     /// Parses the supplied string into a <see cref="HmrcPayeReference"/>. If the supplied string cannot be parsed, then
     /// an <see cref="ArgumentException"/> is thrown, except when the supplied string is null, then an <see
     /// cref="ArgumentNullException"/> is thrown.

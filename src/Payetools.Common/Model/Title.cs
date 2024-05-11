@@ -50,6 +50,13 @@ public readonly struct Title
     public static implicit operator string(in Title title) => title.ToString();
 
     /// <summary>
+    /// Implicit cast from string to Title.
+    /// </summary>
+    /// <param name="title">String title to obtain a Title instance for.</param>
+    /// <exception cref="ArgumentException">Thrown if the title exceeds 35 characters in length.</exception>
+    public static implicit operator Title?(in string title) => Title.Parse(title);
+
+    /// <summary>
     /// Inspects the supplied title and returns a new <see cref="Title"/> instance holding either the
     /// title supplied, or if it is a standard title (e.g., Mr, Mrs, Miss, etc.) then the standardised
     /// form of that title.
