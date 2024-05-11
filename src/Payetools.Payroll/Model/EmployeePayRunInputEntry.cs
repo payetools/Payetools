@@ -38,9 +38,9 @@ public class EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     public ImmutableArray<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 
     /// <summary>
-    /// Gets the pension contributions to apply for this pay period.
+    /// Gets the pension contributions to apply for this pay period. Null if no pension payments are being made.
     /// </summary>
-    public IPensionContributionLevels PensionContributionLevels { get; }
+    public IPensionContributionLevels? PensionContributionLevels { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this pay run.
@@ -61,7 +61,7 @@ public class EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     /// <param name="earnings">List of applicable earnings, if any.  Empty list if none.</param>
     /// <param name="deductions">List of applicable deductions, if any.  Empty list if none.</param>
     /// <param name="payrolledBenefits">List of payrolled benefits, if any.  Empty list if none.</param>
-    /// <param name="pensionContributionLevels">Pension contribtuion levels to be applied.</param>
+    /// <param name="pensionContributionLevels">Pension contribution levels to be applied.</param>
     /// <param name="isLeaverInThisPayRun">Should be set to true if the employee needs to be
     /// reported as leaving during this pay run. Defaults to false.</param>
     /// <param name="isPaymentAfterLeaving">Should be set to true if the employee has already been
@@ -71,7 +71,7 @@ public class EmployeePayRunInputEntry : IEmployeePayRunInputEntry
         ImmutableArray<IEarningsEntry> earnings,
         ImmutableArray<IDeductionEntry> deductions,
         ImmutableArray<IPayrolledBenefitForPeriod> payrolledBenefits,
-        IPensionContributionLevels pensionContributionLevels,
+        IPensionContributionLevels? pensionContributionLevels = null,
         bool isLeaverInThisPayRun = false,
         bool isPaymentAfterLeaving = false)
     {

@@ -38,9 +38,9 @@ public interface IEmployeePayRunInputEntry
     ImmutableArray<IPayrolledBenefitForPeriod> PayrolledBenefits { get; }
 
     /// <summary>
-    /// Gets the pension contributions to apply for this pay period.
+    /// Gets the pension contributions to apply for this pay period.. Null if no pension payments are being made.
     /// </summary>
-    IPensionContributionLevels PensionContributionLevels { get; }
+    IPensionContributionLevels? PensionContributionLevels { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this pay run.

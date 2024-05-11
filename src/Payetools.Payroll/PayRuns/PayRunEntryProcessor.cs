@@ -111,7 +111,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         // Calculate National Insurance first in case it is needed for salary sacrifice
         CalculateNiContributions(entry, nicablePay, out INiCalculationResult niCalculationResult);
 
-        if (entry.Employment.PensionScheme != null)
+        if (entry.Employment.PensionScheme != null && entry.PensionContributionLevels != null)
         {
             var key = (entry.Employment.PensionScheme.EarningsBasis, entry.Employment.PensionScheme.TaxTreatment);
 
@@ -143,7 +143,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             CalculatePensionContributions(ref entry, earningsTotals.PensionablePay, employersNiSavings,
                 out pensionContributions);
 
-            if (!entry.PensionContributionLevels.SalaryExchangeApplied &&
+            if (entry.PensionContributionLevels?.SalaryExchangeApplied == false &&
                 entry.Employment.PensionScheme?.TaxTreatment == PensionTaxTreatment.NetPayArrangement)
             {
                 workingGrossPay -= pensionContributions.CalculatedEmployeeContributionAmount;
@@ -255,7 +255,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
     private void CalculatePensionContributions(ref IEmployeePayRunInputEntry entry, decimal pensionablePay, decimal employersNiSavings,
         out IPensionContributionCalculationResult result)
     {
-        if (entry.Employment.PensionScheme == null)
+        if (entry.Employment.PensionScheme == null || entry.PensionContributionLevels == null)
         {
             result = PensionContributionCalculationResult.NoPensionApplicable;
         }
