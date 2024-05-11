@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using System.ComponentModel;
+
 namespace Payetools.Common.Model;
 
 /// <summary>
@@ -33,7 +35,14 @@ public enum PayFrequency
     BiAnnually,
 
     /// <summary>Once a year</summary>
-    Annually
+    Annually,
+
+    /// <summary>
+    /// Equivalent to fortnightly (retained for backwards-compatibility).
+    /// </summary>
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    TwoWeekly = Fortnightly
 }
 
 /// <summary>
