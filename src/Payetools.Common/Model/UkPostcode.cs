@@ -4,14 +4,27 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using System.Text.RegularExpressions;
+
 namespace Payetools.Common.Model;
 
 /// <summary>
 /// Represents a UK Postcode.
 /// </summary>
-public readonly struct UkPostcode
+public partial class UkPostcode
 {
-    // ^(([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ -]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX)$
+#if NET7_0_OR_GREATER
+
+    [GeneratedRegex(@"^(([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ -]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX)$")]
+    private static partial Regex GetValidationRegex();
+
+#else
+
+    private static readonly Regex _validationRegex = new Regex(@"^(([A-Z]{1,2}\d[A-Z\d]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?\d[A-Z]{2}|BFPO ?\d{1,4}|(KY\d|MSR|VG|AI)[ -]?\d{4}|[A-Z]{2} ?\d{2}|GE ?CX)$");
+
+    private static Regex GetValidationRegex() => _validationRegex;
+
+#endif
 
     private readonly string _value;
 
@@ -22,11 +35,32 @@ public readonly struct UkPostcode
     public static implicit operator string(in UkPostcode value) => value._value;
 
     /// <summary>
+    /// Operator for casting implicitly from a string to a <see cref="UkPostcode"/>.
+    /// </summary>
+    /// <param name="value">A valid string representation of a UK postcode.</param>
+    public static implicit operator UkPostcode(in string value) => new UkPostcode(value);
+
+    /// <summary>
     /// Initialises a new instance of <see cref="UkPostcode"/>.
     /// </summary>
     /// <param name="value">Postcode as string.</param>
-    public UkPostcode(in string value)
+    /// <param name="validate">Set to false to disable postcode validation. Defaults to true.</param>
+    public UkPostcode(in string value, bool validate = true)
     {
-        _value = value;
+        var postcode = value.ToUpperInvariant().Trim();
+
+        if (validate && !IsValid(postcode))
+            throw new ArgumentException($"Argument '{value}' is not a valid UK postcode", nameof(value));
+
+        _value = postcode;
     }
+
+    /// <summary>
+    /// Verifies whether the supplied string could be a valid UK postcode.
+    /// </summary>
+    /// <param name="value">String value to check.</param>
+    /// <returns>True if the supplied value could be a valid UK postcode; false otherwise.</returns>
+    /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid UK
+    /// postcode, it does not guarantee that the supplied value is an actual postcode.</remarks>
+    public static bool IsValid(in string value) => GetValidationRegex().IsMatch(value);
 }

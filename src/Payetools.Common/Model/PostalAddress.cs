@@ -8,7 +8,7 @@ namespace Payetools.Common.Model;
 
 /// <summary>
 /// Represents a postal address.  If it is a UK address, <see cref="Postcode"/> should be supplied
-/// and <see cref="ForeignCountry"/> set to null; if the address is non-UK, then Postcode should
+/// and <see cref="ForeignCountry"/> set to null or omitted; if the address is non-UK, then Postcode should
 /// be null and ForeignCountry should be provided.
 /// </summary>
 public class PostalAddress
@@ -40,15 +40,15 @@ public class PostalAddress
     /// <param name="addressLine4">Fourth line of the address. Optional, i.e., may be null.</param>
     /// <param name="postcode">Postcode for UK addresses only.  Should be set to null for overseas
     /// addresses.</param>
-    /// <param name="foreignCountry">Foreign country for overseas addresses.  Should be null for UK
-    /// addresses.</param>
+    /// <param name="foreignCountry">Foreign country for overseas addresses.  Optional; should be null
+    /// or omitted for UK addresses.</param>
     public PostalAddress(
         in string addressLine1,
         in string addressLine2,
         in string? addressLine3,
         in string? addressLine4,
         in UkPostcode? postcode,
-        in string? foreignCountry)
+        in string? foreignCountry = null)
     {
         AddressLine1 = addressLine1;
         AddressLine2 = addressLine2;
