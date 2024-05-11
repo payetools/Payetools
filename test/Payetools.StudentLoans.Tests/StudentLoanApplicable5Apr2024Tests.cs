@@ -51,7 +51,7 @@ public class StudentLoanApplicable5Apr2024Tests : IClassFixture<StudentLoanCalcu
     [Fact]
     public async Task TestPlan4StudentLoan()
     {
-        var calculator = await GetCalculator(_taxYear, PayFrequency.TwoWeekly, 10);
+        var calculator = await GetCalculator(_taxYear, PayFrequency.Fortnightly, 10);
 
         RunTest(calculator, 187.06m, StudentLoanType.Plan4, false, 0.0m, 0.0m, 1063.84m, null);
 

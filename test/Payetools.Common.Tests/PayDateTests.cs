@@ -84,7 +84,7 @@ public class PayDateTests
         isWeekly.Should().BeTrue();
         periodNumber.Should().Be(53);
 
-        payDate = new PayDate(new DateOnly(2023, 5, 18), PayFrequency.TwoWeekly);
+        payDate = new PayDate(new DateOnly(2023, 5, 18), PayFrequency.Fortnightly);
         payDate.GetWeekOrMonthNumber(out periodNumber, out isWeekly);
         isWeekly.Should().BeTrue();
         periodNumber.Should().Be(8);

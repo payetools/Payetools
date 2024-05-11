@@ -66,7 +66,7 @@ public readonly struct PensionsThresholdEntry : IPensionsThresholdEntry
         payFrequency switch
         {
             PayFrequency.Weekly => ThresholdValuePerWeek,
-            PayFrequency.TwoWeekly=> ThresholdValuePerTwoWeeks,
+            PayFrequency.Fortnightly=> ThresholdValuePerTwoWeeks,
             PayFrequency.FourWeekly=> ThresholdValuePerFourWeeks,
             PayFrequency.Monthly => ThresholdValuePerMonth,
             PayFrequency.Quarterly => ThresholdValuePerQuarter,

@@ -18,7 +18,7 @@ public enum PayFrequency
     Weekly,
 
     /// <summary>Every two weeks</summary>
-    TwoWeekly,
+    Fortnightly,
 
     /// <summary>Every four weeks</summary>
     FourWeekly,
@@ -52,7 +52,7 @@ public static class PayFrequencyExtensions
         return payFrequency switch
         {
             PayFrequency.Weekly => 52,
-            PayFrequency.TwoWeekly => 26,
+            PayFrequency.Fortnightly => 26,
             PayFrequency.FourWeekly => 13,
             PayFrequency.Monthly => 12,
             PayFrequency.Quarterly => 4,
@@ -73,7 +73,7 @@ public static class PayFrequencyExtensions
         return payFrequency switch
         {
             PayFrequency.Weekly => 7,
-            PayFrequency.TwoWeekly => 14,
+            PayFrequency.Fortnightly => 14,
             PayFrequency.FourWeekly => 28,
             PayFrequency.Monthly => 12,
             PayFrequency.Quarterly => 4,

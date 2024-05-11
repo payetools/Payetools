@@ -15,7 +15,7 @@ public class PayFrequencyTests
     public void TestTaxYearPeriodCounts()
     {
         PayFrequency.Weekly.GetStandardTaxPeriodCount().Should().Be(52);
-        PayFrequency.TwoWeekly.GetStandardTaxPeriodCount().Should().Be(26);
+        PayFrequency.Fortnightly.GetStandardTaxPeriodCount().Should().Be(26);
         PayFrequency.FourWeekly.GetStandardTaxPeriodCount().Should().Be(13);
         PayFrequency.Monthly.GetStandardTaxPeriodCount().Should().Be(12);
         PayFrequency.Quarterly.GetStandardTaxPeriodCount().Should().Be(4);

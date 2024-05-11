@@ -135,7 +135,7 @@ public readonly struct TaxYear
                 var dayCountPerPeriod = payFrequency switch
                 {
                     PayFrequency.Weekly => 7,
-                    PayFrequency.TwoWeekly => 14,
+                    PayFrequency.Fortnightly => 14,
                     PayFrequency.FourWeekly => 28,
                     _ => throw new ArgumentException($"Invalid pay frequency value {payFrequency}", nameof(payFrequency))
                 };
@@ -170,7 +170,7 @@ public readonly struct TaxYear
         payFrequency switch
         {
             PayFrequency.Weekly => StartOfTaxYear.AddDays((7 * taxPeriod) - 1),
-            PayFrequency.TwoWeekly => StartOfTaxYear.AddDays((14 * taxPeriod) - 1),
+            PayFrequency.Fortnightly => StartOfTaxYear.AddDays((14 * taxPeriod) - 1),
             PayFrequency.FourWeekly => StartOfTaxYear.AddDays((28 * taxPeriod) - 1),
             PayFrequency.Monthly => StartOfTaxYear.AddMonths(taxPeriod).AddDays(-1),
             PayFrequency.Quarterly => StartOfTaxYear.AddMonths(taxPeriod * 3).AddDays(-1),
@@ -193,7 +193,7 @@ public readonly struct TaxYear
         var multiplier = payFrequency switch
         {
             PayFrequency.FourWeekly => 4,
-            PayFrequency.TwoWeekly => 2,
+            PayFrequency.Fortnightly => 2,
             PayFrequency.Weekly => 1,
             _ => 0
         };

@@ -83,7 +83,7 @@ public readonly struct PayDate
     public void GetWeekOrMonthNumber(out int periodNumber, out bool isWeekly)
     {
         isWeekly = PayFrequency == PayFrequency.Weekly |
-            PayFrequency == PayFrequency.TwoWeekly |
+            PayFrequency == PayFrequency.Fortnightly |
             PayFrequency == PayFrequency.FourWeekly;
 
         periodNumber = isWeekly ? TaxYear.GetWeekNumber(Date, PayFrequency) :

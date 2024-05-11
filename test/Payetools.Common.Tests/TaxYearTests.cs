@@ -59,16 +59,16 @@ public class TaxYearTests
     [Fact]
     public void TestTwoWeeklyTaxPeriod()
     {
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 4, 6), PayFrequency.TwoWeekly, 1, 2, 1);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2023, new DateOnly(2022, 5, 5), PayFrequency.TwoWeekly, 3, 6, 1);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2019, new DateOnly(2018, 5, 15), PayFrequency.TwoWeekly, 3, 6, 2);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 12, 31), PayFrequency.TwoWeekly, 20, 40, 9);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2020, new DateOnly(2020, 1, 5), PayFrequency.TwoWeekly, 20, 40, 9);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2021, new DateOnly(2021, 1, 11), PayFrequency.TwoWeekly, 21, 42, 10);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2020, new DateOnly(2020, 2, 29), PayFrequency.TwoWeekly, 24, 48, 11);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2022, 3, 20), PayFrequency.TwoWeekly, 25, 50, 12);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2022, 4, 3), PayFrequency.TwoWeekly, 26, 52, 12);
-        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2022, 4, 5), PayFrequency.TwoWeekly, 27, 54, 12);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 4, 6), PayFrequency.Fortnightly, 1, 2, 1);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2023, new DateOnly(2022, 5, 5), PayFrequency.Fortnightly, 3, 6, 1);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2019, new DateOnly(2018, 5, 15), PayFrequency.Fortnightly, 3, 6, 2);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2021, 12, 31), PayFrequency.Fortnightly, 20, 40, 9);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2020, new DateOnly(2020, 1, 5), PayFrequency.Fortnightly, 20, 40, 9);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2021, new DateOnly(2021, 1, 11), PayFrequency.Fortnightly, 21, 42, 10);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2020, new DateOnly(2020, 2, 29), PayFrequency.Fortnightly, 24, 48, 11);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2022, 3, 20), PayFrequency.Fortnightly, 25, 50, 12);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2022, 4, 3), PayFrequency.Fortnightly, 26, 52, 12);
+        RunTaxPeriodTest(TaxYearEnding.Apr5_2022, new DateOnly(2022, 4, 5), PayFrequency.Fortnightly, 27, 54, 12);
     }
 
     [Fact]
@@ -128,8 +128,8 @@ public class TaxYearTests
 
         taxYear.GetLastDayOfTaxPeriod(PayFrequency.Weekly, 1).Should().Be(new DateOnly(2021, 4, 12));
         taxYear.GetLastDayOfTaxPeriod(PayFrequency.Weekly, 2).Should().Be(new DateOnly(2021, 4, 19));
-        taxYear.GetLastDayOfTaxPeriod(PayFrequency.TwoWeekly, 1).Should().Be(new DateOnly(2021, 4, 19));
-        taxYear.GetLastDayOfTaxPeriod(PayFrequency.TwoWeekly, 2).Should().Be(new DateOnly(2021, 5, 3));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Fortnightly, 1).Should().Be(new DateOnly(2021, 4, 19));
+        taxYear.GetLastDayOfTaxPeriod(PayFrequency.Fortnightly, 2).Should().Be(new DateOnly(2021, 5, 3));
         taxYear.GetLastDayOfTaxPeriod(PayFrequency.FourWeekly, 1).Should().Be(new DateOnly(2021, 5, 3));
         taxYear.GetLastDayOfTaxPeriod(PayFrequency.Monthly, 1).Should().Be(new DateOnly(2021, 5, 5));
         taxYear.GetLastDayOfTaxPeriod(PayFrequency.Monthly, 2).Should().Be(new DateOnly(2021, 6, 5));
