@@ -130,4 +130,12 @@ public class Employment : IEmployment
     {
         _payrollHistoryYtd = payrollHistoryYtd;
     }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="Employment"/> with an empty payroll history.
+    /// </summary>
+    public Employment()
+    {
+        _payrollHistoryYtd = new EmployeePayrollHistoryYtd();
+    }
 }
