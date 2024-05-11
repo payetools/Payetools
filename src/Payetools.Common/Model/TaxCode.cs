@@ -105,7 +105,7 @@ public readonly partial struct TaxCode
     /// </summary>
     /// <param name="value">String title to obtain a Title instance for.</param>
     /// <exception cref="ArgumentException">Thrown if the title exceeds 35 characters in length.</exception>
-    public static implicit operator TaxCode?(in string value)
+    public static implicit operator TaxCode(in string value)
     {
         if (!TryParse(value, out var taxCode))
             throw new ArgumentException($"Value '{value}' is not a valid tax code for the current tax year", nameof(value));
