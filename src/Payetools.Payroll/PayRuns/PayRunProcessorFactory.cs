@@ -7,6 +7,7 @@
 using Payetools.Common.Model;
 using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
+using Payetools.Payroll.Model;
 using Payetools.Pensions;
 using Payetools.ReferenceData;
 using Payetools.Statutory.AttachmentOfEarnings;
@@ -99,6 +100,16 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
 
         return new PayRunProcessor(calculator);
     }
+
+    /// <summary>
+    /// Gets a payrun processor for specified pay run details.
+    /// </summary>
+    /// <param name="payRunDetails">Pay run detaiils that provide applicable pay date and
+    /// pay period for the required payrun processor.</param>
+    /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
+    /// and pay period.</returns>
+    public IPayRunProcessor GetProcessor(IPayRunDetails payRunDetails) =>
+        GetProcessor(payRunDetails.PayDate, payRunDetails.PayPeriod);
 
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data
     // provider, on the basis that payruns are not created frequently.  However, in a large scale SaaS implementation,
