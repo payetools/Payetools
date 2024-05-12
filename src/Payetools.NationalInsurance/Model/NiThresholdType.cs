@@ -23,6 +23,9 @@ public enum NiThresholdType
     /// <summary>Freeport Upper Secondary Threshold</summary>
     FUST,
 
+    /// <summary>Investment Zone Upper Secondary Threshold</summary>
+    IZUST,
+
     /// <summary>Upper Secondary Threshold</summary>
     UST,
 
@@ -39,7 +42,7 @@ public enum NiThresholdType
     DPT,
 
     /// <summary>Number of elements in enum</summary>
-    Count = 9
+    Count = 10
 }
 
 /// <summary>
@@ -69,6 +72,7 @@ public static class NationalInsuranceThresholdExtensions
             NiThresholdType.PT => "Primary Threshold",
             NiThresholdType.ST => "Secondary Threshold",
             NiThresholdType.FUST => "Freeport Upper Secondary Threshold",
+            NiThresholdType.IZUST => "Investment Zone Upper Secondary Threshold",
             NiThresholdType.UST => "Upper Secondary Threshold",
             NiThresholdType.AUST => "Apprentice Upper Secondary Threshold",
             NiThresholdType.VUST => "Veterans Upper Secondary Threshold",
