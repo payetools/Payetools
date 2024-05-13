@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{17075853-7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Common.Tests", "test\Payetools.Common.Tests\Payetools.Common.Tests.csproj", "{8DB123BD-29BD-4C79-AA00-B293D140A355}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6E337BD9-2FCA-4C69-B47C-5926F44FBD2F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{6E337BD9-2FCA-4C69-B47C-5926F44FBD2F}"
 	ProjectSection(SolutionItems) = preProject
 		KnownIssues.md = KnownIssues.md
 		docs\README.md = docs\README.md
@@ -52,9 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Payroll.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{9918B4E2-ACAA-4A46-8658-599651D88A95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payetools.Statutory", "src\Payetools.Statutory\Payetools.Statutory.csproj", "{98D7F9C4-D01E-446B-B78B-F7C6298BD388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Statutory", "src\Payetools.Statutory\Payetools.Statutory.csproj", "{98D7F9C4-D01E-446B-B78B-F7C6298BD388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payetools.Statutory.Tests", "test\Payetools.Statutory.Tests\Payetools.Statutory.Tests.csproj", "{344F8D7A-D59A-4C71-B0A4-9894D664DFB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Statutory.Tests", "test\Payetools.Statutory.Tests\Payetools.Statutory.Tests.csproj", "{344F8D7A-D59A-4C71-B0A4-9894D664DFB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
