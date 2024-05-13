@@ -16,7 +16,6 @@ using Payetools.Example.Earnings;
 using Payetools.Payroll.Model;
 using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
-using Payroll;
 using System.Collections.Immutable;
 
 string[] ReferenceDataResources =
