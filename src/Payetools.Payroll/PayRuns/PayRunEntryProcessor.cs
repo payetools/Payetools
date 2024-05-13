@@ -240,7 +240,9 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
     {
         if (entry.Employment.IsDirector)
         {
-            var (employeesNiPaidYtd, employersNiPaidYtd) = entry.Employment.PayrollHistoryYtd.EmployeeNiHistoryEntries.GetNiYtdTotals();
+            var histories = entry.Employment.PayrollHistoryYtd.EmployeeNiHistoryEntries;
+
+            var (employeesNiPaidYtd, employersNiPaidYtd) = histories != null ? histories.GetNiYtdTotals() : (0.0m, 0.0m);
 
             _niCalculator.CalculateDirectors(entry.Employment.DirectorsNiCalculationMethod ?? DirectorsNiCalculationMethod.StandardAnnualisedEarningsMethod,
                 entry.Employment.NiCategory, nicablePay, nicablePay + entry.Employment.PayrollHistoryYtd.NicablePayYtd,
@@ -304,9 +306,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         where TKey : notnull
         where TCalculator : class
     {
-        TCalculator? calculator;
-
-        if (!dictionary.TryGetValue(key, out calculator))
+        if (!dictionary.TryGetValue(key, out TCalculator? calculator))
             dictionary.TryAdd(key, calculator = calculatorFactoryFunction());
 
         return calculator;
