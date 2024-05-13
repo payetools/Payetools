@@ -37,6 +37,7 @@ public class NiThresholdTypeJsonConverter : JsonConverter<NiThresholdType>
             "veterans upper secondary threshold" => NiThresholdType.VUST,
             "upper earnings limit" => NiThresholdType.UEL,
             "directors primary threshold" => NiThresholdType.DPT,
+            "investment zone upper secondary threshold" => NiThresholdType.IZUST,
             _ => throw new ArgumentException($"Unrecognised Ni threshold type value '{entry}'")
         };
     }
