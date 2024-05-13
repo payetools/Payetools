@@ -211,6 +211,7 @@ public class TaxCalculator : ITaxCalculator
 
         var roundedTaxDueToEndOfPeriod = decimal.Round(taxDueToEndOfPeriod, 2, MidpointRounding.ToZero);
 
+        // Ensure that we don't refund tax the employee hasn't paid
         var taxDue = roundedTaxDueToEndOfPeriod < 0 ?
             (refundAllowed ? roundedTaxDueToEndOfPeriod : 0.0m) :
             roundedTaxDueToEndOfPeriod;
