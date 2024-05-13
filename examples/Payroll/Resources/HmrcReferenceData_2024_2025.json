@@ -1,0 +1,371 @@
+﻿{
+  "applicableTaxYearEnding": "Apr5_2025",
+  "version": "1.0",
+  "incomeTax": [
+    {
+      "applicableFrom": "2024-04-06",
+      "applicableTill": "2025-04-05",
+      "taxEntries": [
+        {
+          "applicableCountries": "GB-ENG GB-NIR",
+          "personalAllowances": [
+            {
+              "payFrequency": "Weekly",
+              "value": 242
+            },
+            {
+              "payFrequency": "Monthly",
+              "value": 1048
+            },
+            {
+              "payFrequency": "Annually",
+              "value": 12570
+            }
+          ],
+          "taxBands": [
+            {
+              "description": "English and Northern Irish basic tax rate",
+              "from": null,
+              "to": 37700,
+              "rate": 0.2
+            },
+            {
+              "description": "English and Northern Irish higher tax rate",
+              "from": 37701,
+              "to": 125140,
+              "rate": 0.4
+            },
+            {
+              "description": "English and Northern Irish additional tax rate",
+              "from": 125140,
+              "to": null,
+              "rate": 0.45
+            }
+          ]
+        },
+        {
+          "applicableCountries": "GB-SCT",
+          "personalAllowances": [
+            {
+              "payFrequency": "Weekly",
+              "value": 242
+            },
+            {
+              "payFrequency": "Monthly",
+              "value": 1048
+            },
+            {
+              "payFrequency": "Annually",
+              "value": 12570
+            }
+          ],
+          "taxBands": [
+            {
+              "description": "Scottish starter tax rate",
+              "from": null,
+              "to": 2306,
+              "rate": 0.19
+            },
+            {
+              "description": "Scottish basic tax rate",
+              "from": 2307,
+              "to": 13991,
+              "rate": 0.2
+            },
+            {
+              "description": "Scottish intermediate tax rate",
+              "from": 13992,
+              "to": 31092,
+              "rate": 0.21
+            },
+            {
+              "description": "Scottish higher tax rate",
+              "from": 31093,
+              "to": 62430,
+              "rate": 0.42
+            },
+            {
+              "description": "Scottish advanced tax rate",
+              "from": 62431,
+              "to": 125140,
+              "rate": 0.45
+            },
+            {
+              "description": "Scottish top tax rate",
+              "from": 125140,
+              "to": null,
+              "rate": 0.48
+            }
+          ]
+        },
+        {
+          "applicableCountries": "GB-WLS",
+          "personalAllowances": [
+            {
+              "payFrequency": "Weekly",
+              "value": 242
+            },
+            {
+              "payFrequency": "Monthly",
+              "value": 1048
+            },
+            {
+              "payFrequency": "Annually",
+              "value": 12570
+            }
+          ],
+          "taxBands": [
+            {
+              "description": "Welsh basic tax rate",
+              "from": null,
+              "to": 37700,
+              "rate": 0.2
+            },
+            {
+              "description": "Welsh higher tax rate",
+              "from": 37701,
+              "to": 125140,
+              "rate": 0.4
+            },
+            {
+              "description": "Welsh additional tax rate",
+              "from": 125140,
+              "to": null,
+              "rate": 0.45
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "nationalInsurance": [
+    {
+      "applicableFrom": "2024-04-06",
+      "applicableTill": "2025-04-05",
+      "niThresholds": [
+        {
+          "thresholdName": "Lower Earnings Limit",
+          "perWeek": 123,
+          "perMonth": 533,
+          "perYear": 6396
+        },
+        {
+          "thresholdName": "Primary Threshold",
+          "perWeek": 242,
+          "perMonth": 1048,
+          "perYear": 12570
+        },
+        {
+          "thresholdName": "Directors Primary Threshold",
+          "perWeek": 242,
+          "perYear": 12570
+        },
+        {
+          "thresholdName": "Secondary Threshold",
+          "perWeek": 175,
+          "perMonth": 758,
+          "perYear": 9100
+        },
+        {
+          "thresholdName": "Freeport Upper Secondary Threshold",
+          "perWeek": 481,
+          "perMonth": 2083,
+          "perYear": 25000
+        },
+        {
+          "thresholdName": "Investment Zone Upper Secondary Threshold",
+          "perWeek": 481,
+          "perMonth": 2083,
+          "perYear": 25000
+        },
+        {
+          "thresholdName": "Upper Secondary Threshold",
+          "perWeek": 967,
+          "perMonth": 4189,
+          "perYear": 50270
+        },
+        {
+          "thresholdName": "Apprentice Upper Secondary Threshold",
+          "perWeek": 967,
+          "perMonth": 4189,
+          "perYear": 50270
+        },
+        {
+          "thresholdName": "Veterans Upper Secondary Threshold",
+          "perWeek": 967,
+          "perMonth": 4189,
+          "perYear": 50270
+        },
+        {
+          "thresholdName": "Upper Earnings Limit",
+          "perWeek": 967,
+          "perMonth": 4189,
+          "perYear": 50270
+        }
+      ],
+      "employerRates": [
+        {
+          "niCategories": [
+            "A",
+            "B",
+            "C",
+            "J"
+          ],
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0.138,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.138,
+          "forEarningsAboveUELOrUST": 0.138
+        },
+        {
+          "niCategories": [
+            "D",
+            "E",
+            "F",
+            "I",
+            "K",
+            "L",
+            "N",
+            "S"
+          ],
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0.138,
+          "forEarningsAboveUELOrUST": 0.138
+        },
+        {
+          "niCategories": [
+            "H",
+            "M",
+            "V",
+            "Z"
+          ],
+          "forEarningsAtOrAboveLELUpToAndIncludingST": 0,
+          "forEarningsAboveSTUpToAndIncludingFUST": 0,
+          "forEarningsAboveFUSTUpToAndIncludingUELOrUST": 0,
+          "forEarningsAboveUELOrUST": 0.138
+        }
+      ],
+      "employeeRates": [
+        {
+          "niCategories": [
+            "A",
+            "F",
+            "H",
+            "M",
+            "N",
+            "V"
+          ],
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.08,
+          "forEarningsAboveUEL": 0.02
+        },
+        {
+          "niCategories": [
+            "B",
+            "E",
+            "I"
+          ],
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.0185,
+          "forEarningsAboveUEL": 0.02
+        },
+        {
+          "niCategories": [
+            "C",
+            "K",
+            "S"
+          ],
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0,
+          "forEarningsAboveUEL": 0
+        },
+        {
+          "niCategories": [
+            "D",
+            "J",
+            "L",
+            "Z"
+          ],
+          "forEarningsAtOrAboveLELUpTAndIncludingPT": 0,
+          "forEarningsAbovePTUpToAndIncludingUEL": 0.02,
+          "forEarningsAboveUEL": 0.02
+        }
+      ]
+    }
+  ],
+  "pensions": [
+    {
+      "applicableFrom": "2024-04-06",
+      "applicableTill": "2025-04-05",
+      "basicRateOfTaxForTaxRelief": 0.2,
+      "qualifyingEarningsLowerLevel": {
+        "perWeek": 120,
+        "perTwoWeeks": 240,
+        "perFourWeeks": 480,
+        "perMonth": 520,
+        "perQuarter": 1560,
+        "perHalfYear": 3120,
+        "perYear": 6240
+      },
+      "qualifyingEarningsUpperLevel": {
+        "perWeek": 967,
+        "perTwoWeeks": 1934,
+        "perFourWeeks": 3867,
+        "perMonth": 4189,
+        "perQuarter": 12568,
+        "perHalfYear": 25135,
+        "perYear": 50270
+      },
+      "aeEarningsTrigger": {
+        "perWeek": 192,
+        "perTwoWeeks": 384,
+        "perFourWeeks": 768,
+        "perMonth": 833,
+        "perQuarter": 2499,
+        "perHalfYear": 4998,
+        "perYear": 10000
+      }
+    }
+  ],
+  "nationalMinimumWage": [
+    {
+      "applicableFrom": "2024-04-06",
+      "applicableTill": "2025-04-05",
+      "apprenticeLevel": 6.40,
+      "under18Level": 6.40,
+      "age18To20Level": 8.60,
+      "age21To22Level": 11.44,
+      "age23AndAboveLevel": 11.44
+    }
+  ],
+  "studentLoans": [
+    {
+      "applicableFrom": "2024-04-06",
+      "applicableTill": "2025-04-05",
+      "plan1Thresholds": {
+        "perWeek": 480.57,
+        "perMonth": 2082.50,
+        "perYear": 24990
+      },
+      "plan2Thresholds": {
+        "perWeek": 524.90,
+        "perMonth": 2274.58,
+        "perYear": 27295
+      },
+      "plan4Thresholds": {
+        "perWeek": 603.75,
+        "perMonth": 2616.25,
+        "perYear": 31395
+      },
+      "postGradThresholds": {
+        "perWeek": 403.84,
+        "perMonth": 1750,
+        "perYear": 21000
+      },
+      "deductionRates": {
+        "student": 0.09,
+        "postGrad": 0.06
+      }
+    }
+  ]
+}
