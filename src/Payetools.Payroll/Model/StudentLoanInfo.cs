@@ -22,5 +22,5 @@ public readonly struct StudentLoanInfo
     /// <summary>
     /// Gets a value indicating whether the employee has an outstanding post-graduate loan.
     /// </summary>
-    public bool HasPostGradLoan { get; init; }
+    public bool HasPostgraduateLoan { get; init; }
 }

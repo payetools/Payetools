@@ -167,7 +167,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
 
         if (entry.Employment.StudentLoanInfo != null)
             _studentLoanCalculator.Calculate(earningsTotals.GrossPay, entry.Employment.StudentLoanInfo?.StudentLoanType,
-                entry.Employment.StudentLoanInfo?.HasPostGradLoan == true, out studentLoanCalculationResult);
+                entry.Employment.StudentLoanInfo?.HasPostgraduateLoan == true, out studentLoanCalculationResult);
 
         IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult = null;
 
