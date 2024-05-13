@@ -11,6 +11,9 @@ Payetools contains support for calculating the following:
 - Pensions using Qualifying Earnings and Pensionable Pay earnings bases (under both Relief at Source and Net Pay Arrangement tax treatments)
 - Compliance with National Minimum/Living Wage regulations
 
+See the [Program.cs](https://github.com/payetools/Payetools/blob/main/examples/Payroll/Program.cs) of the example project for step-by-step
+instructions on getting your first pay run output.
+
 The code passes HMRC tests for income tax, National Insurance, student loans and National Minimum Wage.
 
 Tests are included for 2022-2023 and 2023-2024 tax year rates and thresholds.  2024-2025 support is due shortly.

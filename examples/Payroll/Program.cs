@@ -23,19 +23,19 @@ string[] ReferenceDataResources =
     @"Resources\HmrcReferenceData_2024_2025.json"
 };
 
-// Step 1 - make an Employer
+// ##### Step 1 - make an Employer #####
 var employer = new Employer(
     "EXAMPLE LTD",
     "Example",
     "121/AB12345",
     "121PF03054321",
     null,  // Corporation tax identifier - not supplied
-    false, // Not eligible for Employment Allowance as single director firm
+    false, // Not eligible for Employment Allowance
     null,  // State aid qualification for EA - n/a
     true,  // Eligible for Small Employers Relief 
     null); // No bank account supplied
 
-// Step 2 - create an employment for an employee
+// ##### Step 2 - create an employment for an employee #####
 var employment = new Employment
 {
     NiCategory = NiCategory.A,
@@ -53,13 +53,13 @@ var employment = new Employment
     }
 };
 
-// Step 3 - create the pay run
+// ##### Step 3 - create the pay run #####
 var payDate = new PayDate(new DateOnly(2024, 5, 17), PayFrequency.Monthly);
 var payRunDetails = new PayRunDetails(
     payDate,
     new DateRange(new DateOnly(2024, 5, 1), new DateOnly(2024, 5, 31)));
 
-// Step 4 - create the pay run input
+// ##### Step 4 - create the pay run input #####
 var earnings = ImmutableArray.Create<IEarningsEntry>(
     new EarningsEntry
     {
@@ -79,7 +79,7 @@ var payRunInput = new EmployeePayRunInputEntry(
 
 var payRunEntries = new List<IEmployeePayRunInputEntry>() { payRunInput };
 
-// Step 5 - get a reference data provider, then get a pay run processor and run the pay run
+// ##### Step 5 - get a reference data provider, then get a pay run processor and run the pay run #####
 var helper = new ReferenceDataHelper(ReferenceDataResources);
 var provider = await helper.CreateProviderAsync();
 var factory = new PayRunProcessorFactory(provider);
