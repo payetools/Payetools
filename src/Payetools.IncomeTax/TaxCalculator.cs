@@ -8,6 +8,7 @@ using Payetools.Common.Diagnostics;
 using Payetools.Common.Model;
 using Payetools.IncomeTax.Model;
 using Payetools.IncomeTax.ReferenceData;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace Payetools.IncomeTax;
@@ -133,6 +134,7 @@ public class TaxCalculator : ITaxCalculator
            internalResult.FinalTaxDue);
     }
 
+    // NB A fixed code means codes like "BR" and "D0"; a "non-fixed" code here means anything else, e.g., 1257L.
     private void CalculateTaxDueOnNonFixedTaxCode(
         decimal totalTaxableSalaryInPeriod,
         TaxCode taxCode,
@@ -180,6 +182,8 @@ public class TaxCalculator : ITaxCalculator
 
         var taxableSalaryAfterAllowance = Math.Floor(totalTaxableSalaryYtd - taxFreePayToEndOfPeriod);
 
+        var refundAllowed = taxPaidYearToDate > taxFreePayToEndOfPeriod;
+
         // This is the "magic" - we search for the highest applicable tax band (using FirstOrDefault with criteria) and
         // calculate the portion of tax that is applicable to that band.  For all other bands below, we are applying
         // 100% of the band, and all bands above are irrelevant.
@@ -205,7 +209,11 @@ public class TaxCalculator : ITaxCalculator
         var taxAtThisBand = taxableSalaryAtThisBand * applicableRate;
         var taxDueToEndOfPeriod = cumulativeTaxBelow + taxAtThisBand;
 
-        var taxDue = decimal.Round(taxDueToEndOfPeriod, 2, MidpointRounding.ToZero);
+        var roundedTaxDueToEndOfPeriod = decimal.Round(taxDueToEndOfPeriod, 2, MidpointRounding.ToZero);
+
+        var taxDue = roundedTaxDueToEndOfPeriod < 0 ?
+            (refundAllowed ? roundedTaxDueToEndOfPeriod : 0.0m) :
+            roundedTaxDueToEndOfPeriod;
 
         var taxPayable = taxDue - taxPaidYearToDate;
 
