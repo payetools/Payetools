@@ -13,9 +13,10 @@
 using Payetools.Common.Model;
 using Payetools.Example;
 using Payetools.Example.Earnings;
-using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.Model;
 using Payetools.Payroll.PayRuns;
+using Payetools.Pensions.Model;
+using Payroll;
 using System.Collections.Immutable;
 
 string[] ReferenceDataResources =
@@ -38,12 +39,19 @@ var employer = new Employer(
 // Step 2 - create an employment for an employee
 var employment = new Employment
 {
-    IsDirector = true,
-    DirectorsNiCalculationMethod = DirectorsNiCalculationMethod.AlternativeMethod,
     NiCategory = NiCategory.A,
     NormalHoursWorkedBand = NormalHoursWorkedBand.A,
     PayrollId = "1",
-    TaxCode = "100L"
+    TaxCode = "1257L",
+    StudentLoanInfo = new StudentLoanInfo
+    {
+        StudentLoanType = StudentLoanType.Plan1
+    },
+    PensionScheme = new PensionScheme
+    {
+        EarningsBasis = PensionsEarningsBasis.QualifyingEarnings,
+        TaxTreatment = PensionTaxTreatment.NetPayArrangement
+    }
 };
 
 // Step 3 - create the pay run
@@ -57,16 +65,18 @@ var earnings = ImmutableArray.Create<IEarningsEntry>(
     new EarningsEntry
     {
         EarningsDetails = new SalaryEarningsDetails(),
-        FixedAmount = 10.88m
+        FixedAmount = 2500.00m
     });
 var deductions = ImmutableArray<IDeductionEntry>.Empty;
 var payrolledBenefits = ImmutableArray<IPayrolledBenefitForPeriod>.Empty;
+var pensionContributions = new Payroll.PensionContributionLevels();
 
 var payRunInput = new EmployeePayRunInputEntry(
     employment,
     earnings,
     deductions,
-    payrolledBenefits);
+    payrolledBenefits,
+    pensionContributions);
 
 var payRunEntries = new List<IEmployeePayRunInputEntry>() { payRunInput };
 
@@ -81,11 +91,12 @@ processor.Process(employer, payRunEntries, out var payRunResult);
 
 foreach (var er in payRunResult.EmployeePayRunResults)
 {
-    Console.WriteLine($"Employee #{er.Employment.PayrollId}:");
-    Console.WriteLine($"   Gross pay: {er.TotalGrossPay}");
-    Console.WriteLine($"   Income tax: {er.TaxCalculationResult.FinalTaxDue}");
-    Console.WriteLine($"   Employees NI: {er.NiCalculationResult.EmployeeContribution}");
-    Console.WriteLine($"   Student loan repayments: {er.StudentLoanCalculationResult?.TotalDeduction ?? 0.00m}");
-    Console.WriteLine($"   Employee pension contribution: {er.PensionContributionCalculationResult?.CalculatedEmployeeContributionAmount ?? 0.00m}");
-    Console.WriteLine($"   Net pay: {er.NetPay}");
+    Console.WriteLine($"Employee #{er.Employment.PayrollId}:c");
+    Console.WriteLine($"   Gross pay: {er.TotalGrossPay:c}");
+    Console.WriteLine($"   Income tax: {er.TaxCalculationResult.FinalTaxDue:c}");
+    Console.WriteLine($"   Employees NI: {er.NiCalculationResult.EmployeeContribution:c} (Employers NI: {er.NiCalculationResult.EmployerContribution:c})");
+    Console.WriteLine($"   Student loan repayments: {er.StudentLoanCalculationResult?.TotalDeduction ?? 0.00m:c}");
+    Console.WriteLine($"   Employee pension contribution: {er.PensionContributionCalculationResult?.CalculatedEmployeeContributionAmount ?? 0.00m:c}" +
+        $" (Employer contribution: {er.PensionContributionCalculationResult?.CalculatedEmployerContributionAmount ?? 0.00m:c})");
+    Console.WriteLine($"   Net pay: {er.NetPay:c}");
 }
