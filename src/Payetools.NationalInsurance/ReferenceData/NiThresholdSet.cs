@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 using System.Collections;
 using System.Collections.Immutable;
@@ -42,14 +43,16 @@ public class NiThresholdSet : INiThresholdSet
     /// Initialises a new instance of <see cref="NiThresholdSet"/>.
     /// </summary>
     /// <param name="niThresholds">Immutable input list of thresholds.</param>
+    /// <param name="taxYearEnding">Tax year that this set of thresholds pertains to.</param>
     /// <exception cref="ArgumentException">Thrown if the number of thresholds supplied does not match the expected
     /// number of possible thresholds.</exception>
-    public NiThresholdSet(ImmutableArray<INiThresholdEntry> niThresholds)
+    public NiThresholdSet(ImmutableArray<INiThresholdEntry> niThresholds, TaxYearEnding taxYearEnding)
     {
-        int entryCount = (int)NiThresholdType.Count;
+        var expectedThresholds = TaxYearSpecificConfiguration.GetNiThresholdTypesForTaxYear(taxYearEnding);
 
-        if (niThresholds.Length != entryCount)
-            throw new ArgumentException($"Expected {entryCount} threshold entries but only {niThresholds.Length} supplied in input list", nameof(niThresholds));
+        if (niThresholds.Where(t => !expectedThresholds.Contains(t.ThresholdType)).Any() ||
+                expectedThresholds.Count != niThresholds.Length)
+            throw new ArgumentException($"Mismatch between expected {expectedThresholds.Count} threshold entries and actual {niThresholds.Length} threshold entries for tax year ending {taxYearEnding}", nameof(niThresholds));
 
         _niThresholds = niThresholds;
     }

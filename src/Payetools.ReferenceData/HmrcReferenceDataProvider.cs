@@ -151,7 +151,7 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             ThresholdValuePerYear = nit.ThresholdValuePerYear
         }).ToImmutableArray<INiThresholdEntry>();
 
-        return new NiThresholdSet(thresholds);
+        return new NiThresholdSet(thresholds, payDate.TaxYear.TaxYearEnding);
     }
 
     /// <summary>
