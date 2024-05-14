@@ -126,6 +126,7 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     {
         EarningsHistoryYtd = new EarningsHistoryYtd();
         DeductionsHistoryYtd = new DeductionsHistoryYtd();
+        EmployeeNiHistoryEntries = new NiYtdHistory();
     }
 
     private EmployeePayrollHistoryYtd(IEarningsHistoryYtd earningsHistoryYtd, IDeductionsHistoryYtd deductionsHistoryYtd)

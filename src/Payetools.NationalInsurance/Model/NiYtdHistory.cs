@@ -23,6 +23,39 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>
     public decimal? Class1ANicsYtd { get; private set; }
 
     /// <summary>
+    /// Initialises a new instance of <see cref="NiYtdHistory"/> with the supplied NI calculation result.  This
+    /// constructor is intended to be used for the first time a payrun is run during the tax year.
+    /// </summary>
+    /// <param name="initialNiCalculationResult">NI calculation result for the first payrun of the tax year
+    /// for a given employee.</param>
+    public NiYtdHistory(in INiCalculationResult initialNiCalculationResult)
+    {
+        _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty
+            .Add(new EmployeeNiHistoryEntry(initialNiCalculationResult));
+
+        Class1ANicsYtd = initialNiCalculationResult.Class1ANicsPayable;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NiYtdHistory"/> class.
+    /// </summary>
+    public NiYtdHistory()
+    {
+        _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty;
+    }
+
+    /// <summary>
+    /// Initialises a new instance of <see cref="NiYtdHistory"/>.
+    /// </summary>
+    /// <param name="entries">NI history entries for the tax year to date.</param>
+    /// <param name="class1ANicsYtd">Class 1A NICs for the tax year to date.</param>
+    public NiYtdHistory(in ImmutableArray<IEmployeeNiHistoryEntry> entries, decimal? class1ANicsYtd)
+    {
+        _entries = entries;
+        Class1ANicsYtd = class1ANicsYtd;
+    }
+
+    /// <summary>
     /// Returns a new instance of <see cref="NiYtdHistory"/> with the previous history updated by the latest
     /// payrun result.  Where an entry in the history matches the current NI category, that entry
     /// is updated, but otherwise a new history entry is created and appended.
@@ -46,31 +79,6 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>
         return entryAlreadyPresent ?
             new NiYtdHistory(_entries.ReplaceAt(index, _entries[index].Add(latestNiCalculationResult)), class1ANicsYtd) :
             new NiYtdHistory(_entries.Add(new EmployeeNiHistoryEntry(latestNiCalculationResult)), class1ANicsYtd);
-    }
-
-    /// <summary>
-    /// Initialises a new instance of <see cref="NiYtdHistory"/> with the supplied NI calculation result.  This
-    /// constructor is intended to be used for the first time a payrun is run during the tax year.
-    /// </summary>
-    /// <param name="initialNiCalculationResult">NI calculation result for the first payrun of the tax year
-    /// for a given employee.</param>
-    public NiYtdHistory(in INiCalculationResult initialNiCalculationResult)
-    {
-        _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty
-            .Add(new EmployeeNiHistoryEntry(initialNiCalculationResult));
-
-        Class1ANicsYtd = initialNiCalculationResult.Class1ANicsPayable;
-    }
-
-    /// <summary>
-    /// Initialises a new instance of <see cref="NiYtdHistory"/>.
-    /// </summary>
-    /// <param name="entries">NI history entries for the tax year to date.</param>
-    /// <param name="class1ANicsYtd">Class 1A NICs for the tax year to date.</param>
-    public NiYtdHistory(in ImmutableArray<IEmployeeNiHistoryEntry> entries, decimal? class1ANicsYtd)
-    {
-        _entries = entries;
-        Class1ANicsYtd = class1ANicsYtd;
     }
 
     /// <summary>
