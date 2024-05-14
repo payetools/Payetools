@@ -138,4 +138,14 @@ public class Employment : IEmployment
     {
         _payrollHistoryYtd = new EmployeePayrollHistoryYtd();
     }
+
+    /// <summary>
+    /// Updates the payroll history for this employee with the supplied pay run information.
+    /// </summary>
+    /// <param name="payRunInput">Employee pay run input entry.</param>
+    /// <param name="payrunResult">Results of a set of payroll calculations for the employee.</param>
+    public void UpdatePayrollHistory(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult)
+    {
+        _payrollHistoryYtd = _payrollHistoryYtd.Add(payRunInput, payrunResult);
+    }
 }

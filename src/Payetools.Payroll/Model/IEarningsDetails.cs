@@ -9,6 +9,8 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents a pay component (e.g., salary, bonus, sick pay, etc.).
 /// </summary>
+/// <remarks>As this type is used as the key to a dictionary in the <see cref="IEarningsHistoryYtd"/> type,
+/// it is recommended to override <see cref="object.GetHashCode"/> in any implementations.</remarks>
 public interface IEarningsDetails
 {
     /// <summary>

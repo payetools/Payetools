@@ -78,12 +78,6 @@ public interface IEmployeePayRunResult
     decimal? PayrollBenefitsInPeriod { get; }
 
     /// <summary>
-    /// Gets the historical set of information for an employee's payroll for the current tax year,
-    /// including the effect of this payrun.
-    /// </summary>
-    ref IEmployeePayrollHistoryYtd EmployeePayrollHistoryYtd { get; }
-
-    /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this pay run.
     /// Note that the employee's leaving date may be before the start of the pay period for this pay run.
     /// </summary>

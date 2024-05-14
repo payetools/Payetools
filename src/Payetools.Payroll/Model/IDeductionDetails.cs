@@ -9,6 +9,8 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents the various types of deduction that can be made from payroll.
 /// </summary>
+/// <remarks>As this type is used as the key to a dictionary in the <see cref="IDeductionsHistoryYtd"/> type,
+/// it is recommended to override <see cref="object.GetHashCode"/> in any implementations.</remarks>
 public interface IDeductionDetails
 {
     /// <summary>

@@ -120,4 +120,11 @@ public interface IEmployment
     /// Gets the key figures from the employee's payroll history for the tax year to date.
     /// </summary>
     ref IEmployeePayrollHistoryYtd PayrollHistoryYtd { get; }
+
+    /// <summary>
+    /// Updates the payroll history for this employee with the supplied pay run information.
+    /// </summary>
+    /// <param name="payRunInput">Employee pay run input entry.</param>
+    /// <param name="payrunResult">Results of a set of payroll calculations for the employee.</param>
+    void UpdatePayrollHistory(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult);
 }

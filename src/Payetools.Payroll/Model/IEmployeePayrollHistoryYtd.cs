@@ -32,7 +32,7 @@ public interface IEmployeePayrollHistoryYtd
     /// <summary>
     /// Gets any statutory parental pay paid to date this tax year.
     /// </summary>
-    decimal SharedParentalPayYtd { get; }
+    decimal StatutorySharedParentalPayYtd { get; }
 
     /// <summary>
     /// Gets any statutory parental bereavement pay paid to date this tax year.
@@ -115,13 +115,14 @@ public interface IEmployeePayrollHistoryYtd
     /// <summary>
     /// Gets the employee's deduction history for the tax year to date.
     /// </summary>
-    IDeductionHistoryYtd DeductionHistoryYtd { get; }
+    IDeductionsHistoryYtd DeductionsHistoryYtd { get; }
 
     /// <summary>
     /// Adds the results of the pay run provided to the current instance and returns a new instance of
     /// <see cref="IEmployeePayrollHistoryYtd"/>.</summary>
+    /// <param name="payRunInput">Employee pay run input entry.</param>
     /// <param name="payrunResult">Results of a set of payroll calculations for a given employee.</param>
     /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results
     /// applied.</returns>
-    IEmployeePayrollHistoryYtd Add(IEmployeePayRunResult payrunResult);
+    IEmployeePayrollHistoryYtd Add(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult);
 }

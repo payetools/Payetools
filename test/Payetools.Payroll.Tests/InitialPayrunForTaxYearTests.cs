@@ -8,7 +8,6 @@ using FluentAssertions;
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.NationalInsurance.ReferenceData;
-using Payetools.Payroll.Extensions;
 using Payetools.Payroll.Model;
 using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
@@ -73,6 +72,8 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             payrolledBenefits,
             out var payrunEntry);
 
+        var employment = payrunEntry.Employment;
+
         var payRunInfo = testData.PayRunInfo.Where(pi => pi.TestReference == "Pay1").First();
 
         var payDate = new PayDate(payRunInfo.PayDay, payRunInfo.PayFrequency);
@@ -84,7 +85,9 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         processor.Process(employer, entries, out var result);
 
-        IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(result.EmployeePayRunResults[0]);
+        employment.UpdatePayrollHistory(payrunEntry, result.EmployeePayRunResults[0]);
+
+        //IEmployeePayrollHistoryYtd historyYtd = employeePayrollHistory.Add(payrunEntry, result.EmployeePayRunResults[0]);
 
         foreach (var employeeResult in result.EmployeePayRunResults)
         {
@@ -152,7 +155,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             PayrolledBenefitsYtd = previousYtd.PayrolledBenefitsYtd,
             StudentLoanRepaymentsYtd = previousYtd.StudentLoanRepaymentsYtd,
             PostgraduateLoanRepaymentsYtd = previousYtd.GraduateLoanRepaymentsYtd,
-            SharedParentalPayYtd = previousYtd.SharedParentalPayYtd,
+            StatutorySharedParentalPayYtd = previousYtd.SharedParentalPayYtd,
             StatutoryMaternityPayYtd = previousYtd.StatutoryMaternityPayYtd,
             StatutoryAdoptionPayYtd = previousYtd.StatutoryAdoptionPayYtd,
             StatutoryPaternityPayYtd = previousYtd.StatutoryPaternityPayYtd,
@@ -250,7 +253,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
             LastName = staticEntry.EmployeeLastName
         };
 
-        var employment = new Model.Employment(history)
+        var employment = new Employment(history)
         {
             TaxCode = staticEntry.TaxCode,
             NiCategory = staticEntry.NiCategory,

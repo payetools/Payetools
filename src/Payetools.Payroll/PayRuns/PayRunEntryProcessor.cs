@@ -195,7 +195,6 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
         // earned income for the period, whereas the latter is that figure less any pre-tax deductions,
         // for example, salary exchange arrangements.
         decimal grossPay = 0.0m;
-        decimal workingGrossPay = 0.0m;
         decimal taxablePay = 0.0m;
         decimal nicablePay = 0.0m;
         decimal pensionablePay = 0.0m;
@@ -209,7 +208,7 @@ public class PayRunEntryProcessor : IPayRunEntryProcessor
             pensionablePay += e.EarningsDetails.IsPensionable ? e.TotalEarnings : 0.0m;
         }
 
-        workingGrossPay = grossPay;
+        decimal workingGrossPay = grossPay;
 
         foreach (var d in entry.Deductions)
         {
