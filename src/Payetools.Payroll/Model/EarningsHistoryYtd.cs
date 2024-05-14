@@ -40,6 +40,9 @@ public class EarningsHistoryYtd : IEarningsHistoryYtd
     {
         foreach (var entry in earnings)
         {
+            if (EmployeePayrollHistoryYtd.IsReclaimableStatutoryPayment(entry.EarningsDetails.PaymentType))
+                continue;
+
             if (_entries.TryGetValue(entry.EarningsDetails, out var existingEntry))
                 _entries[entry.EarningsDetails] = existingEntry.Add(entry);
             else
