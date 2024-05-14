@@ -122,7 +122,7 @@ public class NiCalculator : INiCalculator
 
         if (resultOfStep1 < 0.0m)
         {
-            result = NiCalculationResult.NoRecordingRequired;
+            result = new NiCalculationResult(niCategory);
 
             return;
         }
@@ -191,7 +191,7 @@ public class NiCalculator : INiCalculator
 
         if (resultOfStep1 < 0.0m)
         {
-            result = NiCalculationResult.NoRecordingRequired;
+            result = new NiCalculationResult(niCategory);
 
             return;
         }

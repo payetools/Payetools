@@ -58,7 +58,7 @@ public interface INiCalculationResult
     /// <summary>
     /// Gets a value indicating whether the results of this calculation need to be reported to HMRC.
     /// </summary>
-    bool NoRecordingRequiredIndicator { get; }
+    bool NoRecordingRequired { get; }
 
     /// <summary>
     /// Gets the value of any Class 1A National Insurance contributions payable. Null if none.

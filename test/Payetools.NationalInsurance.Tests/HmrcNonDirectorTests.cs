@@ -92,7 +92,7 @@ public class HmrcNonDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture
         result.EmployeeContribution.Should().Be(0.0m, "Low income NI test #1");
         result.EmployerContribution.Should().Be(0.0m, "Low income NI test #2");
         result.EarningsBreakdown.EarningsAtLEL.Should().Be(0, "Low income NI test #3");
-        result.Should().BeEquivalentTo(NiCalculationResult.NoRecordingRequired);
+        result.Should().BeEquivalentTo(new NiCalculationResult(NiCategory.A));
     }
 
     private async Task<INiCalculator> GetCalculator(PayDate payDate)
