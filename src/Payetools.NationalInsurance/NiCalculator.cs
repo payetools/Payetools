@@ -122,7 +122,7 @@ public class NiCalculator : INiCalculator
 
         if (resultOfStep1 < 0.0m)
         {
-            result = new NiCalculationResult(niCategory);
+            result = new NiCalculationResult(niCategory, nicableEarningsInPeriod, thresholds);
 
             return;
         }
@@ -191,7 +191,7 @@ public class NiCalculator : INiCalculator
 
         if (resultOfStep1 < 0.0m)
         {
-            result = new NiCalculationResult(niCategory);
+            result = new NiCalculationResult(niCategory, nicableEarningsInPeriod, _niPeriodThresholds);
 
             return;
         }

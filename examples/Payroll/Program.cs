@@ -99,3 +99,11 @@ foreach (var er in payRunResult.EmployeePayRunResults)
         $" (Employer contribution: {er.PensionContributionCalculationResult?.CalculatedEmployerContributionAmount ?? 0.00m:c})");
     Console.WriteLine($"   Net pay: {er.NetPay:c}");
 }
+
+// #### Step 6 - once finalised, apply the pay run information to the employment history ####
+foreach (var er in payRunResult.EmployeePayRunResults)
+{
+    er.Employment.UpdatePayrollHistory(
+        payRunEntries.Where(i => i.Employment.PayrollId == er.Employment.PayrollId).First(),
+        er);
+}

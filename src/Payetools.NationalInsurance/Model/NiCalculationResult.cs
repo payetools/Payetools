@@ -107,11 +107,18 @@ public readonly struct NiCalculationResult : INiCalculationResult
     /// the NI category. Used to indicate that no recording is required.
     /// </summary>
     /// <param name="category">NI category used for this calculation.</param>
-    public NiCalculationResult(NiCategory category)
+    /// <param name="nicablePay">Gross pay for NI purposes ("Nicable pay") used in this calculation.</param>
+    /// <param name="thresholdsUsed">Thresholds used for this calculation.</param>
+    public NiCalculationResult(
+        NiCategory category,
+        decimal nicablePay,
+        INiThresholdSet thresholdsUsed)
     {
         NiCategory = category;
+        NicablePay = nicablePay;
+        ThresholdsUsed = thresholdsUsed;
+
         RatesUsed = default!;
-        ThresholdsUsed = default!;
         EarningsBreakdown = default!;
         NoRecordingRequired = true;
     }
