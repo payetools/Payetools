@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Common.Model;
 using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
@@ -59,6 +60,7 @@ public class PayRunResult : IPayRunResult
 
         payRunSummary = new PayRunSummary
         {
+            PayDate = PayRunDetails.PayDate,
             IncomeTaxTotal = EmployeePayRunResults
                 .Select(r => r.TaxCalculationResult.FinalTaxDue)
                 .Sum(),
