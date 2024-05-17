@@ -67,11 +67,11 @@ public class EmployerHistoryEntry : IEmployerHistoryEntry
     public decimal TotalStatutoryParentalBereavementPay { get; init; }
 
     /// <summary>
-    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
+    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="IEmployerHistoryEntry"/> instance.
     /// </summary>
     /// <param name="summary">Pay run summary to apply.</param>
-    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary applied.</returns>
-    public EmployerHistoryEntry Apply(IPayRunSummary summary) =>
+    /// <returns>New entity that implements <see cref="IEmployerHistoryEntry"/> with the supplied pay run summary applied.</returns>
+    public IEmployerHistoryEntry Apply(IPayRunSummary summary) =>
         new EmployerHistoryEntry
         {
             MonthNumber = MonthNumber,
@@ -88,11 +88,12 @@ public class EmployerHistoryEntry : IEmployerHistoryEntry
         };
 
     /// <summary>
-    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
+    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="IEmployerHistoryEntry"/>
+    /// instance.
     /// </summary>
     /// <param name="summary">Pay run summary to un-apply.</param>
-    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
-    public EmployerHistoryEntry UndoApply(IPayRunSummary summary) =>
+    /// <returns>New entity that implements <see cref="IEmployerHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
+    public IEmployerHistoryEntry UndoApply(IPayRunSummary summary) =>
         new EmployerHistoryEntry
         {
             MonthNumber = MonthNumber,

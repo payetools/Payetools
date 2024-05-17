@@ -67,16 +67,17 @@ public interface IEmployerHistoryEntry
     decimal TotalStatutoryParentalBereavementPay { get; }
 
     /// <summary>
-    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
+    /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="IEmployerHistoryEntry"/> instance.
     /// </summary>
     /// <param name="summary">Pay run summary to apply.</param>
-    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary applied.</returns>
-    EmployerHistoryEntry Apply(IPayRunSummary summary);
+    /// <returns>New entity that implements <see cref="IEmployerHistoryEntry"/> with the supplied pay run summary applied.</returns>
+    IEmployerHistoryEntry Apply(IPayRunSummary summary);
 
     /// <summary>
-    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="EmployerHistoryEntry"/>.
+    /// Undoes the previous application of a pay run summary on this history entry and returns a new updated <see cref="IEmployerHistoryEntry"/>
+    /// instance.
     /// </summary>
     /// <param name="summary">Pay run summary to un-apply.</param>
-    /// <returns>New <see cref="EmployerHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
-    EmployerHistoryEntry UndoApply(IPayRunSummary summary);
+    /// <returns>New entity that implements <see cref="IEmployerHistoryEntry"/> with the supplied pay run summary un-applied.</returns>
+    IEmployerHistoryEntry UndoApply(IPayRunSummary summary);
 }

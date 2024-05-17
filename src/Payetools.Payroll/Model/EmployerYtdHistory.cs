@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using System;
 
 namespace Payetools.Payroll.Model;
 
@@ -74,10 +75,7 @@ public class EmployerYtdHistory : IEmployerYtdHistory
         if (month < 1 || month > 12)
             throw new ArgumentException($"Invalid month number {month}; value must be between 1 and 12", nameof(monthNumber));
 
-        var entries = _historyEntries.Where(e => e.MonthNumber <= month);
-
-        if (!entries.Any())
-            throw new ArgumentException($"No employer history found for month {month}", nameof(monthNumber));
+        var entries = _historyEntries.Where(e => e != null && e.MonthNumber <= month);
 
         ytdHistory = new EmployerHistoryEntry
         {
