@@ -214,6 +214,9 @@ public readonly struct TaxYear
     /// <returns>Tax month number.</returns>
     public int GetMonthNumber(in DateOnly payDate, in PayFrequency payFrequency)
     {
+        if (payDate < StartOfTaxYear || payDate > EndOfTaxYear)
+            throw new ArgumentException($"Pay date of {payDate.ToUk()} is outside this tax year {StartOfTaxYear.ToUk()} - {EndOfTaxYear.ToUk()}", nameof(payDate));
+
         var startOfCalendarYear = new DateOnly((int)TaxYearEnding, 1, 1);
         var monthNumber = payDate.Month + (payDate >= startOfCalendarYear && payDate <= EndOfTaxYear ? 12 : 0) - 3;
         var dayOfMonth = payDate.Day;
@@ -250,5 +253,7 @@ public readonly struct TaxYear
         taxYear.GetMonthNumber(payDate.Date, PayFrequency.Monthly);
 
     private int GetDayNumber(in DateOnly payDate) =>
-        payDate.DayNumber - StartOfTaxYear.DayNumber + 1;
+        payDate >= StartOfTaxYear && payDate <= EndOfTaxYear ?
+            payDate.DayNumber - StartOfTaxYear.DayNumber + 1 :
+            throw new ArgumentException($"Pay date of {payDate.ToUk()} is outside this tax year {StartOfTaxYear.ToUk()} - {EndOfTaxYear.ToUk()}", nameof(payDate));
 }
