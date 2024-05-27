@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="5.0.19" />
-    <PackageReference Include="xunit" Version="2.8.0" />
+    <PackageReference Include="xunit" Version="2.8.1" />
   </ItemGroup>
 
   <ItemGroup>
