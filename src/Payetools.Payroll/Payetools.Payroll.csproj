@@ -4,8 +4,8 @@
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Title>Paytools payroll library</Title>
-	<Description>Payroll processing library for Paytools framework</Description>
+	<Title>Payetools payroll library</Title>
+	<Description>Payroll processing library for Payetools framework</Description>
 	<Authors>$(Authors)</Authors>
 	<Company>$(Company)</Company>
 	<Copyright>$(Copyright)</Copyright>

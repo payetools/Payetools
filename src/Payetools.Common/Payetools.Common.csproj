@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Title>Paytools common library</Title>
-    <Description>Common library for Paytools components</Description>
+    <Title>Payetools common library</Title>
+    <Description>Common library for Payetools components</Description>
     <Authors>$(Authors)</Authors>
     <Company>$(Company)</Company>
     <Copyright>$(Copyright)</Copyright>

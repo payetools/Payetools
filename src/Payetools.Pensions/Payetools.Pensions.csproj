@@ -5,8 +5,8 @@
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-	<Title>Paytools pensions library</Title>
-	<Description>Pensions calculation library for Paytools framework</Description>
+	<Title>Payetools pensions library</Title>
+	<Description>Pensions calculation library for Payetools framework</Description>
 	<Authors>$(Authors)</Authors>
 	<Company>$(Company)</Company>
 	<Copyright>$(Copyright)</Copyright>

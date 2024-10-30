@@ -4,8 +4,8 @@
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Title>Paytools NMW/NLW compliance library</Title>
-	<Description>National Minimum/Living Wage compliance library for Paytools framework</Description>
+	<Title>Payetools NMW/NLW compliance library</Title>
+	<Description>National Minimum/Living Wage compliance library for Payetools framework</Description>
 	<Authors>$(Authors)</Authors>
 	<Company>$(Company)</Company>
 	<Copyright>$(Copyright)</Copyright>
