@@ -26,6 +26,10 @@
     <ProjectReference Include="..\..\src\Payetools.Common\Payetools.Common.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Update="MinVer" Version="6.0.0" />
   </ItemGroup>
