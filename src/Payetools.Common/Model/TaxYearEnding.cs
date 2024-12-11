@@ -36,11 +36,14 @@ public enum TaxYearEnding
     /// <summary>2024-2025</summary>
     Apr5_2025 = 2025,
 
+    /// <summary>2024-2025</summary>
+    Apr5_2026 = 2026,
+
     /// <summary>Minimum value supported for TaxYearEnding</summary>
     MinValue = 2019,
 
     /// <summary>Maximum value supported for TaxYearEnding</summary>
-    MaxValue = 2025
+    MaxValue = 2026
 }
 
 /// <summary>

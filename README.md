@@ -27,6 +27,8 @@ Commercial support for the Payetools open-source libraries is also available - p
 Releases are made via nuget - search for payetools to see all libraries for this repo or follow [this link](https://www.nuget.org/packages?q=payetools).
 Packages are built with compatibility with .NET 8.0 and 9.0.
 
+Release notes can be found in [releases.md](doc/releases.md).
+
 ### Reference Data
 Payetools relies on static reference data to drive tax, NI, etc., calculations (the machine-readable equivalent of HMRC's
 **[Rates and thresholds for employers](https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025)** page.

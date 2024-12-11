@@ -47,13 +47,13 @@ public class PayDateTests
         var action = () => new PayDate(date, PayFrequency.Monthly);
 
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("Unsupported tax year; date must fall within range tax year ending 6 April 2019 to 6 April 2025 (Parameter 'date')");
+            .WithMessage("Unsupported tax year; date must fall within range tax year ending 6 April 2019 to 6 April 2026 (Parameter 'date')");
 
-        date = new DateOnly(2025, 4, 6);
+        date = new DateOnly(2026, 4, 6);
         action = () => new PayDate(date, PayFrequency.Monthly);
 
         action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("Unsupported tax year; date must fall within range tax year ending 6 April 2019 to 6 April 2025 (Parameter 'date')");
+            .WithMessage("Unsupported tax year; date must fall within range tax year ending 6 April 2019 to 6 April 2026 (Parameter 'date')");
     }
 
     [Fact]
