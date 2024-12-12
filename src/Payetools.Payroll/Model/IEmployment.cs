@@ -96,6 +96,13 @@ public interface IEmployment
     bool IsOffPayrollWorker { get; init; }
 
     /// <summary>
+    /// Gets the employee's workplace postcode, applicable when the employees' National Insurance
+    /// category indicates they are working in a Freeport or Investment Zone.
+    /// </summary>
+    /// <remarks>Only applicable from April 2025.</remarks>
+    string? EmployeeWorkplacePostcode { get; init; }
+
+    /// <summary>
     /// Gets the default pension contributions to apply in each pay period, unless overridden by employee
     /// or employer instruction for that pay period.
     /// </summary>

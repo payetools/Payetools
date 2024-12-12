@@ -103,6 +103,13 @@ public class Employment : IEmployment
     public bool IsOffPayrollWorker { get; init; }
 
     /// <summary>
+    /// Gets the employee's workplace postcode, applicable when the employees' National Insurance
+    /// category indicates they are working in a Freeport or Investment Zone.
+    /// </summary>
+    /// <remarks>Only applicable from April 2025.</remarks>
+    public string? EmployeeWorkplacePostcode { get; init; }
+
+    /// <summary>
     /// Gets the list of payrolled benefits that apply to this employment.
     /// </summary>
     public ImmutableArray<IPayrolledBenefit> PayrolledBenefits { get; init; } = default!;
