@@ -8,7 +8,8 @@ namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Represents summarised pay run information across all pay runs for a given tax month.
-/// </summary>`
+/// </summary>
+/// <remarks>Added Statutory Neonatal Care Pay applicable from April 2025.</remarks>
 public class EmployerHistoryEntry : IEmployerHistoryEntry
 {
     /// <summary>
@@ -65,6 +66,11 @@ public class EmployerHistoryEntry : IEmployerHistoryEntry
     /// Gets the total Statutory Parental Bereavement Pay amount for the tax month. May be zero.
     /// </summary>
     public decimal TotalStatutoryParentalBereavementPay { get; init; }
+
+    /// <summary>
+    /// Gets the total Statutory Neonatal Care Pay amount for the tax month.  May be zero.
+    /// </summary>
+    public decimal TotalStatutoryNeonatalCarePay { get; init; }
 
     /// <summary>
     /// Applies the supplied pay run summary to this history entry and returns a new updated <see cref="IEmployerHistoryEntry"/> instance.

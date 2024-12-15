@@ -52,11 +52,13 @@ public class StatutoryPaymentReclaimCalculator : IStatutoryPaymentReclaimCalcula
             ReclaimableStatutoryPaternityPay = decimal.Round(employerMonthEntry.TotalStatutoryPaternityPay * reclaimRate, 2, MidpointRounding.ToPositiveInfinity),
             ReclaimableStatutorySharedParentalPay = decimal.Round(employerMonthEntry.TotalStatutorySharedParentalPay * reclaimRate, 2, MidpointRounding.ToPositiveInfinity),
             ReclaimableStatutoryParentalBereavementPay = decimal.Round(employerMonthEntry.TotalStatutoryParentalBereavementPay * reclaimRate, 2, MidpointRounding.ToPositiveInfinity),
+            ReclaimableStatutoryNeonatalCarePay = decimal.Round(employerMonthEntry.TotalStatutoryNeonatalCarePay * reclaimRate, 2, MidpointRounding.ToPositiveInfinity),
             AdditionalNiCompensationOnSMP = decimal.Round(employerMonthEntry.TotalStatutoryMaternityPay * additionalRate, 2, MidpointRounding.ToPositiveInfinity),
             AdditionalNiCompensationOnSAP = decimal.Round(employerMonthEntry.TotalStatutoryAdoptionPay * additionalRate, 2, MidpointRounding.ToPositiveInfinity),
             AdditionalNiCompensationOnSPP = decimal.Round(employerMonthEntry.TotalStatutoryPaternityPay * additionalRate, 2, MidpointRounding.ToPositiveInfinity),
             AdditionalNiCompensationOnSShPP = decimal.Round(employerMonthEntry.TotalStatutorySharedParentalPay * additionalRate, 2, MidpointRounding.ToPositiveInfinity),
-            AdditionalNiCompensationOnSPBP = decimal.Round(employerMonthEntry.TotalStatutoryParentalBereavementPay * additionalRate, 2, MidpointRounding.ToPositiveInfinity)
+            AdditionalNiCompensationOnSPBP = decimal.Round(employerMonthEntry.TotalStatutoryParentalBereavementPay * additionalRate, 2, MidpointRounding.ToPositiveInfinity),
+            AdditionalNiCompensationOnSNCP = decimal.Round(employerMonthEntry.TotalStatutoryNeonatalCarePay * additionalRate, 2, MidpointRounding.ToPositiveInfinity)
         };
     }
 }

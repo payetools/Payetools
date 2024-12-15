@@ -9,6 +9,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents the amounts that can be reclaimed from HMRC against eligible statutory payments.
 /// </summary>
+/// <remarks>Added Statutory Neonatal Care Pay applicable from April 2025.</remarks>
 public interface IStatutoryPaymentReclaim
 {
     /// <summary>
@@ -57,6 +58,15 @@ public interface IStatutoryPaymentReclaim
     decimal ReclaimableStatutoryParentalBereavementPay { get; }
 
     /// <summary>
+    /// Gets the total Statutory Neonatal Care Pay amount for the tax month. May be zero.
+    /// </summary>
+    /// <remarks>This is the statutory amount repayable by HMRC, which is either the amount reduced by the current
+    /// HMRC published percentage (e.g., 92% in 2024/5) for larger employers, or the total amount claimed (i.e., 100%)
+    /// for employers that are entitled to Small Employers Relief. Any additional percentage-based reclaim amount
+    /// (e.g., 3% in 2024/5) is given via the <see cref="AdditionalNiCompensationOnSNCP"/> property.</remarks>
+    decimal ReclaimableStatutoryNeonatalCarePay { get; }
+
+    /// <summary>
     /// Gets any additional National Insurance compensation available for Statutory Maternity Pay
     /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
     /// <see cref="ReclaimableStatutoryMaternityPay"/> already includes this amount (if applicable).
@@ -90,6 +100,13 @@ public interface IStatutoryPaymentReclaim
     /// <see cref="ReclaimableStatutoryParentalBereavementPay"/> already includes this amount (if applicable).
     /// </summary>
     decimal AdditionalNiCompensationOnSPBP { get; }
+
+    /// <summary>
+    /// Gets any additional National Insurance compensation available for Statutory Neonatal Care Pay
+    /// in the case that the employer qualifies for Small Employers Relief.  Note that the value
+    /// <see cref="ReclaimableStatutoryNeonatalCarePay"/> already includes this amount (if applicable).
+    /// </summary>
+    decimal AdditionalNiCompensationOnSNCP { get; }
 
     /// <summary>
     /// Gets any CIS deductions suffered.

@@ -1,5 +1,15 @@
 # Releases
 
+# 1.1.9
+
+Full changelog: [1.1.8 -> 1.1.9](https://github.com/payetools/Payetools/compare/1.1.8...1.1.9)
+
+## What's Changed
+
+### Misc
+- Feat: Added support for recording and reclaiming Statutory Neonatal Care Pay (applicable from
+April 2025)
+
 # 1.1.8
 
 Full changelog: [1.1.7 -> 1.1.8](https://github.com/payetools/Payetools/compare/1.1.7...1.1.8)
