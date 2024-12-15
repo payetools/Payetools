@@ -1,5 +1,15 @@
 # Releases
 
+# 1.1.10
+
+Full changelog: [1.1.9 -> 1.1.10](https://github.com/payetools/Payetools/compare/1.1.9...1.1.10)
+
+## What's Changed
+
+### Misc
+- Feat: Added Statutory Neonatal Care Pay (applicable from April 2025) to employee payroll history
+and to payroll output
+
 # 1.1.9
 
 Full changelog: [1.1.8 -> 1.1.9](https://github.com/payetools/Payetools/compare/1.1.8...1.1.9)

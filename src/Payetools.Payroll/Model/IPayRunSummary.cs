@@ -67,4 +67,9 @@ public interface IPayRunSummary
     /// Gets the total Statutory Parental Bereavement Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
     decimal StatutoryParentalBereavementPayTotal { get; }
+
+    /// <summary>
+    /// Gets the total Statutory Neonatal Care Pay amount for the pay run, if any. Zero otherwise.
+    /// </summary>
+    decimal StatutoryNeonatalCarePayTotal { get; }
 }

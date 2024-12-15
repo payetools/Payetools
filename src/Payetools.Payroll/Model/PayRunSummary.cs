@@ -11,6 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the summary of a pay run.
 /// </summary>
+/// <remarks>Added Statutory Neonatal Care Pay from April 2025.</remarks>
 public class PayRunSummary : IPayRunSummary
 {
     /// <summary>
@@ -67,4 +68,9 @@ public class PayRunSummary : IPayRunSummary
     /// Gets the total Statutory Parental Bereavement Pay amount for the pay run, if any. Zero otherwise.
     /// </summary>
     public decimal StatutoryParentalBereavementPayTotal { get; init; }
+
+    /// <summary>
+    /// Gets the total Statutory Neonatal Care Pay amount for the pay run, if any. Zero otherwise.
+    /// </summary>
+    public decimal StatutoryNeonatalCarePayTotal { get; init; }
 }

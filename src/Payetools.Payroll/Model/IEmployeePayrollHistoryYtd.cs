@@ -12,6 +12,7 @@ namespace Payetools.Payroll.Model;
 /// Interface for types that represent the historical set of information for an employee's payroll for the
 /// current tax year.
 /// </summary>
+/// <remarks>Added Statutory Neonatal Care Pay applicable from April 2025.</remarks>
 public interface IEmployeePayrollHistoryYtd
 {
     /// <summary>
@@ -38,6 +39,11 @@ public interface IEmployeePayrollHistoryYtd
     /// Gets any statutory parental bereavement pay paid to date this tax year.
     /// </summary>
     decimal StatutoryParentalBereavementPayYtd { get; }
+
+    /// <summary>
+    /// Gets any statutory neonatal care pay paid to date this tax year.
+    /// </summary>
+    decimal StatutoryNeonatalCarePayYtd { get; }
 
     /// <summary>
     /// Gets any statutory sickness pay paid to date this tax year.

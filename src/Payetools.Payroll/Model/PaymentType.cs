@@ -38,6 +38,9 @@ public enum PaymentType
     /// <summary>Statutory Parental Bereavement Pay.</summary>
     StatutoryParentalBereavementPay,
 
+    /// <summary>Statutory Neonatal Care Pay.</summary>
+    StatutoryNeonatalCarePay,
+
     /// <summary>Occupational (i.e., employer voluntary) sick pay; allows single-line reporting of SSP and occupational
     /// sick pay.</summary>
     OccupationalSickPay,

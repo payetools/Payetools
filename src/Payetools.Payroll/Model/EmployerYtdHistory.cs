@@ -89,7 +89,8 @@ public class EmployerYtdHistory : IEmployerYtdHistory
             TotalStatutoryPaternityPay = entries.Sum(e => e.TotalStatutoryPaternityPay),
             TotalStatutoryAdoptionPay = entries.Sum(e => e.TotalStatutoryAdoptionPay),
             TotalStatutorySharedParentalPay = entries.Sum(e => e.TotalStatutorySharedParentalPay),
-            TotalStatutoryParentalBereavementPay = entries.Sum(e => e.TotalStatutoryParentalBereavementPay)
+            TotalStatutoryParentalBereavementPay = entries.Sum(e => e.TotalStatutoryParentalBereavementPay),
+            TotalStatutoryNeonatalCarePay = entries.Sum(e => e.TotalStatutoryNeonatalCarePay)
         };
     }
 
@@ -106,6 +107,7 @@ public class EmployerYtdHistory : IEmployerYtdHistory
             TotalStatutoryPaternityPay = summary.StatutoryPaternityPayTotal,
             TotalStatutoryAdoptionPay = summary.StatutoryAdoptionPayTotal,
             TotalStatutorySharedParentalPay = summary.StatutorySharedParentalPayTotal,
-            TotalStatutoryParentalBereavementPay = summary.StatutoryParentalBereavementPayTotal
+            TotalStatutoryParentalBereavementPay = summary.StatutoryParentalBereavementPayTotal,
+            TotalStatutoryNeonatalCarePay = summary.StatutoryNeonatalCarePayTotal
         };
 }

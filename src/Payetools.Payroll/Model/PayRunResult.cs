@@ -95,6 +95,10 @@ public class PayRunResult : IPayRunResult
             StatutoryParentalBereavementPayTotal = allEarnings
                 .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryParentalBereavementPay)
                 .Select(e => e.TotalEarnings)
+                .Sum(),
+            StatutoryNeonatalCarePayTotal = allEarnings
+                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryNeonatalCarePay)
+                .Select(e => e.TotalEarnings)
                 .Sum()
         };
     }
