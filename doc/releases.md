@@ -1,5 +1,14 @@
 # Releases
 
+# 1.1.11
+
+Full changelog: [1.1.10 -> 1.1.11](https://github.com/payetools/Payetools/compare/1.1.10...1.1.11)
+
+## What's Changed
+
+### Misc
+- Chore: Updated dependency for xunit.runner.visualstudio
+
 # 1.1.10
 
 Full changelog: [1.1.9 -> 1.1.10](https://github.com/payetools/Payetools/compare/1.1.9...1.1.10)
