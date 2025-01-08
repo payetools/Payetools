@@ -183,6 +183,12 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
+            StatutoryNeonatalCarePayYtd = StatutoryNeonatalCarePayYtd +
+                payRunInput.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryNeonatalCarePay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
             EmployeeNiHistoryEntries = EmployeeNiHistoryEntries.Add(payrunResult.NiCalculationResult),
 
             GrossPayYtd = GrossPayYtd + payrunResult.TotalGrossPay,
@@ -222,7 +228,8 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
         paymentType == PaymentType.StatutoryAdoptionPay ||
         paymentType == PaymentType.StatutoryPaternityPay ||
         paymentType == PaymentType.StatutorySharedParentalPay ||
-        paymentType == PaymentType.StatutoryParentalBereavementPay;
+        paymentType == PaymentType.StatutoryParentalBereavementPay ||
+        paymentType == PaymentType.StatutoryNeonatalCarePay;
 
     private static bool PensionIsUnderNpa(IPensionContributionCalculationResult? pensionCalculationResult) =>
         pensionCalculationResult?.TaxTreatment == PensionTaxTreatment.NetPayArrangement;
