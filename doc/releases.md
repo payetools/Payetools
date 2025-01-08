@@ -1,5 +1,14 @@
 # Releases
 
+# 1.1.12
+
+Full changelog: [1.1.11 -> 1.1.12](https://github.com/payetools/Payetools/compare/1.1.11...1.1.12)
+
+## What's Changed
+
+### Misc
+- Feat: Added YTD calculation for Statutory Neonatal Care Pay
+
 # 1.1.11
 
 Full changelog: [1.1.10 -> 1.1.11](https://github.com/payetools/Payetools/compare/1.1.10...1.1.11)
