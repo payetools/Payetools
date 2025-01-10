@@ -1,5 +1,14 @@
 # Releases
 
+# 1.1.13
+
+Full changelog: [1.1.12 -> 1.1.13](https://github.com/payetools/Payetools/compare/1.1.12...1.1.13)
+
+## What's Changed
+
+### Misc
+- Chore: Updated dependencies (xunit, xunit.runner.visualstudio, coverlet.collector)
+
 # 1.1.12
 
 Full changelog: [1.1.11 -> 1.1.12](https://github.com/payetools/Payetools/compare/1.1.11...1.1.12)
