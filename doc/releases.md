@@ -1,5 +1,14 @@
 # Releases
 
+# 1.1.14
+
+Full changelog: [1.1.13 -> 1.1.14](https://github.com/payetools/Payetools/compare/1.1.13...1.1.14)
+
+## What's Changed
+
+### Misc
+- Chore: Updated dependencies (nuke.common, fluentassertions, coverlet.collector, microsoft.extensions.logging.console, microsoft.extensions.http)
+
 # 1.1.13
 
 Full changelog: [1.1.12 -> 1.1.13](https://github.com/payetools/Payetools/compare/1.1.12...1.1.13)
