@@ -90,4 +90,4 @@ csharp_space_around_binary_operators = before_and_after
 # Payetools specifics
 
 dotnet_diagnostic.IDE0073.severity = warning
-file_header_template = Copyright (c) 2023-2024, Payetools Foundation.\n\nPayetools Foundation licenses this file to you under the following license(s):\n\n  * The MIT License, see https://opensource.org/license/mit/
+file_header_template = Copyright (c) 2023-2025, Payetools Foundation.\n\nPayetools Foundation licenses this file to you under the following license(s):\n\n  * The MIT License, see https://opensource.org/license/mit/
