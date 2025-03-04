@@ -52,7 +52,7 @@ public enum NiCategory
     /// <summary>Employees under 21.</summary>
     M,
 
-    /// <summary>Investment Zone.  Added for 2024-2025.</summary>
+    /// <summary>All employees who work in investment zones, apart from those in groups E, D and K.  Added for 2024-2025.</summary>
     N,
 
     /// <summary>Employees who work in freeports and are over the State Pension age.</summary>
