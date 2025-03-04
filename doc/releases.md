@@ -1,5 +1,16 @@
 # Releases
 
+# 1.1.15
+
+Full changelog: [1.1.14 -> 1.1.15](https://github.com/payetools/Payetools/compare/1.1.15...1.1.15)
+
+## What's Changed
+
+### Misc
+- Chore: Updated dependency (microsoft.extensions.http)
+- Misc: Removed #ifdefs for pre- .NET 8.0
+- Test: Replaced all references to FluentAssertions with Shouldly
+
 # 1.1.14
 
 Full changelog: [1.1.13 -> 1.1.14](https://github.com/payetools/Payetools/compare/1.1.13...1.1.14)

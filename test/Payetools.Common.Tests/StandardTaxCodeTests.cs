@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
+using Shouldly;
 using Payetools.Common.Model;
 using Test = Payetools.Common.Tests.TaxCodeTestHelper;
 
@@ -40,6 +40,6 @@ public class StandardTaxCodeTests
         var result = TaxCode.TryParse("AB123C", new(TaxYearEnding.Apr5_2023), out var taxCode);
 
         taxCode.ShouldHaveDefaultValue();
-        result.Should().BeFalse();
+        result.ShouldBeFalse();
     }
 }

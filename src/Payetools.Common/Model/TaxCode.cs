@@ -23,8 +23,6 @@ public readonly partial struct TaxCode
     private const string _digits = "Digits";
     private const string _suffix = "Suffix";
 
-#if NET7_0_OR_GREATER
-
     [GeneratedRegex(@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<NonCumulative>W1M1|W1/M1|X|W1|M1)$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
     private static partial Regex GetNonCumulativeRegex();
 
@@ -33,25 +31,6 @@ public readonly partial struct TaxCode
 
     [GeneratedRegex(@"(?<CountryPrefix>^[SC]?)(?<OtherPrefix>[K]?)(?<Digits>\d*)(?<Suffix>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
     private static partial Regex GetStandardCodeRegex();
-
-#else
-
-    private static readonly Regex _nonCumulativeRegex = new ($@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<{_nonCumulative}>W1M1|W1/M1|X|W1|M1)$",
-        RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-    private static readonly Regex _fixedCodeRegex = new ($@"^(?<{_countryPrefix}>^[SC]?)(?<{_fixedCode}>0T|BR|NT|D0|D1|D2)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
-        RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-    private static readonly Regex _standardCodeRegex = new ($@"(?<{_countryPrefix}>^[SC]?)(?<{_otherPrefix}>[K]?)(?<{_digits}>\d*)(?<{_suffix}>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$",
-        RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-    private static Regex GetNonCumulativeRegex() => _nonCumulativeRegex;
-
-    private static Regex GetFixedCodeRegex() => _fixedCodeRegex;
-
-    private static Regex GetStandardCodeRegex() => _standardCodeRegex;
-
-#endif
 
     private static readonly CountriesForTaxPurposes _allCountries = CountriesForTaxPurposes.England | CountriesForTaxPurposes.Wales | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Scotland;
 

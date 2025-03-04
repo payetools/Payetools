@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
+using Shouldly;
 using Payetools.Common.Model;
 
 namespace Payetools.Common.Tests;
@@ -14,46 +14,46 @@ public class TitleTests
     [Fact]
     public void TestStandardisedTitles()
     {
-        Title.Parse("mr").ToString().Should().Be("Mr");
-        Title.Parse("MR").ToString().Should().Be("Mr");
-        Title.Parse("Mr.").ToString().Should().Be("Mr");
+        Title.Parse("mr").ToString().ShouldBe("Mr");
+        Title.Parse("MR").ToString().ShouldBe("Mr");
+        Title.Parse("Mr.").ToString().ShouldBe("Mr");
 
-        Title.Parse("mrs").ToString().Should().Be("Mrs");
-        Title.Parse("mrs.").ToString().Should().Be("Mrs");
-        Title.Parse("MRS").ToString().Should().Be("Mrs");
+        Title.Parse("mrs").ToString().ShouldBe("Mrs");
+        Title.Parse("mrs.").ToString().ShouldBe("Mrs");
+        Title.Parse("MRS").ToString().ShouldBe("Mrs");
 
-        Title.Parse("ms").ToString().Should().Be("Ms");
-        Title.Parse("MS").ToString().Should().Be("Ms");
+        Title.Parse("ms").ToString().ShouldBe("Ms");
+        Title.Parse("MS").ToString().ShouldBe("Ms");
 
-        Title.Parse("Miss").ToString().Should().Be("Miss");
-        Title.Parse("MISS").ToString().Should().Be("Miss");
+        Title.Parse("Miss").ToString().ShouldBe("Miss");
+        Title.Parse("MISS").ToString().ShouldBe("Miss");
 
-        Title.Parse("prof").ToString().Should().Be("Prof.");
-        Title.Parse("PROF.").ToString().Should().Be("Prof.");
-        Title.Parse("Professor").ToString().Should().Be("Prof.");
+        Title.Parse("prof").ToString().ShouldBe("Prof.");
+        Title.Parse("PROF.").ToString().ShouldBe("Prof.");
+        Title.Parse("Professor").ToString().ShouldBe("Prof.");
 
-        Title.Parse("dr").ToString().Should().Be("Dr.");
-        Title.Parse("DR.").ToString().Should().Be("Dr.");
-        Title.Parse("DOCTOR").ToString().Should().Be("Dr.");
+        Title.Parse("dr").ToString().ShouldBe("Dr.");
+        Title.Parse("DR.").ToString().ShouldBe("Dr.");
+        Title.Parse("DOCTOR").ToString().ShouldBe("Dr.");
 
-        Title.Parse("rev").ToString().Should().Be("Rev.");
-        Title.Parse("rev.").ToString().Should().Be("Rev.");
-        Title.Parse("REVEREND").ToString().Should().Be("Rev.");
-        Title.Parse("REVD").ToString().Should().Be("Rev.");
-        Title.Parse("Revd.").ToString().Should().Be("Rev.");
+        Title.Parse("rev").ToString().ShouldBe("Rev.");
+        Title.Parse("rev.").ToString().ShouldBe("Rev.");
+        Title.Parse("REVEREND").ToString().ShouldBe("Rev.");
+        Title.Parse("REVD").ToString().ShouldBe("Rev.");
+        Title.Parse("Revd.").ToString().ShouldBe("Rev.");
     }
 
     [Fact]
     public void TestEmptyTitles()
     {
-        Title.Parse("").Should().BeNull();
-        Title.Parse("   ").Should().BeNull();
+        Title.Parse("").ShouldBeNull();
+        Title.Parse("   ").ShouldBeNull();
     }
 
     [Fact]
     public void TestNonStandardisedTitle()
     {
-        Title.Parse("The Right Honourable").ToString().Should().Be("The Right Honourable");
+        Title.Parse("The Right Honourable").ToString().ShouldBe("The Right Honourable");
     }
 
     [Fact]
@@ -61,17 +61,17 @@ public class TitleTests
     {
         Action action = () => Title.Parse("The Right Honourable Mighty One and Only Most Majestic And Humble");
 
-        action.Should().Throw<ArgumentException>()
-            .WithMessage("Titles may not exceed 35 characters in length (Parameter 'title')");
+        action.ShouldThrow<ArgumentException>()
+            .Message.ShouldBe("Titles may not exceed 35 characters in length (Parameter 'title')");
     }
 
     [Fact]
     public void TestImplicitCasts()
     {
         string? value = Title.Parse("mr");
-        value.Should().Be("Mr");
+        value.ShouldBe("Mr");
 
         value = Title.Parse("");
-        value.Should().BeNull();
+        value.ShouldBeNull();
     }
 }

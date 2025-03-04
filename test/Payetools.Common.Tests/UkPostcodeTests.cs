@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
+using Shouldly;
 using Payetools.Common.Model;
 using System.Drawing;
 using System.Numerics;
@@ -30,7 +30,7 @@ public class UkPostcodeTests
         {
             Action act = () => new UkPostcode(validPostcode);
 
-            act.Should().NotThrow();
+            act.ShouldNotThrow();
         }
     }
 
@@ -51,9 +51,8 @@ public class UkPostcodeTests
         {
             Action act = () => new UkPostcode(invalidPostcode);
             
-            act.Should()
-                .Throw<ArgumentException>()
-                .WithMessage($"Argument '{invalidPostcode}' is not a valid UK postcode (Parameter 'value')");
+            act.ShouldThrow<ArgumentException>()
+                .Message.ShouldBe($"Argument '{invalidPostcode}' is not a valid UK postcode (Parameter 'value')");
         }
     }
 }

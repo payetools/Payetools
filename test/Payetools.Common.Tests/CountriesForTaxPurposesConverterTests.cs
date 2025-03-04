@@ -4,8 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
 using Payetools.Common.Model;
+using Shouldly;
 
 namespace Payetools.Common.Tests;
 
@@ -15,45 +15,45 @@ public class CountriesForTaxPurposesConverterTests
     public void TestConvertToEnum()
     {
         var input = "GB-ENG";
-        CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.England);
+        CountriesForTaxPurposesConverter.ToEnum(input).ShouldBe(CountriesForTaxPurposes.England);
 
         input += " GB-NIR";
-        CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland);
+        CountriesForTaxPurposesConverter.ToEnum(input).ShouldBe(CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland);
 
         input += " GB-WLS";
-        CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Wales);
+        CountriesForTaxPurposesConverter.ToEnum(input).ShouldBe(CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Wales);
 
         input = "GB-WLS GB-NIR GB-ENG";
-        CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Wales);
+        CountriesForTaxPurposesConverter.ToEnum(input).ShouldBe(CountriesForTaxPurposes.England | CountriesForTaxPurposes.NorthernIreland | CountriesForTaxPurposes.Wales);
 
         input = "GB-SCT";
-        CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.Scotland);
+        CountriesForTaxPurposesConverter.ToEnum(input).ShouldBe(CountriesForTaxPurposes.Scotland);
 
         input = "GB-WLS";
-        CountriesForTaxPurposesConverter.ToEnum(input).Should().Be(CountriesForTaxPurposes.Wales);
+        CountriesForTaxPurposesConverter.ToEnum(input).ShouldBe(CountriesForTaxPurposes.Wales);
 
         input = "GB-XYZ";
         Action action = () => CountriesForTaxPurposesConverter.ToEnum(input);
-        action.Should().Throw<ArgumentException>()
-            .WithMessage("Unrecognised country 'GB-XYZ' (Parameter 'iso3166Countries')");
+        action.ShouldThrow<ArgumentException>()
+            .Message.ShouldBe("Unrecognised country 'GB-XYZ' (Parameter 'iso3166Countries')");
     }
 
     [Fact]
     public void TestConvertToISO3166String()
     {
         var countries = CountriesForTaxPurposes.England;
-        CountriesForTaxPurposesConverter.ToString(countries).Should().Be("GB-ENG");
+        CountriesForTaxPurposesConverter.ToString(countries).ShouldBe("GB-ENG");
 
         countries |= CountriesForTaxPurposes.NorthernIreland;
-        CountriesForTaxPurposesConverter.ToString(countries).Should().Be("GB-ENG GB-NIR");
+        CountriesForTaxPurposesConverter.ToString(countries).ShouldBe("GB-ENG GB-NIR");
 
         countries |= CountriesForTaxPurposes.Wales;
-        CountriesForTaxPurposesConverter.ToString(countries).Should().Be("GB-ENG GB-NIR GB-WLS");
+        CountriesForTaxPurposesConverter.ToString(countries).ShouldBe("GB-ENG GB-NIR GB-WLS");
 
         countries = CountriesForTaxPurposes.Scotland;
-        CountriesForTaxPurposesConverter.ToString(countries).Should().Be("GB-SCT");
+        CountriesForTaxPurposesConverter.ToString(countries).ShouldBe("GB-SCT");
 
         countries = CountriesForTaxPurposes.Wales;
-        CountriesForTaxPurposesConverter.ToString(countries).Should().Be("GB-WLS");
+        CountriesForTaxPurposesConverter.ToString(countries).ShouldBe("GB-WLS");
     }
 }

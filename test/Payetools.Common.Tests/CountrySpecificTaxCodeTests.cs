@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
+using Shouldly;
 using Payetools.Common.Diagnostics;
 using Payetools.Common.Model;
 using Test = Payetools.Common.Tests.TaxCodeTestHelper;
@@ -43,7 +43,7 @@ public class CountrySpecificTaxCodeTests
     {
         Action action = () => TaxCode.TryParse("C1257L", new(TaxYearEnding.Apr5_2019), out var taxCode);
 
-        action.Should().Throw<InconsistentDataException>()
-            .WithMessage("Country-specific tax code supplied but country not valid for tax year");
+        action.ShouldThrow<InconsistentDataException>()
+            .Message.ShouldBe("Country-specific tax code supplied but country not valid for tax year");
     }
 }

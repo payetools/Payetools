@@ -21,18 +21,8 @@ namespace Payetools.Common.Model;
 /// </summary>
 public partial record HmrcAccountsOfficeReference
 {
-#if NET7_0_OR_GREATER
-
     [GeneratedRegex(@"^[0-9]{3}P[A-Z]\d{7}[0-9X]$")]
     private static partial Regex GetValidationRegex();
-
-#else
-
-    private static readonly Regex _validationRegex = new Regex(@"^[0-9]{3}P[A-Z]\d{7}[0-9X]$");
-
-    private static Regex GetValidationRegex() => _validationRegex;
-
-#endif
 
     private readonly string _accountsOfficeReference;
 

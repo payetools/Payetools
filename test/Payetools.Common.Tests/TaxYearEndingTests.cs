@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
+using Shouldly;
 using Payetools.Common.Extensions;
 using Payetools.Common.Model;
 
@@ -17,36 +17,37 @@ public class TaxYearEndingTests
     {
         var date = new DateOnly(2020, 4, 5);
         TaxYearEnding ending = date.ToTaxYearEnding();
-        ending.Should().Be(TaxYearEnding.Apr5_2020);
+        ending.ShouldBe(TaxYearEnding.Apr5_2020);
 
         date = new DateOnly(2020, 4, 6);
         ending = date.ToTaxYearEnding();
-        ending.Should().Be(TaxYearEnding.Apr5_2021);
+        ending.ShouldBe(TaxYearEnding.Apr5_2021);
 
         date = new DateOnly(2022, 5, 5);
         ending = date.ToTaxYearEnding();
-        ending.Should().Be(TaxYearEnding.Apr5_2023);
+        ending.ShouldBe(TaxYearEnding.Apr5_2023);
     }
 
     [Fact]
     public void TestUnsupportedTaxYears()
     {
         Action action = () => (new DateOnly((int)TaxYearEnding.MinValue - 1, 1, 1)).ToTaxYearEnding();
-        action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue} (Parameter 'date')");
+
+        action.ShouldThrow<ArgumentOutOfRangeException>()
+            .Message.ShouldBe($"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue} (Parameter 'date')");
 
         action = () => (new DateOnly((int)TaxYearEnding.MaxValue + 1, 1, 1)).ToTaxYearEnding();
-        action.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage($"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue} (Parameter 'date')");
+        action.ShouldThrow<ArgumentOutOfRangeException>()
+            .Message.ShouldBe($"Unsupported tax year; date must fall within range tax year ending 6 April {(int)TaxYearEnding.MinValue} to 6 April {(int)TaxYearEnding.MaxValue} (Parameter 'date')");
     }
 
     [Fact]
     public void TestTaxYearEndingExtensions()
     {
         var taxYearEnding = TaxYearEnding.Apr5_2019;
-        taxYearEnding.YearAsString().Should().Be("2019");
+        taxYearEnding.YearAsString().ShouldBe("2019");
 
         taxYearEnding = TaxYearEnding.Apr5_2022;
-        taxYearEnding.YearAsString().Should().Be("2022");
+        taxYearEnding.YearAsString().ShouldBe("2022");
     }
 }

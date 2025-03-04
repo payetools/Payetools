@@ -4,21 +4,21 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions.Execution;
+using Shouldly;
 
 namespace Payetools.Common.Tests;
 
-public static class FluentAssertionsExtensions
+public static class ShouldlyExtensions
 {
     public static void ShouldHaveDefaultValue<T>(this T value)
     {
         if (!EqualityComparer<T>.Default.Equals(value, default(T)))
-            throw new AssertionFailedException("Must have default value.");
+            throw new ShouldAssertException("Must have default value.");
     }
 
     public static void ShouldNotHaveDefaultValue<T>(this T value)
     {
         if (EqualityComparer<T>.Default.Equals(value, default(T)))
-            throw new AssertionFailedException("Must not have default value.");
+            throw new ShouldAssertException("Must not have default value.");
     }
 }

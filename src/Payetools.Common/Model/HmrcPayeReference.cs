@@ -23,18 +23,8 @@ namespace Payetools.Common.Model;
 /// </summary>
 public partial struct HmrcPayeReference
 {
-#if NET7_0_OR_GREATER
-
     [GeneratedRegex(@"^[0-9]{3}/[A-Z0-9]{1,10}$")]
     private static partial Regex GetPayeRefRegex();
-
-#else
-
-    private static readonly Regex _payeRefRegex = new Regex(@"^[0-9]{3}/[A-Z0-9]{1,10}$");
-
-    private static Regex GetPayeRefRegex() => _payeRefRegex;
-
-#endif
 
     /// <summary>
     /// Gets or sets the HMRC office number portion of the full PAYE Reference.  Always 3 digits.

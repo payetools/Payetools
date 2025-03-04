@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using FluentAssertions;
+using Shouldly;
 using Payetools.Common.Model;
 
 namespace Payetools.Common.Tests;
@@ -14,17 +14,17 @@ public class PayFrequencyTests
     [Fact]
     public void TestTaxYearPeriodCounts()
     {
-        PayFrequency.Weekly.GetStandardTaxPeriodCount().Should().Be(52);
-        PayFrequency.Fortnightly.GetStandardTaxPeriodCount().Should().Be(26);
-        PayFrequency.FourWeekly.GetStandardTaxPeriodCount().Should().Be(13);
-        PayFrequency.Monthly.GetStandardTaxPeriodCount().Should().Be(12);
-        PayFrequency.Quarterly.GetStandardTaxPeriodCount().Should().Be(4);
-        PayFrequency.BiAnnually.GetStandardTaxPeriodCount().Should().Be(2);
-        PayFrequency.Annually.GetStandardTaxPeriodCount().Should().Be(1);
+        PayFrequency.Weekly.GetStandardTaxPeriodCount().ShouldBe(52);
+        PayFrequency.Fortnightly.GetStandardTaxPeriodCount().ShouldBe(26);
+        PayFrequency.FourWeekly.GetStandardTaxPeriodCount().ShouldBe(13);
+        PayFrequency.Monthly.GetStandardTaxPeriodCount().ShouldBe(12);
+        PayFrequency.Quarterly.GetStandardTaxPeriodCount().ShouldBe(4);
+        PayFrequency.BiAnnually.GetStandardTaxPeriodCount().ShouldBe(2);
+        PayFrequency.Annually.GetStandardTaxPeriodCount().ShouldBe(1);
 
         Action action = () => { PayFrequency.Unspecified.GetStandardTaxPeriodCount(); };
 
-        action.Should().Throw<ArgumentException>()
-            .WithMessage($"Invalid pay frequency value Unspecified (Parameter 'payFrequency')");
+        action.ShouldThrow<ArgumentException>()
+            .Message.ShouldBe($"Invalid pay frequency value Unspecified (Parameter 'payFrequency')");
     }
 }

@@ -18,18 +18,8 @@ public readonly partial struct NiNumber
 {
     private const string UNKNOWN = "UNKNOWN";
 
-#if NET7_0_OR_GREATER
-
     [GeneratedRegex("^(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\\s*\\d\\s*){6}([A-D]|\\s)$")]
     private static partial Regex GetValidationRegex();
-
-#else
-
-    private static readonly Regex _validationRegex = new Regex("^(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\\s*\\d\\s*){6}([A-D]|\\s)$");
-
-    private static Regex GetValidationRegex() => _validationRegex;
-
-#endif
 
     private readonly string _value;
 
