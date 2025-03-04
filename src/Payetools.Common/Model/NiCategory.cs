@@ -87,7 +87,7 @@ public static class NiCategoryRelatedExtensions
         if (value == null)
             return null;
 
-        if (!Enum.TryParse<NiCategory>(value, out var category))
+        if (!Enum.TryParse<NiCategory>(value, true, out var category))
             throw new ArgumentException($"Value '{value}' is not a valid NICategory value", nameof(value));
 
         if (taxYearEnding < TaxYearEnding.Apr5_2025)
