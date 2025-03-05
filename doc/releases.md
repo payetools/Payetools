@@ -7,8 +7,7 @@ Full changelog: [1.1.16 -> 1.1.17](https://github.com/payetools/Payetools/compar
 ## What's Changed
 
 ### Misc
-- Misc: 
-- Feat: Added IsWithin method to TaxYear class
+- Misc: Allowed for enum values to be converted in case-insensitive fashion when parsing from string
 
 # 1.1.16
 
