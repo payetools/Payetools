@@ -2,6 +2,16 @@
 
 # 1.1.16
 
+Full changelog: [1.1.16 -> 1.1.17](https://github.com/payetools/Payetools/compare/1.1.16...1.1.17)
+
+## What's Changed
+
+### Misc
+- Misc: 
+- Feat: Added IsWithin method to TaxYear class
+
+# 1.1.16
+
 Full changelog: [1.1.15 -> 1.1.16](https://github.com/payetools/Payetools/compare/1.1.15...1.1.16)
 
 ## What's Changed

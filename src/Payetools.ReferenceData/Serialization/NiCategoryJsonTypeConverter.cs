@@ -24,7 +24,7 @@ public class NiCategoryJsonTypeConverter : JsonConverter<NiCategory>
     /// <param name="options">JSON serializer options (unused).</param>
     /// <returns><see cref="PayFrequency"/> value.</returns>
     public override NiCategory Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-        Enum.Parse<NiCategory>(reader.GetString() ?? string.Empty);
+        Enum.Parse<NiCategory>(reader.GetString() ?? string.Empty, true);
 
     /// <summary>
     /// Writes a <see cref="NiCategory"/> enum value, converted to its string equivalent, to the JSON stream.

@@ -27,7 +27,7 @@ public class PayFrequencyJsonConverter : JsonConverter<PayFrequency>
         ref Utf8JsonReader reader,
         /* in */ Type typeToConvert,
         /* in */ JsonSerializerOptions options) =>
-        Enum.Parse<PayFrequency>(reader.GetString() ?? string.Empty);
+        Enum.Parse<PayFrequency>(reader.GetString() ?? string.Empty, true);
 
     /// <summary>
     /// Writes a <see cref="PayFrequency"/> enum value, converted to its string equivalent, to the JSON stream.

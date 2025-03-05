@@ -27,7 +27,7 @@ public class TaxYearEndingJsonConverter : JsonConverter<TaxYearEnding>
         ref Utf8JsonReader reader,
         /* in */ Type typeToConvert,
         /* in */ JsonSerializerOptions options) =>
-        Enum.Parse<TaxYearEnding>(reader.GetString() ?? string.Empty);
+        Enum.Parse<TaxYearEnding>(reader.GetString() ?? string.Empty, true);
 
     /// <summary>
     /// Writes a <see cref="TaxYearEnding"/> enum value, converted to its string equivalent, to the JSON stream.
