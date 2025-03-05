@@ -66,6 +66,13 @@ public readonly struct DateRange : IEnumerable<DateOnly>, IEquatable<DateRange>
     public readonly bool Equals(/* in */ DateRange other) => Start.Equals(other.Start) && End.Equals(other.End);
 
     /// <summary>
+    /// Determines whether the supplied date is within this date range.
+    /// </summary>
+    /// <param name="date">Date to test.</param>
+    /// <returns>True if within range; false otherwise.</returns>
+    public bool IsWithinRange(in DateOnly date) => date >= Start && date <= End;
+
+    /// <summary>
     /// Gets an enumerator across this DateRange.  Enables use of foreach.
     /// </summary>
     /// <returns>Enumerator for enumerating across all the dates in between the Start and End dates.</returns>

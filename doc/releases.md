@@ -1,8 +1,18 @@
 # Releases
 
+# 1.1.16
+
+Full changelog: [1.1.15 -> 1.1.16](https://github.com/payetools/Payetools/compare/1.1.15...1.1.16)
+
+## What's Changed
+
+### Misc
+- Feat: Added IsWIthinRange method to DateRange class
+- Feat: Added IsWithin method to TaxYear class
+
 # 1.1.15
 
-Full changelog: [1.1.14 -> 1.1.15](https://github.com/payetools/Payetools/compare/1.1.15...1.1.15)
+Full changelog: [1.1.14 -> 1.1.15](https://github.com/payetools/Payetools/compare/1.1.14...1.1.15)
 
 ## What's Changed
 

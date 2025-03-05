@@ -233,6 +233,13 @@ public readonly struct TaxYear
     }
 
     /// <summary>
+    /// Determines whether the supplied date is within this tax year.
+    /// </summary>
+    /// <param name="date">Date to test.</param>
+    /// <returns>True if within tax year; false otherwise.</returns>
+    public bool IsWithin(in DateOnly date) => date >= StartOfTaxYear && date <= EndOfTaxYear;
+
+    /// <summary>
     /// Gets the tax month number from the supplied tax year and pay date. Ignores pay frequency as this static overload is
     /// primarily intended for establishing the tax month of a particular pay date for reporting purposes.
     /// </summary>
@@ -253,7 +260,7 @@ public readonly struct TaxYear
         taxYear.GetMonthNumber(payDate.Date, PayFrequency.Monthly);
 
     private int GetDayNumber(in DateOnly payDate) =>
-        payDate >= StartOfTaxYear && payDate <= EndOfTaxYear ?
+        IsWithin(payDate) ?
             payDate.DayNumber - StartOfTaxYear.DayNumber + 1 :
             throw new ArgumentException($"Pay date of {payDate.ToUk()} is outside this tax year {StartOfTaxYear.ToUk()} - {EndOfTaxYear.ToUk()}", nameof(payDate));
 }
