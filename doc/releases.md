@@ -1,6 +1,17 @@
 # Releases
 
-# 1.1.16
+# 1.1.20
+
+Full changelog: [1.1.17 -> 1.1.20](https://github.com/payetools/Payetools/compare/1.1.17...1.1.20)
+
+## What's Changed
+
+### Misc
+- Fix: Corrected issue with non-cumulative tax codes generating negative tax amounts when the 
+  employee's pay was less than the tax-free allowance
+- Misc: Updated dependencies
+
+# 1.1.17
 
 Full changelog: [1.1.16 -> 1.1.17](https://github.com/payetools/Payetools/compare/1.1.16...1.1.17)
 
