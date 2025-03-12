@@ -1,8 +1,8 @@
 # Releases
 
-# 1.1.20
+# 1.1.22
 
-Full changelog: [1.1.17 -> 1.1.20](https://github.com/payetools/Payetools/compare/1.1.17...1.1.20)
+Full changelog: [1.1.17 -> 1.1.22](https://github.com/payetools/Payetools/compare/1.1.17...1.1.22)
 
 ## What's Changed
 
