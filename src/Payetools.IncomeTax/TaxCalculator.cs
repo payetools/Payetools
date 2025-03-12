@@ -38,6 +38,15 @@ public class TaxCalculator : ITaxCalculator
         public decimal TaxAtHighestApplicableBand { get; init; }
 
         public decimal TaxInExcessOfRegulatoryLimit { get; set; }
+
+        public static InternalTaxCalculationResult GetZeroTaxResult(
+            decimal taxableSalary,
+            decimal taxFreePayForPeriod) =>
+            new InternalTaxCalculationResult
+            {
+                TaxableSalary = taxableSalary,
+                TaxFreePayForPeriod = taxFreePayForPeriod
+            };
     }
 
     private readonly CountriesForTaxPurposes _applicableCountries;
@@ -242,7 +251,15 @@ public class TaxCalculator : ITaxCalculator
         //    return new TaxCalculation(null, totalTaxableSalaryInPeriod, taxCode, totalTaxableSalaryYtd,
         //        taxPaidYearToDate, _taxPeriodCount, taxUnpaidDueToRegulatoryLimit, 0.0m);
 
-        var taxableSalaryAfterAllowance = totalTaxableSalaryInPeriod - taxFreePayToEndOfPeriod;
+        // Ensure that we don't end up refunding tax when there is no tax to pay
+        var taxableSalaryAfterAllowance = decimal.Max(totalTaxableSalaryInPeriod - taxFreePayToEndOfPeriod, 0.0m);
+
+        if (taxableSalaryAfterAllowance == 0.0m)
+        {
+            result = InternalTaxCalculationResult.GetZeroTaxResult(taxableSalaryAfterAllowance, taxFreePayToEndOfPeriod);
+
+            return;
+        }
 
         // As per above, this is the "magic" - we search for the highest applicable tax band (using FirstOrDefault with
         // criteria) and calculate the portion of tax that is applicable to that band.  For all other bands below, we are

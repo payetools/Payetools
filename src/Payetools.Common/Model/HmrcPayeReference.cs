@@ -6,7 +6,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
 namespace Payetools.Common.Model;
