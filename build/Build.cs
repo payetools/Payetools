@@ -117,6 +117,7 @@ class Build : NukeBuild
         });
 
     Target Publish => _ => _
+        .OnlyWhenDynamic(() => GitRepository.Tags.Count > 0 || IsLocalBuild)
         .Requires(() => NugetApiKey)
         .Requires(() => NugetApiUrl)
         .DependsOn(Pack)
