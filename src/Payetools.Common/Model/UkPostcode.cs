@@ -52,5 +52,6 @@ public partial class UkPostcode
     /// <returns>True if the supplied value could be a valid UK postcode; false otherwise.</returns>
     /// <remarks>Although this method confirms whether the string supplied <em>could</em> be a valid UK
     /// postcode, it does not guarantee that the supplied value is an actual postcode.</remarks>
-    public static bool IsValid(in string value) => GetValidationRegex().IsMatch(value);
+    public static bool IsValid(in string value) =>
+        GetValidationRegex().IsMatch(value.ToUpperInvariant().Trim());
 }
