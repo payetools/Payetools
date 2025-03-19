@@ -8,7 +8,7 @@ namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents summarised pay run information for a given tax month.
-/// </summary>`
+/// </summary>
 /// <remarks>Added Statutory Neonatal Care Pay applicable from April 2025.</remarks>
 public interface IEmployerHistoryEntry
 {
