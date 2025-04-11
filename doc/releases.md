@@ -1,13 +1,14 @@
 # Releases
 
-# 1.1.26
+# 1.2.1
 
-Full changelog: [1.1.22 -> 1.1.26](https://github.com/payetools/Payetools/compare/1.1.22...1.1.26)
+Full changelog: [1.1.22 -> 1.2.1](https://github.com/payetools/Payetools/compare/1.1.22...1.2.1)
 
 ## What's Changed
 
 ### Misc
 - Update: Added missing `FixedAmount` property to earnings and deductions interfaces (`IEarningsEntry` and `IDeductionEntry`)
+- Feat: Added optional `AttachmentOfEarningsOrders` property to `IEmployeePayRunInputEntry` interface and its implementation
 - Misc: Updated dependencies
 
 # 1.1.22
