@@ -27,6 +27,12 @@ public interface IEarningsEntry
     decimal? ValuePerUnit { get; }
 
     /// <summary>
+    /// Gets the fixed amount of the earnings, if that is specified in place of quantity and value per unit.  Used for absolute
+    /// amounts.
+    /// </summary>
+    public decimal? FixedAmount { get; init; }
+
+    /// <summary>
     /// Gets the total earnings to be applied.
     /// </summary>
     decimal TotalEarnings { get; }

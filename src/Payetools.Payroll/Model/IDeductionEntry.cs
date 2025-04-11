@@ -27,6 +27,12 @@ public interface IDeductionEntry
     decimal? ValuePerUnit { get; }
 
     /// <summary>
+    /// Gets the fixed amount of the deduction, if that is specified in place of quantity and value per unit.  Used for absolute
+    /// amounts.
+    /// </summary>
+    public decimal? FixedAmount { get; init; }
+
+    /// <summary>
     /// Gets the total deduction applied.
     /// </summary>
     decimal TotalDeduction { get; }

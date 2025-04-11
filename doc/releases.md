@@ -1,5 +1,15 @@
 # Releases
 
+# 1.1.26
+
+Full changelog: [1.1.22 -> 1.1.26](https://github.com/payetools/Payetools/compare/1.1.22...1.1.26)
+
+## What's Changed
+
+### Misc
+- Update: Added missing `FixedAmount` property to earnings and deductions interfaces (`IEarningsEntry` and `IDeductionEntry`)
+- Misc: Updated dependencies
+
 # 1.1.22
 
 Full changelog: [1.1.17 -> 1.1.22](https://github.com/payetools/Payetools/compare/1.1.17...1.1.22)
