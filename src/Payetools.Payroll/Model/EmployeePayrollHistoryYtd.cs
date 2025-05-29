@@ -7,6 +7,7 @@
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
+using System.Text.Json.Serialization;
 
 namespace Payetools.Payroll.Model;
 
@@ -124,6 +125,13 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// Gets the employee's deduction history for the tax year to date.
     /// </summary>
     public IDeductionsHistoryYtd DeductionsHistoryYtd { get; init; } = default!;
+
+    /// <summary>
+    /// Gets the National Insurance paid to date this tax year, by NI category.
+    /// </summary>
+    /// <remarks>Overlay property as planning to change the name of the original property in due course.</remarks>
+    [JsonIgnore]
+    public INiYtdHistory NiHistory { get => EmployeeNiHistoryEntries; init => EmployeeNiHistoryEntries = (NiYtdHistory)value; }
 
     /// <summary>
     /// Initialises a new empty instance of <see cref="EmployeePayrollHistoryYtd"/>.

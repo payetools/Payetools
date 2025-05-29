@@ -13,7 +13,7 @@ namespace Payetools.NationalInsurance.Model;
 /// <summary>
 /// Represents an employee's year to date National Insurance history.
 /// </summary>
-public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>
+public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>, INiYtdHistory
 {
     private readonly ImmutableArray<IEmployeeNiHistoryEntry> _entries;
 

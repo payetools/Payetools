@@ -13,7 +13,7 @@ namespace Payetools.Payroll.Model;
 /// current tax year.
 /// </summary>
 /// <remarks>Added Statutory Neonatal Care Pay applicable from April 2025.</remarks>
-public interface IEmployeePayrollHistoryYtd
+public interface IEmployeePayrollHistoryYtd : IEmployeeCoreYtdFigures
 {
     /// <summary>
     /// Gets any statutory maternity pay paid to date this tax year.
@@ -63,21 +63,6 @@ public interface IEmployeePayrollHistoryYtd
     decimal GrossPayYtd { get; }
 
     /// <summary>
-    /// Gets the taxable pay paid to date this tax year.
-    /// </summary>
-    decimal TaxablePayYtd { get; }
-
-    /// <summary>
-    /// Gets the NI-able pay paid to date this tax year.
-    /// </summary>
-    decimal NicablePayYtd { get; }
-
-    /// <summary>
-    /// Gets the income tax paid to date this tax year.
-    /// </summary>
-    decimal TaxPaidYtd { get; }
-
-    /// <summary>
     /// Gets the student loan deductions made to date this tax year.
     /// </summary>
     decimal StudentLoanRepaymentsYtd { get; }
@@ -106,12 +91,6 @@ public interface IEmployeePayrollHistoryYtd
     /// Gets the total employer pension contributions made to date this tax year.
     /// </summary>
     decimal EmployerPensionContributionsYtd { get; }
-
-    /// <summary>
-    /// Gets the tax that it has not been possible to collect so far this tax year due to the
-    /// regulatory limit on income tax deductions.
-    /// </summary>
-    decimal TaxUnpaidDueToRegulatoryLimit { get; }
 
     /// <summary>
     /// Gets the employee's earnings history for the tax year to date.
