@@ -22,7 +22,7 @@ namespace Payetools.Payroll.PayRuns;
 /// Represents the calculator that can process an employee's set of input payroll data and
 /// provide the results of the calculations in the form of an <see cref="IEmployeePayRunResult"/>.
 /// </summary>
-public abstract class PayRunEntryProcessorBase
+public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
 {
     internal readonly struct EarningsTotals
     {
@@ -68,7 +68,7 @@ public abstract class PayRunEntryProcessorBase
     /// <param name="attachmentOfEarningsCalculatorFactory">Attachment of earnings order calculators.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
     /// <param name="payPeriod">Applicable pay period for this calculator.</param>
-    public PayRunEntryProcessorBase(
+    public EmployeePayRunProcessor(
         ITaxCalculatorFactory incomeTaxCalcFactory,
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
@@ -98,7 +98,7 @@ public abstract class PayRunEntryProcessorBase
     /// <param name="payRunInputs">Instance of <see cref="IEmployeePayRunInputs"/> containing all the necessary input data for the
     /// payroll calculation.</param>
     /// <param name="result">An instance of <see cref="IEmployeePayRunOutputs"/> containing the results of the payroll calculations.</param>
-    public void Process(IEmployeePayRunInputs payRunInputs, out IEmployeePayRunOutputs result)
+    public void Process(in IEmployeePayRunInputs payRunInputs, out IEmployeePayRunOutputs result)
     {
         GetAllEarningsTypes(payRunInputs.Earnings, payRunInputs.PayrolledBenefits, payRunInputs.Deductions, out var earningsTotals);
 
@@ -187,6 +187,7 @@ public abstract class PayRunEntryProcessorBase
         IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult = null;
 
         result = new EmployeePayRunOutputs(
+            payRunInputs.EmployeeId,
             ref taxCalculationResult,
             ref niCalculationResult,
             ref studentLoanCalculationResult,

@@ -35,12 +35,12 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
         public IAttachmentOfEarningsCalculatorFactory AttachmentOfEarningsCalculatorFactory { get; }
 
         public FactorySet(
-            IHmrcReferenceDataProvider hmrcReferenceDataProvider,
-            ITaxCalculatorFactory taxCalculatorFactory,
-            INiCalculatorFactory niCalculatorFactory,
-            IStudentLoanCalculatorFactory studentLoanCalculatorFactory,
-            IPensionContributionCalculatorFactory pensionContributionCalculatorFactory,
-            IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory)
+            in IHmrcReferenceDataProvider hmrcReferenceDataProvider,
+            in ITaxCalculatorFactory taxCalculatorFactory,
+            in INiCalculatorFactory niCalculatorFactory,
+            in IStudentLoanCalculatorFactory studentLoanCalculatorFactory,
+            in IPensionContributionCalculatorFactory pensionContributionCalculatorFactory,
+            in IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory)
         {
             HmrcReferenceDataProvider = hmrcReferenceDataProvider;
             TaxCalculatorFactory = taxCalculatorFactory;
@@ -84,7 +84,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    public IPayRunProcessor GetProcessor(PayDate payDate, DateRange payPeriod)
+    public IPayRunProcessor GetProcessor(in PayDate payDate, in DateRange payPeriod)
     {
         var factories = GetFactories(_hmrcReferenceDataProvider ??
                 throw new InvalidOperationException("An valid HMRC reference data provider must be provided"));
@@ -108,7 +108,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
     /// pay period for the required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    public IPayRunProcessor GetProcessor(IPayRunDetails payRunDetails) =>
+    public IPayRunProcessor GetProcessor(in IPayRunDetails payRunDetails) =>
         GetProcessor(payRunDetails.PayDate, payRunDetails.PayPeriod);
 
     // Implementation note: Currently no effort is made to cache any of the factory types or the reference data

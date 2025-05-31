@@ -90,10 +90,10 @@ public class PensionContributions : IPensionContributions
         bool employeeContributionIsFixedAmount,
         decimal employerContribution,
         bool employerContributionIsFixedAmount,
-        bool salaryExchangeApplied,
-        decimal? employersNiReinvestmentPercentage,
-        decimal? avcForPeriod,
-        decimal? salaryForMaternityPurposes)
+        bool salaryExchangeApplied = false,
+        decimal? employersNiReinvestmentPercentage = null,
+        decimal? avcForPeriod = null,
+        decimal? salaryForMaternityPurposes = null)
     {
         EarningsBasis = earningsBasis;
         TaxTreatment = taxTreatment;

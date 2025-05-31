@@ -255,6 +255,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         var employment = new Employment(history)
         {
+            PayrollId = Guid.NewGuid().ToString(),
             TaxCode = staticEntry.TaxCode,
             NiCategory = staticEntry.NiCategory,
             StudentLoanInfo = (staticEntry.StudentLoanPlan != null || staticEntry.GraduateLoan) ?

@@ -9,6 +9,7 @@ using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
 using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
+using System.Text.Json.Serialization;
 
 namespace Payetools.Payroll.Model;
 
@@ -23,6 +24,16 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
     private IAttachmentOfEarningsCalculationResult? _attachmentOfEarningsCalculationResult;
     private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
+
+    /// <summary>
+    /// Gets the unique identifier for the employee.
+    /// </summary>
+    [JsonIgnore]
+    public object EmployeeId
+    {
+        get => Employment.PayrollId;
+        init { }
+    }
 
     /// <summary>
     /// Gets information about this payrun.
@@ -45,7 +56,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// Gets a value indicating whether an ex-employee is being paid after the leaving date has been reported to
     /// HMRC in a previous submission.
     /// </summary>
-    public bool IsPaymentAfterLeaving { get; init;  }
+    public bool IsPaymentAfterLeaving { get; init; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.

@@ -18,6 +18,11 @@ namespace Payetools.Payroll.Model;
 public interface IEmployeePayRunOutputs
 {
     /// <summary>
+    /// Gets the unique identifier for the employee.
+    /// </summary>
+    object EmployeeId { get; init; }
+
+    /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.
     /// </summary>
     ref ITaxCalculationResult TaxCalculationResult { get; }

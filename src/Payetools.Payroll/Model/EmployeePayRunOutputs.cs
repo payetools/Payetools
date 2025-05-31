@@ -27,6 +27,7 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
     /// <summary>
     /// Initializes a new instance of the <see cref="EmployeePayRunOutputs"/> class with all calculation results and values.
     /// </summary>
+    /// <param name="employeeId">The unique identifier for the employee.</param>
     /// <param name="taxCalculationResult">The income tax calculation result.</param>
     /// <param name="niCalculationResult">The National Insurance calculation result.</param>
     /// <param name="studentLoanCalculationResult">The student loan calculation result, or null if not applicable.</param>
@@ -38,6 +39,7 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
     /// <param name="nicablePay">The total pay subject to National Insurance.</param>
     /// <param name="payrollBenefitsInPeriod">The total payrolled benefits in the period, or null if none.</param>
     public EmployeePayRunOutputs(
+        object employeeId,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult? studentLoanCalculationResult,
@@ -55,6 +57,7 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
         _pensionContributionCalculationResult = pensionContributionCalculationResult;
         _attachmentOfEarningsCalculationResult = attachmentOfEarningsCalculationResult;
 
+        EmployeeId = employeeId ?? throw new ArgumentNullException(nameof(employeeId));
         TotalGrossPay = totalGrossPay;
         WorkingGrossPay = workingGrossPay;
         NicablePay = nicablePay;
@@ -68,6 +71,11 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
             attachmentOfEarningsCalculationResult?.TotalDeduction);
         PayrollBenefitsInPeriod = payrollBenefitsInPeriod;
     }
+
+    /// <summary>
+    /// Gets the unique identifier for the employee.
+    /// </summary>
+    public object EmployeeId { get; init; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.

@@ -19,7 +19,7 @@ namespace Payetools.Payroll.PayRuns;
 /// Represents the calculator that can process an employee's set of input payroll data and
 /// provide the results of the calculations in the form of an <see cref="IEmployeePayRunResult"/>.
 /// </summary>
-public class PayRunEntryProcessor : PayRunEntryProcessorBase, IPayRunEntryProcessor
+public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcessor
 {
     /// <summary>
     /// Initialises a new instance of <see cref="PayRunEntryProcessor"/> with the supplied factories
@@ -51,7 +51,7 @@ public class PayRunEntryProcessor : PayRunEntryProcessorBase, IPayRunEntryProces
     /// <param name="entry">Instance of <see cref="IEmployeePayRunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
     /// <param name="result">An instance of <see cref="IEmployeePayRunResult"/> containing the results of the payroll calculations.</param>
-    public void Process(IEmployeePayRunInputEntry entry, out IEmployeePayRunResult result)
+    public void Process(in IEmployeePayRunInputEntry entry, out IEmployeePayRunResult result)
     {
         var inputs = FromPayRunEntry(entry);
 
@@ -80,12 +80,13 @@ public class PayRunEntryProcessor : PayRunEntryProcessorBase, IPayRunEntryProces
         var employment = entry.Employment;
 
         return new EmployeePayRunInputs(
+            entry.Employment.PayrollId,
             employment.TaxCode,
             employment.NiCategory,
             MakeDirectorInfo(employment),
             employment.StudentLoanInfo,
-            entry.Deductions,
             entry.Earnings,
+            entry.Deductions,
             entry.PayrolledBenefits,
             entry.AttachmentOfEarningsOrders,
             MakePensionContributions(employment, entry.PensionContributionLevels),
