@@ -1,8 +1,8 @@
 # Releases
 
-# 2.1.1
+# 2.1.2
 
-Full changelog: [1.2.1 -> 2.1.1](https://github.com/payetools/Payetools/compare/1.2.1...2.1.1)
+Full changelog: [1.2.1 -> 2.1.2](https://github.com/payetools/Payetools/compare/1.2.1...2.1.2)
 
 ## What's Changed
 
