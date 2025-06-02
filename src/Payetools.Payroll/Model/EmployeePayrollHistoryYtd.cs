@@ -8,6 +8,7 @@
 
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
+using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
 using System.Text.Json.Serialization;
 
@@ -145,7 +146,13 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
         EmployeeNiHistoryEntries = new NiYtdHistory();
     }
 
-    private EmployeePayrollHistoryYtd(IEarningsHistoryYtd earningsHistoryYtd, IDeductionsHistoryYtd deductionsHistoryYtd)
+    /// <summary>
+    /// Initialises a new instance of <see cref="EmployeePayrollHistoryYtd"/> with the
+    /// supplied earnings and deductions history.
+    /// </summary>
+    /// <param name="earningsHistoryYtd">Year-to-date earnings history.</param>
+    /// <param name="deductionsHistoryYtd">Year-to-date deductions.</param>
+    protected EmployeePayrollHistoryYtd(IEarningsHistoryYtd earningsHistoryYtd, IDeductionsHistoryYtd deductionsHistoryYtd)
     {
         EarningsHistoryYtd = earningsHistoryYtd;
         DeductionsHistoryYtd = deductionsHistoryYtd;
@@ -229,19 +236,83 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     }
 
     /// <summary>
+    /// Returns true if the supplied payment type is one that can be reclaimed from HMRC, as these are treated differently within this
+    /// entity and the associated earnings history.
+    /// </summary>
+    /// <param name="paymentType">Payment type.</param>
+    /// <returns>True if the supplied payment type is one that can be reclaimed from HMRC; otherwise false.</returns>
+    public static bool IsReclaimableStatutoryPayment(PaymentType paymentType) =>
+        paymentType == PaymentType.StatutoryMaternityPay ||
+        paymentType == PaymentType.StatutoryAdoptionPay ||
+        paymentType == PaymentType.StatutoryPaternityPay ||
+        paymentType == PaymentType.StatutorySharedParentalPay ||
+        paymentType == PaymentType.StatutoryParentalBereavementPay ||
+        paymentType == PaymentType.StatutoryNeonatalCarePay;
+
+    /// <summary>
+    /// Gets whether the pension contribution calculation result is under a net pay arrangement (NPA).
+    /// </summary>
+    /// <param name="pensionCalculationResult">Pension calculation result.</param>
+    /// <returns>true if the pension is under NPA; false otherwise.</returns>
+    protected static bool PensionIsUnderNpa(IPensionContributionCalculationResult? pensionCalculationResult) =>
+        pensionCalculationResult?.TaxTreatment == PensionTaxTreatment.NetPayArrangement;
+}
+
+/// <summary>
+/// Represents the historical set of information for an employee's payroll for the current tax year.
+/// <see cref="EmployeeId"/> is used to identify the employee.  Also adds the tax year ending value,
+/// to identify which tax year this payroll history applies to.
+/// </summary>
+/// <typeparam name="TIdentifier">Type of the employee identifier.</typeparam>
+/// <remarks>Use this type in preference to the non-generic type if it is necessary to identify
+/// payroll history by employee.</remarks>
+public class EmployeePayrollHistoryYtd<TIdentifier> : EmployeePayrollHistoryYtd, IEmployeePayrollHistoryYtd<TIdentifier>
+    where TIdentifier : IEarningsHistoryYtd, IDeductionsHistoryYtd
+{
+    /// <summary>
+    /// Gets the unique identifier for the employee that this payroll history applies to.
+    /// </summary>
+    public required TIdentifier EmployeeId { get; init; }
+
+    /// <summary>
+    /// Gets the tax year ending value for this payroll history.
+    /// </summary>
+    public TaxYearEnding TaxYearEnding { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmployeePayrollHistoryYtd{TIdentifier}"/> class.
+    /// </summary>
+    /// <param name="earningsHistoryYtd">Year-to-date earnings history.</param>
+    /// <param name="deductionsHistoryYtd">Year-to-date deductions.</param>
+    public EmployeePayrollHistoryYtd(IEarningsHistoryYtd earningsHistoryYtd, IDeductionsHistoryYtd deductionsHistoryYtd)
+        : base(earningsHistoryYtd, deductionsHistoryYtd)
+    {
+    }
+
+    /// <summary>
     /// Adds the results of the pay run provided to the current instance and returns a new instance of
     /// <see cref="IEmployeePayrollHistoryYtd"/>.
     /// </summary>
+    /// <param name="payDate">Pay date for the pay run.</param>
     /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
     /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
     /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results
     /// applied.</returns>
-    public IEmployeePayrollHistoryYtd Add(IEmployeePayRunInputs employeePayRunInputs, IEmployeePayRunOutputs employeePayRunOutputs)
+    public IEmployeePayrollHistoryYtd<TIdentifier> Add(
+        PayDate payDate,
+        IEmployeePayRunInputs<TIdentifier> employeePayRunInputs,
+        IEmployeePayRunOutputs<TIdentifier> employeePayRunOutputs)
     {
         var hasPension = employeePayRunOutputs.PensionContributionCalculationResult != null;
 
-        IEmployeePayrollHistoryYtd newHistory = new EmployeePayrollHistoryYtd(EarningsHistoryYtd.Apply(employeePayRunInputs.Earnings), DeductionsHistoryYtd.Apply(employeePayRunInputs.Deductions))
+        IEmployeePayrollHistoryYtd<TIdentifier> newHistory = new EmployeePayrollHistoryYtd<TIdentifier>(
+            EarningsHistoryYtd.Apply(employeePayRunInputs.Earnings),
+            DeductionsHistoryYtd.Apply(employeePayRunInputs.Deductions))
         {
+            EmployeeId = employeePayRunInputs.EmployeeId,
+
+            TaxYearEnding = payDate.TaxYear.TaxYearEnding,
+
             StatutoryMaternityPayYtd = StatutoryMaternityPayYtd +
                 employeePayRunInputs.Earnings
                     .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryMaternityPay)
@@ -305,43 +376,4 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
 
         return newHistory;
     }
-
-    /// <summary>
-    /// Returns true if the supplied payment type is one that can be reclaimed from HMRC, as these are treated differently within this
-    /// entity and the associated earnings history.
-    /// </summary>
-    /// <param name="paymentType">Payment type.</param>
-    /// <returns>True if the supplied payment type is one that can be reclaimed from HMRC; otherwise false.</returns>
-    public static bool IsReclaimableStatutoryPayment(PaymentType paymentType) =>
-        paymentType == PaymentType.StatutoryMaternityPay ||
-        paymentType == PaymentType.StatutoryAdoptionPay ||
-        paymentType == PaymentType.StatutoryPaternityPay ||
-        paymentType == PaymentType.StatutorySharedParentalPay ||
-        paymentType == PaymentType.StatutoryParentalBereavementPay ||
-        paymentType == PaymentType.StatutoryNeonatalCarePay;
-
-    private static bool PensionIsUnderNpa(IPensionContributionCalculationResult? pensionCalculationResult) =>
-        pensionCalculationResult?.TaxTreatment == PensionTaxTreatment.NetPayArrangement;
-}
-
-/// <summary>
-/// Represents the historical set of information for an employee's payroll for the current tax year.
-/// <see cref="EmployeeId"/> is used to identify the employee.  Also adds the tax year ending value,
-/// to identify which tax year this payroll history applies to.
-/// </summary>
-/// <typeparam name="T">Type of the employee identifier.</typeparam>
-/// <remarks>Use this type in preference to the non-generic type if it is necessary to identify
-/// payroll history by employee.</remarks>
-public class EmployeePayrollHistoryYtd<T> : EmployeePayrollHistoryYtd, IEmployeePayrollHistoryYtd<T>
-    where T : IEarningsHistoryYtd, IDeductionsHistoryYtd
-{
-    /// <summary>
-    /// Gets the unique identifier for the employee that this payroll history applies to.
-    /// </summary>
-    public required T EmployeeId { get; init; }
-
-    /// <summary>
-    /// Gets the tax year ending value for this payroll history.
-    /// </summary>
-    public TaxYearEnding TaxYearEnding { get; init; }
 }

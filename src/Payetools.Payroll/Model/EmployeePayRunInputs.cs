@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using Payetools.Payroll.PayRuns;
 using Payetools.Statutory.AttachmentOfEarnings;
 
 namespace Payetools.Payroll.Model;
@@ -16,12 +17,14 @@ namespace Payetools.Payroll.Model;
 /// used, in contrast to <see cref="IEmployeePayRunInputEntry"/> which relies upon the
 /// IEmployment interface and other related entities.
 /// </summary>
-public class EmployeePayRunInputs : IEmployeePayRunInputs
+/// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+public class EmployeePayRunInputs<TIdentifier> : IEmployeePayRunInputs<TIdentifier>
+    where TIdentifier : notnull
 {
     /// <summary>
     /// Gets a unique identifier for the employee.
     /// </summary>
-    public object EmployeeId { get; init; }
+    public TIdentifier EmployeeId { get; init; }
 
     /// <summary>
     /// Gets the employee's tax code.
@@ -77,7 +80,7 @@ public class EmployeePayRunInputs : IEmployeePayRunInputs
     public IEmployeeCoreYtdFigures YtdFigures { get; init; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EmployeePayRunInputs"/> class with the provided values.
+    /// Initializes a new instance of the <see cref="EmployeePayRunInputs{T}"/> class with the provided values.
     /// </summary>
     /// <param name="employeeId">A unique identifier for the employee.</param>
     /// <param name="taxCode">The employee's tax code.</param>
@@ -91,7 +94,7 @@ public class EmployeePayRunInputs : IEmployeePayRunInputs
     /// <param name="pensionContributions">The employee's pension contributions to be applied in this pay run.</param>
     /// <param name="ytdFigures">The employee's year-to-date tax and NI figures.</param>
     public EmployeePayRunInputs(
-        object employeeId,
+        TIdentifier employeeId,
         TaxCode taxCode,
         NiCategory niCategory,
         IDirectorInfo? directorInfo,

@@ -5,9 +5,10 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using Payetools.Payroll.Model;
 using Payetools.Statutory.AttachmentOfEarnings;
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Represents all the inputs to a payrun for a given employee.  This interface is
@@ -16,12 +17,14 @@ namespace Payetools.Payroll.Model;
 /// used, in contrast to <see cref="IEmployeePayRunInputEntry"/> which relies upon the
 /// IEmployment interface and other related entities.
 /// </summary>
-public interface IEmployeePayRunInputs
+/// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+public interface IEmployeePayRunInputs<TIdentifier>
+    where TIdentifier : notnull
 {
     /// <summary>
     /// Gets the unique identifier for the employee.
     /// </summary>
-    public object EmployeeId { get; init; }
+    TIdentifier EmployeeId { get; init; }
 
     /// <summary>
     /// Gets the employee's tax code.

@@ -95,10 +95,12 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
     /// Processes the supplied payrun entry calculating all the earnings and deductions, income tax, national insurance and
     /// other statutory deductions, and generating a result structure which includes the final net pay.
     /// </summary>
-    /// <param name="payRunInputs">Instance of <see cref="IEmployeePayRunInputs"/> containing all the necessary input data for the
+    /// <param name="payRunInputs">Instance of <see cref="IEmployeePayRunInputs{TIdentifier}"/> containing all the necessary input data for the
     /// payroll calculation.</param>
-    /// <param name="result">An instance of <see cref="IEmployeePayRunOutputs"/> containing the results of the payroll calculations.</param>
-    public void Process(in IEmployeePayRunInputs payRunInputs, out IEmployeePayRunOutputs result)
+    /// <param name="result">An instance of <see cref="IEmployeePayRunOutputs{TIdentifier}"/> containing the results of the payroll calculations.</param>
+    /// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+    public void Process<TIdentifier>(in IEmployeePayRunInputs<TIdentifier> payRunInputs, out IEmployeePayRunOutputs<TIdentifier> result)
+        where TIdentifier : notnull
     {
         GetAllEarningsTypes(payRunInputs.Earnings, payRunInputs.PayrolledBenefits, payRunInputs.Deductions, out var earningsTotals);
 
@@ -186,7 +188,7 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
 
         IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult = null;
 
-        result = new EmployeePayRunOutputs(
+        result = new EmployeePayRunOutputs<TIdentifier>(
             payRunInputs.EmployeeId,
             ref taxCalculationResult,
             ref niCalculationResult,

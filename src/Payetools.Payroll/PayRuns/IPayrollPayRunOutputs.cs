@@ -13,8 +13,15 @@ namespace Payetools.Payroll.PayRuns;
 /// <summary>
 /// Interface that represents the output of a payroll pay run, which includes the results for each employee.
 /// </summary>
-public interface IPayrollPayRunOutputs
+/// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+public interface IPayrollPayRunOutputs<TIdentifier>
+    where TIdentifier : notnull
 {
+    /// <summary>
+    /// Gets the unique identifier for this pay run.
+    /// </summary>
+    TIdentifier PayRunId { get; init; }
+
     /// <summary>
     /// Gets the <see cref="PayDate"/> for this payrun, which provides access to the pay date and the pay frequency.
     /// </summary>
@@ -28,5 +35,13 @@ public interface IPayrollPayRunOutputs
     /// <summary>
     /// Gets the set of employee pay run outputs for this payroll pay run.
     /// </summary>
-    ImmutableArray<IEmployeePayRunOutputs> EmployeePayRunOutputs { get; init; }
+    ImmutableArray<IEmployeePayRunOutputs<TIdentifier>> EmployeePayRunOutputs { get; init; }
+
+    /// <summary>
+    /// Gets a summary of this pay run, providing totals for all statutory payments.
+    /// </summary>
+    /// <param name="payRunInputs">Instance of <see cref="IPayrollPayRunInputs{TIdentifier}"/> that provides the input data for
+    /// the pay run.</param>
+    /// <returns><see cref="IPayRunSummary"/> instance that provides summary figures.</returns>
+    IPayRunSummary GetPayRunSummary(in IPayrollPayRunInputs<TIdentifier> payRunInputs);
 }

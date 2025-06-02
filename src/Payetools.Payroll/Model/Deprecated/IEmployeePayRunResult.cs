@@ -4,12 +4,14 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Payroll.PayRuns;
+
 namespace Payetools.Payroll.Model;
 
 /// <summary>
 /// Interface that represents a payrun result for an employee for a specific payrun.
 /// </summary>
-public interface IEmployeePayRunResult : IEmployeePayRunOutputs
+public interface IEmployeePayRunResult : IEmployeePayRunOutputs<object>
 {
     /// <summary>
     /// Gets the employee's employment details for this pay run.

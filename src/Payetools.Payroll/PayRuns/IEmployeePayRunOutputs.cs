@@ -10,17 +10,18 @@ using Payetools.Pensions.Model;
 using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Provides access to the outputs of a pay run for an employee.
 /// </summary>
-public interface IEmployeePayRunOutputs
+/// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+public interface IEmployeePayRunOutputs<TIdentifier>
 {
     /// <summary>
     /// Gets the unique identifier for the employee.
     /// </summary>
-    object EmployeeId { get; init; }
+    TIdentifier EmployeeId { get; init; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.

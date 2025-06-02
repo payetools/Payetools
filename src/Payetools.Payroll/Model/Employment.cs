@@ -6,6 +6,7 @@
 
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
+using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
 using System.Collections.Immutable;
 
@@ -160,10 +161,18 @@ public class Employment : IEmployment
     /// <summary>
     /// Updates the payroll history for this employee with the supplied pay run information.
     /// </summary>
+    /// <param name="payDate">Pay date for the pay run.</param>
     /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
     /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
-    public void UpdatePayrollHistory(in IEmployeePayRunInputs employeePayRunInputs, in IEmployeePayRunOutputs employeePayRunOutputs)
+    /// /// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+    public void UpdatePayrollHistory<TIdentifier>(
+        in PayDate payDate,
+        in IEmployeePayRunInputs<TIdentifier> employeePayRunInputs, in IEmployeePayRunOutputs<TIdentifier> employeePayRunOutputs)
+        where TIdentifier : notnull
     {
-        _payrollHistoryYtd = _payrollHistoryYtd.Add(employeePayRunInputs, employeePayRunOutputs);
+        if (_payrollHistoryYtd is not IEmployeePayrollHistoryYtd<TIdentifier> history)
+            throw new InvalidOperationException("History must be of type IEmployeePayrollHistoryYtd<TIdentifier> to use this method");
+
+        _payrollHistoryYtd = history.Add(payDate, employeePayRunInputs, employeePayRunOutputs);
     }
 }

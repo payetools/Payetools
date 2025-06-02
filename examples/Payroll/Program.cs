@@ -15,6 +15,7 @@ using Payetools.Example;
 using Payetools.Example.Earnings;
 using Payetools.Payroll.Model;
 using Payetools.Payroll.PayRuns;
+using Payroll;
 
 string[] ReferenceDataResources =
 {
@@ -22,8 +23,8 @@ string[] ReferenceDataResources =
 };
 
 // ##### Step 1 - create the employee inputs #####
-var employeePayRunInputs = new EmployeePayRunInputs(
-    "Employee-1",                                             // Employee ID
+var employeePayRunInputs = new EmployeePayRunInputs<int>(
+    1001,                                                     // Employee ID
     "1257L",                                                  // Tax code
     NiCategory.A,                                             // NI category
     null,                                                     // No director info for this example
@@ -53,7 +54,12 @@ var payRunDetails = new PayRunDetails(
     payDate,
     new DateRange(new DateOnly(2024, 5, 1), new DateOnly(2024, 5, 31)));
 
-var payRunEntries = new List<IEmployeePayRunInputs>() { employeePayRunInputs };
+var payRunInputs = new PayrollPayRunInputs
+{
+    PayRunId = 101,                                           // Unique identifier for the pay run
+    PayRunDetails = payRunDetails,
+    EmployeePayRunInputs = [ employeePayRunInputs ]
+};
 
 // ##### Step 3 - get a reference data provider, then get a pay run processor and run the pay run #####
 var helper = new ReferenceDataHelper(ReferenceDataResources);
@@ -62,7 +68,7 @@ var factory = new PayRunProcessorFactory(provider);
 
 var processor = factory.GetProcessor(payRunDetails);
 
-processor.Process(payRunEntries, true, out var payRunResult);
+processor.Process<int>(payRunInputs, true, out var payRunResult);
 
 foreach (var er in payRunResult.EmployeePayRunOutputs)
 {

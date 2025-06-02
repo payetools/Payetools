@@ -54,7 +54,7 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
     [Obsolete("Use IPayRunEntryProcessor.Process(IEmployeePayRunInputs, IEmployeePayRunOutputs) instead. Scheduled for removal in v3.0.0.", false)]
     public void Process(in IEmployeePayRunInputEntry entry, out IEmployeePayRunResult result)
     {
-        var inputs = FromPayRunEntry(entry);
+        var inputs = FromPayRunEntry<object>(entry);
 
         Process(inputs, out var interimResult);
 
@@ -75,14 +75,15 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
     }
 
     [Obsolete]
-    private static EmployeePayRunInputs FromPayRunEntry(IEmployeePayRunInputEntry entry)
+    private static EmployeePayRunInputs<TIdentifier> FromPayRunEntry<TIdentifier>(IEmployeePayRunInputEntry entry)
+        where TIdentifier : notnull
     {
         ArgumentNullException.ThrowIfNull(entry);
 
         var employment = entry.Employment;
 
-        return new EmployeePayRunInputs(
-            entry.Employment.PayrollId,
+        return new EmployeePayRunInputs<TIdentifier>(
+            ConvertToIdentifier<TIdentifier>(entry.Employment.PayrollId),
             employment.TaxCode,
             employment.NiCategory,
             MakeDirectorInfo(employment),
@@ -122,5 +123,13 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
             levels.EmployersNiReinvestmentPercentage,
             levels.AvcForPeriod,
             levels.SalaryForMaternityPurposes);
+    }
+
+    private static TIdentifier ConvertToIdentifier<TIdentifier>(PayrollId payrollId)
+        where TIdentifier : notnull
+    {
+        ArgumentNullException.ThrowIfNull(payrollId);
+
+        return (TIdentifier)Convert.ChangeType(payrollId.ToString(), typeof(TIdentifier));
     }
 }

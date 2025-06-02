@@ -30,13 +30,15 @@ public interface IPayRunProcessor
     /// <summary>
     /// Processes the pay run for a set of employee pay run inputs and returns the results.
     /// </summary>
-    /// <param name="employeePayRunInputs">Input pay run information for each employee in the payrun.</param>
+    /// <param name="payRunInputs">Input pay run information with record for each employee in the payrun.</param>
     /// <param name="processInParallel">Set to true to process all employees in parallel, false to process
     /// each employee serially.</param>
-    /// <param name="results">An instance of a class that implements <see cref="IPayrollPayRunOutputs"/> containing the
+    /// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+    /// <param name="results">An instance of a class that implements <see cref="IPayrollPayRunOutputs{TIdentifier}"/> containing the
     /// results of this payrun.</param>
-    void Process(
-        in IEnumerable<IEmployeePayRunInputs> employeePayRunInputs,
+    void Process<TIdentifier>(
+        in IPayrollPayRunInputs<TIdentifier> payRunInputs,
         in bool processInParallel,
-        out IPayrollPayRunOutputs results);
+        out IPayrollPayRunOutputs<TIdentifier> results)
+        where TIdentifier : notnull;
 }

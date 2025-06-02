@@ -1,26 +1,19 @@
-﻿// This example code may be freely used without restriction; it may be freely copied, adapted and
-// used without attribution.
+﻿// Copyright (c) 2023-2025, Payetools Foundation.
+//
+// Payetools Foundation licenses this file to you under the following license(s):
+//
+//   * The MIT License, see https://opensource.org/license/mit/
 
-using Payetools.Pensions.Model;
+using Payetools.Payroll.Model;
+using Payetools.Payroll.PayRuns;
 
-namespace Payroll
+namespace Payroll;
+
+public class PayrollPayRunInputs : IPayrollPayRunInputs<int>
 {
-    internal class PensionContributionLevels : IPensionContributionLevels
-    {
-        public decimal EmployeeContribution => 5.0m;
+    public int PayRunId { get; init; }
 
-        public bool EmployeeContributionIsFixedAmount => false;
+    public required IPayRunDetails PayRunDetails { get; init; }
 
-        public decimal EmployerContribution => 3.0m;
-
-        public bool EmployerContributionIsFixedAmount => false;
-
-        public bool SalaryExchangeApplied => false;
-
-        public decimal? EmployersNiReinvestmentPercentage => null;
-
-        public decimal? AvcForPeriod => null;
-
-        public decimal? SalaryForMaternityPurposes => null;
-    }
+    public required IEnumerable<IEmployeePayRunInputs<int>> EmployeePayRunInputs { get; init; }
 }

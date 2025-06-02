@@ -6,6 +6,7 @@
 
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
+using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
 using System.Collections.Immutable;
 
@@ -139,7 +140,12 @@ public interface IEmployment
     /// <summary>
     /// Updates the payroll history for this employee with the supplied pay run information.
     /// </summary>
+    /// <param name="payDate">Pay date for the pay run.</param>
     /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
     /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
-    void UpdatePayrollHistory(in IEmployeePayRunInputs employeePayRunInputs, in IEmployeePayRunOutputs employeePayRunOutputs);
+    /// /// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+    void UpdatePayrollHistory<TIdentifier>(
+        in PayDate payDate,
+        in IEmployeePayRunInputs<TIdentifier> employeePayRunInputs, in IEmployeePayRunOutputs<TIdentifier> employeePayRunOutputs)
+        where TIdentifier : notnull;
 }

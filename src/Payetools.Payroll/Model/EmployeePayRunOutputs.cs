@@ -6,6 +6,7 @@
 
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
+using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
 using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
@@ -16,7 +17,8 @@ namespace Payetools.Payroll.Model;
 /// Entiy that represents the outputs of an employee's pay run, including all the individual
 /// calulation results and values that are relevant for the pay run.
 /// </summary>
-public class EmployeePayRunOutputs : IEmployeePayRunOutputs
+/// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdentifier>
 {
     private ITaxCalculationResult _taxCalculationResult;
     private INiCalculationResult _niCalculationResult;
@@ -25,7 +27,7 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
     private IAttachmentOfEarningsCalculationResult? _attachmentOfEarningsCalculationResult;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EmployeePayRunOutputs"/> class with all calculation results and values.
+    /// Initializes a new instance of the <see cref="EmployeePayRunOutputs{TIdentifier}"/> class with all calculation results and values.
     /// </summary>
     /// <param name="employeeId">The unique identifier for the employee.</param>
     /// <param name="taxCalculationResult">The income tax calculation result.</param>
@@ -39,7 +41,7 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
     /// <param name="nicablePay">The total pay subject to National Insurance.</param>
     /// <param name="payrollBenefitsInPeriod">The total payrolled benefits in the period, or null if none.</param>
     public EmployeePayRunOutputs(
-        object employeeId,
+        TIdentifier employeeId,
         ref ITaxCalculationResult taxCalculationResult,
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult? studentLoanCalculationResult,
@@ -75,7 +77,7 @@ public class EmployeePayRunOutputs : IEmployeePayRunOutputs
     /// <summary>
     /// Gets the unique identifier for the employee.
     /// </summary>
-    public object EmployeeId { get; init; }
+    public TIdentifier EmployeeId { get; init; }
 
     /// <summary>
     /// Gets the results of this employee's income tax calculation for this payrun.

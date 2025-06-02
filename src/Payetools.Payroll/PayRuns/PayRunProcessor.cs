@@ -54,34 +54,38 @@ public class PayRunProcessor : IPayRunProcessor
     /// <summary>
     /// Processes the pay run for a set of employee pay run inputs and returns the results.
     /// </summary>
-    /// <param name="employeePayRunInputs">Input pay run information for each employee in the payrun.</param>
+    /// <param name="payRunInputs">Input pay run information for each employee in the payrun.</param>
     /// <param name="processInParallel">Set to true to process all employees in parallel, false to process
     /// each employee serially.</param>
-    /// <param name="results">An instance of a class that implements <see cref="IPayrollPayRunOutputs"/> containing the
+    /// <typeparam name="TIdentifier">Identifier type for payrolls, pay runs, etc.</typeparam>
+    /// <param name="results">An instance of a class that implements <see cref="IPayrollPayRunOutputs{TIdentifier}"/> containing the
     /// results of this pay run.</param>
-    public void Process(
-        in IEnumerable<IEmployeePayRunInputs> employeePayRunInputs,
+    public void Process<TIdentifier>(
+        in IPayrollPayRunInputs<TIdentifier> payRunInputs,
         in bool processInParallel,
-        out IPayrollPayRunOutputs results)
+        out IPayrollPayRunOutputs<TIdentifier> results)
+        where TIdentifier : notnull
     {
-        IEmployeePayRunOutputs[] employeeOutputs;
+        IEmployeePayRunOutputs<TIdentifier>[] employeeOutputs;
 
         if (processInParallel)
         {
-            employeeOutputs = new IEmployeePayRunOutputs[employeePayRunInputs.Count()];
+            employeeOutputs = new IEmployeePayRunOutputs<TIdentifier>[payRunInputs.EmployeePayRunInputs.Count()];
+
+            var employeePayRunInputs = payRunInputs.EmployeePayRunInputs;
 
             var indexedInputs = employeePayRunInputs.Select((item, index) => (Item: item, Index: index));
 
             Parallel.ForEach(indexedInputs, employeeInputs =>
             {
-                _payrunCalculator.Process(employeeInputs.Item, out var employeeResult);
+                _payrunCalculator.Process<TIdentifier>(employeeInputs.Item, out var employeeResult);
 
                 employeeOutputs[employeeInputs.Index] = employeeResult;
             });
         }
         else
         {
-            employeeOutputs = employeePayRunInputs.Select((employeeInputs, index) =>
+            employeeOutputs = payRunInputs.EmployeePayRunInputs.Select((employeeInputs, index) =>
             {
                 _payrunCalculator.Process(employeeInputs, out var employeeResult);
 
@@ -89,8 +93,9 @@ public class PayRunProcessor : IPayRunProcessor
             }).ToArray();
         }
 
-        results = new PayrollPayRunOutput
+        results = new PayrollPayRunOutputs<TIdentifier>
         {
+            PayRunId = payRunInputs.PayRunId,
             PayDate = _payrunCalculator.PayDate,
             PayPeriod = _payrunCalculator.PayPeriod,
             EmployeePayRunOutputs = employeeOutputs.ToImmutableArray()
