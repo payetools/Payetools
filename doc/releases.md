@@ -11,7 +11,7 @@ the requirement for implementing `IEmployer` and `IEmployment` in order to calcu
 introduces two new interfaces, `IEmployeePayRunInputs` and `IEmployeePayRunOutputs`.
 
 ### Misc
-- Update: `IEmployeePayRunInputEntry` and `IEmployeePayRunInputResult now marked as obsolete, along with
+- Update: `IEmployeePayRunInputEntry` and `IEmployeePayRunInputResult` now marked as obsolete, along with
   any APIs that use these types
 - Update: Typed versions of `IEmployeePayrollHistoryYtd` and `EmployeePayrollHistoryYtd` that introduce
   employee id and tax year fields, to assist with storage and retrieval of payroll history
