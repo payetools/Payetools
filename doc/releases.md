@@ -1,5 +1,14 @@
 # Releases
 
+# 2.1.3
+
+Full changelog: [2.1.2 -> 2.1.3](https://github.com/payetools/Payetools/compare/2.1.2...2.1.3)
+
+## What's Changed
+
+### Misc
+- Feat: Added pay run summary support to `IPayrollPayRunOutputs` interface and its implementation
+
 # 2.1.2
 
 Full changelog: [1.2.1 -> 2.1.2](https://github.com/payetools/Payetools/compare/1.2.1...2.1.2)
