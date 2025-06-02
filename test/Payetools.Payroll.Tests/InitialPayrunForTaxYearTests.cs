@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 using FluentAssertions;
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
@@ -255,6 +257,7 @@ public class InitialPayRunForTaxYearTests : IClassFixture<PayrollProcessorFactor
 
         var employment = new Employment(history)
         {
+            PayrollId = Guid.NewGuid().ToString(),
             TaxCode = staticEntry.TaxCode,
             NiCategory = staticEntry.NiCategory,
             StudentLoanInfo = (staticEntry.StudentLoanPlan != null || staticEntry.GraduateLoan) ?

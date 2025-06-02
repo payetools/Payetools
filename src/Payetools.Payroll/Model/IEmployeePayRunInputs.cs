@@ -19,6 +19,11 @@ namespace Payetools.Payroll.Model;
 public interface IEmployeePayRunInputs
 {
     /// <summary>
+    /// Gets the unique identifier for the employee.
+    /// </summary>
+    public object EmployeeId { get; init; }
+
+    /// <summary>
     /// Gets the employee's tax code.
     /// </summary>
     TaxCode TaxCode { get; init; }
@@ -39,14 +44,14 @@ public interface IEmployeePayRunInputs
     IStudentLoanInfo? StudentLoanInfo { get; init; }
 
     /// <summary>
-    /// Gets the list of deductions for this employee for a given payrun.  May be empty.
-    /// </summary>
-    IEnumerable<IDeductionEntry> Deductions { get; init; }
-
-    /// <summary>
     /// Gets the list of pay components for this employee for a given payrun.  May be empty but usually not.
     /// </summary>
     IEnumerable<IEarningsEntry> Earnings { get; init; }
+
+    /// <summary>
+    /// Gets the list of deductions for this employee for a given payrun.  May be empty.
+    /// </summary>
+    IEnumerable<IDeductionEntry> Deductions { get; init; }
 
     /// <summary>
     /// Gets the list of payrolled benefits for this employee for a given payrun.  Empty if the employee has

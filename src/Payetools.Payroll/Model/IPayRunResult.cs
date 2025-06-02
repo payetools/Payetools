@@ -11,6 +11,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Interface that represents the output of a given pay run.
 /// </summary>
+[Obsolete("User IPayrollPayRunOutputs instead. Scheduled for removal in v3.0.0.", false)]
 public interface IPayRunResult
 {
     /// <summary>

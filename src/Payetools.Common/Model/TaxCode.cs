@@ -164,6 +164,18 @@ public readonly partial struct TaxCode
         };
 
     /// <summary>
+    /// Parses the supplied tax code for the specified tax year and returns a new instance of <see cref="TaxCode"/> if valid.
+    /// </summary>
+    /// <param name="taxYear">Tax year that this tax code pertains to.</param>
+    /// <param name="taxCode">Tax code to parse.</param>
+    /// <returns>If valid, a new <see cref="TaxCode"/> instance.</returns>
+    /// <exception cref="ArgumentException">Thrown if the tax code is not valid for the specified tax year.</exception>
+    public static TaxCode Parse(in TaxYear taxYear, string taxCode) =>
+        TryParse(taxCode, taxYear, out var result) ?
+            result :
+            throw new ArgumentException($"Value '{taxCode}' is not a valid tax code for the tax year {taxYear}", nameof(taxCode));
+
+    /// <summary>
     /// Attempts to parse the supplied tax code into its component parts, assuming the tax regimes for the current tax year.
     /// Non-cumulative codes must be identified by an 'X', 'W1', 'M1' or 'W1/M1' suffix, with or without preceding space.
     /// Tax code parsing is case-insensitive.

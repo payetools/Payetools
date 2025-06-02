@@ -38,5 +38,5 @@ public class EmployeeCoreYtdFigures : IEmployeeCoreYtdFigures
     /// <summary>
     /// Gets the National Insurance paid to date this tax year, by NI category.
     /// </summary>
-    public INiYtdHistory NiHistory { get; init; } = default!;
+    public INiYtdHistory NiHistory { get; init; } = new NiYtdHistory();
 }

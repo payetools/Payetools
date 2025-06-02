@@ -4,12 +4,6 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-using Payetools.IncomeTax.Model;
-using Payetools.NationalInsurance.Model;
-using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
-using Payetools.StudentLoans.Model;
-
 namespace Payetools.Payroll.Model;
 
 /// <summary>
@@ -18,10 +12,9 @@ namespace Payetools.Payroll.Model;
 public interface IEmployeePayRunResult : IEmployeePayRunOutputs
 {
     /// <summary>
-    /// Gets the employee's employment details used in calculating this pay run result.  The PayrollId property of
-    /// this field can be used as a handle to get access to the employee.
+    /// Gets the employee's employment details for this pay run.
     /// </summary>
-    public IEmployment Employment { get; }
+    IEmployment Employment { get; }
 
     /// <summary>
     /// Gets a value indicating whether this employee is being recorded as left employment in this pay run.

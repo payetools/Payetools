@@ -4,6 +4,9 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1402 // File may only contain a single type
+
+using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 
 namespace Payetools.Payroll.Model;
@@ -109,5 +112,38 @@ public interface IEmployeePayrollHistoryYtd : IEmployeeCoreYtdFigures
     /// <param name="payrunResult">Results of a set of payroll calculations for a given employee.</param>
     /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results
     /// applied.</returns>
+    [Obsolete("Use Add(IEmployeePayRunInputs, IEmployeePayRunOutputs) instead. Scheduled for removal in v3.0.0.", false)]
     IEmployeePayrollHistoryYtd Add(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult);
+
+    /// <summary>
+    /// Adds the results of the pay run provided to the current instance and returns a new instance of
+    /// <see cref="IEmployeePayrollHistoryYtd"/>.
+    /// </summary>
+    /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
+    /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
+    /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results
+    /// applied.</returns>
+    IEmployeePayrollHistoryYtd Add(IEmployeePayRunInputs employeePayRunInputs, IEmployeePayRunOutputs employeePayRunOutputs);
+}
+
+/// <summary>
+/// Interface for types that represent the historical set of information for an employee's payroll for
+/// the current tax year. <see cref="EmployeeId"/> is used to identify the employee.  Also adds the
+/// tax year ending value, to identify which tax year this payroll history applies to.
+/// </summary>
+/// <typeparam name="T">Type of the employee identifier.</typeparam>
+/// <remarks>Use this interface in preference to the non-generic type if it is necessary to identify
+/// payroll history by employee.</remarks>
+public interface IEmployeePayrollHistoryYtd<T> : IEmployeePayrollHistoryYtd
+    where T : notnull
+{
+    /// <summary>
+    /// Gets the unique identifier for the employee that this payroll history applies to.
+    /// </summary>
+    T EmployeeId { get; init; }
+
+    /// <summary>
+    /// Gets the tax year ending value for this payroll history.
+    /// </summary>
+    TaxYearEnding TaxYearEnding { get; init; }
 }

@@ -1,5 +1,24 @@
 # Releases
 
+# 2.1.1
+
+Full changelog: [1.2.1 -> 2.1.1](https://github.com/payetools/Payetools/compare/1.2.1...2.1.1)
+
+## What's Changed
+
+This release includes a significant refactor of the library to simplify payroll calculations.  It removes
+the requirement for implementing `IEmployer` and `IEmployment` in order to calculate payroll, and instead
+introduces two new interfaces, `IEmployeePayRunInputs` and `IEmployeePayRunOutputs`.
+
+### Misc
+- Update: `IEmployeePayRunInputEntry` and `IEmployeePayRunInputResult now marked as obsolete, along with
+  any APIs that use these types
+- Update: Typed versions of `IEmployeePayrollHistoryYtd` and `EmployeePayrollHistoryYtd` that introduce
+  employee id and tax year fields, to assist with storage and retrieval of payroll history
+- Support for parallel calculation of payroll for multiple employees (optional)
+- Misc: Updated dependencies (FluentAssertions, Microsoft.Extensions.Http, Microsoft.Extensions.Logging.Console,
+  Microsoft.NET.Test.Sdk, xunit.runner.visualstudio)
+
 # 1.2.1
 
 Full changelog: [1.1.22 -> 1.2.1](https://github.com/payetools/Payetools/compare/1.1.22...1.2.1)

@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1402 // File may only contain a single type
+
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
@@ -155,6 +157,7 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// <param name="payRunInput">Employee pay run input entry.</param>
     /// <param name="payrunResult">Results of a set of payroll calculations for a given employee.</param>
     /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results applied.</returns>
+    [Obsolete("Use Add(IEmployeePayRunInputs, IEmployeePayRunOutputs) instead. Scheduled for removal in v3.0.0.", false)]
     public IEmployeePayrollHistoryYtd Add(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult)
     {
         var hasPension = payrunResult.PensionContributionCalculationResult != null;
@@ -226,6 +229,84 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     }
 
     /// <summary>
+    /// Adds the results of the pay run provided to the current instance and returns a new instance of
+    /// <see cref="IEmployeePayrollHistoryYtd"/>.
+    /// </summary>
+    /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
+    /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
+    /// <returns>New instance of <see cref="IEmployeePayrollHistoryYtd"/> with the calculation results
+    /// applied.</returns>
+    public IEmployeePayrollHistoryYtd Add(IEmployeePayRunInputs employeePayRunInputs, IEmployeePayRunOutputs employeePayRunOutputs)
+    {
+        var hasPension = employeePayRunOutputs.PensionContributionCalculationResult != null;
+
+        IEmployeePayrollHistoryYtd newHistory = new EmployeePayrollHistoryYtd(EarningsHistoryYtd.Apply(employeePayRunInputs.Earnings), DeductionsHistoryYtd.Apply(employeePayRunInputs.Deductions))
+        {
+            StatutoryMaternityPayYtd = StatutoryMaternityPayYtd +
+                employeePayRunInputs.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryMaternityPay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
+            StatutoryPaternityPayYtd = StatutoryPaternityPayYtd +
+                employeePayRunInputs.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryPaternityPay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
+            StatutoryAdoptionPayYtd = StatutoryAdoptionPayYtd +
+                employeePayRunInputs.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryAdoptionPay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
+            StatutorySharedParentalPayYtd = StatutorySharedParentalPayYtd +
+                employeePayRunInputs.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutorySharedParentalPay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
+            StatutoryParentalBereavementPayYtd = StatutoryParentalBereavementPayYtd +
+                employeePayRunInputs.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryParentalBereavementPay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
+            StatutoryNeonatalCarePayYtd = StatutoryNeonatalCarePayYtd +
+                employeePayRunInputs.Earnings
+                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryNeonatalCarePay)
+                    .Select(e => e.TotalEarnings)
+                    .Sum(),
+
+            EmployeeNiHistoryEntries = EmployeeNiHistoryEntries.Add(employeePayRunOutputs.NiCalculationResult),
+
+            GrossPayYtd = GrossPayYtd + employeePayRunOutputs.TotalGrossPay,
+            TaxablePayYtd = TaxablePayYtd + employeePayRunOutputs.TaxablePay,
+            NicablePayYtd = NicablePayYtd + employeePayRunOutputs.NicablePay,
+            TaxPaidYtd = TaxPaidYtd + employeePayRunOutputs.TaxCalculationResult.FinalTaxDue,
+            StudentLoanRepaymentsYtd = StudentLoanRepaymentsYtd + employeePayRunOutputs.StudentLoanCalculationResult?.StudentLoanDeduction ?? 0.0m,
+            PostgraduateLoanRepaymentsYtd = PostgraduateLoanRepaymentsYtd + employeePayRunOutputs.StudentLoanCalculationResult?.PostgraduateLoanDeduction ?? 0.0m,
+
+            PayrolledBenefitsYtd = PayrolledBenefitsYtd + employeePayRunInputs.PayrolledBenefits.Select<IPayrolledBenefitForPeriod, decimal>(pb => pb.AmountForPeriod).Sum(),
+
+            EmployeePensionContributionsUnderNpaYtd = EmployeePensionContributionsUnderNpaYtd +
+                (hasPension && PensionIsUnderNpa(employeePayRunOutputs.PensionContributionCalculationResult) ?
+                    employeePayRunOutputs.PensionContributionCalculationResult!.CalculatedEmployeeContributionAmount : 0.0m),
+
+            EmployeePensionContributionsUnderRasYtd = EmployeePensionContributionsUnderRasYtd +
+                (hasPension && !PensionIsUnderNpa(employeePayRunOutputs.PensionContributionCalculationResult) ?
+                    employeePayRunOutputs.PensionContributionCalculationResult!.CalculatedEmployeeContributionAmount : 0.0m),
+
+            EmployerPensionContributionsYtd = EmployerPensionContributionsYtd +
+            employeePayRunOutputs.PensionContributionCalculationResult?.CalculatedEmployerContributionAmount ?? 0.0m,
+
+            TaxUnpaidDueToRegulatoryLimit = TaxUnpaidDueToRegulatoryLimit + employeePayRunOutputs.TaxCalculationResult.TaxUnpaidDueToRegulatoryLimit
+        };
+
+        return newHistory;
+    }
+
+    /// <summary>
     /// Returns true if the supplied payment type is one that can be reclaimed from HMRC, as these are treated differently within this
     /// entity and the associated earnings history.
     /// </summary>
@@ -241,4 +322,26 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
 
     private static bool PensionIsUnderNpa(IPensionContributionCalculationResult? pensionCalculationResult) =>
         pensionCalculationResult?.TaxTreatment == PensionTaxTreatment.NetPayArrangement;
+}
+
+/// <summary>
+/// Represents the historical set of information for an employee's payroll for the current tax year.
+/// <see cref="EmployeeId"/> is used to identify the employee.  Also adds the tax year ending value,
+/// to identify which tax year this payroll history applies to.
+/// </summary>
+/// <typeparam name="T">Type of the employee identifier.</typeparam>
+/// <remarks>Use this type in preference to the non-generic type if it is necessary to identify
+/// payroll history by employee.</remarks>
+public class EmployeePayrollHistoryYtd<T> : EmployeePayrollHistoryYtd, IEmployeePayrollHistoryYtd<T>
+    where T : IEarningsHistoryYtd, IDeductionsHistoryYtd
+{
+    /// <summary>
+    /// Gets the unique identifier for the employee that this payroll history applies to.
+    /// </summary>
+    public required T EmployeeId { get; init; }
+
+    /// <summary>
+    /// Gets the tax year ending value for this payroll history.
+    /// </summary>
+    public TaxYearEnding TaxYearEnding { get; init; }
 }

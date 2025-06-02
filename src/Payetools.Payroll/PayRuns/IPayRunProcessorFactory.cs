@@ -21,7 +21,7 @@ public interface IPayRunProcessorFactory
     /// <param name="payPeriod">Applicable pay period for required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    IPayRunProcessor GetProcessor(PayDate payDate, DateRange payPeriod);
+    IPayRunProcessor GetProcessor(in PayDate payDate, in DateRange payPeriod);
 
     /// <summary>
     /// Gets a payrun processor for specified pay run details.
@@ -30,5 +30,5 @@ public interface IPayRunProcessorFactory
     /// pay period for the required payrun processor.</param>
     /// <returns>An implementation of <see cref="IPayRunProcessor"/> for the specified pay date
     /// and pay period.</returns>
-    IPayRunProcessor GetProcessor(IPayRunDetails payRunDetails);
+    IPayRunProcessor GetProcessor(in IPayRunDetails payRunDetails);
 }
