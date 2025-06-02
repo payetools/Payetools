@@ -51,6 +51,7 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
     /// <param name="entry">Instance of <see cref="IEmployeePayRunInputEntry"/> containing all the necessary input data for the
     /// payroll calculation.</param>
     /// <param name="result">An instance of <see cref="IEmployeePayRunResult"/> containing the results of the payroll calculations.</param>
+    [Obsolete("Use IPayRunEntryProcessor.Process(IEmployeePayRunInputs, IEmployeePayRunOutputs) instead. Scheduled for removal in v3.0.0.", false)]
     public void Process(in IEmployeePayRunInputEntry entry, out IEmployeePayRunResult result)
     {
         var inputs = FromPayRunEntry(entry);
@@ -73,6 +74,7 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
             entry.IsLeaverInThisPayRun);
     }
 
+    [Obsolete]
     private static EmployeePayRunInputs FromPayRunEntry(IEmployeePayRunInputEntry entry)
     {
         ArgumentNullException.ThrowIfNull(entry);

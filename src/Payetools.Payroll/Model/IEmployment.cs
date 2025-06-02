@@ -133,5 +133,13 @@ public interface IEmployment
     /// </summary>
     /// <param name="payRunInput">Employee pay run input entry.</param>
     /// <param name="payrunResult">Results of a set of payroll calculations for the employee.</param>
-    void UpdatePayrollHistory(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult);
+    [Obsolete("Use UpdatePayrollHistory(IEmployeePayRunInputs, IEmployeePayRunOutputs) instead. This method will be removed in a future version.", false)]
+    void UpdatePayrollHistory(in IEmployeePayRunInputEntry payRunInput, in IEmployeePayRunResult payrunResult);
+
+    /// <summary>
+    /// Updates the payroll history for this employee with the supplied pay run information.
+    /// </summary>
+    /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
+    /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
+    void UpdatePayrollHistory(in IEmployeePayRunInputs employeePayRunInputs, in IEmployeePayRunOutputs employeePayRunOutputs);
 }

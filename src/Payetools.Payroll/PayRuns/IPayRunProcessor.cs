@@ -21,7 +21,7 @@ public interface IPayRunProcessor
     /// <param name="employeePayRunEntries">Payrun information for each employee in the payrun.</param>
     /// <param name="result">An instance of a class that implements <see cref="IPayRunResult"/> containing the results
     /// of this payrun.</param>
-    [Obsolete("Use Process(IEnumerable<IEmployeePayRunInputs>, bool, out IPayrollPayRunOutputs) instead.")]
+    [Obsolete("Use Process(IEnumerable<IEmployeePayRunInputs>, bool, out IPayrollPayRunOutputs) instead. Scheduled for removal in v3.0.0.", false)]
     void Process(
         in IEmployer employer,
         in IEnumerable<IEmployeePayRunInputEntry> employeePayRunEntries,

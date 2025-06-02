@@ -151,8 +151,19 @@ public class Employment : IEmployment
     /// </summary>
     /// <param name="payRunInput">Employee pay run input entry.</param>
     /// <param name="payrunResult">Results of a set of payroll calculations for the employee.</param>
-    public void UpdatePayrollHistory(IEmployeePayRunInputEntry payRunInput, IEmployeePayRunResult payrunResult)
+    [Obsolete("Use UpdatePayrollHistory(IEmployeePayRunInputEntry, IEmployeePayRunResult) instead. Scheduled for removal in v3.0.0.", false)]
+    public void UpdatePayrollHistory(in IEmployeePayRunInputEntry payRunInput, in IEmployeePayRunResult payrunResult)
     {
         _payrollHistoryYtd = _payrollHistoryYtd.Add(payRunInput, payrunResult);
+    }
+
+    /// <summary>
+    /// Updates the payroll history for this employee with the supplied pay run information.
+    /// </summary>
+    /// <param name="employeePayRunInputs">Employee pay run inputs.</param>
+    /// <param name="employeePayRunOutputs">Employee pay run outputs.</param>
+    public void UpdatePayrollHistory(in IEmployeePayRunInputs employeePayRunInputs, in IEmployeePayRunOutputs employeePayRunOutputs)
+    {
+        _payrollHistoryYtd = _payrollHistoryYtd.Add(employeePayRunInputs, employeePayRunOutputs);
     }
 }

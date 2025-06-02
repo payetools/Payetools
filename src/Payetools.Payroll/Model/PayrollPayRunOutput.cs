@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using Payetools.Payroll.PayRuns;
 using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;

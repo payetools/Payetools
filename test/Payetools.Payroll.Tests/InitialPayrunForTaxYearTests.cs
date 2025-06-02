@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 using FluentAssertions;
 using Payetools.Common.Model;
 using Payetools.NationalInsurance.Model;

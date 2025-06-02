@@ -5,9 +5,10 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using Payetools.Payroll.Model;
 using System.Collections.Immutable;
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Payroll.PayRuns;
 
 /// <summary>
 /// Interface that represents the output of a payroll pay run, which includes the results for each employee.

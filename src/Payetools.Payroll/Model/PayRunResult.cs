@@ -12,6 +12,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents the output of a payrun.
 /// </summary>
+[Obsolete("Use PayrollPayRunOutputs instead. Scheduled for removal in v3.0.0.", false)]
 public class PayRunResult : IPayRunResult
 {
     private readonly IEnumerable<IEmployeePayRunInputEntry> _payRunInputs;
