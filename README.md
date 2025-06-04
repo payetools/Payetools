@@ -33,7 +33,7 @@ Release notes can be found in [releases.md](doc/releases.md).
 Payetools relies on static reference data to drive tax, NI, etc., calculations (the machine-readable equivalent of HMRC's
 **[Rates and thresholds for employers](https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025)** page.
 A version of this data set for testing can be found at https://uk-rates-and-thresholds-data.netlify.app/index.json.
-(2022-2023, 2023-2024 and 2024-2025 reference data sets are currently published.)
+(2022-2023, 2023-2024, 2024-2025 and 2025-2026 reference data sets are currently published.)
 
 ### Documentation
 API documentation is available at https://payetools.dev/api/Payetools.html.  (This is a work in progress.)
