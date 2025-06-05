@@ -19,7 +19,7 @@ using Payroll;
 
 string[] ReferenceDataResources =
 {
-    @"Resources\HmrcReferenceData_2024_2025.json"
+    @"Resources\hmrc-reference-data-2025-2026.json"
 };
 
 // ##### Step 1 - create the employee inputs #####
@@ -49,10 +49,10 @@ var employeePayRunInputs = new EmployeePayRunInputs<int>(
     new EmployeeCoreYtdFigures());
 
 // ##### Step 2 - create the pay run #####
-var payDate = new PayDate(new DateOnly(2024, 5, 17), PayFrequency.Monthly);
+var payDate = new PayDate(new DateOnly(2025, 5, 17), PayFrequency.Monthly);
 var payRunDetails = new PayRunDetails(
     payDate,
-    new DateRange(new DateOnly(2024, 5, 1), new DateOnly(2024, 5, 31)));
+    new DateRange(new DateOnly(2025, 5, 1), new DateOnly(2025, 5, 31)));
 
 var payRunInputs = new PayrollPayRunInputs
 {

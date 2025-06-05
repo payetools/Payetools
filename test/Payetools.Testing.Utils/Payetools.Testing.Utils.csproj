@@ -9,13 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\HmrcReferenceData_2022_2023.json" />
-    <None Remove="ReferenceData\HmrcReferenceData_2023_2024.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="ReferenceData\HmrcReferenceData_2022_2023.json" />
-    <EmbeddedResource Include="ReferenceData\HmrcReferenceData_2023_2024.json" />
+    <EmbeddedResource Include="..\..\reference-data\hmrc-reference-data-2022-2023.json" Link="ReferenceData\hmrc-reference-data-2022-2023.json" />
+    <EmbeddedResource Include="..\..\reference-data\hmrc-reference-data-2023-2024.json" Link="ReferenceData\hmrc-reference-data-2023-2024.json" />
+    <EmbeddedResource Include="..\..\reference-data\hmrc-reference-data-2024-2025.json" Link="ReferenceData\hmrc-reference-data-2024-2025.json" />
+    <EmbeddedResource Include="..\..\reference-data\hmrc-reference-data-2025-2026.json" Link="ReferenceData\hmrc-reference-data-2025-2026.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +29,10 @@
 
   <ItemGroup>
     <PackageReference Update="MinVer" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ReferenceData\" />
   </ItemGroup>
 
 </Project>

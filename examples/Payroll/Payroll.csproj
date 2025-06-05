@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\HmrcReferenceData_2024_2025.json" />
+    <EmbeddedResource Include="..\..\reference-data\hmrc-reference-data-2025-2026.json" Link="Resources\hmrc-reference-data-2025-2026.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +26,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Payetools.Payroll\Payetools.Payroll.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

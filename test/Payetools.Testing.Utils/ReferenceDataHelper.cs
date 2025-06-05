@@ -11,11 +11,13 @@ namespace Payetools.Testing.Utils;
 
 public static class ReferenceDataHelper
 {
-    private static readonly string[] _resourcePaths = new[]
-{
-        @"ReferenceData\HmrcReferenceData_2022_2023.json",
-        @"ReferenceData\HmrcReferenceData_2023_2024.json"
-    };
+    private static readonly string[] _resourcePaths =
+    [
+        @"ReferenceData\hmrc-reference-data-2022-2023.json",
+        @"ReferenceData\hmrc-reference-data-2023-2024.json",
+        @"ReferenceData\hmrc-reference-data-2024-2025.json",
+        @"ReferenceData\hmrc-reference-data-2025-2026.json"
+    ];
 
     public static HmrcReferenceDataProviderFactory GetFactory() =>
         new HmrcReferenceDataProviderFactory(MakeLogger());
