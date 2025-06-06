@@ -23,10 +23,10 @@ public readonly partial struct TaxCode
     private const string _digits = "Digits";
     private const string _suffix = "Suffix";
 
-    [GeneratedRegex(@"^[SC]?(?:BR|NT|K|D[0-2]?)?\d*[TLMN]?\s*(?<NonCumulative>W1M1|W1/M1|X|W1|M1)$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    [GeneratedRegex(@"^[SC]?(?:BR|NT|K|D[0-3]?)?\d*[TLMN]?\s*(?<NonCumulative>W1M1|W1/M1|X|W1|M1)$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
     private static partial Regex GetNonCumulativeRegex();
 
-    [GeneratedRegex(@"^(?<CountryPrefix>^[SC]?)(?<FixedCode>0T|BR|NT|D0|D1|D2)\s*(?:W1M1|W1/M1|X|W1|M1)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    [GeneratedRegex(@"^(?<CountryPrefix>^[SC]?)(?<FixedCode>0T|BR|NT|D0|D1|D2|D3)\s*(?:W1M1|W1/M1|X|W1|M1)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
     private static partial Regex GetFixedCodeRegex();
 
     [GeneratedRegex(@"(?<CountryPrefix>^[SC]?)(?<OtherPrefix>[K]?)(?<Digits>\d*)(?<Suffix>[LMN]?)\s*(?:W1M1|W1/M1|X|W1|M1)?$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
@@ -303,6 +303,7 @@ public readonly partial struct TaxCode
             "D0" => TaxTreatment.D0,
             "D1" => TaxTreatment.D1,
             "D2" => TaxTreatment.D2,
+            "D3" => TaxTreatment.D2,
             "0T" => TaxTreatment._0T,
             "NT" => TaxTreatment.NT,
             _ => TaxTreatment.Unspecified

@@ -66,6 +66,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{02EA681E-C
 		global.json = global.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "reference-data", "reference-data", "{51F9FB35-741D-48F7-969E-9DC3724BDCFB}"
+	ProjectSection(SolutionItems) = preProject
+		reference-data\hmrc-reference-data-2022-2023.json = reference-data\hmrc-reference-data-2022-2023.json
+		reference-data\hmrc-reference-data-2023-2024.json = reference-data\hmrc-reference-data-2023-2024.json
+		reference-data\hmrc-reference-data-2024-2025.json = reference-data\hmrc-reference-data-2024-2025.json
+		reference-data\hmrc-reference-data-2025-2026.json = reference-data\hmrc-reference-data-2025-2026.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

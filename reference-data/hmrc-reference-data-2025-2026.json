@@ -63,18 +63,18 @@
               {
                 "description": "Scottish starter tax rate",
                 "from": null,
-                "to": 23827,
+                "to": 2827,
                 "rate": 0.19
               },
               {
                 "description": "Scottish basic tax rate",
                 "from": 2828,
-                "to": 14991,
+                "to": 14921,
                 "rate": 0.2
               },
               {
                 "description": "Scottish intermediate tax rate",
-                "from": 14992,
+                "from": 14922,
                 "to": 31092,
                 "rate": 0.21
               },

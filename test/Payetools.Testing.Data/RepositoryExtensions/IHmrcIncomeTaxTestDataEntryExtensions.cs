@@ -13,7 +13,7 @@ public static class IHmrcIncomeTaxTestDataEntryExtensions
 {
     public static TaxCode GetFullTaxCode(this IHmrcIncomeTaxTestDataEntry value, TaxYear taxYear)
     {
-        var nonCumulative = value.W1M1Flag?.ToLowerInvariant() == "wm1" ? " X" : string.Empty;
+        var nonCumulative = value.W1M1Flag ? " X" : string.Empty;
         var input = $"{value.TaxCode}{nonCumulative}";
 
         if (!TaxCode.TryParse(input, taxYear, out var taxCode))

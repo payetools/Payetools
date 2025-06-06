@@ -29,6 +29,9 @@ public enum TaxTreatment
     /// <summary>D2 - next highest rate above D1 to be applied to all taxable earnings.</summary>
     D2,
 
+    /// <summary>D3 - next highest rate above D2 to be applied to all taxable earnings.</summary>
+    D3,
+
     /// <summary>Zero personal allowance to be applied.</summary>
     _0T,
 

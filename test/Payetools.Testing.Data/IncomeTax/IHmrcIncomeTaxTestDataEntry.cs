@@ -18,7 +18,7 @@ public interface IHmrcIncomeTaxTestDataEntry
     decimal GrossPay { get; }
     decimal TaxablePayToDate { get; }
     string TaxCode { get; }
-    string? W1M1Flag { get; }
+    bool W1M1Flag { get; }
     int Period { get; }
     decimal TaxDueInPeriod { get; }
     decimal TaxDueToDate { get; }

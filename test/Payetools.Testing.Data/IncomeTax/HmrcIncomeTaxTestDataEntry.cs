@@ -18,7 +18,7 @@ public class HmrcIncomeTaxTestDataEntry : IHmrcIncomeTaxTestDataEntry
     public decimal GrossPay { get; set; }
     public decimal TaxablePayToDate { get; set; }
     public string TaxCode { get; set; } = string.Empty;
-    public string? W1M1Flag { get; set; }
+    public bool W1M1Flag { get; set; }
     public int Period { get; set; }
     public decimal TaxDueInPeriod { get; set; }
     public decimal TaxDueToDate { get; set; }
