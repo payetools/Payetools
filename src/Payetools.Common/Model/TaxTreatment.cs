@@ -67,6 +67,7 @@ public static class TaxTreatmentExtensions
             TaxTreatment.D0 => applicableCountries == CountriesForTaxPurposes.Scotland ? 2 : 1,
             TaxTreatment.D1 => applicableCountries == CountriesForTaxPurposes.Scotland ? 3 : 2,
             TaxTreatment.D2 => applicableCountries == CountriesForTaxPurposes.Scotland ? 4 : throw new ArgumentOutOfRangeException(nameof(taxTreatment), "Invalid tax treatment for applicable tax regime"),
+            TaxTreatment.D3 => applicableCountries == CountriesForTaxPurposes.Scotland ? 5 : throw new ArgumentOutOfRangeException(nameof(taxTreatment), "Invalid tax treatment for applicable tax regime"),
             _ => throw new ArgumentException($"Band index not valid for tax treatment {taxTreatment}", nameof(taxTreatment))
         };
 }

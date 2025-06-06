@@ -82,8 +82,7 @@ public class BulkIncomeTaxCalculationTests : IClassFixture<TaxCalculatorFactoryD
             if (test.TaxDueInPeriod != result.FinalTaxDue)
                 Output.WriteLine("Variance in test {0} ({1}); expected: {2}, actual {3}", testIndex, taxCode, test.TaxDueInPeriod, result.FinalTaxDue);
 
-            if (testIndex < 68 && testIndex > 68)
-                result.FinalTaxDue.Should().Be(test.TaxDueInPeriod, $"test failed with {test.TaxDueInPeriod} != {result.FinalTaxDue} (Index {testIndex}, tax code {test.TaxCode})");
+            result.FinalTaxDue.Should().BeApproximately(test.TaxDueInPeriod, 0.01m, $"test failed with {test.TaxDueInPeriod} != {result.FinalTaxDue} (Index {testIndex}, tax code {test.TaxCode})");
 
             testCompleted++;
             testIndex++;

@@ -303,7 +303,7 @@ public readonly partial struct TaxCode
             "D0" => TaxTreatment.D0,
             "D1" => TaxTreatment.D1,
             "D2" => TaxTreatment.D2,
-            "D3" => TaxTreatment.D2,
+            "D3" => TaxTreatment.D3,
             "0T" => TaxTreatment._0T,
             "NT" => TaxTreatment.NT,
             _ => TaxTreatment.Unspecified
