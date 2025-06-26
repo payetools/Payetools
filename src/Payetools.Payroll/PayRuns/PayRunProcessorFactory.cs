@@ -4,13 +4,13 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Factories;
 using Payetools.Common.Model;
 using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
 using Payetools.Payroll.Model;
 using Payetools.Pensions;
 using Payetools.ReferenceData;
-using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans;
 
 namespace Payetools.Payroll.PayRuns;
@@ -32,7 +32,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
 
         public IPensionContributionCalculatorFactory PensionContributionCalculatorFactory { get; }
 
-        public IAttachmentOfEarningsCalculatorFactory AttachmentOfEarningsCalculatorFactory { get; }
+        public IAttachmentOrderCalculatorFactory AttachmentOfEarningsCalculatorFactory { get; }
 
         public FactorySet(
             in IHmrcReferenceDataProvider hmrcReferenceDataProvider,
@@ -40,7 +40,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
             in INiCalculatorFactory niCalculatorFactory,
             in IStudentLoanCalculatorFactory studentLoanCalculatorFactory,
             in IPensionContributionCalculatorFactory pensionContributionCalculatorFactory,
-            in IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory)
+            in IAttachmentOrderCalculatorFactory attachmentOfEarningsCalculatorFactory)
         {
             HmrcReferenceDataProvider = hmrcReferenceDataProvider;
             TaxCalculatorFactory = taxCalculatorFactory;
@@ -123,5 +123,5 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
             new NiCalculatorFactory(referenceDataProvider),
             new StudentLoanCalculatorFactory(referenceDataProvider),
             new PensionContributionCalculatorFactory(referenceDataProvider),
-            new AttachmentOfEarningsCalculatorFactory());
+            new AttachmentOrderCalculatorFactory());
 }

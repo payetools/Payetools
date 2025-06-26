@@ -4,12 +4,14 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Statutory.AttachmentOfEarnings;
+using Payetools.AttachmentOrders.Model;
+
+namespace Payetools.AttachmentOrders;
 
 /// <summary>
-/// Interface for types that provide calculation of attachment of earnings orders.
+/// Calculator that provide calculation of attachment of earnings orders.
 /// </summary>
-public interface IAttachmentOfEarningsCalculator
+public class AttachmentOrderCalculator : IAttachmentOrderCalculator
 {
     /// <summary>
     /// Calculates the appropriate employee deduction for the attachment of earnings that this calculator
@@ -17,5 +19,8 @@ public interface IAttachmentOfEarningsCalculator
     /// </summary>
     /// <param name="earnings">Earnings.</param>
     /// <param name="result">Result.</param>
-    void Calculate(in decimal earnings, out IAttachmentOfEarningsCalculationResult result);
+    public void Calculate(in decimal earnings, out IAttachmentOrderCalculationResult result)
+    {
+        throw new NotImplementedException();
+    }
 }

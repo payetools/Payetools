@@ -4,9 +4,9 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
 using Payetools.Common.Model;
 using Payetools.Payroll.PayRuns;
-using Payetools.Statutory.AttachmentOfEarnings;
 
 namespace Payetools.Payroll.Model;
 
@@ -66,7 +66,7 @@ public class EmployeePayRunInputs<TIdentifier> : IEmployeePayRunInputs<TIdentifi
     /// Gets the list of attachment of earnings orders for this employee for a given payrun.  Null (or empty)
     /// if the employee has none.
     /// </summary>
-    public IEnumerable<IAttachmentOfEarnings>? AttachmentOfEarningsOrders { get; init; }
+    public IEnumerable<IAttachmentOrder>? AttachmentOfEarningsOrders { get; init; }
 
     /// <summary>
     /// Gets the employee's pension contributions to be applied in this pay run. Null if no pension payments
@@ -102,7 +102,7 @@ public class EmployeePayRunInputs<TIdentifier> : IEmployeePayRunInputs<TIdentifi
         IEnumerable<IEarningsEntry> earnings,
         IEnumerable<IDeductionEntry> deductions,
         IEnumerable<IPayrolledBenefitForPeriod> payrolledBenefits,
-        IEnumerable<IAttachmentOfEarnings>? attachmentOfEarningsOrders,
+        IEnumerable<IAttachmentOrder>? attachmentOfEarningsOrders,
         IPensionContributions? pensionContributions,
         IEmployeeCoreYtdFigures ytdFigures)
     {

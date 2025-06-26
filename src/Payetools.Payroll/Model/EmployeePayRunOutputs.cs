@@ -4,11 +4,11 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.PayRuns;
 using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
 
 namespace Payetools.Payroll.Model;
@@ -24,7 +24,7 @@ public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdenti
     private INiCalculationResult _niCalculationResult;
     private IStudentLoanCalculationResult? _studentLoanCalculationResult;
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
-    private IAttachmentOfEarningsCalculationResult? _attachmentOfEarningsCalculationResult;
+    private IAttachmentOrderCalculationResult? _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmployeePayRunOutputs{TIdentifier}"/> class with all calculation results and values.
@@ -46,7 +46,7 @@ public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdenti
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult? studentLoanCalculationResult,
         ref IPensionContributionCalculationResult? pensionContributionCalculationResult,
-        ref IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult,
+        ref IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult,
         decimal totalGrossPay,
         decimal workingGrossPay,
         decimal taxablePay,
@@ -105,7 +105,7 @@ public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdenti
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    public ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
+    public ref IAttachmentOrderCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Gets the employee's total gross pay, excluding payrolled taxable benefits.

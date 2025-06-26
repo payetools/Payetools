@@ -4,13 +4,13 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Factories;
 using Payetools.Common.Model;
 using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
 using Payetools.Payroll.Model;
 using Payetools.Pensions;
 using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans;
 
 namespace Payetools.Payroll.PayRuns;
@@ -37,7 +37,7 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
         IStudentLoanCalculatorFactory studentLoanCalcFactory,
-        IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory,
+        IAttachmentOrderCalculatorFactory attachmentOfEarningsCalculatorFactory,
         PayDate payDate,
         DateRange payPeriod)
         : base(incomeTaxCalcFactory, niCalcFactory, pensionCalcFactory, studentLoanCalcFactory, attachmentOfEarningsCalculatorFactory, payDate, payPeriod)

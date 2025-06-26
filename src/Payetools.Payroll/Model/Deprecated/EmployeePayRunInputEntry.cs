@@ -4,8 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
 using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
 using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
@@ -43,7 +43,7 @@ public class EmployeePayRunInputEntry : IEmployeePayRunInputEntry
     /// Gets the list of attachment of earnings orders for this employee for a given payrun.  Null (or empty) if the
     /// employee does not have any attachment of earnings orders.
     /// </summary>
-    public ImmutableArray<IAttachmentOfEarnings>? AttachmentOfEarningsOrders { get; }
+    public ImmutableArray<IAttachmentOrder>? AttachmentOfEarningsOrders { get; }
 
     /// <summary>
     /// Gets the pension contributions to apply for this pay period. Null if no pension payments are being made.

@@ -66,5 +66,15 @@ public enum PaymentType
     OccupationalParentalBereavementPay,
 
     /// <summary>Adjustment to pay, for example, refund of previous deduction.</summary>
-    Adjustment
+    Adjustment,
+
+    /// <summary>Redundancy payment as required by law.</summary>
+    StatutoryRedundancyPay,
+
+    /// <summary>Redundancy payment over and above any required by law. May also contain the portion of an employee's
+    /// redundancy pay required by law if redundancy is paid as a single amount.</summary>
+    DiscretionaryRedundancyPay,
+
+    /// <summary>Holiday pay paid in advance.</summary>
+    AdvancedHolidayPay
 }

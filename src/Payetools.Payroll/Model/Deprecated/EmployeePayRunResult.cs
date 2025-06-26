@@ -4,10 +4,10 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
 using System.Text.Json.Serialization;
 
@@ -22,7 +22,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     private INiCalculationResult _niCalculationResult;
     private IStudentLoanCalculationResult? _studentLoanCalculationResult;
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
-    private IAttachmentOfEarningsCalculationResult? _attachmentOfEarningsCalculationResult;
+    private IAttachmentOrderCalculationResult? _attachmentOfEarningsCalculationResult;
     private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
 
     /// <summary>
@@ -84,7 +84,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    public ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
+    public ref IAttachmentOrderCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,
@@ -160,7 +160,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult? studentLoanCalculationResult,
         ref IPensionContributionCalculationResult? pensionContributionCalculation,
-        ref IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult,
+        ref IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult,
         decimal totalGrossPay,
         decimal workingGrossPay,
         decimal taxablePay,

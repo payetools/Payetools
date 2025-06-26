@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Payroll.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{9918B4E2-ACAA-4A46-8658-599651D88A95}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Statutory", "src\Payetools.Statutory\Payetools.Statutory.csproj", "{98D7F9C4-D01E-446B-B78B-F7C6298BD388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.AttachmentOrders", "src\Payetools.AttachmentOrders\Payetools.AttachmentOrders.csproj", "{98D7F9C4-D01E-446B-B78B-F7C6298BD388}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payetools.Statutory.Tests", "test\Payetools.Statutory.Tests\Payetools.Statutory.Tests.csproj", "{344F8D7A-D59A-4C71-B0A4-9894D664DFB7}"
 EndProject

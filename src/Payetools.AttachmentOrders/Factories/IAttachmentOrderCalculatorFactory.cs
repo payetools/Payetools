@@ -4,25 +4,23 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
 using Payetools.Common.Model;
 
-namespace Payetools.Statutory.AttachmentOfEarnings;
+namespace Payetools.AttachmentOrders.Factories;
 
 /// <summary>
-/// Factory that can generate <see cref="IAttachmentOfEarningsCalculator"/> implementations.
+/// Interface that represents factories that can generate <see cref="IAttachmentOrderCalculator"/> implementations.
 /// </summary>
-public class AttachmentOfEarningsCalculatorFactory : IAttachmentOfEarningsCalculatorFactory
+public interface IAttachmentOrderCalculatorFactory
 {
     /// <summary>
-    /// Gets a new <see cref="IAttachmentOfEarningsCalculator"/> based on the specified pay date and ...
+    /// Gets a new <see cref="IAttachmentOrderCalculator"/> based on the specified pay date and ...
     /// The pay date is provided in order to determine which ... to use, noting that these may change
     /// in-year.
     /// </summary>
     /// <param name="payDate">Applicable pay date.</param>
     /// <param name="attachmentOfEarningsType">Attachment of earnings order type.</param>
     /// <returns>A new calculator instance.</returns>
-    public IAttachmentOfEarningsCalculator GetCalculator(PayDate payDate, AttachmentOfEarningsType attachmentOfEarningsType)
-    {
-        throw new NotImplementedException();
-    }
+    IAttachmentOrderCalculator GetCalculator(PayDate payDate, AttachmentOrderType attachmentOfEarningsType);
 }

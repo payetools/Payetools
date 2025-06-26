@@ -4,17 +4,17 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Statutory.AttachmentOfEarnings;
+namespace Payetools.AttachmentOrders.Model;
 
 /// <summary>
 /// Interface that represents an attachment of earnings order.
 /// </summary>
-public interface IAttachmentOfEarnings
+public interface IAttachmentOrder
 {
     /// <summary>
     /// Gets the type of attachment of earnings order.
     /// </summary>
-    AttachmentOfEarningsType AttachmentOfEarningsType { get; }
+    AttachmentOrderType AttachmentOfEarningsType { get; }
 
     /// <summary>
     /// Gets the date from which this attachment of earnings order is effective.

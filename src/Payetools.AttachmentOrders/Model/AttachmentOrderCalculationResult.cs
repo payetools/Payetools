@@ -4,12 +4,12 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Statutory.AttachmentOfEarnings;
+namespace Payetools.AttachmentOrders.Model;
 
 /// <summary>
 /// Entity that represents the results of an attachment of earnings calculation.
 /// </summary>
-public readonly struct AttachmentOfEarningsCalculationResult : IAttachmentOfEarningsCalculationResult
+public readonly struct AttachmentOrderCalculationResult : IAttachmentOrderCalculationResult
 {
     /// <summary>
     /// Gets the total deduction applicable as a result of any attachment of earnings orders.

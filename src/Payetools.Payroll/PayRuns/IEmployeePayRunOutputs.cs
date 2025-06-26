@@ -4,10 +4,10 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
 using Payetools.IncomeTax.Model;
 using Payetools.NationalInsurance.Model;
 using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans.Model;
 
 namespace Payetools.Payroll.PayRuns;
@@ -49,7 +49,7 @@ public interface IEmployeePayRunOutputs<TIdentifier>
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    ref IAttachmentOfEarningsCalculationResult? AttachmentOfEarningsCalculationResult { get; }
+    ref IAttachmentOrderCalculationResult? AttachmentOfEarningsCalculationResult { get; }
 
     /// <summary>
     /// Gets the employee's total gross pay, excluding payrolled taxable benefits.

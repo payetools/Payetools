@@ -4,12 +4,12 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Statutory.AttachmentOfEarnings;
+namespace Payetools.AttachmentOrders.Model;
 
 /// <summary>
 /// Enumeration of all the supported types of attachment of earnings orders.
 /// </summary>
-public enum AttachmentOfEarningsType
+public enum AttachmentOrderType
 {
     /// <summary>Child maintenance deduction from earnings order.</summary>
     ChildMaintenanceDEO

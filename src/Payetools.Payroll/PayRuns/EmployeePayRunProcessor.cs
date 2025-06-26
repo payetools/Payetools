@@ -4,6 +4,9 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders;
+using Payetools.AttachmentOrders.Factories;
+using Payetools.AttachmentOrders.Model;
 using Payetools.Common.Model;
 using Payetools.IncomeTax;
 using Payetools.NationalInsurance;
@@ -11,7 +14,6 @@ using Payetools.NationalInsurance.Model;
 using Payetools.Payroll.Model;
 using Payetools.Pensions;
 using Payetools.Pensions.Model;
-using Payetools.Statutory.AttachmentOfEarnings;
 using Payetools.StudentLoans;
 using Payetools.StudentLoans.Model;
 using System.Collections.Concurrent;
@@ -43,9 +45,9 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
     private readonly INiCalculator _niCalculator;
     private readonly IPensionContributionCalculatorFactory _pensionCalculatorFactory;
     private readonly IStudentLoanCalculator _studentLoanCalculator;
-    private readonly IAttachmentOfEarningsCalculatorFactory _attachmentOfEarningsCalculatorFactory;
+    private readonly IAttachmentOrderCalculatorFactory _attachmentOfEarningsCalculatorFactory;
     private readonly ConcurrentDictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator> _pensionCalculators;
-    private readonly ConcurrentDictionary<AttachmentOfEarningsType, IAttachmentOfEarningsCalculator> _attachmentOfEarningsCalculators;
+    private readonly ConcurrentDictionary<AttachmentOrderType, IAttachmentOrderCalculator> _attachmentOfEarningsCalculators;
 
     /// <summary>
     /// Gets the pay date for this payrun calculator.
@@ -73,7 +75,7 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
         IStudentLoanCalculatorFactory studentLoanCalcFactory,
-        IAttachmentOfEarningsCalculatorFactory attachmentOfEarningsCalculatorFactory,
+        IAttachmentOrderCalculatorFactory attachmentOfEarningsCalculatorFactory,
         PayDate payDate,
         DateRange payPeriod)
     {
@@ -88,7 +90,7 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
         PayPeriod = payPeriod;
 
         _pensionCalculators = new ConcurrentDictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator>();
-        _attachmentOfEarningsCalculators = new ConcurrentDictionary<AttachmentOfEarningsType, IAttachmentOfEarningsCalculator>();
+        _attachmentOfEarningsCalculators = new ConcurrentDictionary<AttachmentOrderType, IAttachmentOrderCalculator>();
     }
 
     /// <summary>
@@ -186,7 +188,7 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
                 out studentLoanCalculationResult);
         }
 
-        IAttachmentOfEarningsCalculationResult? attachmentOfEarningsCalculationResult = null;
+        IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult = null;
 
         result = new EmployeePayRunOutputs<TIdentifier>(
             payRunInputs.EmployeeId,
