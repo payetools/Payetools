@@ -4,12 +4,12 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Common.Model;
 
 /// <summary>
 /// Interface that represents a pay component (e.g., salary, bonus, sick pay, etc.).
 /// </summary>
-/// <remarks>As this type is used as the key to a dictionary in the <see cref="IEarningsHistoryYtd"/> type,
+/// <remarks>As this type is used as the key to one or more dictionaries in the library,
 /// it is recommended to override <see cref="object.GetHashCode"/> in any implementations.</remarks>
 public interface IEarningsDetails
 {
@@ -21,7 +21,7 @@ public interface IEarningsDetails
     /// <summary>
     /// Gets the type of this payment.
     /// </summary>
-    PaymentType PaymentType { get; }
+    EarningsType PaymentType { get; }
 
     /// <summary>
     /// Gets the units for this pay component, if applicable.  Null if not applicable.

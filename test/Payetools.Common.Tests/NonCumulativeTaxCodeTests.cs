@@ -19,7 +19,7 @@ public class NonCumulativeTaxCodeTests
         Test.RunValidNonCumulativeCodeTest("BR  X", TaxTreatment.BR);
         Test.RunValidNonCumulativeCodeTest("D0X", TaxTreatment.D0);
         Test.RunValidNonCumulativeCodeTest("D1 X", TaxTreatment.D1);
-        Test.RunValidNonCumulativeCodeTest("D2  X", TaxTreatment.D2);
+        Test.RunValidNonCumulativeCodeTest("SD2  X", TaxTreatment.D2);
         Test.RunValidNonCumulativeCodeTest("NT X", TaxTreatment.NT);
     }
 
@@ -31,7 +31,7 @@ public class NonCumulativeTaxCodeTests
         Test.RunValidNonCumulativeCodeTest("BR  W1", TaxTreatment.BR);
         Test.RunValidNonCumulativeCodeTest("D0W1", TaxTreatment.D0);
         Test.RunValidNonCumulativeCodeTest("D1 W1", TaxTreatment.D1);
-        Test.RunValidNonCumulativeCodeTest("D2  W1", TaxTreatment.D2);
+        Test.RunValidNonCumulativeCodeTest("SD2  W1", TaxTreatment.D2);
         Test.RunValidNonCumulativeCodeTest("NT W1", TaxTreatment.NT);
     }
 
@@ -43,7 +43,7 @@ public class NonCumulativeTaxCodeTests
         Test.RunValidNonCumulativeCodeTest("BR  M1", TaxTreatment.BR);
         Test.RunValidNonCumulativeCodeTest("D0M1", TaxTreatment.D0);
         Test.RunValidNonCumulativeCodeTest("D1 M1", TaxTreatment.D1);
-        Test.RunValidNonCumulativeCodeTest("D2  M1", TaxTreatment.D2);
+        Test.RunValidNonCumulativeCodeTest("SD2  M1", TaxTreatment.D2);
         Test.RunValidNonCumulativeCodeTest("NT M1", TaxTreatment.NT);
     }
 

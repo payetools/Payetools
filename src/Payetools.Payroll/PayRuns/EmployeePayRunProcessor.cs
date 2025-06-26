@@ -45,9 +45,8 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
     private readonly INiCalculator _niCalculator;
     private readonly IPensionContributionCalculatorFactory _pensionCalculatorFactory;
     private readonly IStudentLoanCalculator _studentLoanCalculator;
-    private readonly IAttachmentOrderCalculatorFactory _attachmentOfEarningsCalculatorFactory;
     private readonly ConcurrentDictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator> _pensionCalculators;
-    private readonly ConcurrentDictionary<AttachmentOrderType, IAttachmentOrderCalculator> _attachmentOfEarningsCalculators;
+    private readonly IAttachmentOrdersCalculator _attachmentOrdersCalculator;
 
     /// <summary>
     /// Gets the pay date for this payrun calculator.
@@ -67,30 +66,31 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
     /// <param name="niCalcFactory">calculator factory.</param>
     /// <param name="pensionCalcFactory">Pension contributions calculator factory.</param>
     /// <param name="studentLoanCalcFactory">Student loan calculator factory.</param>
-    /// <param name="attachmentOfEarningsCalculatorFactory">Attachment of earnings order calculators.</param>
+    /// <param name="attachmentOrdersCalculatorFactory">Attachment orders calculator factory.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
     /// <param name="payPeriod">Applicable pay period for this calculator.</param>
     public EmployeePayRunProcessor(
-        ITaxCalculatorFactory incomeTaxCalcFactory,
-        INiCalculatorFactory niCalcFactory,
-        IPensionContributionCalculatorFactory pensionCalcFactory,
-        IStudentLoanCalculatorFactory studentLoanCalcFactory,
-        IAttachmentOrderCalculatorFactory attachmentOfEarningsCalculatorFactory,
+        in ITaxCalculatorFactory incomeTaxCalcFactory,
+        in INiCalculatorFactory niCalcFactory,
+        in IPensionContributionCalculatorFactory pensionCalcFactory,
+        in IStudentLoanCalculatorFactory studentLoanCalcFactory,
+        in IAttachmentOrdersCalculatorFactory attachmentOrdersCalculatorFactory,
         PayDate payDate,
-        DateRange payPeriod)
+        in DateRange payPeriod)
     {
+        var taxFactory = incomeTaxCalcFactory;
+        PayDate = payDate;
+        PayPeriod = payPeriod;
+
         _incomeTaxCalculators = payDate.TaxYear.GetCountriesForYear()
-            .Select(regime => (regime, calculator: incomeTaxCalcFactory.GetCalculator(regime, payDate)))
+            .Select(regime => (regime, calculator: taxFactory.GetCalculator(regime, PayDate)))
             .ToDictionary(kv => kv.regime, kv => kv.calculator);
         _niCalculator = niCalcFactory.GetCalculator(payDate);
         _pensionCalculatorFactory = pensionCalcFactory;
         _studentLoanCalculator = studentLoanCalcFactory.GetCalculator(payDate);
-        _attachmentOfEarningsCalculatorFactory = attachmentOfEarningsCalculatorFactory;
-        PayDate = payDate;
-        PayPeriod = payPeriod;
+        _attachmentOrdersCalculator = attachmentOrdersCalculatorFactory.GetCalculator(payDate);
 
         _pensionCalculators = new ConcurrentDictionary<(PensionsEarningsBasis, PensionTaxTreatment), IPensionContributionCalculator>();
-        _attachmentOfEarningsCalculators = new ConcurrentDictionary<AttachmentOrderType, IAttachmentOrderCalculator>();
     }
 
     /// <summary>
@@ -189,6 +189,19 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
         }
 
         IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult = null;
+
+        if (payRunInputs.AttachmentOrders is not null && payRunInputs.AttachmentOrders.Any())
+        {
+            _attachmentOrdersCalculator.Calculate(
+                payRunInputs.AttachmentOrders,
+                payRunInputs.Earnings,
+                payRunInputs.Deductions,
+                taxCalculationResult.FinalTaxDue,
+                niCalculationResult.EmployeeContribution,
+                studentLoanCalculationResult?.TotalDeduction ?? 0.0m,
+                pensionContributions?.CalculatedEmployeeContributionAmount ?? 0.0m,
+                out attachmentOfEarningsCalculationResult);
+        }
 
         result = new EmployeePayRunOutputs<TIdentifier>(
             payRunInputs.EmployeeId,

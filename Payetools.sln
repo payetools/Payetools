@@ -74,6 +74,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "reference-data", "reference
 		reference-data\hmrc-reference-data-2025-2026.json = reference-data\hmrc-reference-data-2025-2026.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payetools.AttachmentOrders.Tests", "test\Payetools.AttachmentOrders.Tests\Payetools.AttachmentOrders.Tests.csproj", "{7FA3A67A-2CF5-4654-B9DE-EB6E0DCEFEB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -162,6 +164,10 @@ Global
 		{5A472F5D-496A-47C2-8439-7BD1A7E2C998}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A472F5D-496A-47C2-8439-7BD1A7E2C998}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A472F5D-496A-47C2-8439-7BD1A7E2C998}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FA3A67A-2CF5-4654-B9DE-EB6E0DCEFEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FA3A67A-2CF5-4654-B9DE-EB6E0DCEFEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FA3A67A-2CF5-4654-B9DE-EB6E0DCEFEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FA3A67A-2CF5-4654-B9DE-EB6E0DCEFEB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,6 +193,7 @@ Global
 		{98D7F9C4-D01E-446B-B78B-F7C6298BD388} = {9316B808-4E93-4E7C-B5D6-1C87B65E72A8}
 		{344F8D7A-D59A-4C71-B0A4-9894D664DFB7} = {17075853-7B07-44FD-8FDB-B917A9E51140}
 		{5A472F5D-496A-47C2-8439-7BD1A7E2C998} = {6F502F95-10A0-4E87-91B5-40ED4248C225}
+		{7FA3A67A-2CF5-4654-B9DE-EB6E0DCEFEB1} = {17075853-7B07-44FD-8FDB-B917A9E51140}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEF0603C-E049-4F35-B083-9EC35309E23C}

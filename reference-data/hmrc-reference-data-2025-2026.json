@@ -385,13 +385,270 @@
       }
     }
   ],
-  "attachmentOfEarnings": [
+  "attachmentOrders": [
     {
       "applicableFrom": "2025-04-06",
       "applicableTill": "2026-04-05",
-      "orders": [
+      "tableBasedRates": [
         {
-          "applicableCountries": "GB-ENG GB-NIR"
+          "applicableCountries": "GB-ENG GB-WLS",
+          "attachmentOrderType": "CTAOE",
+          "rateTables": {
+            "weekly": [
+              {
+                "from": 0,
+                "to": 75,
+                "rate": 0.0
+              },
+              {
+                "from": 75.01,
+                "to": 135,
+                "rate": 0.03
+              },
+              {
+                "from": 135.01,
+                "to": 185,
+                "rate": 0.05
+              },
+              {
+                "from": 185.01,
+                "to": 225,
+                "rate": 0.07
+              },
+              {
+                "from": 225.01,
+                "to": 355,
+                "rate": 0.12
+              },
+              {
+                "from": 355.01,
+                "to": 505,
+                "rate": 0.17
+              },
+              {
+                "from": 505.01,
+                "to": null,
+                "rate": 0.5
+              }
+            ],
+            "monthly": [
+              {
+                "from": 0,
+                "to": 300,
+                "rate": 0.0
+              },
+              {
+                "from": 300.01,
+                "to": 550,
+                "rate": 0.03
+              },
+              {
+                "from": 550.01,
+                "to": 740,
+                "rate": 0.05
+              },
+              {
+                "from": 740.01,
+                "to": 900,
+                "rate": 0.07
+              },
+              {
+                "from": 900.01,
+                "to": 1420,
+                "rate": 0.12
+              },
+              {
+                "from": 1420.01,
+                "to": 2020,
+                "rate": 0.17
+              },
+              {
+                "from": 2020.01,
+                "to": null,
+                "rate": 0.5
+              }
+            ],
+            "daily": [
+              {
+                "from": 0,
+                "to": 11,
+                "rate": 0.0
+              },
+              {
+                "from": 11.01,
+                "to": 20,
+                "rate": 0.03
+              },
+              {
+                "from": 20.01,
+                "to": 27,
+                "rate": 0.05
+              },
+              {
+                "from": 27.01,
+                "to": 33,
+                "rate": 0.07
+              },
+              {
+                "from": 33.01,
+                "to": 52,
+                "rate": 0.12
+              },
+              {
+                "from": 52.01,
+                "to": 72,
+                "rate": 0.17
+              },
+              {
+                "from": 72.01,
+                "to": null,
+                "rate": 0.5
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "applicableFrom": "2025-04-06",
+      "applicableTill": "2026-04-05",
+      "tableBasedRates": [
+        {
+          "applicableCountries": "GB-SCT",
+          "attachmentOrderType": "CTAOE",
+          "rateTables": {
+            "weekly": [
+              {
+                "from": 0,
+                "to": 75,
+                "rate": 0.0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "applicableFrom": "2025-04-06",
+      "applicableTill": "2026-04-05",
+      "tableBasedRates": [
+        {
+          "applicableCountries": "GB-NIR",
+          "attachmentOrderType": "CTAOE",
+          "rateTables": {
+            "rateType": "standard",
+            "daily": [
+              {
+                "from": 0,
+                "to": 15.00,
+                "standardRate": 0.0
+              },
+              {
+                "from": 15.01,
+                "to": 23.00,
+                "standardRate": 0.03
+              },
+              {
+                "from": 23.01,
+                "to": 32.00,
+                "standardRate": 0.05
+              },
+              {
+                "from": 32.01,
+                "to": 39.00,
+                "rate": 0.07
+              },
+              {
+                "from": 39.01,
+                "to": 54.00,
+                "rate": 0.11
+              },
+              {
+                "from": 54.01,
+                "to": 75.00,
+                "rate": 0.15
+              },
+              {
+                "from": 75.01,
+                "to": null,
+                "rate": 0.20
+              }
+            ],
+            "weekly": [
+              {
+                "from": 0,
+                "to": 100.00,
+                "rate": 0.0
+              },
+              {
+                "from": 100.01,
+                "to": 160.00,
+                "rate": 0.03
+              },
+              {
+                "from": 160.01,
+                "to": 220.00,
+                "rate": 0.05
+              },
+              {
+                "from": 220.01,
+                "to": 270.00,
+                "rate": 0.07
+              },
+              {
+                "from": 270.01,
+                "to": 375.00,
+                "rate": 0.11
+              },
+              {
+                "from": 375.01,
+                "to": 520.00,
+                "rate": 0.15
+              },
+              {
+                "from": 520.01,
+                "to": null,
+                "rate": 0.20
+              }
+            ],
+            "monthly": [
+              {
+                "from": 0,
+                "to": 430.00,
+                "rate": 0.0
+              },
+              {
+                "from": 430.01,
+                "to": 690.00,
+                "rate": 0.03
+              },
+              {
+                "from": 690.01,
+                "to": 950.00,
+                "rate": 0.05
+              },
+              {
+                "from": 950.01,
+                "to": 1160.00,
+                "rate": 0.07
+              },
+              {
+                "from": 1160.01,
+                "to": 1615.00,
+                "rate": 0.11
+              },
+              {
+                "from": 1615.01,
+                "to": 2240.00,
+                "rate": 0.15
+              },
+              {
+                "from": 2240.01,
+                "to": null,
+                "rate": 0.20
+              }
+            ]
+          }
         }
       ]
     }

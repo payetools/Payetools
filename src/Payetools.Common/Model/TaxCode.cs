@@ -315,6 +315,10 @@ public readonly partial struct TaxCode
         var countries = treatment == TaxTreatment.NT ? _allCountries : GetApplicableCountries(match, taxYear);
         var allowance = treatment == TaxTreatment.NT ? int.MaxValue : 0;
 
+        // Only Scotland has D2 and D3 codes (as SD2 and SD3)
+        if ((treatment == TaxTreatment.D2 || treatment == TaxTreatment.D3) && countries != CountriesForTaxPurposes.Scotland)
+            return false;
+
         taxCode = new TaxCode(taxYear, countries, treatment, allowance, isNonCumulative, true);
 
         return true;

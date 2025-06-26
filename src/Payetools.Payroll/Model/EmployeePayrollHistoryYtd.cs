@@ -173,37 +173,37 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
         {
             StatutoryMaternityPayYtd = StatutoryMaternityPayYtd +
                 payRunInput.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryMaternityPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryMaternityPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryPaternityPayYtd = StatutoryPaternityPayYtd +
                 payRunInput.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryPaternityPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryPaternityPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryAdoptionPayYtd = StatutoryAdoptionPayYtd +
                 payRunInput.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryAdoptionPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryAdoptionPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutorySharedParentalPayYtd = StatutorySharedParentalPayYtd +
                 payRunInput.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutorySharedParentalPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutorySharedParentalPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryParentalBereavementPayYtd = StatutoryParentalBereavementPayYtd +
                 payRunInput.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryParentalBereavementPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryParentalBereavementPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryNeonatalCarePayYtd = StatutoryNeonatalCarePayYtd +
                 payRunInput.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryNeonatalCarePay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryNeonatalCarePay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
@@ -241,13 +241,13 @@ public class EmployeePayrollHistoryYtd : IEmployeePayrollHistoryYtd
     /// </summary>
     /// <param name="paymentType">Payment type.</param>
     /// <returns>True if the supplied payment type is one that can be reclaimed from HMRC; otherwise false.</returns>
-    public static bool IsReclaimableStatutoryPayment(PaymentType paymentType) =>
-        paymentType == PaymentType.StatutoryMaternityPay ||
-        paymentType == PaymentType.StatutoryAdoptionPay ||
-        paymentType == PaymentType.StatutoryPaternityPay ||
-        paymentType == PaymentType.StatutorySharedParentalPay ||
-        paymentType == PaymentType.StatutoryParentalBereavementPay ||
-        paymentType == PaymentType.StatutoryNeonatalCarePay;
+    public static bool IsReclaimableStatutoryPayment(EarningsType paymentType) =>
+        paymentType == EarningsType.StatutoryMaternityPay ||
+        paymentType == EarningsType.StatutoryAdoptionPay ||
+        paymentType == EarningsType.StatutoryPaternityPay ||
+        paymentType == EarningsType.StatutorySharedParentalPay ||
+        paymentType == EarningsType.StatutoryParentalBereavementPay ||
+        paymentType == EarningsType.StatutoryNeonatalCarePay;
 
     /// <summary>
     /// Gets whether the pension contribution calculation result is under a net pay arrangement (NPA).
@@ -315,37 +315,37 @@ public class EmployeePayrollHistoryYtd<TIdentifier> : EmployeePayrollHistoryYtd,
 
             StatutoryMaternityPayYtd = StatutoryMaternityPayYtd +
                 employeePayRunInputs.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryMaternityPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryMaternityPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryPaternityPayYtd = StatutoryPaternityPayYtd +
                 employeePayRunInputs.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryPaternityPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryPaternityPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryAdoptionPayYtd = StatutoryAdoptionPayYtd +
                 employeePayRunInputs.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryAdoptionPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryAdoptionPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutorySharedParentalPayYtd = StatutorySharedParentalPayYtd +
                 employeePayRunInputs.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutorySharedParentalPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutorySharedParentalPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryParentalBereavementPayYtd = StatutoryParentalBereavementPayYtd +
                 employeePayRunInputs.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryParentalBereavementPay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryParentalBereavementPay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 
             StatutoryNeonatalCarePayYtd = StatutoryNeonatalCarePayYtd +
                 employeePayRunInputs.Earnings
-                    .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryNeonatalCarePay)
+                    .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryNeonatalCarePay)
                     .Select(e => e.TotalEarnings)
                     .Sum(),
 

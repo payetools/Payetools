@@ -32,7 +32,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
 
         public IPensionContributionCalculatorFactory PensionContributionCalculatorFactory { get; }
 
-        public IAttachmentOrderCalculatorFactory AttachmentOfEarningsCalculatorFactory { get; }
+        public IAttachmentOrdersCalculatorFactory AttachmentOfEarningsCalculatorFactory { get; }
 
         public FactorySet(
             in IHmrcReferenceDataProvider hmrcReferenceDataProvider,
@@ -40,7 +40,7 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
             in INiCalculatorFactory niCalculatorFactory,
             in IStudentLoanCalculatorFactory studentLoanCalculatorFactory,
             in IPensionContributionCalculatorFactory pensionContributionCalculatorFactory,
-            in IAttachmentOrderCalculatorFactory attachmentOfEarningsCalculatorFactory)
+            in IAttachmentOrdersCalculatorFactory attachmentOfEarningsCalculatorFactory)
         {
             HmrcReferenceDataProvider = hmrcReferenceDataProvider;
             TaxCalculatorFactory = taxCalculatorFactory;
@@ -123,5 +123,5 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
             new NiCalculatorFactory(referenceDataProvider),
             new StudentLoanCalculatorFactory(referenceDataProvider),
             new PensionContributionCalculatorFactory(referenceDataProvider),
-            new AttachmentOrderCalculatorFactory());
+            new AttachmentOrdersCalculatorFactory());
 }

@@ -66,7 +66,7 @@ public class EmployeePayRunInputs<TIdentifier> : IEmployeePayRunInputs<TIdentifi
     /// Gets the list of attachment of earnings orders for this employee for a given payrun.  Null (or empty)
     /// if the employee has none.
     /// </summary>
-    public IEnumerable<IAttachmentOrder>? AttachmentOfEarningsOrders { get; init; }
+    public IEnumerable<IAttachmentOrder>? AttachmentOrders { get; init; }
 
     /// <summary>
     /// Gets the employee's pension contributions to be applied in this pay run. Null if no pension payments
@@ -114,7 +114,7 @@ public class EmployeePayRunInputs<TIdentifier> : IEmployeePayRunInputs<TIdentifi
         Deductions = deductions;
         Earnings = earnings;
         PayrolledBenefits = payrolledBenefits;
-        AttachmentOfEarningsOrders = attachmentOfEarningsOrders;
+        AttachmentOrders = attachmentOfEarningsOrders;
         PensionContributions = pensionContributions;
         YtdFigures = ytdFigures;
     }

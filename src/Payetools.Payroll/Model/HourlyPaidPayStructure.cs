@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Common.Model;
+
 namespace Payetools.Payroll.Model;
 
 /// <summary>

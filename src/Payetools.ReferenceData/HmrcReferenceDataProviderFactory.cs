@@ -7,7 +7,7 @@
 using Microsoft.Extensions.Logging;
 using Payetools.Common.Diagnostics;
 using Payetools.Common.Serialization;
-using Payetools.ReferenceData.Serialization;
+using Payetools.ReferenceData.Serialisation;
 using System.Text.Json;
 
 namespace Payetools.ReferenceData;

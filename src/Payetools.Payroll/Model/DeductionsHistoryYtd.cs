@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Common.Model;
 using System.Collections.Immutable;
 
 namespace Payetools.Payroll.Model;
@@ -11,7 +12,7 @@ namespace Payetools.Payroll.Model;
 /// <summary>
 /// Represents an employee's deductions history for the tax year to date.
 /// </summary>
-/// <remarks>Note that this type is mutable (via the <see cref="Apply(IEnumerable{Payetools.Payroll.Model.IDeductionEntry})"/> method;
+/// <remarks>Note that this type is mutable (via the <see cref="Apply(IEnumerable{IDeductionEntry})"/> method;
 /// however its one property is not mutable, since it returns an immutable dictionary which contains a type that is itself
 /// immutable.</remarks>
 public class DeductionsHistoryYtd : IDeductionsHistoryYtd

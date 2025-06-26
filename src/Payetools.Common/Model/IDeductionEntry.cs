@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Common.Model;
 
 /// <summary>
 /// Interface that represents a deduction from payroll.

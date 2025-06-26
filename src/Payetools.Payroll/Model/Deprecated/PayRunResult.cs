@@ -78,27 +78,27 @@ public class PayRunResult : IPayRunResult
                 .Select(r => r.NiCalculationResult.EmployerContribution)
                 .Sum(),
             StatutoryMaternityPayTotal = allEarnings
-                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryMaternityPay)
+                .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryMaternityPay)
                 .Select(e => e.TotalEarnings)
                 .Sum(),
             StatutoryPaternityPayTotal = allEarnings
-                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryPaternityPay)
+                .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryPaternityPay)
                 .Select(e => e.TotalEarnings)
                 .Sum(),
             StatutoryAdoptionPayTotal = allEarnings
-                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryAdoptionPay)
+                .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryAdoptionPay)
                 .Select(e => e.TotalEarnings)
                 .Sum(),
             StatutorySharedParentalPayTotal = allEarnings
-                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutorySharedParentalPay)
+                .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutorySharedParentalPay)
                 .Select(e => e.TotalEarnings)
                 .Sum(),
             StatutoryParentalBereavementPayTotal = allEarnings
-                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryParentalBereavementPay)
+                .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryParentalBereavementPay)
                 .Select(e => e.TotalEarnings)
                 .Sum(),
             StatutoryNeonatalCarePayTotal = allEarnings
-                .Where(e => e.EarningsDetails.PaymentType == PaymentType.StatutoryNeonatalCarePay)
+                .Where(e => e.EarningsDetails.PaymentType == EarningsType.StatutoryNeonatalCarePay)
                 .Select(e => e.TotalEarnings)
                 .Sum()
         };

@@ -1,6 +1,7 @@
 ﻿// This example code may be freely used without restriction; it may be freely copied, adapted and
 // used without attribution.
 
+using Payetools.Common.Model;
 using Payetools.Payroll.Model;
 
 namespace Payetools.Example.Earnings
@@ -9,7 +10,7 @@ namespace Payetools.Example.Earnings
     {
         public string Name => "Salary";
 
-        public PaymentType PaymentType => PaymentType.GeneralEarnings;
+        public EarningsType PaymentType => EarningsType.GeneralEarnings;
 
         public PayRateUnits? Units => PayRateUnits.PerPayPeriod;
 

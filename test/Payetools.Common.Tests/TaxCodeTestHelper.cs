@@ -17,43 +17,43 @@ public static class TaxCodeTestHelper
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.TaxTreatment.ShouldBe(expectedTreatment);
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.TaxTreatment.ShouldBe(expectedTreatment, $"Tax code: {input}");
 
         result = TaxCode.TryParse(input.ToUpper(), out taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.TaxTreatment.ShouldBe(expectedTreatment);
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.TaxTreatment.ShouldBe(expectedTreatment, $"Tax code: {input}");
     }
 
     public static void RunInvalidCodeTest(string input)
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
 
-        result.ShouldBeFalse();
-        result.ShouldHaveDefaultValue();
+        result.ShouldBeFalse($"Tax code: {input}");
+        result.ShouldHaveDefaultValue($"Tax code: {input}");
 
         result = TaxCode.TryParse(input.ToUpper(), out taxCode);
 
-        result.ShouldBeFalse();
-        result.ShouldHaveDefaultValue();
+        result.ShouldBeFalse($"Tax code: {input}");
+        result.ShouldHaveDefaultValue($"Tax code: {input}");
     }
 
     public static void RunValidNonCumulativeCodeTest(string input, TaxTreatment expectedTreatment)
     {
         var result = TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.IsNonCumulative.ShouldBeTrue();
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.IsNonCumulative.ShouldBeTrue($"Tax code: {input}");
 
         result = TaxCode.TryParse(input.ToUpper(), out taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.IsNonCumulative.ShouldBeTrue();
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.IsNonCumulative.ShouldBeTrue($"Tax code: {input}");
         taxCode.TaxTreatment.ShouldBe(expectedTreatment);
     }
 
@@ -64,17 +64,17 @@ public static class TaxCodeTestHelper
     {
         var result = TaxCode.TryParse(input.ToLower(), taxYear, out var taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.TaxTreatment.ShouldBe(expectedTreatment);
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.TaxTreatment.ShouldBe(expectedTreatment, $"Tax code: {input}");
         taxCode.ApplicableCountries.ShouldBe(expectedCountries);
 
         result = TaxCode.TryParse(input.ToUpper(), taxYear, out taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.TaxTreatment.ShouldBe(expectedTreatment);
-        taxCode.ApplicableCountries.ShouldBe(expectedCountries);
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.TaxTreatment.ShouldBe(expectedTreatment, $"Tax code: {input}");
+        taxCode.ApplicableCountries.ShouldBe(expectedCountries, $"Tax code: {input}");
     }
 
     public static void RunStandardCodeTest(string input,
@@ -85,40 +85,40 @@ public static class TaxCodeTestHelper
     {
         var result = TaxCode.TryParse(input.ToLower(), taxYear, out var taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.TaxTreatment.ShouldBe(expectedTreatment);
-        taxCode.ApplicableCountries.ShouldBe(expectedCountries);
-        taxCode.NotionalAllowance.ShouldBe(expectedAllowance);
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.TaxTreatment.ShouldBe(expectedTreatment, $"Tax code: {input}");
+        taxCode.ApplicableCountries.ShouldBe(expectedCountries, $"Tax code: {input}");
+        taxCode.NotionalAllowance.ShouldBe(expectedAllowance, $"Tax code: {input}");
 
         result = TaxCode.TryParse(input.ToUpper(), taxYear, out taxCode);
 
-        result.ShouldBeTrue();
-        result.ShouldNotHaveDefaultValue();
-        taxCode.TaxTreatment.ShouldBe(expectedTreatment);
-        taxCode.ApplicableCountries.ShouldBe(expectedCountries);
-        taxCode.NotionalAllowance.ShouldBe(expectedAllowance);
+        result.ShouldBeTrue($"Tax code: {input}");
+        result.ShouldNotHaveDefaultValue($"Tax code: {input}");
+        taxCode.TaxTreatment.ShouldBe(expectedTreatment, $"Tax code: {input}");
+        taxCode.ApplicableCountries.ShouldBe(expectedCountries, $"Tax code: {input}");
+        taxCode.NotionalAllowance.ShouldBe(expectedAllowance, $"Tax code: {input}");
     }
 
     public static void RunToStringTest(string input, string expectedOutput, bool expectedIsNonCumulative)
     {
         TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode).ShouldBeTrue();
-        taxCode.ToString().ShouldBe(expectedOutput);
-        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative);
+        taxCode.ToString().ShouldBe(expectedOutput, $"Tax code: {input}");
+        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative, $"Tax code: {input}");
 
         TaxCode.TryParse(input.ToUpper(), _testTaxYear, out taxCode).ShouldBeTrue();
-        taxCode.ToString().ShouldBe(expectedOutput);
-        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative);
+        taxCode.ToString().ShouldBe(expectedOutput, $"Tax code: {input}");
+        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative, $"Tax code: {input}");
     }
 
     public static void RunToFullStringTest(string input, string expectedOutput, bool expectedIsNonCumulative)
     {
-        TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode).ShouldBeTrue();
-        taxCode.ToString(true, true).ShouldBe(expectedOutput);
-        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative);
+        TaxCode.TryParse(input.ToLower(), _testTaxYear, out var taxCode).ShouldBeTrue($"Tax code: {input}");
+        taxCode.ToString(true, true).ShouldBe(expectedOutput, $"Tax code: {input}");
+        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative, $"Tax code: {input}");
 
-        TaxCode.TryParse(input.ToUpper(), _testTaxYear, out taxCode).ShouldBeTrue();
-        taxCode.ToString(true, true).ShouldBe(expectedOutput);
-        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative);
+        TaxCode.TryParse(input.ToUpper(), _testTaxYear, out taxCode).ShouldBeTrue($"Tax code: {input}");
+        taxCode.ToString(true, true).ShouldBe(expectedOutput, $"Tax code: {input}");
+        taxCode.IsNonCumulative.ShouldBe(expectedIsNonCumulative, $"Tax code: {input}");
     }
 }

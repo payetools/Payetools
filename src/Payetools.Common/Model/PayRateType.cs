@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Common.Model;
 
 /// <summary>
 /// Enum representing different pay types, i.e., salaried, hourly paid, etc.

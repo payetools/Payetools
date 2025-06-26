@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders;
 using Payetools.AttachmentOrders.Factories;
 using Payetools.Common.Model;
 using Payetools.IncomeTax;
@@ -29,7 +30,7 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
     /// <param name="niCalcFactory">calculator factory.</param>
     /// <param name="pensionCalcFactory">Pension contributions calculator factory.</param>
     /// <param name="studentLoanCalcFactory">Student loan calculator factory.</param>
-    /// <param name="attachmentOfEarningsCalculatorFactory">Attachment of earnings order calculators.</param>
+    /// <param name="attachmentOrdersCalculatorFactory">Attachment orders calculator factory.</param>
     /// <param name="payDate">Pay date for this payrun.</param>
     /// <param name="payPeriod">Applicable pay period for this calculator.</param>
     public PayRunEntryProcessor(
@@ -37,10 +38,10 @@ public class PayRunEntryProcessor : EmployeePayRunProcessor, IPayRunEntryProcess
         INiCalculatorFactory niCalcFactory,
         IPensionContributionCalculatorFactory pensionCalcFactory,
         IStudentLoanCalculatorFactory studentLoanCalcFactory,
-        IAttachmentOrderCalculatorFactory attachmentOfEarningsCalculatorFactory,
+        IAttachmentOrdersCalculatorFactory attachmentOrdersCalculatorFactory,
         PayDate payDate,
         DateRange payPeriod)
-        : base(incomeTaxCalcFactory, niCalcFactory, pensionCalcFactory, studentLoanCalcFactory, attachmentOfEarningsCalculatorFactory, payDate, payPeriod)
+        : base(incomeTaxCalcFactory, niCalcFactory, pensionCalcFactory, studentLoanCalcFactory, attachmentOrdersCalculatorFactory, payDate, payPeriod)
     {
     }
 

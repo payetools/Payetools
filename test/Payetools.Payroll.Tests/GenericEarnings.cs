@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Common.Model;
 using Payetools.Payroll.Model;
 
 namespace Payetools.Payroll.Tests;
@@ -31,7 +32,7 @@ public class GenericEarnings : IEarningsDetails
     /// <summary>
     /// Gets the type of this payment.
     /// </summary>
-    public PaymentType PaymentType { get; }
+    public EarningsType PaymentType { get; }
 
     /// <summary>
     /// Gets or sets the units for this pay component, if applicable.  Null if not applicable.

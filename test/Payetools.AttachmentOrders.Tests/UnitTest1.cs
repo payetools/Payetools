@@ -1,0 +1,16 @@
+﻿// Copyright (c) 2023-2025, Payetools Foundation.
+//
+// Payetools Foundation licenses this file to you under the following license(s):
+//
+//   * The MIT License, see https://opensource.org/license/mit/
+
+namespace Payetools.AttachmentOrders.Tests;
+
+public class UnitTest1
+{
+    [Fact]
+    public void Test1()
+    {
+
+    }
+}

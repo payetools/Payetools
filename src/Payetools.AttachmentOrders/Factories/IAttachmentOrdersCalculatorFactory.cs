@@ -10,20 +10,16 @@ using Payetools.Common.Model;
 namespace Payetools.AttachmentOrders.Factories;
 
 /// <summary>
-/// Factory that can generate <see cref="IAttachmentOrderCalculator"/> implementations.
+/// Interface that represents factories that can generate <see cref="IAttachmentOrdersCalculator"/> implementations.
 /// </summary>
-public class AttachmentOrderCalculatorFactory : IAttachmentOrderCalculatorFactory
+public interface IAttachmentOrdersCalculatorFactory
 {
     /// <summary>
-    /// Gets a new <see cref="IAttachmentOrderCalculator"/> based on the specified pay date and ...
+    /// Gets a new <see cref="IAttachmentOrdersCalculator"/> based on the specified pay date and ...
     /// The pay date is provided in order to determine which ... to use, noting that these may change
     /// in-year.
     /// </summary>
     /// <param name="payDate">Applicable pay date.</param>
-    /// <param name="attachmentOfEarningsType">Attachment of earnings order type.</param>
     /// <returns>A new calculator instance.</returns>
-    public IAttachmentOrderCalculator GetCalculator(PayDate payDate, AttachmentOrderType attachmentOfEarningsType)
-    {
-        throw new NotImplementedException();
-    }
+    IAttachmentOrdersCalculator GetCalculator(PayDate payDate);
 }

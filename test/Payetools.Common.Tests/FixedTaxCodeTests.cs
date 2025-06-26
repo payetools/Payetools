@@ -22,13 +22,12 @@ public class FixedTaxCodeTests
     {
         Test.RunFixedCodeTest("D0", TaxTreatment.D0);
         Test.RunFixedCodeTest("D1", TaxTreatment.D1);
-        Test.RunFixedCodeTest("D2", TaxTreatment.D2);
         Test.RunFixedCodeTest("SD0", TaxTreatment.D0);
         Test.RunFixedCodeTest("SD1", TaxTreatment.D1);
         Test.RunFixedCodeTest("SD2", TaxTreatment.D2);
+        Test.RunFixedCodeTest("SD3", TaxTreatment.D3);
         Test.RunFixedCodeTest("CD0", TaxTreatment.D0);
         Test.RunFixedCodeTest("CD1", TaxTreatment.D1);
-        Test.RunFixedCodeTest("CD2", TaxTreatment.D2);
     }
 
     [Fact]
@@ -53,9 +52,12 @@ public class FixedTaxCodeTests
         Test.RunInvalidCodeTest("NX");
         Test.RunInvalidCodeTest("BY");
         Test.RunInvalidCodeTest("AR");
+        Test.RunInvalidCodeTest("D2");
         Test.RunInvalidCodeTest("D3");
+        Test.RunInvalidCodeTest("CD2");
+        Test.RunInvalidCodeTest("CD3");
         Test.RunInvalidCodeTest("XBR");
         Test.RunInvalidCodeTest("CJR");
-        Test.RunInvalidCodeTest("SD5");
+        Test.RunInvalidCodeTest("SD4");
     }
 }

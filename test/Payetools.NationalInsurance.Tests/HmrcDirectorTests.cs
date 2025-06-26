@@ -45,6 +45,26 @@ public class HmrcDirectorTests : IClassFixture<NiCalculatorFactoryDataFixture>
         await RunAllDirectorTests(taxYear, firstPayDate);
     }
 
+    [Fact]
+    public async Task RunAllDirectorTests_2024_2025()
+    {
+        var taxYear = new TaxYear(TaxYearEnding.Apr5_2025);
+
+        var firstPayDate = taxYear.StartOfTaxYear.AddDays(5);
+
+        await RunAllDirectorTests(taxYear, firstPayDate);
+    }
+
+    [Fact]
+    public async Task RunAllDirectorTests_2025_2026()
+    {
+        var taxYear = new TaxYear(TaxYearEnding.Apr5_2026);
+
+        var firstPayDate = taxYear.StartOfTaxYear.AddDays(5);
+
+        await RunAllDirectorTests(taxYear, firstPayDate);
+    }
+
     private async Task RunAllDirectorTests(TaxYear taxYear, DateOnly firstPayDate)
     {
         using var db = new TestDataRepository("National Insurance", Output);

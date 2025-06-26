@@ -4,12 +4,12 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Common.Model;
 
 /// <summary>
 /// Enumeration that represents the different types of payments that an employee can receive.
 /// </summary>
-public enum PaymentType
+public enum EarningsType
 {
     /// <summary>Not specified.</summary>
     Unspecified,

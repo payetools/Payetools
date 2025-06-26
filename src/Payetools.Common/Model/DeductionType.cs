@@ -4,7 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.Common.Model;
 
 /// <summary>
 /// Enumeration that represents the different types of deductions that can be made from an employee's pay.
@@ -15,8 +15,11 @@ public enum DeductionType
     Undefined,
 
     /// <summary>Adjustment to pay, for example, repayment of previous earnings in error.</summary>
-    Adjustment,
+    CorrectionAdjustment,
 
-    /// <summary>Attachment of earnings payment.</summary>
-    AttachmentOfEarnings
+    /// <summary>Repayment of employee loan.</summary>
+    LoanRepayment,
+
+    /// <summary>Attachment order payment.</summary>
+    AttachmentOrder
 }

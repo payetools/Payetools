@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.AttachmentOrders.Model;
+using Payetools.Common.Model;
 using Payetools.Pensions.Model;
 using System.Collections.Immutable;
 

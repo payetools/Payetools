@@ -8,7 +8,7 @@ using Payetools.Common.Model;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Payetools.ReferenceData.Serialization;
+namespace Payetools.ReferenceData.Serialisation;
 
 /// <summary>
 /// JSON Converter for the <see cref="NiCategory"/> enumeration.

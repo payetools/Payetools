@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.ReferenceData;
 using Payetools.IncomeTax.ReferenceData;
 using Payetools.NationalInsurance.ReferenceData;
 using Payetools.NationalMinimumWage.ReferenceData;
@@ -22,7 +23,8 @@ public interface IHmrcReferenceDataProvider :
     IPensionsReferenceDataProvider,
     INmwReferenceDataProvider,
     IStudentLoanReferenceDataProvider,
-    IEmployerReferenceDataProvider
+    IEmployerReferenceDataProvider,
+    IAttachmentOrdersReferenceDataProvider
 {
     /// <summary>
     /// Gets the human-readable 'health' of this reference data provider.

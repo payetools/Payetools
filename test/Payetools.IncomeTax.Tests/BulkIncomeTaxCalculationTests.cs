@@ -10,8 +10,6 @@ using Payetools.Common.Model;
 using Payetools.Testing.Data;
 using Payetools.Testing.Data.IncomeTax;
 using System.Diagnostics;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Xunit.Abstractions;
 
 namespace Payetools.IncomeTax.Tests;
