@@ -12,12 +12,12 @@ namespace Payetools.Common.Model;
 /// </summary>
 public enum Gender
 {
-    /// <summary>Not known/undefined</summary>
+    /// <summary>Not known/undefined.</summary>
     Unknown,
 
-    /// <summary>Male</summary>
+    /// <summary>Male.</summary>
     Male,
 
-    /// <summary>Female</summary>
+    /// <summary>Female.</summary>
     Female
 }

@@ -30,8 +30,7 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>, INiYtdHistory
     /// for a given employee.</param>
     public NiYtdHistory(in INiCalculationResult initialNiCalculationResult)
     {
-        _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty
-            .Add(new EmployeeNiHistoryEntry(initialNiCalculationResult));
+        _entries = [new EmployeeNiHistoryEntry(initialNiCalculationResult)];
 
         Class1ANicsYtd = initialNiCalculationResult.Class1ANicsPayable;
     }
@@ -41,7 +40,7 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>, INiYtdHistory
     /// </summary>
     public NiYtdHistory()
     {
-        _entries = ImmutableArray<IEmployeeNiHistoryEntry>.Empty;
+        _entries = [];
     }
 
     /// <summary>
@@ -85,7 +84,7 @@ public class NiYtdHistory : IEnumerable<IEmployeeNiHistoryEntry>, INiYtdHistory
     /// Gets the totals of employee and employer NI contributions paid to date across all entries.
     /// </summary>
     /// <returns>Totals of employee and employer NI contributions paid tear to date.</returns>
-    public (decimal employeeTotal, decimal employerTotal) GetNiYtdTotals() =>
+    public (decimal EmployeeTotal, decimal EmployerTotal) GetNiYtdTotals() =>
         (_entries.Sum(e => e.EmployeeContribution), _entries.Sum(e => e.EmployerContribution));
 
     /// <summary>

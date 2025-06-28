@@ -2,7 +2,6 @@
 // used without attribution.
 
 using Payetools.Common.Model;
-using Payetools.Payroll.Model;
 
 namespace Payetools.Example.Earnings
 {

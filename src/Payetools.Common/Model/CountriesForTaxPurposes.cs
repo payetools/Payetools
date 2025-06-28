@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1649 // File name should match first type name
+
 using System.Text;
 
 namespace Payetools.Common.Model;
@@ -17,16 +19,16 @@ namespace Payetools.Common.Model;
 [Flags]
 public enum CountriesForTaxPurposes
 {
-    /// <summary>England</summary>
+    /// <summary>England.</summary>
     England = 1,
 
-    /// <summary>Northern Ireland</summary>
+    /// <summary>Northern Ireland.</summary>
     NorthernIreland = 2,
 
-    /// <summary>Scotland</summary>
+    /// <summary>Scotland.</summary>
     Scotland = 4,
 
-    /// <summary>Wales</summary>
+    /// <summary>Wales.</summary>
     Wales = 8
 }
 

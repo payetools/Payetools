@@ -4,22 +4,26 @@
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Title>Payetools attachment orders library</Title>
+    <Description>Library for calculating attachment of earnings order deductions</Description>
+    <Authors>$(Authors)</Authors>
+    <Company>$(Company)</Company>
+    <Copyright>$(Copyright)</Copyright>
+    <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+    <PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
+    <PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
+    <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+    <Version>$(Version)</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
@@ -32,18 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="MinVer" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

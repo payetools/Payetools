@@ -90,13 +90,13 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
 
         result = new PensionContributionCalculationResult()
         {
-            BandedEarnings = EarningsBasis == PensionsEarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
+            BandedEarnings = EarningsBasis == PensionsEarningsBasis.QualifyingEarnings ? contributions.EarningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
-            CalculatedEmployeeContributionAmount = contributions.employeeContribution + (avcForPeriod ?? 0.0m),
+            CalculatedEmployeeContributionAmount = contributions.EmployeeContribution + (avcForPeriod ?? 0.0m),
             EmployeeContributionFixedAmount = employeeContributionIsFixedAmount ? employeeContribution : null,
             EmployeeContributionPercentage = employeeContributionIsFixedAmount ? null : employeeContribution,
-            CalculatedEmployerContributionAmount = contributions.employerContribution,
+            CalculatedEmployerContributionAmount = contributions.EmployerContribution,
             EmployerContributionPercentage = employerContribution,
             EmployersNiReinvestmentPercentage = null,
             EmployerContributionAmountBeforeSalaryExchange = null,
@@ -158,22 +158,22 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
 
         result = new PensionContributionCalculationResult()
         {
-            BandedEarnings = EarningsBasis == PensionsEarningsBasis.QualifyingEarnings ? contributions.earningsForPensionCalculation : null,
+            BandedEarnings = EarningsBasis == PensionsEarningsBasis.QualifyingEarnings ? contributions.EarningsForPensionCalculation : null,
             EarningsBasis = EarningsBasis,
             EmployeeAvcAmount = avcForPeriod,
             CalculatedEmployeeContributionAmount = avcForPeriod ?? 0.0m,
             EmployeeContributionFixedAmount = employeeSalaryExchangedIsFixedAmount ? employeeSalaryExchanged : null,
             EmployeeContributionPercentage = employeeSalaryExchangedIsFixedAmount ? null : employeeSalaryExchanged,
-            CalculatedEmployerContributionAmount = contributions.employerContribution +
-                contributions.employeeContribution +
+            CalculatedEmployerContributionAmount = contributions.EmployerContribution +
+                contributions.EmployeeContribution +
                 employerNiSavingsToReinvest,
             EmployerContributionPercentage = employerContribution,
             EmployersNiReinvestmentPercentage = employerNiSavingsReinvestmentPercentage,
-            EmployerContributionAmountBeforeSalaryExchange = contributions.employerContribution,
+            EmployerContributionAmountBeforeSalaryExchange = contributions.EmployerContribution,
             EmployerNiSavingsToReinvest = employerNiSavingsToReinvest,
             PensionableSalaryInPeriod = pensionableSalary,
             SalaryExchangeApplied = true,
-            SalaryExchangedAmount = contributions.employeeContribution
+            SalaryExchangedAmount = contributions.EmployeeContribution
         };
     }
 
@@ -208,7 +208,7 @@ public abstract class PensionContributionCalculator : IPensionContributionCalcul
     /// pensionable pay.</param>
     /// <returns>A tuple containing the earnings used for the calculation (employee only if maternity override applies),
     /// and the employer and employee contribution levels.</returns>
-    protected abstract (decimal earningsForPensionCalculation, decimal employerContribution, decimal employeeContribution) CalculateContributions(
+    protected abstract (decimal EarningsForPensionCalculation, decimal EmployerContribution, decimal EmployeeContribution) CalculateContributions(
         decimal pensionableSalary,
         decimal employerContributionPercentage,
         decimal employeeContribution,

@@ -21,18 +21,20 @@ public interface IAttachmentOrdersCalculator
     /// <param name="attachmentOrders">Collection of attachment orders to be applied during the calculation.</param>
     /// <param name="earnings">Collection of earnings entries representing the employee's income.</param>
     /// <param name="deductions">Collection of deduction entries to be subtracted from the earnings.</param>
+    /// <param name="payPeriod">Pay period for which the calculation is being performed.</param>
     /// <param name="finalTaxDue">Total tax amount due, which will be factored into the calculation.</param>
     /// <param name="employeeNiContribution">Employee's National Insurance contribution, which will be factored into the calculation.</param>
     /// <param name="studentLoanDeductions">Employee's student and postgraduate loan repayments, if any.</param>
     /// <param name="employeePensionContribution">Employee pension contribution, if any.</param>
-    /// <param name="attachmentOfEarningsCalculationResult">Uutput parameter that will contain the result of the attachment of earnings calculation.
+    /// <param name="attachmentOrdersCalculationResult">Output parameter that contains the result of the attachment order calculation.
     /// If no calculation is appropriate, this will be <see langword="null"/>.</param>
     void Calculate(IEnumerable<IAttachmentOrder> attachmentOrders,
         IEnumerable<IEarningsEntry> earnings,
         IEnumerable<IDeductionEntry> deductions,
+        DateRange payPeriod,
         decimal finalTaxDue,
         decimal employeeNiContribution,
         decimal studentLoanDeductions,
         decimal employeePensionContribution,
-        out IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult);
+        out IAttachmentOrderCalculationResult? attachmentOrdersCalculationResult);
 }

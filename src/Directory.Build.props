@@ -3,7 +3,7 @@
 	
 	<PropertyGroup>
 		<Authors>Payetools Foundation</Authors>
-		<Copyright>Copyright (c) 2023-2024, Payetools Foundation</Copyright>
+		<Copyright>Copyright (c) 2023-2025, Payetools Foundation</Copyright>
 		<Company>Payetools Foundation</Company>
 		<PackageProjectUrl>https://payetools.dev/</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -12,12 +12,23 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="All"/>
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="$(SolutionDir)/src/shared/LICENSE.md" Pack="true" PackagePath="" />
 		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="MinVer">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

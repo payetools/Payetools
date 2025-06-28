@@ -23,8 +23,6 @@ The Welfare Reform Act 2012, which became law in March 2012, allows DWP to instr
 
 ### Attachment of Earnings Order (AOE)
 
-
-
 https://www.gov.uk/debt-deductions-from-employee-pay
 https://www.gov.uk/make-benefit-debt-deductions
 https://www.gov.uk/child-maintenance-for-employers
@@ -39,3 +37,12 @@ When an employee has multiple Attachment Orders, the order in which they are pro
 ### Northern Ireland Regulations
 
 [Benefit debt deductions from your pay](https://www.nidirect.gov.uk/articles/benefit-debt-deductions-your-pay)
+
+## Welsh Regulations
+
+CT-AEO - new rates from 1 April 2022, see [The Council Tax (Administration 
+and Enforcement) (Amendment) 
+(Wales) Regulations 2022](https://www.legislation.gov.uk/wsi/2022/107/made)
+
+## Approach
+

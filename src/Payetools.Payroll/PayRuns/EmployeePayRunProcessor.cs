@@ -196,6 +196,7 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
                 payRunInputs.AttachmentOrders,
                 payRunInputs.Earnings,
                 payRunInputs.Deductions,
+                PayPeriod,
                 taxCalculationResult.FinalTaxDue,
                 niCalculationResult.EmployeeContribution,
                 studentLoanCalculationResult?.TotalDeduction ?? 0.0m,

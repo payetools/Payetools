@@ -20,5 +20,5 @@ public interface INiYtdHistory
     /// Gets the totals of employee and employer NI contributions paid to date across all entries.
     /// </summary>
     /// <returns>Totals of employee and employer NI contributions paid tear to date.</returns>
-    (decimal employeeTotal, decimal employerTotal) GetNiYtdTotals();
+    (decimal EmployeeTotal, decimal EmployerTotal) GetNiYtdTotals();
 }

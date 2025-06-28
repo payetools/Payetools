@@ -42,18 +42,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Update="MinVer" Version="6.0.0" />
-	</ItemGroup>
-
+  
 </Project>

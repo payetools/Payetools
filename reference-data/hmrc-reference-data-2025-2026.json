@@ -389,122 +389,91 @@
     {
       "applicableFrom": "2025-04-06",
       "applicableTill": "2026-04-05",
-      "tableBasedRates": [
+      "applicableCountries": "GB-ENG GB-WLS GB-SCT",
+      "calculationType": "PercentageOfEarnings",
+      "rateTable": [
         {
-          "applicableCountries": "GB-ENG GB-WLS",
-          "attachmentOrderType": "CTAOE",
-          "rateTables": {
-            "weekly": [
-              {
-                "from": 0,
-                "to": 75,
-                "rate": 0.0
-              },
-              {
-                "from": 75.01,
-                "to": 135,
-                "rate": 0.03
-              },
-              {
-                "from": 135.01,
-                "to": 185,
-                "rate": 0.05
-              },
-              {
-                "from": 185.01,
-                "to": 225,
-                "rate": 0.07
-              },
-              {
-                "from": 225.01,
-                "to": 355,
-                "rate": 0.12
-              },
-              {
-                "from": 355.01,
-                "to": 505,
-                "rate": 0.17
-              },
-              {
-                "from": 505.01,
-                "to": null,
-                "rate": 0.5
-              }
-            ],
-            "monthly": [
-              {
-                "from": 0,
-                "to": 300,
-                "rate": 0.0
-              },
-              {
-                "from": 300.01,
-                "to": 550,
-                "rate": 0.03
-              },
-              {
-                "from": 550.01,
-                "to": 740,
-                "rate": 0.05
-              },
-              {
-                "from": 740.01,
-                "to": 900,
-                "rate": 0.07
-              },
-              {
-                "from": 900.01,
-                "to": 1420,
-                "rate": 0.12
-              },
-              {
-                "from": 1420.01,
-                "to": 2020,
-                "rate": 0.17
-              },
-              {
-                "from": 2020.01,
-                "to": null,
-                "rate": 0.5
-              }
-            ],
-            "daily": [
-              {
-                "from": 0,
-                "to": 11,
-                "rate": 0.0
-              },
-              {
-                "from": 11.01,
-                "to": 20,
-                "rate": 0.03
-              },
-              {
-                "from": 20.01,
-                "to": 27,
-                "rate": 0.05
-              },
-              {
-                "from": 27.01,
-                "to": 33,
-                "rate": 0.07
-              },
-              {
-                "from": 33.01,
-                "to": 52,
-                "rate": 0.12
-              },
-              {
-                "from": 52.01,
-                "to": 72,
-                "rate": 0.17
-              },
-              {
-                "from": 72.01,
-                "to": null,
-                "rate": 0.5
-              }
-            ]
+          "standardRate": 0.00,
+          "higherRate": 0.05,
+          "weekly": {
+            "from": 0,
+            "to": 100
+          },
+          "monthly": {
+            "from": 0,
+            "to": 430
+          }
+        },
+        {
+          "standardRate": 0.03,
+          "higherRate": 0.06,
+          "weekly": {
+            "from": 100.01,
+            "to": 160
+          },
+          "monthly": {
+            "from": 430.01,
+            "to": 690
+          }
+        },
+        {
+          "standardRate": 0.05,
+          "higherRate": 0.10,
+          "weekly": {
+            "from": 160.01,
+            "to": 220
+          },
+          "monthly": {
+            "from": 690.01,
+            "to": 950
+          }
+        },
+        {
+          "standardRate": 0.07,
+          "higherRate": 0.14,
+          "weekly": {
+            "from": 220.01,
+            "to": 270
+          },
+          "monthly": {
+            "from": 950.01,
+            "to": 1160
+          }
+        },
+        {
+          "standardRate": 0.11,
+          "higherRate": 0.22,
+          "weekly": {
+            "from": 270.01,
+            "to": 375
+          },
+          "monthly": {
+            "from": 1160.01,
+            "to": 1615
+          }
+        },
+        {
+          "standardRate": 0.15,
+          "higherRate": 0.30,
+          "weekly": {
+            "from": 375.01,
+            "to": 520
+          },
+          "monthly": {
+            "from": 1615.01,
+            "to": 2240
+          }
+        },
+        {
+          "standardRate": 0.20,
+          "higherRate": 0.40,
+          "weekly": {
+            "from": 520.01,
+            "to": null
+          },
+          "monthly": {
+            "from": 2240.01,
+            "to": null
           }
         }
       ]
@@ -512,142 +481,196 @@
     {
       "applicableFrom": "2025-04-06",
       "applicableTill": "2026-04-05",
-      "tableBasedRates": [
+      "applicableCountries": "GB-NIR",
+      "calculationType": "PercentageOfEarnings",
+      "rateTable": [
         {
-          "applicableCountries": "GB-SCT",
-          "attachmentOrderType": "CTAOE",
-          "rateTables": {
-            "weekly": [
-              {
-                "from": 0,
-                "to": 75,
-                "rate": 0.0
-              }
-            ]
+          "standardRate": 0.0,
+          "higherRate": 0.05,
+          "daily": {
+            "from": 0,
+            "to": 15
+          },
+          "weekly": {
+            "from": 0,
+            "to": 100
+          },
+          "monthly": {
+            "from": 0,
+            "to": 430
+          }
+        },
+        {
+          "standardRate": 0.03,
+          "higherRate": 0.06,
+          "daily": {
+            "from": 15.01,
+            "to": 23
+          },
+          "weekly": {
+            "from": 100.01,
+            "to": 160
+          },
+          "monthly": {
+            "from": 430.01,
+            "to": 690
+          }
+        },
+        {
+          "standardRate": 0.05,
+          "higherRate": 0.10,
+          "daily": {
+            "from": 23.01,
+            "to": 32
+          },
+          "weekly": {
+            "from": 160.01,
+            "to": 220
+          },
+          "monthly": {
+            "from": 690.01,
+            "to": 950
+          }
+        },
+        {
+          "standardRate": 0.07,
+          "higherRate": 0.14,
+          "daily": {
+            "from": 32.01,
+            "to": 39
+          },
+          "weekly": {
+            "from": 220.01,
+            "to": 270
+          },
+          "monthly": {
+            "from": 950.01,
+            "to": 1160
+          }
+        },
+        {
+          "standardRate": 0.11,
+          "higherRate": 0.22,
+          "daily": {
+            "from": 39.01,
+            "to": 54
+          },
+          "weekly": {
+            "from": 270.01,
+            "to": 375
+          },
+          "monthly": {
+            "from": 1160.01,
+            "to": 1615
+          }
+        },
+        {
+          "standardRate": 0.15,
+          "higherRate": 0.30,
+          "daily": {
+            "from": 54.01,
+            "to": 75
+          },
+          "weekly": {
+            "from": 375.01,
+            "to": 520
+          },
+          "monthly": {
+            "from": 1615.01,
+            "to": 2240
+          }
+        },
+        {
+          "standardRate": 0.20,
+          "higherRate": 0.40,
+          "daily": {
+            "from": 75.01,
+            "to": null
+          },
+          "weekly": {
+            "from": 520.01,
+            "to": null
+          },
+          "monthly": {
+            "from": 2240.01,
+            "to": null
           }
         }
       ]
     },
     {
-      "applicableFrom": "2025-04-06",
-      "applicableTill": "2026-04-05",
-      "tableBasedRates": [
+      "applicableFrom": "2022-04-06",
+      "applicableTill": "9999-12-31",
+      "applicableCountries": "GB-SCT",
+      "calculationType": "PercentageOfEarningsPlusFixedAmount",
+      "rateTable": [
         {
-          "applicableCountries": "GB-NIR",
-          "attachmentOrderType": "CTAOE",
-          "rateTables": {
-            "rateType": "standard",
-            "daily": [
-              {
-                "from": 0,
-                "to": 15.00,
-                "standardRate": 0.0
-              },
-              {
-                "from": 15.01,
-                "to": 23.00,
-                "standardRate": 0.03
-              },
-              {
-                "from": 23.01,
-                "to": 32.00,
-                "standardRate": 0.05
-              },
-              {
-                "from": 32.01,
-                "to": 39.00,
-                "rate": 0.07
-              },
-              {
-                "from": 39.01,
-                "to": 54.00,
-                "rate": 0.11
-              },
-              {
-                "from": 54.01,
-                "to": 75.00,
-                "rate": 0.15
-              },
-              {
-                "from": 75.01,
-                "to": null,
-                "rate": 0.20
-              }
-            ],
-            "weekly": [
-              {
-                "from": 0,
-                "to": 100.00,
-                "rate": 0.0
-              },
-              {
-                "from": 100.01,
-                "to": 160.00,
-                "rate": 0.03
-              },
-              {
-                "from": 160.01,
-                "to": 220.00,
-                "rate": 0.05
-              },
-              {
-                "from": 220.01,
-                "to": 270.00,
-                "rate": 0.07
-              },
-              {
-                "from": 270.01,
-                "to": 375.00,
-                "rate": 0.11
-              },
-              {
-                "from": 375.01,
-                "to": 520.00,
-                "rate": 0.15
-              },
-              {
-                "from": 520.01,
-                "to": null,
-                "rate": 0.20
-              }
-            ],
-            "monthly": [
-              {
-                "from": 0,
-                "to": 430.00,
-                "rate": 0.0
-              },
-              {
-                "from": 430.01,
-                "to": 690.00,
-                "rate": 0.03
-              },
-              {
-                "from": 690.01,
-                "to": 950.00,
-                "rate": 0.05
-              },
-              {
-                "from": 950.01,
-                "to": 1160.00,
-                "rate": 0.07
-              },
-              {
-                "from": 1160.01,
-                "to": 1615.00,
-                "rate": 0.11
-              },
-              {
-                "from": 1615.01,
-                "to": 2240.00,
-                "rate": 0.15
-              },
-              {
-                "from": 2240.01,
-                "to": null,
-                "rate": 0.20
-              }
-            ]
+          "standardRate": 0.00,
+          "daily": {
+            "from": 0,
+            "to": 18.63
+          },
+          "weekly": {
+            "from": 0,
+            "to": 130.73
+          },
+          "monthly": {
+            "from": 0,
+            "to": 566.51
+          }
+        },
+        {
+          "standardRate": 0.19,
+          "daily": {
+            "from": 18.63,
+            "to": 67.32,
+            "minimumAmount": 0.50
+          },
+          "weekly": {
+            "from": 130.73,
+            "to": 472.54,
+            "minimumAmount": 4.00
+          },
+          "monthly": {
+            "from": 566.51,
+            "to": 2047.65,
+            "minimumAmount": 15.00
+          }
+        },
+        {
+          "standardRate": 0.23,
+          "daily": {
+            "from": 67.32,
+            "to": 101.21,
+            "fixedAmount": 9.25
+          },
+          "weekly": {
+            "from": 472.54,
+            "to": 710.42,
+            "fixedAmount": 64.94
+          },
+          "monthly": {
+            "from": 2047.65,
+            "to": 3078.47,
+            "fixedAmount": 281.42
+          }
+        },
+        {
+          "standardRate": 0.50,
+          "daily": {
+            "from": 101.21,
+            "to": null,
+            "fixedAmount": 17.05
+          },
+          "weekly": {
+            "from": 710.42,
+            "to": null,
+            "fixedAmount": 119.66
+          },
+          "monthly": {
+            "from": 3078.47,
+            "to": null,
+            "fixedAmount": 518.51
           }
         }
       ]

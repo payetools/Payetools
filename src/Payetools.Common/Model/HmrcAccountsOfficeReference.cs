@@ -17,8 +17,7 @@ namespace Payetools.Common.Model;
 ///     <item><description>The letter 'P'</description></item>
 ///     <item><description>Another letter, A-Z</description></item>
 ///     <item><description>8 numbers, or 7 numbers and the letter ‘X’</description></item>
-/// </list>
-///  (from )
+/// </list>.
 /// </summary>
 public partial record HmrcAccountsOfficeReference
 {

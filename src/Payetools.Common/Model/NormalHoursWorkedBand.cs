@@ -11,18 +11,18 @@ namespace Payetools.Common.Model;
 /// </summary>
 public enum NormalHoursWorkedBand
 {
-    /// <summary>Up to 15.99 hours</summary>
+    /// <summary>Up to 15.99 hours.</summary>
     A,
 
-    /// <summary>16 to 23.99 hours</summary>
+    /// <summary>16 to 23.99 hours.</summary>
     B,
 
-    /// <summary>24 to 29.99 hours</summary>
+    /// <summary>24 to 29.99 hours.</summary>
     C,
 
-    /// <summary>30 hours or more</summary>
+    /// <summary>30 hours or more.</summary>
     D,
 
-    /// <summary>Other</summary>
+    /// <summary>Other.</summary>
     E
 }

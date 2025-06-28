@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1649 // File name should match first type name
+
 using System.ComponentModel;
 
 namespace Payetools.Common.Model;
@@ -13,28 +15,28 @@ namespace Payetools.Common.Model;
 /// </summary>
 public enum PayFrequency
 {
-    /// <summary>Not specified</summary>
+    /// <summary>Not specified.</summary>
     Unspecified,
 
-    /// <summary>Weekly</summary>
+    /// <summary>Weekly.</summary>
     Weekly,
 
-    /// <summary>Every two weeks</summary>
+    /// <summary>Every two weeks.</summary>
     Fortnightly,
 
-    /// <summary>Every four weeks</summary>
+    /// <summary>Every four weeks.</summary>
     FourWeekly,
 
-    /// <summary>Monthly</summary>
+    /// <summary>Monthly.</summary>
     Monthly,
 
-    /// <summary>Every three months</summary>
+    /// <summary>Every three months.</summary>
     Quarterly,
 
-    /// <summary>Every six months</summary>
+    /// <summary>Every six months.</summary>
     BiAnnually,
 
-    /// <summary>Once a year</summary>
+    /// <summary>Once a year.</summary>
     Annually,
 
     /// <summary>

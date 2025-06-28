@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1402 // File may only contain a single type
+
 using System.Text.Json.Serialization;
 
 namespace Payetools.ReferenceData.Calendar;
@@ -11,7 +13,7 @@ namespace Payetools.ReferenceData.Calendar;
 /// <summary>
 /// Used to deserialise the public holiday dataset from gov.uk available at <see href="https://www.gov.uk/bank-holidays.json"/>.
 /// </summary>
-public class PublicHolidaysCatalog
+public class UkPublicHolidaysCatalog
 {
     /// <summary>
     /// Gets the public holiday information for England and Wales.

@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1649 // File name should match first type name
+
 namespace Payetools.NationalInsurance.Model;
 
 /// <summary>
@@ -11,34 +13,34 @@ namespace Payetools.NationalInsurance.Model;
 /// </summary>
 public enum NiThresholdType
 {
-    /// <summary>Lower Earnings Limit</summary>
+    /// <summary>Lower Earnings Limit.</summary>
     LEL,
 
-    /// <summary>Primary Threshold</summary>
+    /// <summary>Primary Threshold.</summary>
     PT,
 
-    /// <summary>Secondary Threshold</summary>
+    /// <summary>Secondary Threshold.</summary>
     ST,
 
-    /// <summary>Freeport Upper Secondary Threshold</summary>
+    /// <summary>Freeport Upper Secondary Threshold.</summary>
     FUST,
 
-    /// <summary>Upper Secondary Threshold</summary>
+    /// <summary>Upper Secondary Threshold.</summary>
     UST,
 
-    /// <summary>Apprentice Upper Secondary Threshold</summary>
+    /// <summary>Apprentice Upper Secondary Threshold.</summary>
     AUST,
 
-    /// <summary>Veterans Upper Secondary Threshold</summary>
+    /// <summary>Veterans Upper Secondary Threshold.</summary>
     VUST,
 
-    /// <summary>Upper Earnings Limit</summary>
+    /// <summary>Upper Earnings Limit.</summary>
     UEL,
 
-    /// <summary>Directors Primary Threshold (if applicable)</summary>
+    /// <summary>Directors Primary Threshold (if applicable).</summary>
     DPT,
 
-    /// <summary>Investment Zone Upper Secondary Threshold</summary>
+    /// <summary>Investment Zone Upper Secondary Threshold.</summary>
     IZUST
 }
 

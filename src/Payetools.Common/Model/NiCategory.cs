@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+#pragma warning disable SA1649 // File name should match first type name
+
 namespace Payetools.Common.Model;
 
 /// <summary>

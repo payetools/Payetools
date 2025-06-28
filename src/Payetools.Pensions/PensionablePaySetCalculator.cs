@@ -36,7 +36,7 @@ public class PensionablePaySetCalculator : PensionContributionCalculator
     }
 
     /// <inheritdoc/>
-    protected override (decimal earningsForPensionCalculation, decimal employerContribution, decimal employeeContribution) CalculateContributions(decimal pensionableSalary,
+    protected override (decimal EarningsForPensionCalculation, decimal EmployerContribution, decimal EmployeeContribution) CalculateContributions(decimal pensionableSalary,
         decimal employerContributionPercentage,
         decimal employeeContribution,
         bool employeeContributionIsFixedAmount = false,

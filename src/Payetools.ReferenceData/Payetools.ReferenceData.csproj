@@ -4,17 +4,17 @@
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Title>Payetools reference data library</Title>
-	<Description>Reference data provider library for Payetools framework</Description>
-	<Authors>$(Authors)</Authors>
-	<Company>$(Company)</Company>
-	<Copyright>$(Copyright)</Copyright>
-	<PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
-	<PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
-	<PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
-	<RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
-	<Version>$(Version)</Version>
-	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <Title>Payetools reference data library</Title>
+	  <Description>Reference data provider library for Payetools framework</Description>
+	  <Authors>$(Authors)</Authors>
+	  <Company>$(Company)</Company>
+	  <Copyright>$(Copyright)</Copyright>
+	  <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+	  <PackageReadmeFile>$(PackageReadmeFile)</PackageReadmeFile>
+	  <PackageLicenseFile>$(PackageLicenseFile)</PackageLicenseFile>
+	  <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+	  <Version>$(Version)</Version>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -48,11 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.4" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,14 +59,6 @@
     <ProjectReference Include="..\Payetools.NationalMinimumWage\Payetools.NationalMinimumWage.csproj" />
     <ProjectReference Include="..\Payetools.Pensions\Payetools.Pensions.csproj" />
     <ProjectReference Include="..\Payetools.StudentLoans\Payetools.StudentLoans.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="MinVer" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="AttachmentOrders\" />
   </ItemGroup>
 
 </Project>

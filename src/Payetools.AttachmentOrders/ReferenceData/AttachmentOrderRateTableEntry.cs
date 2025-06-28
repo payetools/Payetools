@@ -4,11 +4,11 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
-namespace Payetools.Payroll.Model;
+namespace Payetools.AttachmentOrders.ReferenceData;
 
 /// <summary>
-/// Represents a payrolled benefit.
+/// Represents a single entry in the rate table within the attachment order reference data.
 /// </summary>
-public interface IPayrolledBenefit
+public class AttachmentOrderRateTableEntry
 {
 }

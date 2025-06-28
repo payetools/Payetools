@@ -11,12 +11,12 @@ namespace Payetools.Common.Model;
 /// </summary>
 public enum StudentLoanType
 {
-    /// <summary>Student loan Plan 1 type</summary>
+    /// <summary>Student loan Plan 1 type.</summary>
     Plan1,
 
-    /// <summary>Student loan Plan 2 type</summary>
+    /// <summary>Student loan Plan 2 type.</summary>
     Plan2,
 
-    /// <summary>Student loan Plan 4 type</summary>
+    /// <summary>Student loan Plan 4 type.</summary>
     Plan4
 }

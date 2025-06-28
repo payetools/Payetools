@@ -42,13 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Payetools.AttachmentOrders\Payetools.AttachmentOrders.csproj" />
     <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
     <ProjectReference Include="..\Payetools.IncomeTax\Payetools.IncomeTax.csproj" />
@@ -56,10 +49,6 @@
     <ProjectReference Include="..\Payetools.Pensions\Payetools.Pensions.csproj" />
     <ProjectReference Include="..\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
     <ProjectReference Include="..\Payetools.StudentLoans\Payetools.StudentLoans.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="MinVer" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

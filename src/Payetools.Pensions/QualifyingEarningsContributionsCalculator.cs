@@ -40,7 +40,7 @@ public class QualifyingEarningsContributionsCalculator : PensionContributionCalc
     }
 
     /// <inheritdoc/>
-    protected override (decimal earningsForPensionCalculation, decimal employerContribution, decimal employeeContribution) CalculateContributions(
+    protected override (decimal EarningsForPensionCalculation, decimal EmployerContribution, decimal EmployeeContribution) CalculateContributions(
         decimal pensionableSalary,
         decimal employerContributionPercentage,
         decimal employeeContribution,
