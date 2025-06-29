@@ -26,12 +26,17 @@ public static class ReferenceDataHelper
     {
         var referenceDataStreams = _resourcePaths.Select(p => Resource.Load(p)).ToArray();
 
-        var factory = await GetFactory().CreateProviderAsync(referenceDataStreams) as T ??
+        return await CreateProviderAsync<T>(referenceDataStreams);
+    }
+
+    public async static Task<T> CreateProviderAsync<T>(Stream[] referenceDataStreams) where T : class
+    {
+        var provider = await GetFactory().CreateProviderAsync(referenceDataStreams) as T ??
             throw new InvalidCastException("Unable to cast reference data provider to specified type");
 
         referenceDataStreams.ToList().ForEach(s => s.Dispose());
 
-        return factory;
+        return provider;
     }
 
     private static ILogger<HmrcReferenceDataProviderFactory> MakeLogger()

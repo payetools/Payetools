@@ -8,10 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\attachment-orders-reference-data.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\attachment-orders-reference-data.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Payetools.AttachmentOrders\Payetools.AttachmentOrders.csproj" />
+    <ProjectReference Include="..\..\src\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
+    <ProjectReference Include="..\Payetools.Testing.Utils\Payetools.Testing.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

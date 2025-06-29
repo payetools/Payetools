@@ -368,7 +368,7 @@
       }
     }
   ],
-  "employers": [
+  "employer": [
     {
       "applicableFrom": "2025-04-06",
       "applicableTill": "2026-04-05",
@@ -387,14 +387,19 @@
   ],
   "attachmentOrders": [
     {
-      "applicableFrom": "2025-04-06",
-      "applicableTill": "2026-04-05",
+      "applicableFrom": "2015-04-06",
+      "applicableTill": "9999-12-31",
       "applicableCountries": "GB-ENG GB-WLS GB-SCT",
-      "calculationType": "PercentageOfEarnings",
+      "calculationType": "TableBasedPercentageOfEarnings",
+      "dataSource": "",
       "rateTable": [
         {
           "standardRate": 0.00,
           "higherRate": 0.05,
+          "daily": {
+            "from": 0,
+            "to": 15
+          },
           "weekly": {
             "from": 0,
             "to": 100
@@ -407,6 +412,10 @@
         {
           "standardRate": 0.03,
           "higherRate": 0.06,
+          "daily": {
+            "from": 15.01,
+            "to": 23
+          },
           "weekly": {
             "from": 100.01,
             "to": 160
@@ -419,6 +428,10 @@
         {
           "standardRate": 0.05,
           "higherRate": 0.10,
+          "daily": {
+            "from": 23.01,
+            "to": 32
+          },
           "weekly": {
             "from": 160.01,
             "to": 220
@@ -431,6 +444,10 @@
         {
           "standardRate": 0.07,
           "higherRate": 0.14,
+          "daily": {
+            "from": 32.01,
+            "to": 39
+          },
           "weekly": {
             "from": 220.01,
             "to": 270
@@ -443,6 +460,10 @@
         {
           "standardRate": 0.11,
           "higherRate": 0.22,
+          "daily": {
+            "from": 39.01,
+            "to": 54
+          },
           "weekly": {
             "from": 270.01,
             "to": 375
@@ -455,6 +476,10 @@
         {
           "standardRate": 0.15,
           "higherRate": 0.30,
+          "daily": {
+            "from": 54.01,
+            "to": 75
+          },
           "weekly": {
             "from": 375.01,
             "to": 520
@@ -467,6 +492,10 @@
         {
           "standardRate": 0.20,
           "higherRate": 0.40,
+          "daily": {
+            "from": 75.01,
+            "to": null
+          },
           "weekly": {
             "from": 520.01,
             "to": null
@@ -482,7 +511,7 @@
       "applicableFrom": "2025-04-06",
       "applicableTill": "2026-04-05",
       "applicableCountries": "GB-NIR",
-      "calculationType": "PercentageOfEarnings",
+      "calculationType": "TableBasedPercentageOfEarnings",
       "rateTable": [
         {
           "standardRate": 0.0,
@@ -602,7 +631,7 @@
       "applicableFrom": "2022-04-06",
       "applicableTill": "9999-12-31",
       "applicableCountries": "GB-SCT",
-      "calculationType": "PercentageOfEarningsPlusFixedAmount",
+      "calculationType": "TableBasedPercentageOfEarningsPlusFixedAmount",
       "rateTable": [
         {
           "standardRate": 0.00,

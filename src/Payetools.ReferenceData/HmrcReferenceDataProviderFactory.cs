@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Microsoft.Extensions.Logging;
+using Payetools.AttachmentOrders.Serialisation;
 using Payetools.Common.Diagnostics;
 using Payetools.Common.Serialization;
 using Payetools.ReferenceData.Serialisation;
@@ -33,7 +34,8 @@ public class HmrcReferenceDataProviderFactory : IHmrcReferenceDataProviderFactor
                 new TaxYearEndingJsonConverter(),
                 new DateOnlyJsonConverter(),
                 new NiThresholdTypeJsonConverter(),
-                new NiCategoryJsonTypeConverter()
+                new NiCategoryJsonTypeConverter(),
+                new AttachmentOrderCalculationTypeConverter()
             },
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };

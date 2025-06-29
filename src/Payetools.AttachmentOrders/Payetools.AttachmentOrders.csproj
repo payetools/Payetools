@@ -39,4 +39,8 @@
     <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Calculators\" />
+  </ItemGroup>
+
 </Project>

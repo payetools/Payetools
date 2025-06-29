@@ -4,6 +4,8 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.Model;
+using Payetools.AttachmentOrders.ReferenceData;
 using Payetools.Common.Diagnostics;
 using Payetools.Common.Model;
 using Payetools.IncomeTax.ReferenceData;
@@ -39,7 +41,7 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// </summary>
     internal HmrcReferenceDataProvider()
     {
-        _referenceDataSets = new Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();
+        _referenceDataSets = [];
         Health = "No tax years added";
     }
 
@@ -52,7 +54,7 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// initialised through a <see cref="HmrcReferenceDataProviderFactory"/>.</remarks>
     public HmrcReferenceDataProvider(IEnumerable<HmrcTaxYearReferenceDataSet> dataSets)
     {
-        _referenceDataSets = new Dictionary<TaxYearEnding, HmrcTaxYearReferenceDataSet>();
+        _referenceDataSets = [];
 
         var health = new List<string>();
 
@@ -382,5 +384,33 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
         var errorMessage = new StringBuilder();
 
         return (false, errorMessage.ToString());
+    }
+
+    /// <summary>
+    /// Gets the rate table for the specified countries, calculation type, and applicable date range.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <param name="jurisdiction">Jurisdiction that this set of rates applies to.</param>
+    /// <param name="calculationType">Attachment order calculation type to match.</param>
+    /// <param name="applicabilityDate">Date that the attachment order applies, typically the issue
+    /// date.</param>
+    /// <returns>The rate table for the specified jurisdiction, calculation type and attachment
+    /// order issue date.</returns>
+    public ImmutableArray<AttachmentOrderRateTableEntry>? GetAttachmentOrderRateTable(
+        TaxYear taxYear,
+        CountriesForTaxPurposes jurisdiction,
+        AttachmentOrderCalculationType calculationType,
+        DateOnly applicabilityDate)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        var entry = referenceDataSet.AttachmentOrders.FirstOrDefault(ao =>
+            (ao.ApplicableCountries & jurisdiction) == jurisdiction &&
+            ao.ApplicableFrom <= applicabilityDate &&
+            ao.ApplicableTill >= applicabilityDate &&
+            ao.CalculationType == calculationType) ??
+            throw new InvalidReferenceDataException($"Unable to find attachment order reference data for jurisdiction '{jurisdiction}' and calculation type '{calculationType}' with applicability date '{applicabilityDate}'");
+
+        return entry.RateTable;
     }
 }
