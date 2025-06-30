@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Payetools.AttachmentOrders\Payetools.AttachmentOrders.csproj" />
     <ProjectReference Include="..\..\src\Payetools.Common\Payetools.Common.csproj" />
     <ProjectReference Include="..\..\src\Payetools.IncomeTax\Payetools.IncomeTax.csproj" />
     <ProjectReference Include="..\..\src\Payetools.NationalInsurance\Payetools.NationalInsurance.csproj" />
@@ -38,10 +39,6 @@
 
   <ItemGroup>
     <PackageReference Update="MinVer" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

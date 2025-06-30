@@ -8,6 +8,7 @@ using Payetools.AttachmentOrders.Model;
 using Payetools.Common.Model;
 using Payetools.ReferenceData;
 using Payetools.Testing.Utils;
+using Shouldly;
 
 namespace Payetools.AttachmentOrders.Tests;
 
@@ -25,10 +26,13 @@ public class ReferenceDataTests
 
         var provider = await ReferenceDataHelper.CreateProviderAsync<IHmrcReferenceDataProvider>(streams);
 
-        var rateTable = provider.GetAttachmentOrderRateTable(
-            new TaxYear(TaxYearEnding.Apr5_2026),
-            CountriesForTaxPurposes.England,
-            AttachmentOrderCalculationType.TableBasedPercentageOfEarnings,
-            new DateOnly(2023, 1, 1));
+        var rateTable = provider.GetAllAttachmentOrderEntries(new TaxYear(TaxYearEnding.Apr5_2026));
+            //CountriesForTaxPurposes.England,
+            //AttachmentOrderCalculationType.TableBasedPercentageOfEarnings,
+            //new DateOnly(2023, 1, 1));
+
+        rateTable.ShouldNotBeNull();
+
+        // rateTable.Value.Length.ShouldBe(7);
     }
 }

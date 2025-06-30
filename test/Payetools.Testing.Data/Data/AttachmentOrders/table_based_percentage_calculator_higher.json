@@ -1,0 +1,254 @@
+[
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 1.00,
+    "expectedDeduction": 0.05
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 100.00,
+    "expectedDeduction": 5.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 100.01,
+    "expectedDeduction": 6.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 160.00,
+    "expectedDeduction": 9.60
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 160.01,
+    "expectedDeduction": 16.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 220.00,
+    "expectedDeduction": 22.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 220.01,
+    "expectedDeduction": 30.80
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 270.00,
+    "expectedDeduction": 37.80
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 270.01,
+    "expectedDeduction": 59.40
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 375.00,
+    "expectedDeduction": 82.50
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 375.01,
+    "expectedDeduction": 112.50
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 520.00,
+    "expectedDeduction": 156.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 520.01,
+    "expectedDeduction": 208.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Weekly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 1520.01,
+    "expectedDeduction": 608.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 20.00,
+    "expectedDeduction": 1.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 430.00,
+    "expectedDeduction": 21.50
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 430.01,
+    "expectedDeduction": 25.80
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 690.00,
+    "expectedDeduction": 41.40
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 690.01,
+    "expectedDeduction": 69.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 950.00,
+    "expectedDeduction": 95.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 950.01,
+    "expectedDeduction": 133.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 1160.00,
+    "expectedDeduction": 162.40
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 1160.01,
+    "expectedDeduction": 255.20
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 1615.00,
+    "expectedDeduction": 355.30
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 1615.01,
+    "expectedDeduction": 484.50
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 2240.00,
+    "expectedDeduction": 672.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 2240.01,
+    "expectedDeduction": 896.00
+  },
+  {
+    "calculationType": "TableBasedPercentageOfEarnings",
+    "jurisdiction": "GB-ENG GB-WLS GB-SCT",
+    "rate": "Higher",
+    "payFrequency": "Monthly",
+    "issueDate": "01/01/2025",
+    "attachableEarnings": 4400.00,
+    "expectedDeduction": 1760.00
+  }
+]

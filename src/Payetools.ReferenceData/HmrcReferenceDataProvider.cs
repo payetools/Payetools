@@ -303,7 +303,9 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             referenceDataSet?.NationalInsurance == null ||
             referenceDataSet?.Pensions == null ||
             referenceDataSet?.NationalMinimumWage == null ||
-            referenceDataSet?.StudentLoans == null)
+            referenceDataSet?.StudentLoans == null ||
+            referenceDataSet?.Employer == null ||
+            referenceDataSet?.AttachmentOrders == null)
             throw new InvalidReferenceDataException($"Reference data for tax year ending {taxYear.EndOfTaxYear} is invalid or incomplete");
 
         return referenceDataSet;
@@ -412,5 +414,28 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
             throw new InvalidReferenceDataException($"Unable to find attachment order reference data for jurisdiction '{jurisdiction}' and calculation type '{calculationType}' with applicability date '{applicabilityDate}'");
 
         return entry.RateTable;
+    }
+
+    /// <summary>
+    /// Gets a dictionary that keyed on lookup data (applicability date, jurisdiction, etc.)
+    /// to attachment order reference data entries for a given tax year.
+    /// </summary>
+    /// <param name="taxYear">Applicable tax year.</param>
+    /// <returns>A dictionary that maps from key lookup data to a given attachment order
+    /// reference data entry.</returns>
+    public Dictionary<AttachmentOrderReferenceDataEntry.LookupKey, AttachmentOrderReferenceDataEntry> GetAllAttachmentOrderEntries(
+        TaxYear taxYear)
+    {
+        var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
+
+        return referenceDataSet.AttachmentOrders
+            .ToDictionary(
+                ao => new AttachmentOrderReferenceDataEntry.LookupKey
+                {
+                    ApplicableDateRange = new DateRange(ao.ApplicableFrom, ao.ApplicableTill),
+                    ApplicableCountries = ao.ApplicableCountries,
+                    CalculationType = ao.CalculationType
+                },
+                ao => ao);
     }
 }

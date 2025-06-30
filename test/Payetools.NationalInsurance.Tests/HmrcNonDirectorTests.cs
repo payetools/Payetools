@@ -6,11 +6,9 @@
 
 using FluentAssertions;
 using Payetools.Common.Model;
-using Payetools.NationalInsurance.Model;
 using Payetools.Testing.Data;
 using Payetools.Testing.Data.NationalInsurance;
 using Xunit.Abstractions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Payetools.NationalInsurance.Tests;
 

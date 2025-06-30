@@ -36,6 +36,7 @@ When an employee has multiple Attachment Orders, the order in which they are pro
 
 ### Northern Ireland Regulations
 
+In Northern Ireland, there is no exact equivalent to a Direct Earnings Attachment (DEA) as used in Great Britain for the recovery of benefit overpayments (via the Department for Work and Pensions, DWP).
 [Benefit debt deductions from your pay](https://www.nidirect.gov.uk/articles/benefit-debt-deductions-your-pay)
 
 ## Welsh Regulations

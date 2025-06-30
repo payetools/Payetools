@@ -123,5 +123,5 @@ public class PayRunProcessorFactory : IPayRunProcessorFactory
             new NiCalculatorFactory(referenceDataProvider),
             new StudentLoanCalculatorFactory(referenceDataProvider),
             new PensionContributionCalculatorFactory(referenceDataProvider),
-            new AttachmentOrdersCalculatorFactory());
+            new AttachmentOrdersCalculatorFactory(referenceDataProvider));
 }

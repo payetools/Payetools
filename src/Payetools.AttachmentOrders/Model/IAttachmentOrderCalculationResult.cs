@@ -15,4 +15,9 @@ public interface IAttachmentOrderCalculationResult
     /// Gets the total deduction applicable as a result of any attachment of earnings orders.
     /// </summary>
     public decimal TotalDeduction { get; }
+
+    /// <summary>
+    /// Gets the collection of entries representing the results of attachment order calculations.
+    /// </summary>
+    public IReadOnlyCollection<IAttachmentOrderCalculationResultEntry> Entries { get; }
 }

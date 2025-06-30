@@ -14,5 +14,21 @@ public readonly struct AttachmentOrderCalculationResult : IAttachmentOrderCalcul
     /// <summary>
     /// Gets the total deduction applicable as a result of any attachment of earnings orders.
     /// </summary>
-    public decimal TotalDeduction => throw new NotImplementedException();
+    public decimal TotalDeduction { get; }
+
+    /// <summary>
+    /// Gets the collection of entries representing the results of attachment order calculations.
+    /// </summary>
+    public IReadOnlyCollection<IAttachmentOrderCalculationResultEntry> Entries { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AttachmentOrderCalculationResult"/> struct.
+    /// </summary>
+    /// <param name="totalDeduction">Total deduction to apply.</param>
+    /// <param name="entries">Attachment order calculation entries.</param>
+    public AttachmentOrderCalculationResult(decimal totalDeduction, IReadOnlyCollection<IAttachmentOrderCalculationResultEntry> entries)
+    {
+        TotalDeduction = totalDeduction;
+        Entries = entries;
+    }
 }

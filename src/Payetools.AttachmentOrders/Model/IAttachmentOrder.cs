@@ -14,7 +14,7 @@ public interface IAttachmentOrder
     /// <summary>
     /// Gets the type of attachment of earnings order.
     /// </summary>
-    AttachmentOrderCalculationType AttachmentOrderType { get; }
+    AttachmentOrderCalculationType CalculationType { get; }
 
     /// <summary>
     /// Gets the date on which the attachment order was issued; this may be used to determine the rates and

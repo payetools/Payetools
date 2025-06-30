@@ -4,12 +4,12 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.Testing.Data.AttachmentOrders;
 using Payetools.Testing.Data.IncomeTax;
 using Payetools.Testing.Data.NationalInsurance;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Xunit.Abstractions;
 
 namespace Payetools.Testing.Data;
 
@@ -22,6 +22,15 @@ public class TestDataProvider
         _serializerOptions = new JsonSerializerOptions();
 
         _serializerOptions.Converters.Add(new JsonStringEnumConverter());
+        _serializerOptions.Converters.Add(new DateOnlyConverter());
+    }
+
+    public TestDataProvider(bool useCamelCase = false)
+    {
+        if (useCamelCase)
+        {
+            _serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        }
     }
 
     public IEnumerable<T> GetTestData<T>(string dataType) where T : class =>
@@ -35,6 +44,9 @@ public class TestDataProvider
 
             "NationalInsurance" when typeof(T) == typeof(IHmrcDirectorsNiTestDataEntry) =>
                 GetTestData<T, HmrcDirectorsNiTestDataEntry>("DirectorsNationalInsurance"),
+
+            "AttachmentOrders" when typeof(T) == typeof(IAttachmentOrderTestDataEntry) =>
+                GetTestData<T, AttachmentOrderTestDataEntry>("AttachmentOrders"),
 
             _ => throw new NotImplementedException()
         };
@@ -59,7 +71,8 @@ public class TestDataProvider
             {
                 foreach (var entry in entries)
                 {
-                    yield return entry as Tinterface;
+                    yield return entry as Tinterface ??
+                        throw new InvalidOperationException($"Unexpected empty entry for data type {dataType}");
                 }
             }
         }

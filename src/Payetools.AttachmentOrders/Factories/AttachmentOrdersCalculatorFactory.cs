@@ -4,6 +4,7 @@
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
+using Payetools.AttachmentOrders.ReferenceData;
 using Payetools.Common.Model;
 
 namespace Payetools.AttachmentOrders.Factories;
@@ -13,6 +14,17 @@ namespace Payetools.AttachmentOrders.Factories;
 /// </summary>
 public class AttachmentOrdersCalculatorFactory : IAttachmentOrdersCalculatorFactory
 {
+    private readonly IAttachmentOrdersReferenceDataProvider _referenceDataProvider;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AttachmentOrdersCalculatorFactory"/> class.
+    /// </summary>
+    /// <param name="referenceDataProvider">Reference data provider for attachment order calculations.</param>
+    public AttachmentOrdersCalculatorFactory(IAttachmentOrdersReferenceDataProvider referenceDataProvider)
+    {
+        _referenceDataProvider = referenceDataProvider;
+    }
+
     /// <summary>
     /// Gets a new <see cref="IAttachmentOrdersCalculator"/> based on the specified pay date and ...
     /// The pay date is provided in order to determine which ... to use, noting that these may change
@@ -22,6 +34,8 @@ public class AttachmentOrdersCalculatorFactory : IAttachmentOrdersCalculatorFact
     /// <returns>A new calculator instance.</returns>
     public IAttachmentOrdersCalculator GetCalculator(PayDate payDate)
     {
-        return new AttachmentOrdersCalculator();
+        var referenceDataEntries = _referenceDataProvider.GetAllAttachmentOrderEntries(payDate.TaxYear);
+
+        return new AttachmentOrdersCalculator(referenceDataEntries);
     }
 }
