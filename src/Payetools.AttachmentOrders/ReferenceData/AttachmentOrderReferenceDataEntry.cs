@@ -16,6 +16,39 @@ namespace Payetools.AttachmentOrders.ReferenceData;
 public class AttachmentOrderReferenceDataEntry : IApplicableFromTill
 {
     /// <summary>
+    /// Represents a unique key for a given set of reference data.
+    /// </summary>
+    public class LookupKey
+    {
+        /// <summary>
+        /// Gets the date range for the reference data that this lookup applies to.
+        /// </summary>
+        public required DateRange ApplicableDateRange { get; init; }
+
+        /// <summary>
+        /// Gets the set of countries for the reference data that this lookup applies to.
+        /// </summary>
+        public CountriesForTaxPurposes ApplicableCountries { get; init; }
+
+        /// <summary>
+        /// Gets the calculation type for the reference data that this lookup applies to.
+        /// </summary>
+        public AttachmentOrderCalculationType CalculationType { get; init; }
+
+        /// <summary>
+        /// Generates a hash code for the current instance based on its properties.
+        /// </summary>
+        /// <remarks>The hash code is computed using the values of <see cref="ApplicableDateRange"/>,
+        /// <see cref="ApplicableCountries"/>, and <see cref="CalculationType"/>. This ensures  that
+        /// instances with identical property values produce the same hash code.</remarks>
+        /// <returns>An integer representing the hash code for the current instance.</returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ApplicableDateRange, ApplicableCountries, CalculationType);
+        }
+    }
+
+    /// <summary>
     /// Gets the start date (i.e., the first full day) for applicability of this set of reference data.
     /// </summary>
     /// <remarks>Unlike income tax, National Insurance, etc., this date relates to the first day the
@@ -45,4 +78,17 @@ public class AttachmentOrderReferenceDataEntry : IApplicableFromTill
     /// Gets the rate table for this set of reference data.
     /// </summary>
     public required ImmutableArray<AttachmentOrderRateTableEntry> RateTable { get; init; }
+
+    /// <summary>
+    /// Gets the lookup key for this set of reference data, which is used to identify entries within
+    /// a dictionary.
+    /// </summary>
+    /// <returns>Unique lookup key for this reference data entry.</returns>
+    public LookupKey ToLookupKey() =>
+        new LookupKey
+        {
+            ApplicableDateRange = new DateRange(ApplicableFrom, ApplicableTill),
+            ApplicableCountries = ApplicableCountries,
+            CalculationType = CalculationType
+        };
 }
