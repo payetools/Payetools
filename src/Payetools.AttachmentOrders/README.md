@@ -32,6 +32,9 @@ When an employee has multiple Attachment Orders, the order in which they are pro
 
 ### Scottish Regulations
 
+The Diligence against Earnings (Variation) (Scotland) Regulations 2024
+https://www.legislation.gov.uk/ssi/2024/293/made
+
 [The Diligence against Earnings (Variation) (Scotland) Regulations 2021](https://www.legislation.gov.uk/ssi/2021/409/made) provides the rates and thresholds for Attachment Orders in Scotland.
 
 ### Northern Ireland Regulations

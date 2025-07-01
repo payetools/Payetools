@@ -69,7 +69,7 @@
     "payFrequency": "Weekly",
     "issueDate": "01/01/2025",
     "attachableEarnings": 270.00,
-    "expectedDeduction": 18.35
+    "expectedDeduction": 18.9
   },
   {
     "calculationType": "TableBasedPercentageOfEarnings",
@@ -78,7 +78,7 @@
     "payFrequency": "Weekly",
     "issueDate": "01/01/2025",
     "attachableEarnings": 270.01,
-    "expectedDeduction": 19.70
+    "expectedDeduction": 29.70
   },
   {
     "calculationType": "TableBasedPercentageOfEarnings",

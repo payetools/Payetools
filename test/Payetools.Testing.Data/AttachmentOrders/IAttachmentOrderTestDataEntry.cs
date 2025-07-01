@@ -19,7 +19,9 @@ public interface IAttachmentOrderTestDataEntry
 
     PayFrequency PayFrequency { get; init; }
 
-    DateOnly IssueDate { get; init; }
+    DateOnly? IssueDate { get; init; }
+
+    DateOnly? ReceivedDate { get; init; }
 
     decimal AttachableEarnings { get; init; }
 

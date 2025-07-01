@@ -11,13 +11,11 @@ using Payetools.Common.Model;
 namespace Payetools.AttachmentOrders.Calculators;
 
 /// <summary>
-/// Calculator for attachment orders that use a table-based percentage of attachable earnings.
+/// Calculator for attachment orders that use a table-based percentage of attachable earnings plus
+/// a fixed or minimum amount.
 /// </summary>
-/// <remarks>This calculator is intended for Direct Earnings Attachment (DEA) orders, which apply across
-/// England, Scotland and Wales.  (In Northern Ireland, there is no exact equivalent to a DEA as social
-/// security matters are handled by the Department for Communities (DfC) rather than the Department
-/// for Work and Pensions (DWP).)</remarks>
-public class TableBasedPercentageCalculator : IAttachmentOrderCalculator
+/// <remarks>This calculator is intended for Scottish Arrestment Orders.</remarks>
+public class TableBasedPercentagePlusFixedAmountCalculator : IAttachmentOrderCalculator
 {
     private readonly AttachmentOrderRateTable _rateTable;
 
@@ -25,7 +23,7 @@ public class TableBasedPercentageCalculator : IAttachmentOrderCalculator
     /// Initializes a new instance of the <see cref="TableBasedPercentageCalculator"/> class.
     /// </summary>
     /// <param name="rateTable">Rate table.</param>
-    public TableBasedPercentageCalculator(IEnumerable<AttachmentOrderRateTableEntry> rateTable)
+    public TableBasedPercentagePlusFixedAmountCalculator(IEnumerable<AttachmentOrderRateTableEntry> rateTable)
     {
         _rateTable = new AttachmentOrderRateTable(rateTable);
     }

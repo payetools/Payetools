@@ -8,6 +8,7 @@ using Payetools.AttachmentOrders.Calculators;
 using Payetools.AttachmentOrders.Model;
 using Payetools.AttachmentOrders.ReferenceData;
 using Payetools.Common.Model;
+using System.Collections.Immutable;
 
 namespace Payetools.AttachmentOrders;
 
@@ -16,14 +17,14 @@ namespace Payetools.AttachmentOrders;
 /// </summary>
 public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
 {
-    private readonly Dictionary<AttachmentOrderReferenceDataEntry.LookupKey, AttachmentOrderReferenceDataEntry> _attachmentOrderReferenceDataEntries;
+    private readonly ImmutableArray<AttachmentOrderReferenceDataEntry> _attachmentOrderReferenceDataEntries;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AttachmentOrdersCalculator"/> class.
     /// </summary>
     /// <param name="attachmentOrderReferenceDataEntries">Dictionary that contains all the
     /// current reference data entries for the tax year.</param>
-    public AttachmentOrdersCalculator(Dictionary<AttachmentOrderReferenceDataEntry.LookupKey, AttachmentOrderReferenceDataEntry> attachmentOrderReferenceDataEntries)
+    public AttachmentOrdersCalculator(in ImmutableArray<AttachmentOrderReferenceDataEntry> attachmentOrderReferenceDataEntries)
     {
         _attachmentOrderReferenceDataEntries = attachmentOrderReferenceDataEntries;
     }
@@ -57,7 +58,7 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
 
         foreach (var attachmentOrder in attachmentOrders)
         {
-            var calculator = GetCalculator(attachmentOrder);
+            var calculator = GetCalculator(attachmentOrder, attachmentOrder.IssueDate ?? attachmentOrder.EffectiveDate);
 
             calculator.Calculate(
                 resultEntries,
@@ -79,16 +80,12 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
             resultEntries.AsReadOnly());
     }
 
-    private IAttachmentOrderCalculator GetCalculator(IAttachmentOrder attachmentOrder)
+    private IAttachmentOrderCalculator GetCalculator(IAttachmentOrder attachmentOrder, DateOnly applicableDate)
     {
         // TODO: Worry about Scottish attachment orders later; they don't have an issue date.
-        var lookupKey = _attachmentOrderReferenceDataEntries.Keys.FirstOrDefault(k =>
-            attachmentOrder.CalculationType == k.CalculationType &&
-            attachmentOrder.IssueDate >= k.ApplicableDateRange.Start &&
-            attachmentOrder.IssueDate <= k.ApplicableDateRange.End) ??
+        var referenceDataEntry = _attachmentOrderReferenceDataEntries.FirstOrDefault(e =>
+            e.IsMatching(attachmentOrder, applicableDate)) ??
             throw new ArgumentException($"Attachment order with calculation type {attachmentOrder.CalculationType} and issue date {attachmentOrder.IssueDate} does not have a matching reference data entry.", nameof(attachmentOrder));
-
-        var referenceDataEntry = _attachmentOrderReferenceDataEntries[lookupKey];
 
         return attachmentOrder.CalculationType switch
         {
