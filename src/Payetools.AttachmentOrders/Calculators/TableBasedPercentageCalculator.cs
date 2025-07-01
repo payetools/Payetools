@@ -19,7 +19,7 @@ namespace Payetools.AttachmentOrders.Calculators;
 /// for Work and Pensions (DWP).)</remarks>
 public class TableBasedPercentageCalculator : IAttachmentOrderCalculator
 {
-    private readonly IEnumerable<AttachmentOrderRateTableEntry> _rateTable;
+    private readonly AttachmentOrderRateTable _rateTable;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TableBasedPercentageCalculator"/> class.
@@ -27,7 +27,7 @@ public class TableBasedPercentageCalculator : IAttachmentOrderCalculator
     /// <param name="rateTable">Rate table.</param>
     public TableBasedPercentageCalculator(IEnumerable<AttachmentOrderRateTableEntry> rateTable)
     {
-        _rateTable = rateTable;
+        _rateTable = new AttachmentOrderRateTable(rateTable);
     }
 
     /// <summary>
@@ -44,10 +44,10 @@ public class TableBasedPercentageCalculator : IAttachmentOrderCalculator
     /// into the calculation.</param>
     /// <param name="studentLoanDeductions">Employee's student and postgraduate loan repayments, if any.</param>
     /// <param name="employeePensionContribution">Employee pension contribution, if any.</param>
-    /// <param name="attachmentOrderCalculationResult"><see cref="IAttachmentOrderCalculationResultEntry"/>
+    /// <param name="attachmentOrderCalculationResult"><see cref="AttachmentOrderCalculationResultEntry"/>
     /// instance containing the results of this calculation.</param>
     public void Calculate(
-        List<IAttachmentOrderCalculationResultEntry> previousEntries,
+        List<AttachmentOrderCalculationResultEntry> previousEntries,
         IAttachmentOrder attachmentOrder,
         IEnumerable<IEarningsEntry> earnings,
         IEnumerable<IDeductionEntry> deductions,
@@ -56,8 +56,20 @@ public class TableBasedPercentageCalculator : IAttachmentOrderCalculator
         decimal employeeNiContribution,
         decimal studentLoanDeductions,
         decimal employeePensionContribution,
-        out IAttachmentOrderCalculationResultEntry attachmentOrderCalculationResult)
+        out AttachmentOrderCalculationResultEntry attachmentOrderCalculationResult)
     {
-        throw new NotImplementedException();
+        // TODO: Put methods for attachable earnings, etc in a common place
+        var attachableEarnings = earnings.Sum(e => e.FixedAmount ?? 0);
+
+        var rateInfo = _rateTable.GetApplicableDeductionInfo(
+            attachableEarnings,
+            attachmentOrder.EmployeePayFrequency,
+            attachmentOrder.RateType ?? AttachmentOrderRateType.Standard);
+
+        attachmentOrderCalculationResult = new AttachmentOrderCalculationResultEntry
+        {
+            AttachmentOrder = attachmentOrder,
+            Deduction = attachableEarnings * rateInfo.Rate
+        };
     }
 }

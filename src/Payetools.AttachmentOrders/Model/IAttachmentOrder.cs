@@ -7,7 +7,7 @@
 namespace Payetools.AttachmentOrders.Model;
 
 /// <summary>
-/// Interface that represents an attachment of earnings order.
+/// Interface that represents an attachment order.
 /// </summary>
 public interface IAttachmentOrder
 {
@@ -25,5 +25,15 @@ public interface IAttachmentOrder
     /// <summary>
     /// Gets the date from which this attachment of earnings order is effective.
     /// </summary>
-    DateTime EffectiveDate { get; }
+    DateOnly EffectiveDate { get; }
+
+    /// <summary>
+    /// Gets the optional rate type that applies to this attachment order, if applicable.
+    /// </summary>
+    AttachmentOrderRateType? RateType { get; }
+
+    /// <summary>
+    /// Gets the employee's pay frequency as it applies to this order.
+    /// </summary>
+    AttachmentOrderPayFrequency EmployeePayFrequency { get; }
 }

@@ -29,10 +29,10 @@ public interface IAttachmentOrderCalculator
     /// into the calculation.</param>
     /// <param name="studentLoanDeductions">Employee's student and postgraduate loan repayments, if any.</param>
     /// <param name="employeePensionContribution">Employee pension contribution, if any.</param>
-    /// <param name="attachmentOrderCalculationResult"><see cref="IAttachmentOrderCalculationResultEntry"/>
+    /// <param name="attachmentOrderCalculationResult"><see cref="AttachmentOrderCalculationResultEntry"/>
     /// instance containing the results of this calculation.</param>
     void Calculate(
-        List<IAttachmentOrderCalculationResultEntry> previousEntries,
+        List<AttachmentOrderCalculationResultEntry> previousEntries,
         IAttachmentOrder attachmentOrder,
         IEnumerable<IEarningsEntry> earnings,
         IEnumerable<IDeductionEntry> deductions,
@@ -41,5 +41,5 @@ public interface IAttachmentOrderCalculator
         decimal employeeNiContribution,
         decimal studentLoanDeductions,
         decimal employeePensionContribution,
-        out IAttachmentOrderCalculationResultEntry attachmentOrderCalculationResult);
+        out AttachmentOrderCalculationResultEntry attachmentOrderCalculationResult);
 }

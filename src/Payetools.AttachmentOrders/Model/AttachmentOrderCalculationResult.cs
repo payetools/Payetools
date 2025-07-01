@@ -19,14 +19,14 @@ public readonly struct AttachmentOrderCalculationResult : IAttachmentOrderCalcul
     /// <summary>
     /// Gets the collection of entries representing the results of attachment order calculations.
     /// </summary>
-    public IReadOnlyCollection<IAttachmentOrderCalculationResultEntry> Entries { get; }
+    public IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AttachmentOrderCalculationResult"/> struct.
     /// </summary>
     /// <param name="totalDeduction">Total deduction to apply.</param>
     /// <param name="entries">Attachment order calculation entries.</param>
-    public AttachmentOrderCalculationResult(decimal totalDeduction, IReadOnlyCollection<IAttachmentOrderCalculationResultEntry> entries)
+    public AttachmentOrderCalculationResult(decimal totalDeduction, IReadOnlyCollection<AttachmentOrderCalculationResultEntry> entries)
     {
         TotalDeduction = totalDeduction;
         Entries = entries;

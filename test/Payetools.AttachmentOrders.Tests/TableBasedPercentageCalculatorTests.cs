@@ -7,13 +7,15 @@
 using Payetools.AttachmentOrders.Calculators;
 using Payetools.AttachmentOrders.Model;
 using Payetools.Common.Model;
+using Payetools.Payroll.Model;
 using Payetools.Testing.Data;
 using Payetools.Testing.Data.AttachmentOrders;
+using Shouldly;
 using System.Threading.Tasks;
 
 namespace Payetools.AttachmentOrders.Tests;
 
-public class TableBasedPercentageCalculatorTests :IClassFixture<AttachmentOrdersCalculatorFactoryDataFixture>
+public class TableBasedPercentageCalculatorTests : IClassFixture<AttachmentOrdersCalculatorFactoryDataFixture>
 {
     private readonly AttachmentOrdersCalculatorFactoryDataFixture _calculatorDataFixture;
 
@@ -37,20 +39,60 @@ public class TableBasedPercentageCalculatorTests :IClassFixture<AttachmentOrders
 
         Console.WriteLine($"{testData.Count} tests found");
 
-        var calculator = await GetCalculator(new PayDate(DateOnly.FromDateTime(DateTime.Now), PayFrequency.Monthly));
+        var testIndex = 0;
 
-        // calculator.Calculate(testData, out var results);
+        foreach (var entry in testData)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Now);
+            var payDay = new DateOnly(today.Year, today.AddMonths(1).Month, 1).AddMonths(-1);
+            var startOfPayPeriod = entry.PayFrequency == PayFrequency.Weekly ? payDay.AddDays(-7) : payDay.AddMonths(-1);
+            var payPeriod = new DateRange(startOfPayPeriod, payDay);
+            var payDate = new PayDate(payDay, entry.PayFrequency);
 
-        // Arrange
-        // var calculator = new TableBasedPercentageCalculator();
-        var earnings = 1000m; // Example earnings
-        var rate = 0.15m; // Example rate (15%)
-        // Act
-        //var deduction = calculator.CalculateAttachmentOrderDeduction(earnings, rate);
-        // Assert
-        //deduction.ShouldBe(150m); // 15% of 1000 is 150
+            var calculator = await GetCalculator(payDate);
+
+            var attachmentOrder = new AttachmentOrder
+            {
+                CalculationType = AttachmentOrderCalculationType.TableBasedPercentageOfEarnings,
+                IssueDate = entry.IssueDate,
+                EffectiveDate = startOfPayPeriod,
+                RateType = AttachmentOrderRateType.Standard
+            };
+
+            var earnings = new EarningsEntry()
+            {
+                EarningsDetails = new GenericEarnings()
+                {
+                    Id = Guid.NewGuid(),
+                    ShortName = "Earnings",
+                    IsNetToGross = false,
+                    IsPensionable = true,
+                    IsSubjectToNi = true,
+                    IsSubjectToTax = true,
+                    IsTreatedAsOvertime = false,
+                    PaymentType = EarningsType.GeneralEarnings
+                },
+                FixedAmount = entry.AttachableEarnings
+            };
+
+            calculator.Calculate(
+                [attachmentOrder], 
+                [earnings], 
+                [], 
+                payPeriod,
+                0m,
+                0m,
+                0m,
+                0m,
+                out var result);
+
+            result.ShouldNotBeNull();
+            result.Entries.Count.ShouldBe(1);
+            result.Entries.First().Deduction.ShouldBe(entry.ExpectedDeduction, $"Test # {testIndex}");
+
+            testIndex++;
+        }
     }
-
     private async Task<IAttachmentOrdersCalculator> GetCalculator(PayDate payDate)
     {
         var provider = await _calculatorDataFixture.GetFactory();

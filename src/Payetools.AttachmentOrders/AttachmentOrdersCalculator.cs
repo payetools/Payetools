@@ -53,7 +53,7 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
         decimal employeePensionContribution,
         out IAttachmentOrderCalculationResult? attachmentOrdersCalculationResult)
     {
-        List<IAttachmentOrderCalculationResultEntry> resultEntries = [];
+        List<AttachmentOrderCalculationResultEntry> resultEntries = [];
 
         foreach (var attachmentOrder in attachmentOrders)
         {

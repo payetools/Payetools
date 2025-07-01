@@ -7,17 +7,17 @@
 namespace Payetools.AttachmentOrders.Model;
 
 /// <summary>
-/// Interface that represents an entry in the results of an attachment of earnings calculation.
+/// Entity that represents an entry in the results of an attachment of earnings calculation.
 /// </summary>
-public interface IAttachmentOrderCalculationResultEntry
+public readonly struct AttachmentOrderCalculationResultEntry
 {
     /// <summary>
     /// Gets the attachment order used to calculate this entry.
     /// </summary>
-    IAttachmentOrder AttachmentOrder { get; }
+    public required IAttachmentOrder AttachmentOrder { get; init; }
 
     /// <summary>
     /// Gets the deduction amount calculated for this entry.
     /// </summary>
-    decimal Deduction { get; }
+    public decimal Deduction { get; init; }
 }

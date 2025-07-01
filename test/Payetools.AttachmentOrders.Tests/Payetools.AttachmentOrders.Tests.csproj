@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Payetools.AttachmentOrders\Payetools.AttachmentOrders.csproj" />
+    <ProjectReference Include="..\..\src\Payetools.Payroll\Payetools.Payroll.csproj" />
     <ProjectReference Include="..\..\src\Payetools.ReferenceData\Payetools.ReferenceData.csproj" />
     <ProjectReference Include="..\Payetools.Testing.Data\Payetools.Testing.Data.csproj" />
     <ProjectReference Include="..\Payetools.Testing.Utils\Payetools.Testing.Utils.csproj" />

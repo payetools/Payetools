@@ -19,5 +19,5 @@ public interface IAttachmentOrderCalculationResult
     /// <summary>
     /// Gets the collection of entries representing the results of attachment order calculations.
     /// </summary>
-    public IReadOnlyCollection<IAttachmentOrderCalculationResultEntry> Entries { get; }
+    public IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }
 }
