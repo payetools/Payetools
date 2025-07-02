@@ -30,7 +30,7 @@ public class TableBasedPercentageCalculatorTests : IClassFixture<AttachmentOrder
         var db = new TestDataProvider(true);
 
         var testData = db.GetTestData<IAttachmentOrderTestDataEntry>("AttachmentOrders")
-            .Where(t => t.CalculationType == AttachmentOrderCalculationType.TableBasedPercentageOfEarnings)
+            .Where(t => t.CalculationType == AttachmentOrderCalculationBehaviours.TableBasedPercentageOfEarnings)
             .ToList();
 
         if (!testData.Any())
@@ -52,7 +52,7 @@ public class TableBasedPercentageCalculatorTests : IClassFixture<AttachmentOrder
 
             var attachmentOrder = new AttachmentOrder
             {
-                CalculationType = AttachmentOrderCalculationType.TableBasedPercentageOfEarnings,
+                CalculationBehaviours = AttachmentOrderCalculationBehaviours.TableBasedPercentageOfEarnings,
                 IssueDate = entry.IssueDate,
                 EffectiveDate = startOfPayPeriod,
                 RateType = entry.Rate,

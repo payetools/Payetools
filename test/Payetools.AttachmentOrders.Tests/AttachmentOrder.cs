@@ -11,7 +11,7 @@ namespace Payetools.AttachmentOrders.Tests;
 
 internal class AttachmentOrder : IAttachmentOrder
 {
-    public AttachmentOrderCalculationType CalculationType { get; init; }
+    public AttachmentOrderCalculationBehaviours CalculationBehaviours { get; init; }
 
     public DateOnly? IssueDate { get; init; }
 

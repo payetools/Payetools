@@ -8,6 +8,7 @@ using Payetools.AttachmentOrders.Calculators;
 using Payetools.AttachmentOrders.Model;
 using Payetools.AttachmentOrders.ReferenceData;
 using Payetools.Common.Model;
+using Payetools.StudentLoans.Model;
 using System.Collections.Immutable;
 
 namespace Payetools.AttachmentOrders;
@@ -50,7 +51,7 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
         DateRange payPeriod,
         decimal finalTaxDue,
         decimal employeeNiContribution,
-        decimal studentLoanDeductions,
+        IStudentLoanCalculationResult? studentLoanDeductions,
         decimal employeePensionContribution,
         out IAttachmentOrderCalculationResult? attachmentOrdersCalculationResult)
     {
@@ -68,7 +69,6 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
                 payPeriod,
                 finalTaxDue,
                 employeeNiContribution,
-                studentLoanDeductions,
                 employeePensionContribution,
                 out var result);
 
@@ -77,6 +77,7 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
 
         attachmentOrdersCalculationResult = new AttachmentOrderCalculationResult(
             resultEntries.Sum(r => r.Deduction),
+            true, // *** NEED TO ADD LOGIC TO DETERMINE IF RECALCULATION IS APPLICABLE ***
             resultEntries.AsReadOnly());
     }
 
@@ -85,12 +86,12 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
         // TODO: Worry about Scottish attachment orders later; they don't have an issue date.
         var referenceDataEntry = _attachmentOrderReferenceDataEntries.FirstOrDefault(e =>
             e.IsMatching(attachmentOrder, applicableDate)) ??
-            throw new ArgumentException($"Attachment order with calculation type {attachmentOrder.CalculationType} and issue date {attachmentOrder.IssueDate} does not have a matching reference data entry.", nameof(attachmentOrder));
+            throw new ArgumentException($"Attachment order with calculation type {attachmentOrder.CalculationBehaviours} and issue date {attachmentOrder.IssueDate} does not have a matching reference data entry.", nameof(attachmentOrder));
 
-        return attachmentOrder.CalculationType switch
+        return attachmentOrder.CalculationBehaviours switch
         {
-            AttachmentOrderCalculationType.TableBasedPercentageOfEarnings => new TableBasedPercentageCalculator(referenceDataEntry.RateTable),
-            _ => throw new NotSupportedException($"Unsupported attachment order calculation type: {attachmentOrder.CalculationType}")
+            AttachmentOrderCalculationBehaviours.TableBasedPercentageOfEarnings => new TableBasedPercentageCalculator(referenceDataEntry.RateTable),
+            _ => throw new NotSupportedException($"Unsupported attachment order calculation type: {attachmentOrder.CalculationBehaviours}")
         };
     }
 }

@@ -27,7 +27,6 @@ public interface IAttachmentOrderCalculator
     /// <param name="finalTaxDue">Total tax amount due, which will be factored into the calculation.</param>
     /// <param name="employeeNiContribution">Employee's National Insurance contribution, which will be factored
     /// into the calculation.</param>
-    /// <param name="studentLoanDeductions">Employee's student and postgraduate loan repayments, if any.</param>
     /// <param name="employeePensionContribution">Employee pension contribution, if any.</param>
     /// <param name="attachmentOrderCalculationResult"><see cref="AttachmentOrderCalculationResultEntry"/>
     /// instance containing the results of this calculation.</param>
@@ -39,7 +38,6 @@ public interface IAttachmentOrderCalculator
         DateRange payPeriod,
         decimal finalTaxDue,
         decimal employeeNiContribution,
-        decimal studentLoanDeductions,
         decimal employeePensionContribution,
         out AttachmentOrderCalculationResultEntry attachmentOrderCalculationResult);
 }

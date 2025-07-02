@@ -30,7 +30,7 @@ public class TableBasedPercentagePlusFixedCalculatorTests : IClassFixture<Attach
         var db = new TestDataProvider(true);
 
         var testData = db.GetTestData<IAttachmentOrderTestDataEntry>("AttachmentOrders")
-            .Where(t => t.CalculationType == AttachmentOrderCalculationType.TableBasedPercentageOfEarningsPlusFixedAmount &&
+            .Where(t => t.CalculationType == AttachmentOrderCalculationBehaviours.TableBasedPercentageOfEarningsPlusFixedAmount &&
                 CountriesForTaxPurposesConverter.ToEnum(t.Jurisdiction) == CountriesForTaxPurposes.Scotland)
             .ToList();
 
@@ -53,7 +53,7 @@ public class TableBasedPercentagePlusFixedCalculatorTests : IClassFixture<Attach
 
             var attachmentOrder = new AttachmentOrder
             {
-                CalculationType = AttachmentOrderCalculationType.TableBasedPercentageOfEarnings,
+                CalculationBehaviours = AttachmentOrderCalculationBehaviours.TableBasedPercentageOfEarnings,
                 IssueDate = entry.IssueDate,
                 EffectiveDate = startOfPayPeriod,
                 RateType = entry.Rate,

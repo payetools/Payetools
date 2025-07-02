@@ -377,7 +377,7 @@
       },
       "statutoryPaymentReclaim": {
         "defaultReclaimRate": 0.92,
-        "smallEmployerReclaimRate": 1.03
+        "smallEmployerReclaimRate": 1.085
       },
       "apprenticeLevy": {
         "allowanceAmount": 15000,

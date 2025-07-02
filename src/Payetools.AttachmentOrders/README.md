@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This library provides calculations of attachment orders.  The term *attachment order** is used here as a generic term for all types of deductions from earnings mandated by law (often by the courts) and communicated externally to employers, regardless of source or type.  There are many distinct types of deductions that can be made from an employee's earnings; these are listed further below.
+This library provides the facilites to calculate attachment order deductions.  The term ***attachment order*** is used here as a generic term for all types of deductions from net earnings mandated by law (often by the courts) and communicated externally to employers, regardless of source or type.  There are many distinct types of attachment order deductions that can be made from an employee's earnings; these are listed further below.
 
 The legislation around attachment orders is complex and varies by jurisdiction. Although somewhat outdated, the HMCS document [Attachment Orders: A Guide for Employers](https://www.rbkc.gov.uk/pdf/aoehandbook-eng.pdf) provides a good overview of the process. Lewes and Eastbourne Councils also have a useful [Attachment of Earnings - Employers Guide](https://www.lewes-eastbourne.gov.uk/media/4064/Attachment-of-earnings-employers-guide/pdf/Attachment_of_Earnings_-Employer_Guide_1.pdf).
 
@@ -18,14 +18,22 @@ Due to the different legislators across the UK, different types of attachment or
 |--------------------------------------------|--------------------------|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | Direct Earnings Attachment (DEA)           | England, Scotland, Wales | DWP, Local Authority                                                                | Recovery of overpayment of benefits                                                                                                    |
 | Deductions from Earnings Order (DEO)       | All of UK                | Child Maintenance Service (CMS) (Northern Ireland has a separate CMS, part of DfC)  | Child maintenance                                                                                                                      |
-| Countil Tax Attachment of Earnings (CTAOE) | England, Wales           | Magistrates Court                                                                   | Recovery of Council Tax arrears                                                                                                        |
-| Attachment of Earnings Order               | Northern Ireland         | Northern Ireland Enforcement of Judgments Office                                    | Recovery of Rate arrears                                                                                                               |
-| Earnings Arrestment                        | Scotland                 |                                                                                     | Recovery of Council Tax arrears, utility charges, unpaid fines, overpayment of benefits, unpaid debts, rent arrears, child maintenance |
-|                                            |                          |                                                                                     |                                                                                                                                        |
+| Council Tax Attachment of Earnings (CTAOE) | England, Wales           | Magistrates Court                                                                   | Recovery of Council Tax arrears                                                                                                        |
+| Attachment of Earnings order (AOE)         | England, Wales           | High Court, County Court, Magistrates Court                                         |                                                                                                                                        |
+| Attachment of Earnings Order (AOE)         | Northern Ireland         | Northern Ireland Enforcement of Judgments Office                                    | Recovery of Rate arrears                                                                                                               |
+| Earnings Arrestment (EA)                   | Scotland                 |                                                                                     | Recovery of Council Tax arrears, utility charges, unpaid fines, overpayment of benefits, unpaid debts, rent arrears, child maintenance |
+| Current Maintenance Arrestment (CMA)       | Scotland                 |                                                                                     |                                                                                                                                        |                                         |                          |                                                                                     |                                                                                                                                        |
+
+The following orders types are used when more than one order has been issued for a given employee and where the orders can be consolidated into a single order, replacing the original orders:
+
+| Type                                       | Applicability            |
+|--------------------------------------------|--------------------------|
+| Consolidated Attachment of Earnings Order (CAEO) | England, Wales                 |                                                                                     |                                                                                                                                        |                                         |                          |                                                                                     |                                                                                                                                        |
+| Combined Attachment of Earnings Order  | Northern Ireland                 |                                                                                     |                                                                                                                                        |                                         |                          |                                                                                     |                                                                                                                                        |
+| Conjoined Arrestment Order (CAO)           | Scotland                 |                                                                                     |                                                                                                                                        |
 
 
-
-how they are prioritised.
+There are a small number of specific attachment orders that are not included in the above tables, such as Income Payment Orders (IPO), Council Tax Attachment of Allowances Orders (CTAAO) and Income Support Deduction Notices (ISDN), but these are sufficiently rate that they are not covered here.  It should nevertheless be possible to describe these orders using the generic calculations provided by this library.
 
 
 library
@@ -76,3 +84,10 @@ CT-AEO - new rates from 1 April 2022, see [The Council Tax (Administration
 and Enforcement) (Amendment) 
 (Wales) Regulations 2022](https://www.legislation.gov.uk/wsi/2022/107/made)
 
+## Interaction with Student Loan Deductions
+
+The following is not true:
+
+Student loan deductions should NOT be made at all if making them would reduce the employee’s net pay below their Protected Earnings Rate (PER) set by an attachment order. This applies across all UK jurisdictions.
+
+https://www.gov.uk/hmrc-internal-manuals/collection-of-student-loans-manual/cslm18010

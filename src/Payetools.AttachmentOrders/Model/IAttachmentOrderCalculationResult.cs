@@ -17,6 +17,12 @@ public interface IAttachmentOrderCalculationResult
     public decimal TotalDeduction { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the results of the attachment orders calculation requires
+    /// student loans deductions to be recalculated.
+    /// </summary>
+    public bool StudentLoanRecalculationRequired { get; }
+
+    /// <summary>
     /// Gets the collection of entries representing the results of attachment order calculations.
     /// </summary>
     public IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }

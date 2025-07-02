@@ -51,4 +51,8 @@
     <ProjectReference Include="..\Payetools.StudentLoans\Payetools.StudentLoans.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Reporting\" />
+  </ItemGroup>
+
 </Project>

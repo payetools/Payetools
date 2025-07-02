@@ -39,7 +39,7 @@ public class AttachmentOrderReferenceDataEntry : IApplicableFromTill
     /// <summary>
     /// Gets the calculation type for this set of reference data.
     /// </summary>
-    public AttachmentOrderCalculationType CalculationType { get; init; }
+    public AttachmentOrderCalculationBehaviours CalculationType { get; init; }
 
     /// <summary>
     /// Gets the rate table for this set of reference data.
@@ -57,5 +57,5 @@ public class AttachmentOrderReferenceDataEntry : IApplicableFromTill
     public bool IsMatching(IAttachmentOrder attachmentOrder, DateOnly applicableDate) =>
                 ApplicableFrom <= applicableDate && applicableDate <= ApplicableTill &&
                     ApplicableCountries.HasFlag(attachmentOrder.ApplicableJurisdiction) &&
-                    CalculationType == attachmentOrder.CalculationType;
+                    CalculationType == attachmentOrder.CalculationBehaviours;
 }

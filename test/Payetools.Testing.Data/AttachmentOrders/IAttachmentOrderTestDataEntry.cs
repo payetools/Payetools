@@ -11,7 +11,7 @@ namespace Payetools.Testing.Data.AttachmentOrders;
 
 public interface IAttachmentOrderTestDataEntry
 {
-    AttachmentOrderCalculationType CalculationType { get; init; }
+    AttachmentOrderCalculationBehaviours CalculationType { get; init; }
 
     string Jurisdiction { get; init; }
 

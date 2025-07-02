@@ -9,24 +9,36 @@ namespace Payetools.AttachmentOrders.Model;
 /// <summary>
 /// Enumeration of all the supported types of attachment of earnings orders.
 /// </summary>
-public enum AttachmentOrderCalculationType
+[Flags]
+public enum AttachmentOrderCalculationBehaviours
 {
     /// <summary>Used when an attachment order specifies a fixed amount per pay period.</summary>
-    FixedAmount,
+    UseFixedPerPeriodAmount = 0b0000_0001,
 
     /// <summary>Used when an attachment order specifies a fixed percentage of attachable earnings
     /// per pay period.</summary>
-    FixedPercentageOfEarnings,
+    UseFixedPercentageOfEarnings = 0b0000_0010,
 
     /// <summary>Used when an attachment order requires use of a percentage amount based on the level
     /// of attachable earnings.</summary>
-    TableBasedPercentageOfEarnings,
+    UseTableBasedPercentageOfEarnings = 0b0000_0100,
 
     /// <summary>Used when an attachment order requires use of a fixed amount plus a percentage amount
     /// based on the level of attachable earnings.</summary>
-    TableBasedPercentageOfEarningsPlusFixedAmount,
+    UsePercentageWithFixedOrMinimumAmount = 0b0000_1000,
 
     /// <summary>Used when an attachment order specifies a fixed amount based on the level of
     /// attachable earnings.</summary>
-    TableBasedFixedAmount
+    PercentageTableBasedHasFixedAmount = 0b0001_0000,
+
+    /// <summary>
+    /// Gets a value indicating whether this attachment order uses the full attachable earnings amount,
+    /// or if prior deductions should be subtracted from the attachable earnings amount before calculating.
+    /// </summary>
+    UseFullAttachableEarnings = 0b0010_0000,
+
+    /// <summary>
+    /// x.
+    /// </summary>
+    TreatAsPriorityOrder = 0b0100_0000
 }

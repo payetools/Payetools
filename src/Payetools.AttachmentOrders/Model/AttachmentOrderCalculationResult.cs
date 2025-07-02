@@ -17,6 +17,12 @@ public readonly struct AttachmentOrderCalculationResult : IAttachmentOrderCalcul
     public decimal TotalDeduction { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the results of the attachment orders calculation requires
+    /// student loans deductions to be recalculated.
+    /// </summary>
+    public bool StudentLoanRecalculationRequired { get; }
+
+    /// <summary>
     /// Gets the collection of entries representing the results of attachment order calculations.
     /// </summary>
     public IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }
@@ -25,10 +31,16 @@ public readonly struct AttachmentOrderCalculationResult : IAttachmentOrderCalcul
     /// Initializes a new instance of the <see cref="AttachmentOrderCalculationResult"/> struct.
     /// </summary>
     /// <param name="totalDeduction">Total deduction to apply.</param>
+    /// <param name="studentLoanRecalculationRequired">Indicates whether the results of this attachment
+    /// orders calculation requires student loans deductions to be recalculated.</param>
     /// <param name="entries">Attachment order calculation entries.</param>
-    public AttachmentOrderCalculationResult(decimal totalDeduction, IReadOnlyCollection<AttachmentOrderCalculationResultEntry> entries)
+    public AttachmentOrderCalculationResult(
+        decimal totalDeduction,
+        bool studentLoanRecalculationRequired,
+        IReadOnlyCollection<AttachmentOrderCalculationResultEntry> entries)
     {
         TotalDeduction = totalDeduction;
+        StudentLoanRecalculationRequired = studentLoanRecalculationRequired;
         Entries = entries;
     }
 }

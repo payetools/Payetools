@@ -199,9 +199,11 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
                 PayPeriod,
                 taxCalculationResult.FinalTaxDue,
                 niCalculationResult.EmployeeContribution,
-                studentLoanCalculationResult?.TotalDeduction ?? 0.0m,
+                studentLoanCalculationResult,
                 pensionContributions?.CalculatedEmployeeContributionAmount ?? 0.0m,
                 out attachmentOfEarningsCalculationResult);
+
+            // TODO: Student loan deductions / protected earnings
         }
 
         result = new EmployeePayRunOutputs<TIdentifier>(

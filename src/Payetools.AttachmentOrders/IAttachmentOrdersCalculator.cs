@@ -6,6 +6,7 @@
 
 using Payetools.AttachmentOrders.Model;
 using Payetools.Common.Model;
+using Payetools.StudentLoans.Model;
 
 namespace Payetools.AttachmentOrders;
 
@@ -34,7 +35,7 @@ public interface IAttachmentOrdersCalculator
         DateRange payPeriod,
         decimal finalTaxDue,
         decimal employeeNiContribution,
-        decimal studentLoanDeductions,
+        IStudentLoanCalculationResult? studentLoanDeductions,
         decimal employeePensionContribution,
         out IAttachmentOrderCalculationResult? attachmentOrdersCalculationResult);
 }

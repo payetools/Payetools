@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Payetools.Common\Payetools.Common.csproj" />
+    <ProjectReference Include="..\Payetools.StudentLoans\Payetools.StudentLoans.csproj" />
   </ItemGroup>
 
 </Project>

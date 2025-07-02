@@ -11,26 +11,26 @@ using System.Text.Json.Serialization;
 namespace Payetools.AttachmentOrders.Serialisation;
 
 /// <summary>
-/// JSON Converter for the <see cref="AttachmentOrderCalculationType"/> enumeration.
+/// JSON Converter for the <see cref="AttachmentOrderCalculationBehaviours"/> enumeration.
 /// </summary>
-public class AttachmentOrderCalculationTypeConverter : JsonConverter<AttachmentOrderCalculationType>
+public class AttachmentOrderCalculationTypeConverter : JsonConverter<AttachmentOrderCalculationBehaviours>
 {
     /// <summary>
-    /// Reads a <see cref="AttachmentOrderCalculationType"/> enumerated value in string format and converts
+    /// Reads a <see cref="AttachmentOrderCalculationBehaviours"/> enumerated value in string format and converts
     /// to the appropriate enum value.
     /// </summary>
     /// <param name="reader">JSON reader (UTF-8 format).</param>
     /// <param name="typeToConvert">Type to convert (unused).</param>
     /// <param name="options">JSON serializer options (unused).</param>
-    /// <returns><see cref="AttachmentOrderCalculationType"/> value.</returns>
-    public override AttachmentOrderCalculationType Read(
+    /// <returns><see cref="AttachmentOrderCalculationBehaviours"/> value.</returns>
+    public override AttachmentOrderCalculationBehaviours Read(
         ref Utf8JsonReader reader,
         /* in */ Type typeToConvert,
         /* in */ JsonSerializerOptions options) =>
-        Enum.Parse<AttachmentOrderCalculationType>(reader.GetString() ?? string.Empty, true);
+        Enum.Parse<AttachmentOrderCalculationBehaviours>(reader.GetString() ?? string.Empty, true);
 
     /// <summary>
-    /// Writes a <see cref="AttachmentOrderCalculationType"/> enum value, converted to its string equivalent,
+    /// Writes a <see cref="AttachmentOrderCalculationBehaviours"/> enum value, converted to its string equivalent,
     /// to the JSON stream.
     /// </summary>
     /// <param name="writer">JSON writer (UTF-8 format).</param>
@@ -38,7 +38,7 @@ public class AttachmentOrderCalculationTypeConverter : JsonConverter<AttachmentO
     /// <param name="options">JSON serializer options (unused).</param>
     public override void Write(
         /* in */ Utf8JsonWriter writer,
-        /* in */ AttachmentOrderCalculationType value,
+        /* in */ AttachmentOrderCalculationBehaviours value,
         /* in */ JsonSerializerOptions options) =>
         writer.WriteStringValue(value.ToString());
 }
