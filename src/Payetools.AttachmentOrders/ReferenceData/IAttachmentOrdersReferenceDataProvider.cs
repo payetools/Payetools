@@ -5,6 +5,7 @@
 //   * The MIT License, see https://opensource.org/license/mit/
 
 using Payetools.Common.Model;
+using System.Collections.Immutable;
 
 namespace Payetools.AttachmentOrders.ReferenceData;
 
@@ -18,8 +19,6 @@ public interface IAttachmentOrdersReferenceDataProvider
     /// to attachment order reference data entries for a given tax year.
     /// </summary>
     /// <param name="taxYear">Applicable tax year.</param>
-    /// <returns>A dictionary that maps from key lookup data to a given attachment order
-    /// reference data entry.</returns>
-    Dictionary<AttachmentOrderReferenceDataEntry.LookupKey, AttachmentOrderReferenceDataEntry> GetAllAttachmentOrderEntries(
-        TaxYear taxYear);
+    /// <returns>An immutable array of reference data entries.</returns>
+    ImmutableArray<AttachmentOrderReferenceDataEntry> GetAllAttachmentOrderEntries(TaxYear taxYear);
 }

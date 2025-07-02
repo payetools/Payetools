@@ -15,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace Payetools.AttachmentOrders.Tests;
 
-public class TableBasedPercentageCalculatorTests : IClassFixture<AttachmentOrdersCalculatorFactoryDataFixture>
+public class TableBasedPercentagePlusFixedCalculatorTests : IClassFixture<AttachmentOrdersCalculatorFactoryDataFixture>
 {
     private readonly AttachmentOrdersCalculatorFactoryDataFixture _calculatorDataFixture;
 
-    public TableBasedPercentageCalculatorTests(AttachmentOrdersCalculatorFactoryDataFixture calculatorDataFixture)
+    public TableBasedPercentagePlusFixedCalculatorTests(AttachmentOrdersCalculatorFactoryDataFixture calculatorDataFixture)
     {
         _calculatorDataFixture = calculatorDataFixture;
     }
@@ -30,11 +30,12 @@ public class TableBasedPercentageCalculatorTests : IClassFixture<AttachmentOrder
         var db = new TestDataProvider(true);
 
         var testData = db.GetTestData<IAttachmentOrderTestDataEntry>("AttachmentOrders")
-            .Where(t => t.CalculationType == AttachmentOrderCalculationType.TableBasedPercentageOfEarnings)
+            .Where(t => t.CalculationType == AttachmentOrderCalculationType.TableBasedPercentageOfEarningsPlusFixedAmount &&
+                CountriesForTaxPurposesConverter.ToEnum(t.Jurisdiction) == CountriesForTaxPurposes.Scotland)
             .ToList();
 
         if (!testData.Any())
-            Assert.Fail("No tests found");
+            Assert.Fail("No income found");
 
         Console.WriteLine($"{testData.Count} tests found");
 

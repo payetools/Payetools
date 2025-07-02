@@ -423,19 +423,11 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     /// <param name="taxYear">Applicable tax year.</param>
     /// <returns>A dictionary that maps from key lookup data to a given attachment order
     /// reference data entry.</returns>
-    public Dictionary<AttachmentOrderReferenceDataEntry.LookupKey, AttachmentOrderReferenceDataEntry> GetAllAttachmentOrderEntries(
-        TaxYear taxYear)
+    public ImmutableArray<AttachmentOrderReferenceDataEntry> GetAllAttachmentOrderEntries(TaxYear taxYear)
     {
         var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);
 
-        return referenceDataSet.AttachmentOrders
-            .ToDictionary(
-                ao => new AttachmentOrderReferenceDataEntry.LookupKey
-                {
-                    ApplicableDateRange = new DateRange(ao.ApplicableFrom, ao.ApplicableTill),
-                    ApplicableCountries = ao.ApplicableCountries,
-                    CalculationType = ao.CalculationType
-                },
-                ao => ao);
+        return referenceDataSet?.AttachmentOrders.ToImmutableArray() ??
+            throw new NotSupportedException($"No reference data found for tax year {taxYear}");
     }
 }

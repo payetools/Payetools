@@ -19,7 +19,9 @@ public class AttachmentOrderTestDataEntry : IAttachmentOrderTestDataEntry
 
     public PayFrequency PayFrequency { get; init; }
 
-    public DateOnly IssueDate { get; init; }
+    public DateOnly? IssueDate { get; init; }
+
+    public DateOnly? ReceivedDate { get; init; }
 
     public decimal AttachableEarnings { get; init; }
 
