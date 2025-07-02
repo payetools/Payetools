@@ -2,9 +2,37 @@
 
 ## Introduction
 
-This library provides calculations of Attachment Orders.  The term Attachment Order as used here is a generic term for all types of deductions from earnings mandated by law (often by the courts) and communicated externally to employers, regardless of source or type.  There are many distinct types of deductions that can be made from an employee's earnings; these are listed further below.
+This library provides calculations of attachment orders.  The term *attachment order** is used here as a generic term for all types of deductions from earnings mandated by law (often by the courts) and communicated externally to employers, regardless of source or type.  There are many distinct types of deductions that can be made from an employee's earnings; these are listed further below.
 
-The legislation around Attachment Orders is complex and varies by jurisdiction. Although somewhat outdated, the HMCS document [Attachment Orders: A Guide for Employers](https://www.rbkc.gov.uk/pdf/aoehandbook-eng.pdf) provides a good overview of the process. Lewes and Eastbourne Councils also have a useful [Attachment of Earnings - Employers Guide](https://www.lewes-eastbourne.gov.uk/media/4064/Attachment-of-earnings-employers-guide/pdf/Attachment_of_Earnings_-Employer_Guide_1.pdf).
+The legislation around attachment orders is complex and varies by jurisdiction. Although somewhat outdated, the HMCS document [Attachment Orders: A Guide for Employers](https://www.rbkc.gov.uk/pdf/aoehandbook-eng.pdf) provides a good overview of the process. Lewes and Eastbourne Councils also have a useful [Attachment of Earnings - Employers Guide](https://www.lewes-eastbourne.gov.uk/media/4064/Attachment-of-earnings-employers-guide/pdf/Attachment_of_Earnings_-Employer_Guide_1.pdf).
+
+## Approach
+
+The approach taken in the library is to provide a set of generic calculations that can be used to cover all the attachment order types prescribed by law across the UK.  Similar to Statutory Maternity Pay, the approach is to split the definition of specific attachment orders into a set of rules that can be applied to the generic calculations.  This allows for the addition of new attachment order types without needing to change the core calculations.  These rules must be implemented separately, typically in the user interface or application layer.  The following sections provide an overview of the different types of attachment orders and the rules that should be associated with them.
+
+### Jurisdictional Variations
+
+Due to the different legislators across the UK, different types of attachment orders apply in different jurisdictions, some across multiple jurisdictions, and some only in specific jurisdictions, as follows:
+
+| Type                                       | Applicability            | Issued By                                                                           | Use                                                                                                                                    |
+|--------------------------------------------|--------------------------|-------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| Direct Earnings Attachment (DEA)           | England, Scotland, Wales | DWP, Local Authority                                                                | Recovery of overpayment of benefits                                                                                                    |
+| Deductions from Earnings Order (DEO)       | All of UK                | Child Maintenance Service (CMS) (Northern Ireland has a separate CMS, part of DfC)  | Child maintenance                                                                                                                      |
+| Countil Tax Attachment of Earnings (CTAOE) | England, Wales           | Magistrates Court                                                                   | Recovery of Council Tax arrears                                                                                                        |
+| Attachment of Earnings Order               | Northern Ireland         | Northern Ireland Enforcement of Judgments Office                                    | Recovery of Rate arrears                                                                                                               |
+| Earnings Arrestment                        | Scotland                 |                                                                                     | Recovery of Council Tax arrears, utility charges, unpaid fines, overpayment of benefits, unpaid debts, rent arrears, child maintenance |
+|                                            |                          |                                                                                     |                                                                                                                                        |
+
+
+
+how they are prioritised.
+
+
+library
+does not 
+
+
+
 
 The term Attachment Order used here is a generic term for all types of deductions from earnings communicated externally to employers and mandated by law, regardless of source or type.  There are in fact distinct types of deductions that can be made from an employee's earnings:
 - Direct Earnings Attachment (DEA) - for tax debts
@@ -44,6 +72,4 @@ In Northern Ireland, there is no exact equivalent to a Direct Earnings Attachmen
 CT-AEO - new rates from 1 April 2022, see [The Council Tax (Administration 
 and Enforcement) (Amendment) 
 (Wales) Regulations 2022](https://www.legislation.gov.uk/wsi/2022/107/made)
-
-## Approach
 
