@@ -401,7 +401,7 @@ public class HmrcReferenceDataProvider : IHmrcReferenceDataProvider
     public ImmutableArray<AttachmentOrderRateTableEntry>? GetAttachmentOrderRateTable(
         TaxYear taxYear,
         CountriesForTaxPurposes jurisdiction,
-        AttachmentOrderCalculationBehaviours calculationType,
+        AttachmentOrderCalculationTraits calculationType,
         DateOnly applicabilityDate)
     {
         var referenceDataSet = GetReferenceDataSetForTaxYear(taxYear);

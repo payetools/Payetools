@@ -39,7 +39,7 @@ public class AttachmentOrderReferenceDataEntry : IApplicableFromTill
     /// <summary>
     /// Gets the calculation type for this set of reference data.
     /// </summary>
-    public AttachmentOrderCalculationBehaviours CalculationType { get; init; }
+    public AttachmentOrderCalculationTraits CalculationType { get; init; }
 
     /// <summary>
     /// Gets the rate table for this set of reference data.

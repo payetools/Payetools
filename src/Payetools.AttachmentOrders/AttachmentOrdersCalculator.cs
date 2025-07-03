@@ -90,7 +90,7 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
 
         return attachmentOrder.CalculationBehaviours switch
         {
-            AttachmentOrderCalculationBehaviours.TableBasedPercentageOfEarnings => new TableBasedPercentageCalculator(referenceDataEntry.RateTable),
+            AttachmentOrderCalculationTraits.TableBasedPercentageOfEarnings => new TableBasedPercentageCalculator(referenceDataEntry.RateTable),
             _ => throw new NotSupportedException($"Unsupported attachment order calculation type: {attachmentOrder.CalculationBehaviours}")
         };
     }

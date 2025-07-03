@@ -17,7 +17,7 @@ public interface IAttachmentOrder
     /// <summary>
     /// Gets the calculation behaviours to use for this attachment of earnings order.
     /// </summary>
-    AttachmentOrderCalculationBehaviours CalculationBehaviours { get; }
+    AttachmentOrderCalculationTraits CalculationBehaviours { get; }
 
     /// <summary>
     /// Gets the date on which the attachment order was issued; this may be used to determine the rates and
