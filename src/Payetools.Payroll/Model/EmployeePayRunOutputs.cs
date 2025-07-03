@@ -24,7 +24,7 @@ public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdenti
     private INiCalculationResult _niCalculationResult;
     private IStudentLoanCalculationResult? _studentLoanCalculationResult;
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
-    private IAttachmentOrderCalculationResult? _attachmentOfEarningsCalculationResult;
+    private IAttachmentOrdersCalculationResult? _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmployeePayRunOutputs{TIdentifier}"/> class with all calculation results and values.
@@ -46,7 +46,7 @@ public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdenti
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult? studentLoanCalculationResult,
         ref IPensionContributionCalculationResult? pensionContributionCalculationResult,
-        ref IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult,
+        ref IAttachmentOrdersCalculationResult? attachmentOfEarningsCalculationResult,
         decimal totalGrossPay,
         decimal workingGrossPay,
         decimal taxablePay,
@@ -105,7 +105,7 @@ public class EmployeePayRunOutputs<TIdentifier> : IEmployeePayRunOutputs<TIdenti
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    public ref IAttachmentOrderCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
+    public ref IAttachmentOrdersCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Gets the employee's total gross pay, excluding payrolled taxable benefits.

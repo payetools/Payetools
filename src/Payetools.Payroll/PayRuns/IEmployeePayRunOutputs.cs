@@ -49,7 +49,7 @@ public interface IEmployeePayRunOutputs<TIdentifier>
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    ref IAttachmentOrderCalculationResult? AttachmentOfEarningsCalculationResult { get; }
+    ref IAttachmentOrdersCalculationResult? AttachmentOfEarningsCalculationResult { get; }
 
     /// <summary>
     /// Gets the employee's total gross pay, excluding payrolled taxable benefits.

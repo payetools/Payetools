@@ -20,4 +20,11 @@ public readonly struct AttachmentOrderCalculationResultEntry
     /// Gets the deduction amount calculated for this entry.
     /// </summary>
     public decimal Deduction { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether the deduction amount either exceeds or would exceed
+    /// the attachable earnings. Used to indicate whether any further attachment orders should be
+    /// applied to the attachable earnings amount in the current pay period.
+    /// </summary>
+    public bool DeductionExceedsAttachableEarnings { get; init; }
 }

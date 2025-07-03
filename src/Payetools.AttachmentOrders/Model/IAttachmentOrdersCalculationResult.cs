@@ -9,7 +9,7 @@ namespace Payetools.AttachmentOrders.Model;
 /// <summary>
 /// Interface that represents the results of an attachment of earnings calculation.
 /// </summary>
-public interface IAttachmentOrderCalculationResult
+public interface IAttachmentOrdersCalculationResult
 {
     /// <summary>
     /// Gets the total deduction applicable as a result of any attachment of earnings orders.

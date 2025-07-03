@@ -53,7 +53,7 @@ public class AttachmentOrdersCalculator : IAttachmentOrdersCalculator
         decimal employeeNiContribution,
         IStudentLoanCalculationResult? studentLoanDeductions,
         decimal employeePensionContribution,
-        out IAttachmentOrderCalculationResult? attachmentOrdersCalculationResult)
+        out IAttachmentOrdersCalculationResult? attachmentOrdersCalculationResult)
     {
         List<AttachmentOrderCalculationResultEntry> resultEntries = [];
 

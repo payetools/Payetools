@@ -22,7 +22,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     private INiCalculationResult _niCalculationResult;
     private IStudentLoanCalculationResult? _studentLoanCalculationResult;
     private IPensionContributionCalculationResult? _pensionContributionCalculationResult;
-    private IAttachmentOrderCalculationResult? _attachmentOfEarningsCalculationResult;
+    private IAttachmentOrdersCalculationResult? _attachmentOfEarningsCalculationResult;
     private IEmployeePayrollHistoryYtd _employeePayrollHistoryYtd;
 
     /// <summary>
@@ -84,7 +84,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
     /// Gets the results of any attachment of earnings order calculation for this employee for this
     /// payrun, if applicable.
     /// </summary>
-    public ref IAttachmentOrderCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
+    public ref IAttachmentOrdersCalculationResult? AttachmentOfEarningsCalculationResult => ref _attachmentOfEarningsCalculationResult;
 
     /// <summary>
     /// Gets the historical set of information for an employee's payroll for the current tax year,
@@ -160,7 +160,7 @@ public record EmployeePayRunResult : IEmployeePayRunResult
         ref INiCalculationResult niCalculationResult,
         ref IStudentLoanCalculationResult? studentLoanCalculationResult,
         ref IPensionContributionCalculationResult? pensionContributionCalculation,
-        ref IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult,
+        ref IAttachmentOrdersCalculationResult? attachmentOfEarningsCalculationResult,
         decimal totalGrossPay,
         decimal workingGrossPay,
         decimal taxablePay,

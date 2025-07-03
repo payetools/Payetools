@@ -188,7 +188,7 @@ public abstract class EmployeePayRunProcessor : IEmployeePayRunProcessor
                 out studentLoanCalculationResult);
         }
 
-        IAttachmentOrderCalculationResult? attachmentOfEarningsCalculationResult = null;
+        IAttachmentOrdersCalculationResult? attachmentOfEarningsCalculationResult = null;
 
         if (payRunInputs.AttachmentOrders is not null && payRunInputs.AttachmentOrders.Any())
         {
