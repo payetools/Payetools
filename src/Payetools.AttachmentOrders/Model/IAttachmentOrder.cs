@@ -79,7 +79,7 @@ public interface IAttachmentOrder
     /// Gets a value indicating whether the protected earnings amount is expressed as a percentage
     /// of the employee's net earnings, or as a fixed amount per pay period.
     /// </summary>
-    bool IsProtectedEarningsPercentage { get; }
+    bool ProtectedEarningsIsPercentage { get; }
 
     /// <summary>
     /// Gets a value indicating whether an admin charge should be applied to this attachment order.

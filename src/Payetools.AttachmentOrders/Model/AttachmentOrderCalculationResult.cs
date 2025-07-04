@@ -23,6 +23,18 @@ public readonly struct AttachmentOrderCalculationResult : IAttachmentOrdersCalcu
     public bool StudentLoanRecalculationRequired { get; }
 
     /// <summary>
+    /// Gets any shortfall between the calculated deduction and the protected earnings; in some
+    /// cases, shortfalls may be carried forward to the next pay period.
+    /// </summary>
+    public decimal? DeductionShortfall { get; }
+
+    /// <summary>
+    /// Gets any shortfall between the attachable earnings and protected earnings; used for audit/
+    /// reporting purposes to explain why no deduction was made.
+    /// </summary>
+    public decimal? EarningsShortfall { get; }
+
+    /// <summary>
     /// Gets the collection of entries representing the results of attachment order calculations.
     /// </summary>
     public IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }

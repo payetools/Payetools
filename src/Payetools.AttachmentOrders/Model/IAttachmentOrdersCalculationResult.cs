@@ -14,16 +14,16 @@ public interface IAttachmentOrdersCalculationResult
     /// <summary>
     /// Gets the total deduction applicable as a result of any attachment of earnings orders.
     /// </summary>
-    public decimal TotalDeduction { get; }
+    decimal TotalDeduction { get; }
 
     /// <summary>
     /// Gets a value indicating whether the results of the attachment orders calculation requires
     /// student loans deductions to be recalculated.
     /// </summary>
-    public bool StudentLoanRecalculationRequired { get; }
+    bool StudentLoanRecalculationRequired { get; }
 
     /// <summary>
     /// Gets the collection of entries representing the results of attachment order calculations.
     /// </summary>
-    public IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }
+    IReadOnlyCollection<AttachmentOrderCalculationResultEntry> Entries { get; }
 }

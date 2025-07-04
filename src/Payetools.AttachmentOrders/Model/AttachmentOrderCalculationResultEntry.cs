@@ -22,9 +22,14 @@ public readonly struct AttachmentOrderCalculationResultEntry
     public decimal Deduction { get; init; }
 
     /// <summary>
-    /// Gets a value indicating whether the deduction amount either exceeds or would exceed
-    /// the attachable earnings. Used to indicate whether any further attachment orders should be
-    /// applied to the attachable earnings amount in the current pay period.
+    /// Gets any shortfall between the calculated deduction and the protected earnings; in some
+    /// cases, shortfalls may be carried forward to the next pay period.
     /// </summary>
-    public bool DeductionExceedsAttachableEarnings { get; init; }
+    public decimal? DeductionShortfall { get; }
+
+    /// <summary>
+    /// Gets any shortfall between the attachable earnings and protected earnings; used for audit/
+    /// reporting purposes to explain why no deduction was made.
+    /// </summary>
+    public decimal? EarningsShortfall { get; }
 }
