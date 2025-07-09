@@ -247,4 +247,4 @@ dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
 dotnet_diagnostic.IDE0073.severity = warning
 dotnet_diagnostic.IDE0090.severity = none
-file_header_template = Copyright (c) 2023-2025, Payetools Foundation.\n\nPayetools Foundation licenses this file to you under the following license(s):\n\n  * The MIT License, see https://opensource.org/license/mit/
+file_header_template = Copyright (c) 2023-2025, Payetools Ltd.\n\nPayetools Ltd licenses this file to you under the following license(s):\n\n  * The MIT License, see https://opensource.org/license/mit/

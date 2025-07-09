@@ -2,9 +2,9 @@
 <Project>
 	
 	<PropertyGroup>
-		<Authors>Payetools Foundation</Authors>
-		<Copyright>Copyright (c) 2023-2025, Payetools Foundation</Copyright>
-		<Company>Payetools Foundation</Company>
+		<Authors>Payetools Ltd</Authors>
+		<Copyright>Copyright (c) 2023-2025, Payetools Ltd</Copyright>
+		<Company>Payetools Ltd</Company>
 		<PackageProjectUrl>https://payetools.dev/</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>

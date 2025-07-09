@@ -1,6 +1,6 @@
-// Copyright (c) 2023-2025, Payetools Foundation.
+// Copyright (c) 2023-2025, Payetools Ltd.
 //
-// Payetools Foundation licenses this file to you under the following license(s):
+// Payetools Ltd licenses this file to you under the following license(s):
 //
 //   * The MIT License, see https://opensource.org/license/mit/
 
